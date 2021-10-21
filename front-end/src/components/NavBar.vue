@@ -166,7 +166,7 @@ export default ({
     border-top: 2px solid black;
     height: 40px;
     position: absolute;
-    margin: 17px 0px 0px 200px;
+    margin: 17px 0px 0px 160px;
     display: flex;
     flex-direction: row;
 }
