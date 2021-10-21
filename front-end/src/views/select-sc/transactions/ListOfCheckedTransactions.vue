@@ -9,9 +9,9 @@
           <thead class="table-inside">
             <tr>
               <th style="width: 10%" scope="col">#</th>
-              <th style="width: 40%" scope="col">Batch Name</th>
+              <th style="width: 30%" scope="col">Checker</th>
               <th style="width: 25%" scope="col">Checked Date</th>
-              <th style="width: 25%" scope="col">Description</th>
+              <th style="width: 35%" scope="col"> Number of smart contracts </th>
             </tr>
           </thead>
           <tbody>
@@ -33,9 +33,9 @@
       </div>
     </div>
     <div id="action">
-      <div id="btn-addsc" @click="routing('addsc')">Add Smart Contracts</div>
+      <div id="btn-addsc" @click="routing('addsc')">Start a new checking session</div>
       <div id="btn-backnext" @click="routing('back')">Back</div>
-      <div id="btn-backnext" @click="routing('next')">Next</div>
+      <!-- <div id="btn-backnext" @click="routing('next')">Next</div> -->
     </div>
   </div>
 </template>

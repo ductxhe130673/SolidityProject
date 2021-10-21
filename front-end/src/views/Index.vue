@@ -10,8 +10,8 @@
             </g>
         </svg>
         <div class="message-box">
-            <h1>Solidity To CPN</h1>
-            <p>Check for vulnerabilities in smart contracts</p>
+            <h1>SolidityCPN Home</h1>
+            <p>Check properties and vulnerabilities of the smart contracts</p>
             <div class="buttons-con">
                 <div class="action-link-wrap">
                 <a @click="routing('check')" class="link-button">Check smart contracts</a>
