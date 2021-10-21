@@ -11,11 +11,14 @@ class Account(models.Model):
     class Meta:
         managed = False
         db_table = 'Account'
-        
+
+
 class Checkedbatchsc(models.Model):
     bid = models.AutoField(primary_key=True)
     aid = models.ForeignKey(Account, models.DO_NOTHING, db_column='aid')
-    name = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+    #lnid = models.ForeignKey()
+    #name = models.ForeignKey(Contact, models.DO_NOTHING, db_column='lastname')
+    nosc = models.IntegerField(db_column='noSC')
     checkeddate = models.DateField(db_column='checkedDate', blank=True, null=True)  # Field name made lowercase.
     description = models.TextField(blank=True, null=True)
 

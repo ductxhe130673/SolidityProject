@@ -9,7 +9,7 @@ from django.db import connection
 
 # Create your views here.
 
-
+            
 class Listofcheckedtransactions(APIView):
     def get(self, request):
         try:
