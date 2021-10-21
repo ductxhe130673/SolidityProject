@@ -1,17 +1,20 @@
 <template>
   <div>
     <div id="con-setting" class="container">
-      <div id="header">Contract-Specifc Property Setting Non-Template</div>
+      <div id="header">Contract-Specifc Property Setting - Non Template</div>
       <div class="row">
         <div class="col-2">Name</div>
         <div class="col-9">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" placeholder="Check format">
         </div>
       </div>
       <div class="row">
         <div class="col-2">Formular</div>
         <div class="col-9">
           <!-- <LTLEditor @update="getLTLCode" :code="ltlcode" /> -->
+          <textarea name="" id="" cols="30" rows="7" class="form-control">
+            G ({ function 1 } => (¬{ function 2 } U { function 3 }))
+          </textarea>
         </div>
       </div>
       <div class="row">
@@ -29,7 +32,7 @@ followed by an occurrence of {function 4}
         <div class="col-2"></div>
         <div id="btn-group" class="col-9">
           <button class="btn btn-primary-outline btn-sm" @click="routing('save')">
-            Add
+            Next
           </button>
           <button
             class="btn btn-outline btn-sm"
