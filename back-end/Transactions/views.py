@@ -27,12 +27,11 @@ class Checkreentrancydetail(APIView):
     def get(self,request):
         try:
             if request.method == 'GET':
-                sql = '''select sc.name as sc,ct.name as ct ,lt.name as lt,cscd.status,cscd.result from checkedbatchsc cb join checkedsmartcontractdetail cscd 
-                        on cb.bid = cscd.bid
-                        join smartcontract sc on sc.sid = cscd.sid
-                        join cpncontext ct on ct.cid = cscd.cid
-                        join ltltemplate lt on lt.lteid = cscd.lteid 
-                        where cb.bid = %s'''
+                sql = '''select c.lastname, lt.name, con.name, ch.noSC, ch.checkedDate, ch.status, ch.LTLformula, ch.result from
+                        soliditycpn.checkedbatchsc ch join soliditycpn.contact c on ch.aid = c.aid
+                        join soliditycpn.ltltemplate lt on ch.lteid = lt.lteid
+                        join soliditycpn.cpncontext con on ch.cid = con.cid 
+                        where ch.bid = %s'''
             cursor = connection.cursor()
             try:
                 cursor.execute(sql,[request.GET['id']] )
