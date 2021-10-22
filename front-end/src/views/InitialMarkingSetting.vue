@@ -53,11 +53,16 @@
         />
       </div>
     </div> -->
-
+    <div class="smart_contract_button">
+            <button>Smart Contract 1</button>
+            <button>Smart Contract 2</button>
+            <button>Smart Contract 3</button>
+    </div>
     <div class="row" id="textbox">
       <div class="col-2">Function parameters</div>
       <div class="col-10 ">
-        <textarea class="form-control" aria-label="With textarea"></textarea>
+        <textarea class="form-control" aria-label="With textarea">
+        </textarea>
       </div>
     </div>
 
@@ -127,6 +132,9 @@ label{
 
 .text {
   height: 200px;
+}
+.smart_contract_button{
+  margin-left: 20%;
 }
 #btn-group {
   width: 100%;

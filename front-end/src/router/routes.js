@@ -40,197 +40,200 @@ import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 
 
 import { DOMAIN_TITLE } from '../.env'
+import GenerateLNAfile from "../views/GenerateLNAfile.vue"
 
-export const routes = [
-  {
-    path: "/",
-    name: "Index",
-    component: Index,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | login` },
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
-  },
-  {
-    path: "/select-sc/",
-    name: "SelectSc",
-    component: SelectSc,
-    children: [
-      {
-        path: 'listofcheckedtransactions',
-        name: 'ListOfCheckedTransactions',
-        component: ListOfCheckedTransactions,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | listofcheckedtransactions` },
-      },
-      {
-        path: 'checkreentrancydetail',
-        name: 'CheckRentrancy',
-        component: CheckReenTrancyDetail
-      },
-      {
-        path: 'select-smart-contract',
-        name: 'SelectSmartContract',
-        component: SelectSmartContract
-      },
-      {
-        path: 'uploadsc',
-        name: 'UpLoadSc',
-        component: UpLoadSc
-      },
-    ],
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` },
-  },
-  {
-    path: "/context/",
-    name: "SelectContext",
-    component: SelectContext,
-    children: [
-      {
-        path: 'context-of-smartcontract',
-        name: 'ContextOfSmartContract',
-        component: ContextOfSmartContract
-      },
-      {
-        path: 'load-context',
-        name: 'LoadContext',
-        component: LoadContext
-      },
-      {
-        path: 'uploadcontext',
-        name: 'UpLoadContext',
-        component: UpLoadContext
-      }
-    ],
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | select context` },
-  },
-  {
-    path: "/choose-property/",
-    name: "ChooseProperty",
-    component: ChooseProperty,
-    children: [
-      {
-        path: "ltlcheck-option",
-        name: "LTLCheckOption",
-        component: LTLCheckingOption,
-      },
-      {
-        path: "csp-template-setting",
-        name: "CSPTemplateSetting",
-        component: CSPTemplateSetting
-      },
-       {
-        path: "csp-setting-types",
-        name: "CSPSettingType",
-        component: ContractSpecificProperty
-      },
-      {
-        path: "csp-non-template-setting",
-        name: "CSPNonTemplateSetting",
-        component: ContractSpecificPropertyNonTemplate
-      },
-      {
-        path: "genaral-vul-setting",
-        name: "GenaralVulSetting",
-        component: GenaralVulSetting
-      },
-      {
-        path:"choose-ele-contract",
-        name:"ChooseElementOfSmartContract",
-        component:ChooseEleOfSC
-      },
-      {
-        path:"vul-summary",
-        name:"VulSummary",
-        component:VulnerabilitySummary
-      },
+export const routes = [{
+        path: "/",
+        name: "Index",
+        component: Index,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
+    },
+    {
+        path: "/login",
+        name: "Login",
+        component: Login,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | login` },
+    },
+    {
+        path: "/register",
+        name: "Register",
+        component: Register,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
+    },
+    {
+        path: "/select-sc/",
+        name: "SelectSc",
+        component: SelectSc,
+        children: [{
+                path: 'listofcheckedtransactions',
+                name: 'ListOfCheckedTransactions',
+                component: ListOfCheckedTransactions,
+                meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | listofcheckedtransactions` },
+            },
+            {
+                path: 'checkreentrancydetail',
+                name: 'CheckRentrancy',
+                component: CheckReenTrancyDetail
+            },
+            {
+                path: 'select-smart-contract',
+                name: 'SelectSmartContract',
+                component: SelectSmartContract
+            },
+            {
+                path: 'uploadsc',
+                name: 'UpLoadSc',
+                component: UpLoadSc
+            },
+        ],
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` },
+    },
+    {
+        path: "/context/",
+        name: "SelectContext",
+        component: SelectContext,
+        children: [{
+                path: 'context-of-smartcontract',
+                name: 'ContextOfSmartContract',
+                component: ContextOfSmartContract
+            },
+            {
+                path: 'load-context',
+                name: 'LoadContext',
+                component: LoadContext
+            },
+            {
+                path: 'uploadcontext',
+                name: 'UpLoadContext',
+                component: UpLoadContext
+            }
+        ],
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | select context` },
+    },
+    {
+        path: "/choose-property/",
+        name: "ChooseProperty",
+        component: ChooseProperty,
+        children: [{
+                path: "ltlcheck-option",
+                name: "LTLCheckOption",
+                component: LTLCheckingOption,
+            },
+            {
+                path: "csp-template-setting",
+                name: "CSPTemplateSetting",
+                component: CSPTemplateSetting
+            },
+            {
+                path: "csp-setting-types",
+                name: "CSPSettingType",
+                component: ContractSpecificProperty
+            },
+            {
+                path: "csp-non-template-setting",
+                name: "CSPNonTemplateSetting",
+                component: ContractSpecificPropertyNonTemplate
+            },
+            {
+                path: "genaral-vul-setting",
+                name: "GenaralVulSetting",
+                component: GenaralVulSetting
+            },
+            {
+                path: "choose-ele-contract",
+                name: "ChooseElementOfSmartContract",
+                component: ChooseEleOfSC
+            },
+            {
+                path: "vul-summary",
+                name: "VulSummary",
+                component: VulnerabilitySummary
+            },
 
-      
-    ],
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | choose property` },
-  },
-  {
-    path: "/initialmarking",
-    name: "Initial",
-    component: InitialMarkingSetting,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-  },
-  {
-    path: "/check-sc",
-    name: "CheckSmartContract",
-    component: CheckingSmartContract,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-  },
-  {
-    path: "/list-context",
-    name: "ListContext",
-    component: ListContext,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
-    props: true
-  },
-  {
-    path: "/list-sc",
-    name: "ListSc",
-    component: ListSc,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | list smart contracts` },
-  },
-  {
-    path: "/edit-sc",
-    name: "EditSc",
-    component: EditSc,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | edit smart contracts` },
-    props: true
-  },
-  {
-    path: "/add-sc",
-    name: "AddSc",
-    component: AddSc,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create smart contracts` },
-    props: true
-  },
-  {
-    path: "/add-context",
-    name: "AddContext",
-    component: AddContext,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Add a Context` },
-    props: true
-  },
-  {
-    path: "/edit-context",
-    name: "EditContext",
-    component: EditContext,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit Context` },
-    props: true
-  },
-  {
-    path: "/list-vul",
-    name: "ListVul",
-    component: ListVul,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
-    props: true
-  },
-  {
-    path: "/add-vul",
-    name: "AddVul",
-    component: AddVul,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Add an LTL Vulnerability` },
-    props: true
-  },
-  {
-    path: "/edit-vul",
-    name: "EditVul",
-    component: EditVul,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
-    props: true
-  },
+
+        ],
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | choose property` },
+    },
+    {
+        path: "/initialmarking",
+        name: "Initial",
+        component: InitialMarkingSetting,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/check-sc",
+        name: "CheckSmartContract",
+        component: CheckingSmartContract,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/list-context",
+        name: "ListContext",
+        component: ListContext,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
+        props: true
+    },
+    {
+        path: "/list-sc",
+        name: "ListSc",
+        component: ListSc,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | list smart contracts` },
+    },
+    {
+        path: "/edit-sc",
+        name: "EditSc",
+        component: EditSc,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | edit smart contracts` },
+        props: true
+    },
+    {
+        path: "/add-sc",
+        name: "AddSc",
+        component: AddSc,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create smart contracts` },
+        props: true
+    },
+    {
+        path: "/add-context",
+        name: "AddContext",
+        component: AddContext,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Add a Context` },
+        props: true
+    },
+    {
+        path: "/edit-context",
+        name: "EditContext",
+        component: EditContext,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit Context` },
+        props: true
+    },
+    {
+        path: "/list-vul",
+        name: "ListVul",
+        component: ListVul,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
+        props: true
+    },
+    {
+        path: "/add-vul",
+        name: "AddVul",
+        component: AddVul,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Add an LTL Vulnerability` },
+        props: true
+    },
+    {
+        path: "/edit-vul",
+        name: "EditVul",
+        component: EditVul,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
+        props: true
+    },
+    {
+        path: "/Generate-LF",
+        name: "GenerateLNAfile",
+        component: GenerateLNAfile,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Generate LNA file` },
+    }
 ]
 
 /*
