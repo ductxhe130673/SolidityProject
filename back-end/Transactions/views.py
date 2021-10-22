@@ -1,3 +1,4 @@
+from warnings import catch_warnings
 from MySQLdb._mysql import result
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,14 +15,20 @@ class Listofcheckedtransactions(APIView):
     def get(self, request):
         try:
             if request.method == 'GET':
-                transaction = Checkedbatchsc.objects.all()
-                serializer = SerializerCheckedbatchsc(transaction, many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                sql = '''select cb.bid,co.lastname,cb.checkedDate,cb.noSC from soliditycpn.checkedbatchsc cb join soliditycpn.contact co on cb.aid = co.id'''
+            cursor = connection.cursor()
+            try:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+                    return Response(data, status=status.HTTP_200_OK)
+            except Exception as e:
+                cursor.close
         except:
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 class Checkreentrancydetail(APIView):
-    def get(self,request):
+    def get(self, request):
         try:
             if request.method == 'GET':
                 sql = '''select sc.name as sc,ct.name as ct ,lt.name as lt,cscd.status,cscd.result from checkedbatchsc cb join checkedsmartcontractdetail cscd 
@@ -32,7 +39,7 @@ class Checkreentrancydetail(APIView):
                         where cb.bid = %s'''
             cursor = connection.cursor()
             try:
-                cursor.execute(sql,[request.GET['id']] )
+                cursor.execute(sql, [request.GET['id']])
                 data = cursor.fetchall()
                 return Response(data, status=status.HTTP_200_OK)
             except Exception as e:

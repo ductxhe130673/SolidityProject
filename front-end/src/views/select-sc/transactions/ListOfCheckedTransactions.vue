@@ -22,11 +22,11 @@
                   :to="{path:'checkreentrancydetail', query: { id: item.bid }}"
                   tag="a"
                   class="lk"
-                  >{{ item.name }}</router-link
+                  >{{ item[1] }}</router-link
                 ></div>
               </td>
-              <td>{{ item.checkeddate }}</td>
-              <td>{{ item.description }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
             </tr>
           </tbody>
         </table>
