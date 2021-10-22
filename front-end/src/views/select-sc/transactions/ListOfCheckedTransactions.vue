@@ -1,13 +1,8 @@
 <template>
   <div id="main">
     <div id="header">
-    <h1>List of Checked Transactions</h1>
+    <h1>Checked Smart Contract List</h1>
     </div>
-
-    <div class="grey">
-      <span>Checked information</span>
-    </div>
-
     <div class="blue">
       <div class="atable">
         <table class="table table-striped table-hover table-sm">
@@ -125,6 +120,7 @@ export default {
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: -40px;
   background: none;
+  margin-top: 65px;
   z-index: 2;
   position: relative;
 }
