@@ -5,4 +5,4 @@ class SerializerCheckedbatchsc(serializers.ModelSerializer):
     class Meta:
         model = Checkedbatchsc
         fields = '__all__'
-        # fields = ['id','name']
+        #fields = ['bid','noSC','checkedDate','result']

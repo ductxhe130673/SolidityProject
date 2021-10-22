@@ -9,9 +9,9 @@
           <thead class="table-inside">
             <tr>
               <th style="width: 10%" scope="col">#</th>
-              <th style="width: 40%" scope="col">Batch Name</th>
+              <th style="width: 40%" scope="col">Checker</th>
               <th style="width: 25%" scope="col">Checked Date</th>
-              <th style="width: 25%" scope="col">Description</th>
+              <th style="width: 25%" scope="col">Number of smart contract</th>
             </tr>
           </thead>
           <tbody>
@@ -19,14 +19,14 @@
               <th scope="row">{{ index + 1 }}</th>
               <td>
                 <div v-on:click="set(item.bid)" v-bind:id="item.bid"><router-link
-                  :to="{path:'checkreentrancydetail', query: { id: item.bid }}"
+                  :to="{path:'checkreentrancydetail', query: { id: item[0] }}"
                   tag="a"
                   class="lk"
-                  >{{ item.name }}</router-link
+                  >{{ item[1]}}</router-link
                 ></div>
               </td>
-              <td>{{ item.checkeddate }}</td>
-              <td>{{ item.description }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
             </tr>
           </tbody>
         </table>
