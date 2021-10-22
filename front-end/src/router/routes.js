@@ -39,6 +39,8 @@ import EditVul from "../views/vuls-crud/edit-vul.vue"
 import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 
 import GenerateLNAfileSuccessfully from "../views/GenerateLNAfileSuccessfully.vue"
+import CheckSmartContractProgress from "../views/CheckSmartContractProgress.vue"
+import CheckedSuccessfully from "../views/CheckedSuccessfully.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 
@@ -232,6 +234,18 @@ export const routes = [{
         path: "/generate-LS",
         name: "GenerateLNAfileSuccessfully",
         component: GenerateLNAfileSuccessfully,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/checking-scp",
+        name: "CheckSmartContractProgress",
+        component: CheckSmartContractProgress,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/checkingS",
+        name: "CheckedSuccessfully",
+        component: CheckedSuccessfully,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
     }
 ]

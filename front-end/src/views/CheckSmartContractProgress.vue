@@ -64,12 +64,12 @@
     </div>
     <div class="row">
       <div class="wrapper">
-        <h6>The generating process completed successfully</h6>
+        <h6>The the smart contract is checking ....</h6>
         <div class="progress" style="height: 40px">
           <div
             class="progress-bar"
             role="progressbar"
-            style="width: 100%"
+            style="width: 50%"
             aria-valuenow="100"
             aria-valuemin="0"
             aria-valuemax="100"
@@ -79,8 +79,7 @@
     </div>
     <div class="row">
       <div id="action">
-        <button type="button" class="btn btn-outline-primary">Next</button>
-        <button type="button" class="btn btn-outline-primary">Download</button>
+        <button type="button" class="btn btn-outline-primary">Check</button>
         <button type="button" class="btn btn-outline-primary">Back</button>
       </div>
     </div>
@@ -123,7 +122,7 @@ h5 {
   margin-top: 4%;
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  width: 40%;
 }
 .progress-bar{
   background-color: #73C1D9;
