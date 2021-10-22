@@ -14,7 +14,7 @@
             <p>Check properties and vulnerabilities of the smart contracts</p>
             <div class="buttons-con">
                 <div class="action-link-wrap">
-                <a @click="routing('check')" class="link-button">Check smart contracts</a>
+                <a @click="onChangeIndex" class="link-button">Check smart contracts</a>
                 </div>
             </div>
             <div id="current-process" v-if="haveProcess">
@@ -97,7 +97,11 @@ export default ({
       },
       getCPStep(){
         return this.$store.state.data.views.road_page+"/6"
-      }
+      },
+    onChangeIndex(){
+      this.routing('check');
+        this.$store.commit("setIndex", 'smartContractList');      
+    }
   }
 })
 </script>

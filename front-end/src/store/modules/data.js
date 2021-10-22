@@ -2,6 +2,7 @@ const state = {
     used: false,
     version: 2,
     date_modified: 0,
+    index : 'home',
     data: {
         selectedSc: [],
         selectedSCInfor: {},
@@ -34,6 +35,10 @@ const state = {
     },
     GetConfigVul: state => {
       return state.data.configVul;
+    },
+    /* -- index -- */
+    getIndex : state =>{
+      return state.data.index;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -68,6 +73,10 @@ const state = {
           fourth_step_views: "property-coptions",
         }
     },
+     /* -- index -- */
+     setIndex(state, data){
+       state.index = data;
+     },
       /* -- data -- */
     SetDataState(state,data){
         state.data = data

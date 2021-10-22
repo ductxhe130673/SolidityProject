@@ -3,72 +3,20 @@
         <div class='nav__left'>
           <div class="name" @click="goHome()">Solidity</div>
         </div>
-          <!-- <div class='nav__search'>
-            <span class="material-icons">search</span>
-            <input type='text' placeholder="Search Solidity"/>
-          </div>
-        </div> -->
-
-        <!-- <div class='nav__mid'>
-            <div class='icon' @click="goHome()" title="Home">
-              <i class="material-icons">home</i>
-            </div>
-            <div id="dropdown">
-            <div class='icon' title="Manage">
-              <i class="material-icons">view_list</i>
-            </div>
-              <div id="dropdown-content">
-                  <p @click="goURL('list-sc')"><a>Smart Contracts</a></p>
-                  <p @click="goURL('list-context')"><a>Contexts</a></p>
-                  <p @click="goURL('list-vul')"><a>LTL</a></p>
-              </div>
-            </div>
-            <div class='icon' @click="goRoadMap()" title="RoadMap">
-              <i class="material-icons">map</i>
-            </div>
-            <div class='icon' title="Help">
-              <i class="material-icons">help</i>
-            </div>
-        </div> -->
          <div class="road-map-text">
              <span>Road map</span>
          </div>
         <div class="nav__mid">
-           <div class="line">
-                <ul>
-                <li>
-                    <span class="point"></span>
-                    <div class="text-road-map">Start</div>
-                </li>
-                 <li>
-                    <span class="point"></span>
-                   <div class="text-road-map">Smart Contract</div>
-                </li>
-                 <li>
-                    <span class="point"></span>
-                    <div class="text-road-map">Select Contract</div>
-                </li>
-                 <li>
-                    <span class="point"></span>
-                   <div class="text-road-map">Choose Vulnerability</div>
-                </li>
-                 <li>
-                   <span class="point"></span>
-                   <div class="text-road-map">Generate SC to CPN</div>
-                </li>
-                 <li>
-                    <span class="point"></span>
-                    <div class="text-road-map">Check the SCs </div>
-                </li>
-                 <li>
-                   <span class="point"></span>
-                    <div class="text-road-map">Finished</div>
-                </li>
+        <a-steps :current="1" size="small">
+             <a-step title="Start" />
+             <a-step title="Smart Contract" />
+             <a-step title="Select Contract" />
+             <a-step title="Choose Vulnerability" />
+             <a-step title="Generate SC to CPN" />
+             <a-step title="Check the SCs" />
+             <a-step title="Finished" />
+        </a-steps>
 
-            </ul>
-            
-           </div>
-           
         </div>
         <div class="nav__right">
             <div id="dropdown">
@@ -85,30 +33,12 @@
               <i class="material-icons">map</i>
             </div>
         </div>
-        <!-- <div class="nav__right" v-if="checkUser">
-            <a class="avatar">
-                <img class='avatar__img' src='../assets/avata.jpg' />
-                <span><strong>{{getUserName}}</strong></span>
-            </a>
-            <div class="buttons">
-                <a><i class='material-icons'>notifications</i></a>
-            </div>
-            <div class="buttons">
-                <a><i @click="toggleProfile" class='material-icons'>arrow_drop_down</i>
-                <ProDia v-show="showDia"/>
-                    </a>
-            </div>
-        </div>
-        <div class="nav__right" v-if="!checkUser">
-            <button @click="goLogin()" id="login-btn">Login</button>
-            <button id="register-btn">Register</button>
-        </div> -->
     </nav>
 </template>
 
 
 <script>
-// import ProDia from './ProfileDialog.vue'
+
 
 export default ({
     name: "Navbar",
@@ -161,26 +91,7 @@ export default ({
     border: 1px solid;
     position: absolute;
 }
-.line{
-    width: 975px;
-    border-top: 2px solid black;
-    height: 40px;
-    position: absolute;
-    margin: 17px 0px 0px 160px;
-    display: flex;
-    flex-direction: row;
-}
-   .text-road-map {
-       padding: 10px 0 0 0;
-       width: 150px;
-   }
-.point{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: black;
-    position: absolute;
-}
+
 .road-map-text{
     width: 100px;
     height: 30px;
@@ -193,17 +104,6 @@ export default ({
 .header{
     height: 70px;
     margin-top: 20px;
-}
-ul{
-    display: flex;
-    flex-direction: row;
-    margin-left: -40px;
-    
-}
-li{
-    padding-right: 14px;
-    margin-top: -5px;
-    list-style-type: none;
 }
 nav {
     background-color: white;
@@ -258,6 +158,8 @@ nav {
     width: 150px;
     height: 70px;
     border: 2px solid black;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .icon {
