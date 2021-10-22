@@ -4,22 +4,25 @@ from rest_framework.response import Response
 
 from rest_framework import status
 from .serializers import SerializerCheckedbatchsc
-from .models import Checkedbatchsc
+from .models import  Checkedbatchsc
 from django.db import connection
 
 # Create your views here.
-
-            
+         
 class Listofcheckedtransactions(APIView):
-    def get(self, request):
+    def get(self,request):
         try:
             if request.method == 'GET':
-                transaction = Checkedbatchsc.objects.all()
-                serializer = SerializerCheckedbatchsc(transaction, many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+                sql = '''SELECT ch.bid,co.lastname,ch.checkedDate,ch.noSC FROM soliditycpn.checkedbatchsc ch join soliditycpn.contact co on ch.aid = co.aid'''
+            cursor = connection.cursor()
+            try:
+                cursor.execute(sql)
+                data = cursor.fetchall()
+                return Response(data, status=status.HTTP_200_OK)
+            except Exception as e:
+                cursor.close
         except:
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
-
 class Checkreentrancydetail(APIView):
     def get(self,request):
         try:
@@ -39,3 +42,5 @@ class Checkreentrancydetail(APIView):
                 cursor.close
         except:
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
