@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import sha256 from 'crypto-js/sha256';
 import VueCookies from 'vue-cookies'
+import 'ant-design-vue/dist/antd.css';
+import Steps from 'ant-design-vue/lib/steps';
 
 Vue.config.productionTip = false;
 
@@ -17,6 +19,7 @@ Vue.mixin({
 
 VueCookies.config("90d")
 Vue.use(VueCookies)
+Vue.use(Steps)
 
 new Vue({
   store,

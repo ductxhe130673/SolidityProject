@@ -1,17 +1,24 @@
 <template>
-    <nav>
+    <nav class="header">
         <div class='nav__left'>
           <div class="name" @click="goHome()">Solidity</div>
-          <div class='nav__search'>
-            <span class="material-icons">search</span>
-            <input type='text' placeholder="Search Solidity"/>
-          </div>
         </div>
+         <div class="road-map-text">
+             <span>Road map</span>
+         </div>
+        <div class="nav__mid">
+        <a-steps :current="1" size="small">
+             <a-step title="Start" />
+             <a-step title="Smart Contract" />
+             <a-step title="Select Contract" />
+             <a-step title="Choose Vulnerability" />
+             <a-step title="Generate SC to CPN" />
+             <a-step title="Check the SCs" />
+             <a-step title="Finished" />
+        </a-steps>
 
-        <div class='nav__mid'>
-            <div class='icon' @click="goHome()" title="Home">
-              <i class="material-icons">home</i>
-            </div>
+        </div>
+        <div class="nav__right">
             <div id="dropdown">
             <div class='icon' title="Manage">
               <i class="material-icons">view_list</i>
@@ -25,35 +32,13 @@
             <div class='icon' @click="goRoadMap()" title="RoadMap">
               <i class="material-icons">map</i>
             </div>
-            <div class='icon' title="Help">
-              <i class="material-icons">help</i>
-            </div>
-        </div>
-
-        <div class="nav__right" v-if="checkUser">
-            <a class="avatar">
-                <img class='avatar__img' src='../assets/avata.jpg' />
-                <span><strong>{{getUserName}}</strong></span>
-            </a>
-            <div class="buttons">
-                <a><i class='material-icons'>notifications</i></a>
-            </div>
-            <div class="buttons">
-                <a><i @click="toggleProfile" class='material-icons'>arrow_drop_down</i>
-                <ProDia v-show="showDia"/>
-                    </a>
-            </div>
-        </div>
-        <div class="nav__right" v-if="!checkUser">
-            <button @click="goLogin()" id="login-btn">Login</button>
-            <button id="register-btn">Register</button>
         </div>
     </nav>
 </template>
 
 
 <script>
-import ProDia from './ProfileDialog.vue'
+
 
 export default ({
     name: "Navbar",
@@ -94,11 +79,32 @@ export default ({
             }
         }
     },
-    components:{ProDia}
+    // components:{ProDia}
 })
 </script>
 
 <style scoped>
+
+.road-map {
+    width: 1000px;
+    height: 50px;
+    border: 1px solid;
+    position: absolute;
+}
+
+.road-map-text{
+    width: 100px;
+    height: 30px;
+    padding-left: 10px;
+    background: white;
+    position: absolute;
+    margin-left: 200px;
+    margin-top: -10px;
+}
+.header{
+    height: 70px;
+    margin-top: 20px;
+}
 nav {
     background-color: white;
     width: 100%;
@@ -112,16 +118,20 @@ nav {
 .nav__left {
     display: flex;
     align-items: center;
-    flex-basis: 25%;
+    flex-basis: 10%;
+    width: 150px;
+    height: 70px;
+    border: 2px solid black;
 }
 
 .nav__left .name {
     flex-basis: 10%;
     margin-right: 8%;
-    margin-left: 2%;
+    margin-left: 15%;
     font-size: 30px;
     cursor: pointer;
     color: black;
+    font-weight: bold;
 }
 
 .nav__search {
@@ -142,13 +152,18 @@ nav {
 }
 
 .nav__mid {
-    flex-basis: 33%;
+    flex-basis: 80%;
     display: flex;
     align-items: center;
+    width: 150px;
+    height: 70px;
+    border: 2px solid black;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .icon {
-    padding: 10px 2.8vw;
+    padding: 10px 1.2vw;
     border-radius: 5px;
     cursor: pointer;
     align-items: center;
@@ -165,6 +180,10 @@ nav {
 .nav__right {
     display: flex;
     align-items: center;
+     width: 150px;
+    height: 70px;
+    border: 2px solid black;
+    
 }
 
 .avatar {
