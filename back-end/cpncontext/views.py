@@ -16,8 +16,8 @@ class cpncontextAPIView(APIView):
 	def get(self,request):
 		try:
 			if request.method == 'GET':
-				LTLproDB = cpncontext.objects.raw('select cid, cpncontext.name as name, content, cpncontext.description, cpncontext.ctid, contexttype.name as name1 from cpncontext  join  contexttype on cpncontext.ctid= contexttype.ctid')	
-				serializeLTLpro = cpncontextSerializer(LTLproDB, many=True)
+				cpnContext = cpncontext.objects.all()	
+				serializeLTLpro = cpncontextSerializer(cpnContext, many=True)
 				return Response(serializeLTLpro.data, status=status.HTTP_202_ACCEPTED)
 				# return render(request, 'ContextOfSmartContract.vue', {'cpncontext': serializeLTLpro}, status= status.HTTP_202_ACCEPTED)
 				return 

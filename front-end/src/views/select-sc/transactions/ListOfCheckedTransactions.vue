@@ -18,8 +18,8 @@
             <tr v-for="(item, index) in getListTransaction" v-bind:key="index">
               <th scope="row">{{ index + 1 }}</th>
               <td>
-                <div v-on:click="set(item.bid)" v-bind:id="item.bid"><router-link
-                  :to="{path:'checkreentrancydetail', query: { id: item.bid }}"
+                <div v-on:click="set(item[0])" v-bind:id="item[0]"><router-link
+                  :to="{path:'checkreentrancydetail', query: { id: item[0] }}"
                   tag="a"
                   class="lk"
                   >{{ item[1] }}</router-link

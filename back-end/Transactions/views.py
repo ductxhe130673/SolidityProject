@@ -18,9 +18,9 @@ class Listofcheckedtransactions(APIView):
                 sql = '''select cb.bid,co.lastname,cb.checkedDate,cb.noSC from soliditycpn.checkedbatchsc cb join soliditycpn.contact co on cb.aid = co.id'''
             cursor = connection.cursor()
             try:
-                    cursor.execute(sql)
-                    data = cursor.fetchall()
-                    return Response(data, status=status.HTTP_200_OK)
+                cursor.execute(sql)
+                data = cursor.fetchall()
+                return Response(data, status=status.HTTP_200_OK)
             except Exception as e:
                 cursor.close
         except:
@@ -31,12 +31,9 @@ class Checkreentrancydetail(APIView):
     def get(self, request):
         try:
             if request.method == 'GET':
-                sql = '''select sc.name as sc,ct.name as ct ,lt.name as lt,cscd.status,cscd.result from checkedbatchsc cb join checkedsmartcontractdetail cscd 
-                        on cb.bid = cscd.bid
-                        join smartcontract sc on sc.sid = cscd.sid
-                        join cpncontext ct on ct.cid = cscd.cid
-                        join ltltemplate lt on lt.lteid = cscd.lteid 
-                        where cb.bid = %s'''
+                sql = '''select cb.bid,co.lastname,cb.checkedDate,cb.noSC,cb.result
+                    from soliditycpn.checkedbatchsc cb join soliditycpn.contact co on cb.aid = co.id
+                    where cb.bid = %s'''
             cursor = connection.cursor()
             try:
                 cursor.execute(sql, [request.GET['id']])
