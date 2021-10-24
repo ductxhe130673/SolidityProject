@@ -7,26 +7,14 @@
       </div>
       <div class="col-8">
         <table class="table table-striped" >
-          <thead>
             <tr>
               <th>#</th>
               <th>Contract Name</th>
             </tr>
-          </thead>
-          <tbody>
             <tr>
               <td>1</td>
               <td>cdsvbsk</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>...</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>cdsvbsk</td>
-            </tr>
-          </tbody>
         </table>
       </div>
     </div>
@@ -130,9 +118,8 @@ h5 {
 th {
   text-indent: inherit;
 }
-.table {
+/* .table {
   width: 100%;
-  max-width: 100%;
 }
 .table thead tr {
  background-color:darkgray ;
@@ -140,5 +127,5 @@ th {
 }
 tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.05);
-}
+} */
 </style>
