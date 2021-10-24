@@ -54,9 +54,12 @@ export default {
     routing(param) {
       if (param == "back") {
         this.$router.push({ name: "ListOfCheckedTransactions" });
+        this.$store.commit("setIndex", 0);      
+
       }
       if (param == "addsc") {
         this.$router.push({ name: "SelectSmartContract" });
+         this.$store.commit("setIndex", 2);  
       }
     }, 
     ...mapActions(["setlistcheck"]),//Back to List Of Checked Transactions

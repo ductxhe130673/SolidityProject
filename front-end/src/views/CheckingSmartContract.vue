@@ -400,7 +400,7 @@ export default {
   border-radius: 10px;
 }
 .table {
-  width: 94%;
+  width: 100%;
   margin: 0 auto;
 }
 .table tr:first-child {

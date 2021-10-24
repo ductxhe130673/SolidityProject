@@ -9,16 +9,16 @@
           <thead class="table-inside">
             <tr>
               <th style="width: 10%" scope="col">#</th>
-              <th style="width: 40%" scope="col">Batch Name</th>
+              <th style="width: 30%" scope="col">Checker</th>
               <th style="width: 25%" scope="col">Checked Date</th>
-              <th style="width: 25%" scope="col">Description</th>
+              <th style="width: 35%" scope="col"> Number of smart contracts </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, index) in getListTransaction" v-bind:key="index">
               <th scope="row">{{ index + 1 }}</th>
               <td>
-                <div v-on:click="set(item[0])" v-bind:id="item[0]"><router-link
+                <div v-on:click="set(item.bid)" v-bind:id="item.bid"><router-link
                   :to="{path:'checkreentrancydetail', query: { id: item[0] }}"
                   tag="a"
                   class="lk"
@@ -33,9 +33,9 @@
       </div>
     </div>
     <div id="action">
-      <div id="btn-addsc" @click="routing('addsc')">Add Smart Contracts</div>
+      <div id="btn-addsc" @click="routing('addsc')">Start a new checking session</div>
       <div id="btn-backnext" @click="routing('back')">Back</div>
-      <div id="btn-backnext" @click="routing('next')">Next</div>
+      <!-- <div id="btn-backnext" @click="routing('next')">Next</div> -->
     </div>
   </div>
 </template>
@@ -57,9 +57,12 @@ export default {
       }
       if (param == "addsc") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setIndex", 2);      
+
       }
       if (param == "back") {
         this.$router.push({ name: "Index" });
+        this.$store.commit("setIndex", 0); 
       }
     },
     ...mapActions(["getListTran","setid"]),
