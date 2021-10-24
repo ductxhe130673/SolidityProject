@@ -3,8 +3,8 @@
     <h1><b>Configuration</b></h1>
 
     <div class="row">
-      <div class="col-2 left">Number of users</div>
-      <div class="col-10 right">
+      <div class="col-3 left">Number of users</div>
+      <div class="col-7 right">
         <input type="text"
           class="form-control"
           id="basic-url"
@@ -30,8 +30,8 @@
     </div>
 
     <div class="row">
-      <div class="col-2">Balance</div>
-      <div class="col-10">
+      <div class="col-3 left">Balance</div>
+      <div class="col-7">
         <input
           type="text"
           class="form-control"
@@ -53,16 +53,54 @@
         />
       </div>
     </div> -->
-    <div class="smart_contract_button">
-            <button>Smart Contract 1</button>
-            <button>Smart Contract 2</button>
-            <button>Smart Contract 3</button>
-    </div>
+    
     <div class="row" id="textbox">
-      <div class="col-2">Function parameters</div>
-      <div class="col-10 ">
-        <textarea class="form-control" aria-label="With textarea">
-        </textarea>
+      <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a href="#" class="nav-link" @click="OpenSC(event,'Smart Contract 1')">Smart Contract 1</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link" @click="OpenSC(event,'Smart Contract 2')">Smart Contract 2</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#" class="nav-link" @click="OpenSC(event,'Smart Contract 3')">Smart Contract 3</a>
+      </li>
+    </ul>
+      <div class="col-3 left">Function parameters</div>
+      <div class="col-7 ">
+        <!-- <textarea class="form-control" aria-label="With textarea">
+          
+        </textarea> -->
+        <textbox class="form-control" aria-label="With textbox">
+          <table class="table table-striped" border="2">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Functions</th>
+                            <th>Arguments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Function1</td>
+                            <td><a href="#">Input Params</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Function2</td>
+                            <td><a href="#">Input Params</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Function3</td>
+                            <td><a href="#">Input Params</a></td>
+                        </tr>
+                    </tbody>
+          </table>
+        </textbox>
       </div>
     </div>
 
@@ -97,6 +135,20 @@ export default {
     },
   },
 };
+
+// function OpenSC(evt, name) {
+//   var i, table, a;
+//   table = document.getElementsByClassName("table");
+//   for (i = 0; i < table.length; i++) {
+//     table[i].style.display = "none";
+//   }
+//   a = document.getElementsByClassName("a");
+//   for (i = 0; i < a.length; i++) {
+//     a[i].className = a[i].className.replace(" active", "");
+//   }
+//   document.getElementById(name).style.display = "block";
+//   evt.currentTarget.className += " active";
+// }
 </script>
 <style scoped>
 textarea{
@@ -124,7 +176,15 @@ h1 {
 
 .radioB{
   display: flex;
-  margin-left: 15%;
+  margin-left: 25%;
+}
+.nav-tabs{
+  margin-left: 30%;
+  border-bottom: 0px;
+}
+.nav-link{
+  background-color: darkgray;
+  color: black;
 }
 label{
   margin: 0.5rem;
@@ -155,5 +215,9 @@ button {
   font-weight: 600;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.nav-item a:hover {
+  background-color: white;
 }
 </style>

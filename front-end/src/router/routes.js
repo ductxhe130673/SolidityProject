@@ -41,6 +41,7 @@ import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 import GenerateLNAfile from "../views/GenerateLNAfile.vue"
+import ChooseParams from "../views/ChooseParams.vue"
 
 export const routes = [{
         path: "/",
@@ -233,6 +234,12 @@ export const routes = [{
         name: "GenerateLNAfile",
         component: GenerateLNAfile,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Generate LNA file` },
+    },
+    {
+        path: "/ChooseParams",
+        name: "ChooseParams",
+        component: ChooseParams,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Choose Params` },
     }
 ]
 
