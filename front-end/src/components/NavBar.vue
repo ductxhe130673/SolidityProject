@@ -7,7 +7,7 @@
              <span>Road map</span>
          </div>
         <div class="nav__mid">
-        <a-steps :current="1" size="small">
+        <a-steps :current="this.$store.state.data.index -1" size="small">
              <a-step title="Start" />
              <a-step title="Smart Contract" />
              <a-step title="Select Contract" />
@@ -55,6 +55,9 @@ export default ({
         getUserName() {
             return this.$store.state.user.currentUser.name
         },
+        getIndexPage() {
+            return this.$store.state.data.index;
+    },
     },
     methods: {
         toggleProfile(){
@@ -62,6 +65,7 @@ export default ({
         },
         goHome() {
           this.goURL("/")
+            this.$store.commit("setIndex", 0);      
         },
         goListSC() {
           this.goURL("/list-sc")
