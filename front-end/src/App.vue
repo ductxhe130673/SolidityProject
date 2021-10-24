@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <NavBar v-if="showNavigationBar" />
+    <NavBar v-if="!showNavigationBar" />
+    <Header v-if="showNavigationBar" />
     <router-view />
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar.vue";
+import Header from "./components/Header.vue";
+
 // @ is an alias to /src
 export default {
-  components: { NavBar },
+  components: { NavBar,Header },
   data() {
     return {
       sngPage: {
@@ -36,12 +39,12 @@ export default {
     };
   },
   computed: {
-    showNavigationBar() {
-      if (this.$route.name in this.sngPage) {
-        return true;
-      }
-      return false;
-    },
+      showNavigationBar() {
+        if (this.$route.name in this.sngPage && this.$store.state.data.index === 0) {
+          return true;
+        }
+        return false;
+      },
   },
 };
 </script>

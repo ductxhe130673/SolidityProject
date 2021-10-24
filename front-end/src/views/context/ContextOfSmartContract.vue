@@ -126,12 +126,14 @@ export default {
     routing(param) {
       if (param == "add") {
         this.$router.push({ name: "LTLCheckOption" });
+        this.$store.commit("setIndex", 4);      
       }
       if (param == "upfile") {
         this.$router.push({ name: "UpLoadContext" });
       }
       if (param == "back") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setIndex", 2);      
       }
     },
   },

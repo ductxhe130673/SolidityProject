@@ -6,27 +6,15 @@
         <h5>Smart Contracts</h5>
       </div>
       <div class="col-8">
-        <table class="table table-striped" >
-          <thead>
+        <table class="table" >
             <tr>
-              <th>#</th>
-              <th>Contract Name</th>
+              <th>#<span><a-icon id="icon" type="caret-up" /><a-icon id="icon" type="caret-down" /></span></th>
+              <th>Contract Name<span><a-icon id="icon" type="caret-up" /><a-icon id="icon" type="caret-down" /></span></th>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>cdsvbsk</td>
+            <tr v-for="data in datatable" :key="data.id">
+              <td>{{ data.id }}</td>
+              <td>{{ data.var }}</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>...</td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>cdsvbsk</td>
-            </tr>
-          </tbody>
         </table>
       </div>
     </div>
@@ -85,6 +73,20 @@
     </div>
   </div>
 </template>
+<script>
+export default{
+  data() {
+    return {
+      datatable: [
+        { id: "1", var: "GV1" },
+        { id: "2", var: "GV2" },
+        { id: "3", var: "GV3" },
+        { id: "4", var: "GV4" },
+      ],
+    };
+}}
+</script>
+
 <style scoped>
 h1 {
   text-align: center;
@@ -127,18 +129,31 @@ h5 {
 .progress-bar{
   background-color: #73C1D9;
 }
-th {
+.table{
+  width: 100;
+   border: 1px solid #ddd;
+}
+.table td, .table th {
+  padding: 8px;
+}
+.table tr:nth-child(even){background-color: #f2f2f2;}
+
+.table tr:hover {background-color: #ddd;}
+
+.table th {
+  background-color: #d9edf7;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: black  ;
   text-indent: inherit;
 }
-.table {
-  width: 100%;
-  max-width: 100%;
+span{
+  float: right;
+  display: block;
 }
-.table thead tr {
- background-color:darkgray ;
-   color: black;
-}
-tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
+#icon{
+  display: block;
+ height: 8px;
 }
 </style>
