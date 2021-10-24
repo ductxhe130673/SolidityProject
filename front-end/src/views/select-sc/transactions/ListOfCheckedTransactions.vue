@@ -57,9 +57,12 @@ export default {
       }
       if (param == "addsc") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setIndex", 2);      
+
       }
       if (param == "back") {
         this.$router.push({ name: "Index" });
+        this.$store.commit("setIndex", 0); 
       }
     },
     ...mapActions(["getListTran","setid"]),

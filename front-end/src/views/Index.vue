@@ -100,7 +100,7 @@ export default ({
       },
     onChangeIndex(){
       this.routing('check');
-        this.$store.commit("setIndex", 'smartContractList');      
+        this.$store.commit("setIndex", 1);      
     }
   }
 })

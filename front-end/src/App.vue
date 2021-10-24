@@ -39,12 +39,12 @@ export default {
     };
   },
   computed: {
-    showNavigationBar() {
-      if (this.$route.name in this.sngPage && this.$store.state.data.index === 'home') {
-        return true;
-      }
-      return false;
-    },
+      showNavigationBar() {
+        if (this.$route.name in this.sngPage && this.$store.state.data.index === 0) {
+          return true;
+        }
+        return false;
+      },
   },
 };
 </script>
