@@ -92,9 +92,11 @@ export default {
     routing(param) {
       if (param == "add") {
         this.$router.push({ name: "ContextOfSmartContract" });
+        this.$store.commit("setIndex", 3);      
       }
       if (param == "back") {
         this.$router.push({ name: "ListOfCheckedTransactions" });
+        this.$store.commit("setIndex", 1);      
       }
       if (param == "uploadfile") {
         this.$router.push({ name: "UpLoadSc" });
