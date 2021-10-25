@@ -42,6 +42,7 @@ import GenerateLNAfileSuccessfully from "../views/GenerateLNAfileSuccessfully.vu
 import CheckSmartContractProgress from "../views/CheckSmartContractProgress.vue"
 import CheckedSuccessfully from "../views/CheckedSuccessfully.vue"
 
+import FinalDetailResult from "../views/FinalDetailResult.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 
@@ -249,7 +250,12 @@ export const routes = [{
         component: CheckedSuccessfully,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
     },
-
+    {
+        path: "/finalDr",
+        name: "FinalDetailResult",
+        component: FinalDetailResult,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
 
 ]
 

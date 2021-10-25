@@ -7,34 +7,34 @@
       </div>
       <div class="col-8">
         <table class="table-header">
-            <tr>
-              <th>
-                #
-                <span
-                  ><a-icon id="icon" type="caret-up" @click="sort('asId')" />
-                  <a-icon id="icon" type="caret-down" @click="sort('deId')" />
-                </span>
-              </th>
-              <th>
-                Contract Name<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('asName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('deName')"
-                /></span>
-              </th>
-            </tr>
-        </table>
-        <div class="scroll-table">
-        <table >
-          <tr v-for="data in datatable" :key="data.id">
-            <td>{{ data.id }}</td>
-            <td>{{ data.var }}</td>
+          <tr>
+            <th>
+              #
+              <span
+                ><a-icon id="icon" type="caret-up" @click="sort('asId')" />
+                <a-icon id="icon" type="caret-down" @click="sort('deId')" />
+              </span>
+            </th>
+            <th>
+              Contract Name<span
+                ><a-icon
+                  id="icon"
+                  type="caret-up"
+                  @click="sort('asName')" /><a-icon
+                  id="icon"
+                  type="caret-down"
+                  @click="sort('deName')"
+              /></span>
+            </th>
           </tr>
         </table>
+        <div class="scroll-table">
+          <table>
+            <tr v-for="data in datatable" :key="data.id">
+              <td>{{ data.id }}</td>
+              <td>{{ data.var }}</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -85,12 +85,12 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div id="action">
-        <button type="button" class="btn btn-outline-primary">Check</button>
-        <button type="button" class="btn btn-outline-primary">Back</button>
-      </div>
+
+    <div id="action">
+      <button type="button" class="btn btn-outline-primary">Check</button>
+      <button type="button" class="btn btn-outline-primary">Back</button>
     </div>
+    
   </div>
 </template>
 <script>
@@ -167,8 +167,8 @@ h5 {
   justify-content: space-between;
   width: 40%;
 }
-.progress-bar{
-  background-color: #73C1D9;
+.progress-bar {
+  background-color: #73c1d9;
 }
 table {
   width: 100%;
@@ -186,7 +186,7 @@ table th {
   background-color: #ddd;
 }
 
-.table-header{
+.table-header {
   background-color: #d9edf7;
   padding-top: 12px;
   padding-bottom: 12px;
@@ -195,7 +195,7 @@ table th {
   text-indent: inherit;
 }
 .table-header tr td {
-   word-wrap: break-word;
+  word-wrap: break-word;
 }
 span {
   float: right;
