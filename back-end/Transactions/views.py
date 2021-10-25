@@ -27,11 +27,7 @@ class Checkreentrancydetail(APIView):
     def get(self,request):
         try:
             if request.method == 'GET':
-                sql = '''select c.lastname, lt.name, con.name, ch.noSC, ch.checkedDate, ch.status, ch.LTLformula, ch.result from
-                        soliditycpn.checkedbatchsc ch join soliditycpn.contact c on ch.aid = c.aid
-                        join soliditycpn.ltltemplate lt on ch.lteid = lt.lteid
-                        join soliditycpn.cpncontext con on ch.cid = con.cid 
-                        where ch.bid = %s'''
+                sql = '''select result from soliditycpn.checkedbatchsc where bid = %s'''
             cursor = connection.cursor()
             try:
                 cursor.execute(sql,[request.GET['id']] )
