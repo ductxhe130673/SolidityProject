@@ -4,6 +4,6 @@ from .views import Listofcheckedtransactions,Checkreentrancydetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('listofcheckedtransactions/',Listofcheckedtransactions.as_view()),
+    path('listofcheckedtransactions/',Listofcheckedtransactions.as_view()), #,name='get1'
     path('checkreentrancydetail/',Checkreentrancydetail.as_view()),
 ]
