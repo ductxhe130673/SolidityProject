@@ -6,16 +6,36 @@
         <h5>Smart Contracts</h5>
       </div>
       <div class="col-8">
-        <table class="table" >
+        <table class="table-header">
             <tr>
-              <th>#<span><a-icon id="icon" type="caret-up" /><a-icon id="icon" type="caret-down" /></span></th>
-              <th>Contract Name<span><a-icon id="icon" type="caret-up" /><a-icon id="icon" type="caret-down" /></span></th>
-            </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
+              <th>
+                #
+                <span
+                  ><a-icon id="icon" type="caret-up" @click="sort('asId')" />
+                  <a-icon id="icon" type="caret-down" @click="sort('deId')" />
+                </span>
+              </th>
+              <th>
+                Contract Name<span
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('asName')" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                    @click="sort('deName')"
+                /></span>
+              </th>
             </tr>
         </table>
+        <div class="scroll-table">
+        <table >
+          <tr v-for="data in datatable" :key="data.id">
+            <td>{{ data.id }}</td>
+            <td>{{ data.var }}</td>
+          </tr>
+        </table>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -74,17 +94,38 @@
   </div>
 </template>
 <script>
-export default{
+export default {
   data() {
     return {
       datatable: [
         { id: "1", var: "GV1" },
-        { id: "2", var: "GV2" },
+        { id: "5", var: "HA5" },
         { id: "3", var: "GV3" },
-        { id: "4", var: "GV4" },
+        { id: "4", var: "EB" },
+        { id: "8", var: "BD" },
+        { id: "4", var: "UE" },
       ],
     };
-}}
+  },
+  methods: {
+    sort(mess) {
+      switch (mess) {
+        case "asId":
+          this.datatable.sort((a, b) => a.id - b.id);
+          break;
+        case "deId":
+          this.datatable.sort((a, b) => b.id - a.id);
+          break;
+        case "asName":
+          this.datatable.sort((a, b) => (a.var < b.var ? 1 : -1));
+          break;
+        case "deName":
+          this.datatable.sort((a, b) => (a.var > b.var ? 1 : -1));
+          break;
+      }
+    },
+  },
+};
 </script>
 <style scoped>
 h1 {
@@ -128,31 +169,43 @@ h5 {
 .progress-bar{
   background-color: #73C1D9;
 }
-.table{
-  width: 100;
-   border: 1px solid #ddd;
+table {
+  width: 100%;
+  border: 1px solid #ddd;
 }
-.table td, .table th {
+table td,
+table th {
   padding: 8px;
 }
-.table tr:nth-child(even){background-color: #f2f2f2;}
+.scroll-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-.table tr:hover {background-color: #ddd;}
+.scroll-table tr:hover {
+  background-color: #ddd;
+}
 
-.table th {
+.table-header{
   background-color: #d9edf7;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: black  ;
+  color: black;
   text-indent: inherit;
 }
-span{
+.table-header tr td {
+   word-wrap: break-word;
+}
+span {
   float: right;
   display: block;
 }
-#icon{
+#icon {
   display: block;
- height: 8px;
+  height: 8px;
+}
+.scroll-table {
+  height: 200px;
+  overflow-y: auto;
 }
 </style>

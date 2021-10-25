@@ -8,9 +8,6 @@ import 'ant-design-vue/dist/antd.css';
 import Steps from 'ant-design-vue/lib/steps';
 import Antd from 'ant-design-vue';
 
-
-
-
 Vue.config.productionTip = false;
 
 Vue.mixin({

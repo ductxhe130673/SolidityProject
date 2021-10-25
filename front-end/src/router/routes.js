@@ -42,6 +42,7 @@ import GenerateLNAfileSuccessfully from "../views/GenerateLNAfileSuccessfully.vu
 import CheckSmartContractProgress from "../views/CheckSmartContractProgress.vue"
 import CheckedSuccessfully from "../views/CheckedSuccessfully.vue"
 
+
 import { DOMAIN_TITLE } from '../.env'
 
 export const routes = [{
@@ -247,7 +248,9 @@ export const routes = [{
         name: "CheckedSuccessfully",
         component: CheckedSuccessfully,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    }
+    },
+
+
 ]
 
 /*
