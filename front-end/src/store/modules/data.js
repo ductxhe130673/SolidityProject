@@ -2,7 +2,7 @@ const state = {
     used: false,
     version: 2,
     date_modified: 0,
-    index : 'home',
+    index : 0,
     data: {
         selectedSc: [],
         selectedSCInfor: {},
