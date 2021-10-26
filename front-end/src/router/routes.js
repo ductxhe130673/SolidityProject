@@ -43,7 +43,7 @@ import CheckSmartContractProgress from "../views/CheckSmartContractProgress.vue"
 import CheckedSuccessfully from "../views/CheckedSuccessfully.vue"
 
 import FinalDetailResult from "../views/FinalDetailResult.vue"
-
+import tab from "../views/tab.vue"
 import { DOMAIN_TITLE } from '../.env'
 
 export const routes = [{
@@ -254,6 +254,18 @@ export const routes = [{
         path: "/finalDr",
         name: "FinalDetailResult",
         component: FinalDetailResult,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/tab",
+        name: "tab",
+        component: tab,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/checkingsc",
+        name: "CheckingSmartContract",
+        component: CheckingSmartContract,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
     },
 

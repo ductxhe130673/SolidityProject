@@ -88,7 +88,7 @@
 
     <div id="action">
       <button type="button" class="btn btn-outline-primary">Check</button>
-      <button type="button" class="btn btn-outline-primary">Back</button>
+      <button type="button" class="btn btn-outline-primary" @click="routing('back')">Back</button>
     </div>
     
   </div>
@@ -124,6 +124,12 @@ export default {
           break;
       }
     },
+    routing(param){
+      if(param == "back"){
+         this.$router.push({ name: "GenerateLNAfileSuccessfully" });
+        this.$store.commit("setIndex", 5); 
+      }
+    }
   },
 };
 </script>

@@ -87,13 +87,14 @@
     </div>
     
     <div id="action">
-      <button type="button" class="btn btn-outline-primary">Next</button>
+      <button type="button" class="btn btn-outline-primary" @click="routing('next')">Next</button>
       <button type="button" class="btn btn-outline-primary">Download</button>
-      <button type="button" class="btn btn-outline-primary">Back</button>
+      <button type="button" class="btn btn-outline-primary" @click="routing('back')">Back</button>
     </div>
   </div>
 
 </template>
+
 <script>
 export default {
   data() {
@@ -125,6 +126,16 @@ export default {
           break;
       }
     },
+    routing(param){
+      if(param == "back"){
+        this.$router.push({ name: "GenerateLNAfile" });
+        this.$store.commit("setIndex", 5); 
+      }
+      else if(param == 'next'){
+        this.$router.push({ name: "CheckSmartContractProgress" });
+        this.$store.commit("setIndex", 6); 
+      }
+    }
   },
 };
 </script>
@@ -172,7 +183,7 @@ h5 {
   background-color: #73c1d9;
 }
 
-.table {
+table {
   width: 100%;
   border: 1px solid #ddd;
 }
