@@ -42,6 +42,7 @@ import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 import { DOMAIN_TITLE } from '../.env'
 import GenerateLNAfile from "../views/GenerateLNAfile.vue"
 import ChooseParams from "../views/ChooseParams.vue"
+import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
 export const routes = [{
         path: "/",
@@ -240,6 +241,12 @@ export const routes = [{
         name: "ChooseParams",
         component: ChooseParams,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Choose Params` },
+    },
+    {
+        path: "/InitialMarkingLink",
+        name: "InitialMarkingLink",
+        component: InitialMarkingLink,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | InitialMarkingLink` },
     }
 ]
 

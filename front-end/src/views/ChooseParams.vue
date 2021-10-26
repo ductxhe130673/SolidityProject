@@ -63,7 +63,25 @@
 
 </template>
 <script>
-
+export default{
+    data(){
+        return{
+            info: [],
+            id: null,
+        };
+    },
+    methods: {
+        routing(param){
+            if(param == "save"){
+                this.$router.push({name: "Initial"})
+            }
+            if(param == "back"){
+                this.$router.push({name: "Initial"});
+                this.$store.commit("setIndex",0);
+            }
+        }
+    }
+}
 </script>
 
 <style scoped>

@@ -86,17 +86,17 @@
                         <tr>
                             <td>1</td>
                             <td>Function1</td>
-                            <td><a href="#">Input Params</a></td>
+                            <td><a href="#" @click="routing('addsc')">Input Params</a></td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>Function2</td>
-                            <td><a href="#">Input Params</a></td>
+                            <td><a href="#" @click="routing('addsc')">Input Params</a></td>
                         </tr>
                         <tr>
                             <td>3</td>
                             <td>Function3</td>
-                            <td><a href="#">Input Params</a></td>
+                            <td><a href="#" @click="routing('addsc')">Input Params</a></td>
                         </tr>
                     </tbody>
           </table>
@@ -127,10 +127,15 @@ export default {
   methods: {
     routing(param) {
       if (param == "save") {
-        this.$router.push({ name: "CheckSmartContract" });
+        // this.$router.push({ name: "CheckSmartContract" });
+        this.$router.push({name: "GenerateLNAfile"});
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
+      }
+      if(param == "addsc"){
+        this.$router.push({name: "ChooseParams"});
+        // this.$store.commit("SetIndex",2);
       }
     },
   },
@@ -186,6 +191,9 @@ h1 {
   background-color: darkgray;
   color: black;
 }
+.nav-item a:hover {
+  background-color: white;
+}
 label{
   margin: 0.5rem;
 }
@@ -215,9 +223,5 @@ button {
   font-weight: 600;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.nav-item a:hover {
-  background-color: white;
 }
 </style>
