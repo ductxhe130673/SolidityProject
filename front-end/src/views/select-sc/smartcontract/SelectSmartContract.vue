@@ -3,8 +3,18 @@
     <div id="header">
       <h1>Select Smart Contracts</h1>
     </div>
+     <div class="select-type">
+        <a-dropdown-button @click="handleButtonClick">
+      {{getType}}
+      <a-menu slot="overlay" @click="handleMenuClick">
+        <a-menu-item key="1" style="width: 200px"> <a-icon type="user" @click="selectType('Common')" />Common </a-menu-item>
+        <a-menu-item key="2" style="width: 200px"> <a-icon type="user"  />Private </a-menu-item>
+        <a-menu-item key="3" style="width: 200px"> <a-icon type="user" />Pending </a-menu-item>
+      </a-menu>
+    </a-dropdown-button>
+     </div>
 
-    <div class="grey">
+    <!-- <div class="grey">
       <span>Common Smart Contracts</span>
     </div>
 
@@ -31,19 +41,18 @@
           </tbody>
         </table>
       </div>
-    </div>
-
+    </div> -->
     <div class="grey">
-      <span>Private Smart Contracts</span>
     </div>
     <div class="blue">
       <div class="atable">
         <table class="table table-striped table-hover table-sm">
           <thead class="table-inside">
             <tr>
-              <th style="width: 20%" scope="col">#</th>
-              <th style="width: 60%" scope="col">Smart Contract Name</th>
-              <th style="width: 20%" scope="col">Select</th>
+              <th style="width: 15%" scope="col">#</th>
+              <th style="width: 40%" scope="col">Name</th>
+              <th style="width: 30%" scope="col">Type</th>
+              <th style="width: 15%" scope="col">Select</th>
             </tr>
           </thead>
           <tbody>
@@ -60,8 +69,8 @@
       </div>
     </div>
     <div id="action">
-      <div id="btn" @click="routing('add')">Add</div>
-      <div id="btn" v-on:click="load">Upload File</div>
+      <div id="btn" @click="routing('add')">Next</div>
+      <div id="btn" v-on:click="load">Upload Smart Contract File</div>
       <div id="btn" @click="routing('back')">Back</div>
     </div>
 
@@ -88,6 +97,9 @@ export default {
     },
     dahieu() {
       this.isOpen = false;
+    },
+    selectType(data){
+          this.$store.commit("setType", data);      
     },
     routing(param) {
       if (param == "add") {
@@ -119,8 +131,10 @@ export default {
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
+    getType(){
+            return this.$store.state.data.typeOfSmartContract;
+    },
     
-            // return k;
   },
   components: {
     Popup,
@@ -136,6 +150,10 @@ export default {
   text-align: center;
   margin-bottom: 2%;
   margin-top: 2%;
+}
+.select-type{
+  height: 150px;
+  margin-left : 74%;
 }
 .table-inside {
   background-color: #d9edf7;
@@ -158,8 +176,6 @@ export default {
 .grey {
   margin-left: 11%;
   margin-bottom: 25px;
-  background: white;
-  z-index: 3;
   position: relative;
 }
 .blue {
@@ -190,7 +206,7 @@ h1 {
 }
 #btn {
   cursor: pointer;
-  width: 12%;
+  width: 18%;
   height: 2%;
   border: 1px solid #2196f3;
   text-align: center;

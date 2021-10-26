@@ -8,13 +8,13 @@
          </div>
         <div class="nav__mid">
         <a-steps :current="this.$store.state.data.index -1" size="small">
-             <a-step title="Start" />
-             <a-step title="Smart Contract" />
-             <a-step title="Select Contract" />
-             <a-step title="Choose Vulnerability" />
-             <a-step title="Generate SC to CPN" />
-             <a-step title="Check the SCs" />
-             <a-step title="Finished" />
+             <a-step title="Start" style="cursor: pointer" @click="onChangeIndex(1)"/>
+             <a-step title="Smart Contract" style="cursor: pointer" @click="onChangeIndex(2)" />
+             <a-step title="Select Contract" style="cursor: pointer" @click="onChangeIndex(3)" />
+             <a-step title="Choose Vulnerability" style="cursor: pointer" @click="onChangeIndex(4)"/>
+             <a-step title="Generate SC to CPN" style="cursor: pointer" @click="onChangeIndex(5)"/>
+             <a-step title="Check the SCs" style="cursor: pointer" @click="onChangeIndex(6)"/>
+             <a-step title="Finished" style="cursor: pointer" @click="onChangeIndex(7)"/>
         </a-steps>
 
         </div>
@@ -81,7 +81,37 @@ export default ({
             {
                 this.$router.push(url)
             }
-        }
+        },
+           onChangeIndex(pageNum){
+      if(pageNum === 1){
+          this.$router.push({name:'ListOfCheckedTransactions'})
+        this.$store.commit("setIndex", pageNum);
+      } 
+      if(pageNum === 2){
+         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 3){
+         this.$router.push({ name: "ContextOfSmartContract" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 4){
+        this.$router.push({ name: "LTLCheckOption" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 5){
+         this.$router.push({ name: "CheckSmartContract" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 6){
+          this.$router.push({name:'ListOfCheckedTransactions'})
+        this.$store.commit("setIndex", pageNum);
+      } 
+      if(pageNum === 7){
+          this.$router.push({name:'ListOfCheckedTransactions'})
+        this.$store.commit("setIndex", pageNum);
+      }        
+    }
     },
     // components:{ProDia}
 })
