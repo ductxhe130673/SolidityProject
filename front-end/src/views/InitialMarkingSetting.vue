@@ -69,6 +69,7 @@ export default {
     routing(param) {
       if (param == "save") {
         this.$router.push({ name: "CheckSmartContract" });
+        this.$store.commit("setIndex", 5);
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
