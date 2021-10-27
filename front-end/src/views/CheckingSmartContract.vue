@@ -4,49 +4,45 @@
       <h1>Checking Smart Contracts</h1>
     </div>
     <div class="text">
-      <span>DCR</span>
+      <h5>Smart Contract</h5>
     </div>
     <div id="locate-1">
       <div class="text-1">
-        <span>Blind Auction</span>
+       
       </div>
       <div id="component">
         <div class="table table-striped table-hover">
           <table class="table" border="1">
             <tr>
-              <th>#</th>
-              <th>LTL Property</th>
-              <th>Type</th>
+              <th style="width: 30%">#</th>
+              <th>Contract Name</th>
             </tr>
             <tr v-for="data in datatable" :key="data.id">
               <td>{{ data.id }}</td>
               <td>{{ data.var }}</td>
-              <td><input type="checkbox" /></td>
+              <!-- <td><input type="checkbox" /></td> -->
             </tr>
           </table>
         </div>
       </div>
       <div class="text-1">
-        <span>EitherGame</span>
+        <h5>Context</h5>
       </div>
-      <div id="component">
-        <div class="table table-striped table-hover">
-          <table class="table" border="1">
-            <tr>
-              <th>#</th>
-              <th>LTL Property</th>
-              <th>Type</th>
-            </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
-              <td><input type="checkbox" /></td>
-            </tr>
-          </table>
-        </div>
+       <input type="text" class="input-1" value="Gaming">
+          <div class="text-1">
+        <h5>LTL Property</h5>
       </div>
-    </div>
-    <div class="text-2">
+       <input type="text" class="input-1" value="Integer Overfow">
+       <div class="text-1">
+        <h5>Confguration</h5>
+         <a href="google.com" style="padding: 3px 0px 0px 59px">Link to the setting configuration</a>
+      </div>
+     
+       </div>
+  
+       
+    
+    <!-- <div class="text-2">
       <span>Free-content</span>
     </div>
     <div id="locate-1">
@@ -69,7 +65,7 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> -->
     <div id="processing-btn">
       <button
         v-if="step == 'initial' || step == 'generating'"
@@ -359,15 +355,19 @@ export default {
   background-color: #1079cf;
   color: white;
 }
+.input-1{
+  margin: 25px 0px 0px 41px;
+  height: 35px;
+  width: 94%;
+}
 .text-1 {
   position: relative;
-  left: 15%;
-  top: 15px;
+  left: 1%;
+  top: 22px;
   z-index: 1;
-  height: 30px;
-  width: 8%;
-  background: white;
-  text-align: center;
+  height: 33px;
+  text-align: left;
+  display: flex;
 }
 .text-2 {
   position: relative;
@@ -381,12 +381,11 @@ export default {
 }
 .text {
   position: relative;
-  left: 15%;
-  top: 15px;
+  left: 10%;
+  top: 30px;
   z-index: 1;
   height: 30px;
-  width: 3.6%;
-  background: white;
+  width: 9.6%;
   text-align: center;
 }
 #component {

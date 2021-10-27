@@ -1,3 +1,4 @@
+from rest_framework import generics
 from .serializer import GetSmartConstractSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -54,9 +55,16 @@ class SmartConstractAPIView(APIView):
 def getScById(request):
         try:
             if request.method == 'GET':
-                idClient = request.GET['id']
-                smartConstractDB = Smartcontract.objects.get(id=idClient)
+                smartConstractDB=SmartContractListAPIView.getquerryset()
                 serialiSmartConstract = GetSmartConstractSerializer(smartConstractDB)
                 return Response(serialiSmartConstract.data,status=status.HTTP_200_OK)
         except:
             return Response({"message":"Get Data Fail!!"},status=status.HTTP_400_BAD_REQUEST)
+
+class SmartContractListAPIView(generics.ListAPIView):
+    def getquerryset(self):
+        id_value = self.request.QUERY_PARAMS.get('id', None)
+        if id_value:
+            id_list = id_value.split(',')
+            queryset = Smartcontract.objects.filter(sid=id_list)
+            return queryset
