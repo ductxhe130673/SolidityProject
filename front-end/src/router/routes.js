@@ -60,6 +60,8 @@ export const routes = [
     component: Register,
     meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
   },
+
+
   {
     path: "/select-sc/",
     name: "SelectSc",
@@ -79,7 +81,8 @@ export const routes = [
       {
         path: 'select-smart-contract',
         name: 'SelectSmartContract',
-        component: SelectSmartContract
+        component: SelectSmartContract,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | select-smart-contract` },
       },
       {
         path: 'uploadsc',

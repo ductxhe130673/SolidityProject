@@ -105,12 +105,12 @@ export default {
     ...mapActions(["setListSmartContract"]),
     Private: function (arrays) {
                 return arrays.filter(function (array) {
-                  return array.type === "Private"
+                  return array.type === "private"
               });
             },
     Common: function (arrays) {
                 return arrays.filter(function (array) {
-                  return array.type === "Common"
+                  return array.type === "common"
               });
             },       
   },
