@@ -6,5 +6,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('listofcheckedtransactions/',Listofcheckedtransactions.as_view()),
     path('checkreentrancydetail/',Checkreentrancydetail.as_view()),
-    #path('demo/', Demo.as_view())
 ]

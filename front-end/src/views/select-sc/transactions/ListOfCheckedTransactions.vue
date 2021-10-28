@@ -3,15 +3,20 @@
     <div id="header">
     <h1>Checked Smart Contract List</h1>
     </div>
+
+    <div class="grey">
+      <span>Checked information</span>
+    </div>
+
     <div class="blue">
       <div class="atable">
         <table class="table table-striped table-hover table-sm">
           <thead class="table-inside">
             <tr>
               <th style="width: 10%" scope="col">#</th>
-              <th style="width: 30%" scope="col">Checker</th>
-              <th style="width: 25%" scope="col">Checked Date</th>
-              <th style="width: 35%" scope="col"> Number of smart contracts </th>
+              <th style="width: 20%" scope="col">Checker</th>
+              <th style="width: 30%" scope="col">Checked Date</th>
+              <th style="width: 60%" scope="col">Number of smart contracts</th>
             </tr>
           </thead>
           <tbody>
@@ -19,14 +24,14 @@
               <th scope="row">{{ index + 1 }}</th>
               <td>
                 <div v-on:click="set(item.bid)" v-bind:id="item.bid"><router-link
-                  :to="{path:'checkreentrancydetail', query: { id: item[0] }}"
+                  :to="{path:'checking-result', query: { id: item[0] }}"
                   tag="a"
                   class="lk"
-                  >{{ item[1]}}</router-link
+                  >{{ item[1] }} {{item[2]}} </router-link
                 ></div>
               </td>
-              <td>{{ item[2] }}</td>
               <td>{{ item[3] }}</td>
+              <td>{{ item[4] }}</td>
             </tr>
           </tbody>
         </table>
@@ -35,7 +40,6 @@
     <div id="action">
       <div id="btn-addsc" @click="routing('addsc')">Start a new checking session</div>
       <div id="btn-backnext" @click="routing('back')">Back</div>
-      <!-- <div id="btn-backnext" @click="routing('next')">Next</div> -->
     </div>
   </div>
 </template>
@@ -53,16 +57,13 @@ export default {
     
     routing(param) {
       if (param == "next") {
-        this.$router.push({ name: "CheckRentrancy" });
+        this.$router.push({ name: "CheckingResult" });
       }
       if (param == "addsc") {
         this.$router.push({ name: "SelectSmartContract" });
-        this.$store.commit("setIndex", 2);      
-
       }
       if (param == "back") {
         this.$router.push({ name: "Index" });
-        this.$store.commit("setIndex", 0); 
       }
     },
     ...mapActions(["getListTran","setid"]),
@@ -123,7 +124,6 @@ export default {
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: -40px;
   background: none;
-  margin-top: 65px;
   z-index: 2;
   position: relative;
 }

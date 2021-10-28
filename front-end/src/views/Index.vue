@@ -10,11 +10,11 @@
             </g>
         </svg>
         <div class="message-box">
-            <h1>SolidityCPN Home</h1>
-            <p>Check properties and vulnerabilities of the smart contracts</p>
+            <h1>Solidity To CPN</h1>
+            <p>Check for vulnerabilities in smart contracts</p>
             <div class="buttons-con">
                 <div class="action-link-wrap">
-                <a @click="onChangeIndex" class="link-button">Check smart contracts</a>
+                <a @click="routing('check')" class="link-button">Check smart contracts</a>
                 </div>
             </div>
             <div id="current-process" v-if="haveProcess">
@@ -97,11 +97,7 @@ export default ({
       },
       getCPStep(){
         return this.$store.state.data.views.road_page+"/6"
-      },
-    onChangeIndex(){
-      this.routing('check');
-        this.$store.commit("setIndex", 1);      
-    }
+      }
   }
 })
 </script>
