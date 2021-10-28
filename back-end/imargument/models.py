@@ -1,14 +1,6 @@
 from django.db import models
 
 # Create your models here.
-
-# class SmartConstract(models.Model):
-#     id = models.CharField(max_length=300,primary_key=True)
-#     name = models.CharField(max_length=300)
-#     date_modified = models.DateTimeField()
-#     type = models.CharField(max_length=300)
-
-
 class Account(models.Model):
     username = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
     password = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
@@ -50,5 +42,36 @@ class Argument(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Argument'          
+        db_table = 'Argument'  
+                
 
+class InitialMarking(models.Model):
+    imid = models.AutoField(primary_key=True)
+    num_user = models.IntegerField()
+    IM_type = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+   
+    class Meta:
+        managed = False
+        db_table = 'InitialMarking'
+
+class IMFunction(models.Model):
+    imfid = models.AutoField(primary_key=True)
+    fun_name = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+    sender_from = models.IntegerField()
+    sender_to = models.IntegerField()
+    imid = models.ForeignKey(InitialMarking, models.DO_NOTHING, db_column='imid')
+
+    class Meta:
+        managed = False
+        db_table = 'IMFunction'       
+
+class IMArgument(models.Model):
+    imaid = models.AutoField(primary_key=True)
+    arg_name = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+    IMfrom = models.IntegerField()
+    IMto = models.IntegerField()
+    imfid = models.ForeignKey(IMFunction, models.DO_NOTHING, db_column='imfid')
+
+    class Meta:
+        managed = False
+        db_table = 'IMArgument'                      

@@ -28,4 +28,5 @@ urlpatterns = [
     path('auth/', include('account.urls')),
     path('select-sc/', include('Transactions.urls')),
     path('tools/',include('tools.urls')),
+    path('imargument/',include('imargument.urls')),
 ]
