@@ -1,76 +1,53 @@
 <template>
-  <div id="main">
+  <div id="main" class="container">
     <div id="header">
-      <h1>Select Smart Contracts</h1>
-    </div>
-     <div class="select-type">
-        <a-dropdown-button @click="handleButtonClick">
-      {{getType}}
-      <a-menu slot="overlay" @click="handleMenuClick">
-        <a-menu-item key="1" style="width: 200px"> <a-icon type="user" @click="selectType('Common')" />Common </a-menu-item>
-        <a-menu-item key="2" style="width: 200px"> <a-icon type="user"  />Private </a-menu-item>
-        <a-menu-item key="3" style="width: 200px"> <a-icon type="user" />Pending </a-menu-item>
-      </a-menu>
-    </a-dropdown-button>
-     </div>
-
-    <!-- <div class="grey">
-      <span>Common Smart Contracts</span>
+      <h1>Select Smart Contracts </h1>
     </div>
 
-    <div class="blue">
-      <div class="atable">
-        <table class="table table-striped table-hover table-sm">
-          <thead class="table-inside">
-            <tr>
-              <th style="width: 20%" scope="col">#</th>
-              <th style="width: 60%" scope="col">Smart Contract Name</th>
-              <th style="width: 20%" scope="col">Select</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr  v-for="(item, index) in Common(getlistSmartContract)" 
-                  v-bind:key="index"
-                  >
-              <th scope="row" >{{index+1}}</th>
-              <td>{{item.name}}</td>
-              <td>
-                <input type="checkbox" id="one" value="One" v-model="picked" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="row type">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">Type</label>
+          <select class="form-select" id="inputGroupSelect01" v-model="selected">
+            <option value="common" >Common</option>
+            <option value="private">Private</option>
+            <option value="pending">Pending</option>
+            <option value="0">All</option>
+          </select>
+        </div>
       </div>
-    </div> -->
-    <div class="grey">
     </div>
-    <div class="blue">
-      <div class="atable">
-        <table class="table table-striped table-hover table-sm">
-          <thead class="table-inside">
-            <tr>
-              <th style="width: 15%" scope="col">#</th>
-              <th style="width: 40%" scope="col">Name</th>
-              <th style="width: 30%" scope="col">Type</th>
-              <th style="width: 15%" scope="col">Select</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in Private(getlistSmartContract)" 
-                  v-bind:key="index">
-              <th scope="row"> {{index+1}} </th>
-              <td>{{item.name}}</td>
-              <td>
-                <input type="checkbox" id="one" value="One" v-model="picked" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+    <div class="atable">
+      <table class="table table-striped table-hover table-sm">
+        <thead class="table-inside">
+          <tr>
+            <th style="width: 10%" scope="col">#</th>
+            <th style="width: 40%" scope="col">Name</th>
+            <th style="width: 30%" scope="col">Type</th>
+            <th style="width: 20%" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(item, index) in filterlist"
+            v-bind:key="index"
+          >
+            <th scope="row">{{ index + 1 }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.type }}</td>
+            <td>
+              <input type="checkbox" id="one" name="ch" v-model="checkedNames" :value="item"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div id="action">
-      <div id="btn" @click="routing('add')">Next</div>
-      <div id="btn" v-on:click="load">Upload Smart Contract File</div>
+      <div id="btn" @click="funtionNext()">Next</div>
+      <div id="btn" v-on:click="load">Upload Smart Contract</div>
       <div id="btn" @click="routing('back')">Back</div>
     </div>
 
@@ -85,23 +62,14 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
+      selected: '0',
       isOpen: false,
       info: null,
-      k: 1,
-      h: 1,
+      checkedNames: []
     };
   },
   methods: {
-    load() {
-      this.isOpen = true;
-    },
-    dahieu() {
-      this.isOpen = false;
-    },
-    selectType(data){
-          this.$store.commit("setType", data);      
-    },
-    routing(param) {
+   routing(param) {
       if (param == "add") {
         this.$router.push({ name: "ContextOfSmartContract" });
         this.$store.commit("setIndex", 3);      
@@ -114,27 +82,47 @@ export default {
         this.$router.push({ name: "UpLoadSc" });
       }
     },
+    funtionNext() {
+      var checkbox = document.getElementsByName("ch");
+      var kt = false;
+      for (var i = 0; i < checkbox.length; i++) {
+        if (checkbox[i].checked === true) {
+          kt = true;
+          break;
+        }
+      }
+
+      if (!kt) {
+        alert("Please select a smart contract at least to go to the next step!");
+      } else {
+        this.routing("add");
+      }
+    },
+    load() {
+      this.isOpen = true;
+    },
+    dahieu() {
+      this.isOpen = false;
+    },
     ...mapActions(["setListSmartContract"]),
-    Private: function (arrays) {
-                return arrays.filter(function (array) {
-                  return array.type === "Private"
-              });
-            },
-    Common: function (arrays) {
-                return arrays.filter(function (array) {
-                  return array.type === "Common"
-              });
-            },       
   },
   created() {
     this.setListSmartContract();
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-    getType(){
-            return this.$store.state.data.typeOfSmartContract;
-    },
-    
+    filterlist(){
+      const { selected } = this;
+      if (selected === "0") return this.getlistSmartContract; 
+      var items = []; 
+      this.getlistSmartContract.forEach(function (item) {
+        if (item.type === selected ){
+          items.push(item);
+        }
+      })
+      return items;  
+    }
+    // return k;
   },
   components: {
     Popup,
@@ -148,44 +136,12 @@ export default {
 }
 #header {
   text-align: center;
-  margin-bottom: 2%;
+  margin-bottom: 7%;
   margin-top: 2%;
-}
-.select-type{
-  height: 150px;
-  margin-left : 74%;
 }
 .table-inside {
   background-color: #d9edf7;
   color: #3a7694;
-}
-.blue {
-  border-radius: 10px;
-  width: 80%;
-  text-align: center;
-  margin-left: 10%;
-  margin-right: 30%;
-  height: 270px;
-  color: black;
-}
-.grey {
-  width: 190px;
-  height: 30px;
-  color: black;
-}
-.grey {
-  margin-left: 11%;
-  margin-bottom: 25px;
-  position: relative;
-}
-.blue {
-  border: 1px solid #d9edf7;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  margin-top: -40px;
-  background: none;
-  z-index: 2;
-  position: relative;
 }
 
 h1 {
@@ -197,9 +153,7 @@ h1 {
 .atable {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  margin-left: 50px;
-  margin-top: 30px;
-  margin-right: 50px;
+  margin-top: 40px;
   padding-bottom: 5%;
   border: 1px solid #d9edf7;
   border-radius: 10px;
@@ -228,10 +182,14 @@ h1 {
   margin-top: 4%;
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  width: 70%;
 }
+
 div#main {
   padding-bottom: 3%;
 }
 
+.type {
+  margin-top: 50px;
+}
 </style>
