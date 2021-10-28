@@ -3,6 +3,7 @@ const state = {
     version: 2,
     date_modified: 0,
     index: 0,
+    typeOfSmartContract: 'Type',
     data: {
         selectedSc: [],
         selectedSCInfor: {},
@@ -40,6 +41,9 @@ const getters = {
     getIndex: state => {
         return state.data.index;
     },
+    getTypeOfContract: state => {
+        return state.data.type;
+    },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
     GetRoadPage: (state) => state.views.road_page,
@@ -76,6 +80,9 @@ const mutations = {
     /* -- index -- */
     setIndex(state, data) {
         state.index = data;
+    },
+    setType(state, data) {
+        state.type = data;
     },
     /* -- data -- */
     SetDataState(state, data) {
