@@ -2,6 +2,7 @@ const state = {
     rs: 'asdasdas',
     used: false,
     version: 2,
+    index : 0,
     date_modified: 0,
     data: {
         selectedSc: [],
@@ -52,6 +53,10 @@ const state = {
     },
     GetInitialMarking: state => {
       return state.data.initialMarkingInfor;
+    },
+     /* -- index -- */
+     getIndex : state =>{
+      return state.data.index;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -105,6 +110,11 @@ const state = {
     },
     SetSCSelectedInfo(state, newArr){
       state.data.selectedSCInfor = newArr;
+    },
+     /* -- index -- */
+     setIndex(state, data){
+       console.log('data',data);
+      state.index = data;
     },
     NewSCSelectedInfor(state, {sc_id, sc_info}) {
       var vuls = state.data.selectedVulnerbility

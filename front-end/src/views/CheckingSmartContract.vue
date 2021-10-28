@@ -149,6 +149,8 @@ export default {
       }
       if (param == "back") {
         this.$router.push({ name: "Initial" });
+      this.$store.commit("setIndex", 4);    
+
       }
 
     },
@@ -221,6 +223,7 @@ export default {
       await this.delay(2000);
       this.step = "check";
       this.$store.commit("data/SetProcessView", "check-sc");
+      this.$store.commit("setIndex", 6);    
       //dcr2cpn
       // await this.checkContext();
       //unfoding
@@ -241,6 +244,7 @@ export default {
       this.$store.commit("data/SetProcessView", "finish");
       this.callToolHelena();
       this.$router.push({name:"checkingresult31"})
+      this.$store.commit("setIndex", 7);    
     },
     routing(processview) {
       this.$store.commit("data/SetProcessView", processview);

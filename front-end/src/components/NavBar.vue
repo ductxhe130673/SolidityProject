@@ -1,17 +1,24 @@
 <template>
-    <nav>
+    <nav class="header">
         <div class='nav__left'>
           <div class="name" @click="goHome()">Solidity</div>
-          <div class='nav__search'>
-            <span class="material-icons">search</span>
-            <input type='text' placeholder="Search Solidity"/>
-          </div>
         </div>
+         <div class="road-map-text">
+             <span>Road map</span>
+         </div>
+        <div class="nav__mid">
+        <a-steps :current="this.$store.state.data.index -1" size="small">
+             <a-step title="Start" style="cursor: pointer" @click="onChangeIndex(1)"/>
+             <a-step title="Smart Contract" style="cursor: pointer" @click="onChangeIndex(2)" />
+             <a-step title="Select Contract" style="cursor: pointer" @click="onChangeIndex(3)" />
+             <a-step title="Choose Vulnerability" style="cursor: pointer" @click="onChangeIndex(4)"/>
+             <a-step title="Generate SC to CPN" style="cursor: pointer" @click="onChangeIndex(5)"/>
+             <a-step title="Check the SCs" style="cursor: pointer" @click="onChangeIndex(6)"/>
+             <a-step title="Finished" style="cursor: pointer" @click="onChangeIndex(7)"/>
+        </a-steps>
 
-        <div class='nav__mid'>
-            <div class='icon' @click="goHome()" title="Home">
-              <i class="material-icons">home</i>
-            </div>
+        </div>
+        <div class="nav__right">
             <div id="dropdown">
             <div class='icon' title="Manage">
               <i class="material-icons">view_list</i>
@@ -25,36 +32,12 @@
             <div class='icon' @click="goRoadMap()" title="RoadMap">
               <i class="material-icons">map</i>
             </div>
-            <div class='icon' title="Help">
-              <i class="material-icons">help</i>
-            </div>
-        </div>
-
-        <div class="nav__right" v-if="checkUser">
-            <a class="avatar">
-                <img class='avatar__img' src='../assets/carl_petri.jpg' />
-                <span><strong>{{getUserName}}</strong></span>
-            </a>
-            <div class="buttons">
-                <a><i class='material-icons'>notifications</i></a>
-            </div>
-            <div class="buttons">
-                <a><i @click="toggleProfile" class='material-icons'>arrow_drop_down</i>
-                <ProDia v-show="showDia"/>
-                    </a>
-            </div>
-        </div>
-        <div class="nav__right" v-if="!checkUser">
-            <button @click="goLogin()" id="login-btn">Login</button>
-            <button id="register-btn">Register</button>
         </div>
     </nav>
 </template>
 
 
 <script>
-import ProDia from './ProfileDialog.vue'
-
 export default ({
     name: "Navbar",
     data: function(){
@@ -70,6 +53,9 @@ export default ({
         getUserName() {
             return this.$store.state.user.currentUser.name
         },
+        getIndexPage() {
+            return this.$store.state.data.index;
+    },
     },
     methods: {
         toggleProfile(){
@@ -77,6 +63,7 @@ export default ({
         },
         goHome() {
           this.goURL("/")
+            this.$store.commit("setIndex", 0);      
         },
         goListSC() {
           this.goURL("/list-sc")
@@ -92,13 +79,62 @@ export default ({
             {
                 this.$router.push(url)
             }
-        }
+        },
+           onChangeIndex(pageNum){
+      if(pageNum === 1){
+          this.$router.push({name:'ListOfCheckedTransactions'})
+        this.$store.commit("setIndex", pageNum);
+      } 
+      if(pageNum === 2){
+         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 3){
+         this.$router.push({ name: "ContextOfSmartContract" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 4){
+        this.$router.push({ name: "LTLCheckOption" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 5){
+         this.$router.push({ name: "CheckSmartContract" });
+        this.$store.commit("setIndex", pageNum);
+      }  
+      if(pageNum === 6){
+          this.$router.push({name:'ListOfCheckedTransactions'})
+        this.$store.commit("setIndex", pageNum);
+      } 
+      if(pageNum === 7){
+          this.$router.push({name:'ListOfCheckedTransactions'})
+        this.$store.commit("setIndex", pageNum);
+      }        
+    }
     },
-    components:{ProDia}
+    // components:{ProDia}
 })
 </script>
 
 <style scoped>
+.road-map {
+    width: 1000px;
+    height: 50px;
+    border: 1px solid;
+    position: absolute;
+}
+.road-map-text{
+    width: 100px;
+    height: 30px;
+    padding-left: 10px;
+    background: white;
+    position: absolute;
+    margin-left: 200px;
+    margin-top: -10px;
+}
+.header{
+    height: 70px;
+    margin-top: 20px;
+}
 nav {
     background-color: white;
     width: 100%;
@@ -108,22 +144,23 @@ nav {
     padding: 5px 10px;
 /*     box-shadow: 0px 0px 4px rgb(48, 47, 47); */
 }
-
 .nav__left {
     display: flex;
     align-items: center;
-    flex-basis: 25%;
+    flex-basis: 10%;
+    width: 150px;
+    height: 70px;
+    border: 2px solid black;
 }
-
 .nav__left .name {
     flex-basis: 10%;
     margin-right: 8%;
-    margin-left: 2%;
+    margin-left: 15%;
     font-size: 30px;
     cursor: pointer;
     color: black;
+    font-weight: bold;
 }
-
 .nav__search {
     display: flex;
     align-items: center;
@@ -132,7 +169,6 @@ nav {
     border-radius: 50px;
     height: 40px;
 }
-
 .nav__search input {
     outline: none;
     border: none;
@@ -140,20 +176,22 @@ nav {
     padding: 0 10px;
     color: #484849;
 }
-
 .nav__mid {
-    flex-basis: 33%;
+    flex-basis: 80%;
     display: flex;
     align-items: center;
+    width: 150px;
+    height: 70px;
+    border: 2px solid black;
+    padding-right: 10px;
+    padding-left: 10px;
 }
-
 .icon {
-    padding: 10px 2.8vw;
+    padding: 10px 1.2vw;
     border-radius: 5px;
     cursor: pointer;
     align-items: center;
 }
-
 .icon i {
     font-size: 30px;
 }
@@ -161,12 +199,14 @@ nav {
     background-color: #e6e6e9;
     transition: ease-in-out 0.1s;
 }
-
 .nav__right {
     display: flex;
     align-items: center;
+     width: 150px;
+    height: 70px;
+    border: 2px solid black;
+    
 }
-
 .avatar {
     display: flex;
     align-items: center;
@@ -175,12 +215,10 @@ nav {
     padding: 5px 10px;
     color: #616264;
 }
-
 .avatar:hover {
     background: #c7c7c9;
     transition: ease-in-out 0.1s;
 }
-
 .avatar__img {
     height: 30px;
     width: 30px;
@@ -188,19 +226,16 @@ nav {
     object-fit: cover;
     margin-right: 5px;
 }
-
 .buttons {
     display: flex;
     align-items: center;
 }
-
 .buttons i {
     padding: 10px;
     margin: 0 1px;
     border-radius: 50%;
     background: #e4e6eb;
 }
-
 .buttons i:hover {
     background: #c7c7c9;
     transition: ease-in-out 0.1s;
@@ -254,27 +289,21 @@ display: none;
         display: none;
     }
 }
-
 @media only screen and (max-width:938px) {
-
     .nav__search {
         border-radius: 50%;
         padding: 10px;
     }
-
     .nav__search i {
         border-radius: 50%;
     }
-
     .nav__search input {
         display: none;
     }
 }
-
 @media only screen and (max-width:540px) {
     .avatar {
         display: none;
     }
 }
-
 </style>

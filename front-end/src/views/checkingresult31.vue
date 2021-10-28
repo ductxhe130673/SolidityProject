@@ -46,15 +46,21 @@ export default {
     routing(param) {      
       if (param == "back") {
         this.$router.push({ name: "CheckSmartContract" });
+      this.$store.commit("setIndex", 5);    
       }
       if (param == "checkLTL") {
         this.$router.push({ name: "LTLCheckOption" });
+      this.$store.commit("setIndex", 4);    
+
       }
       if (param == "checkIM") {
         this.$router.push({ name: "Initial" });
+      this.$store.commit("setIndex", 4);    
+
       }
       if (param == "checkNew") {
         this.$router.push({ name: "SelectSmartContract" });
+      this.$store.commit("setIndex", 3);    
       }
     },
   },
