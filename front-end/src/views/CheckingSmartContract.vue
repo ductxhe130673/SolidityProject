@@ -39,33 +39,6 @@
       </div>
      
        </div>
-  
-       
-    
-    <!-- <div class="text-2">
-      <span>Free-content</span>
-    </div>
-    <div id="locate-1">
-      <div class="text-1">
-        <span>EitherLotto</span>
-      </div>
-      <div id="component">
-        <div class="table table-striped table-hover">
-          <table class="table" border="1">
-            <tr>
-              <th>#</th>
-              <th>LTL Property</th>
-              <th>Type</th>
-            </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
-              <td><input type="checkbox" /></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div> -->
     <div id="processing-btn">
       <button
         v-if="step == 'initial' || step == 'generating'"
