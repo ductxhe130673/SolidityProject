@@ -43,9 +43,6 @@ import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTran
 
 
 import { DOMAIN_TITLE } from '../.env'
-// import GenerateLNAfile from "../views/GenerateLNAfile.vue"
-// import ChooseParams from "../views/ChooseParams.vue"
-// import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
 export const routes = [{
         path: "/",
