@@ -15,7 +15,11 @@ class Listofcheckedtransactions(APIView):
     def get(self, request):
         try:
             if request.method == 'GET':
-                sql = '''select cb.bid,co.lastname,cb.checkedDate,cb.noSC from soliditycpn.checkedbatchsc cb join soliditycpn.contact co on cb.aid = co.id'''
+                sql = '''select a.aid as id ,c.firstname as firstname,c.lastname as lastname, cb.checkedDate as CheckedDate, cb.noSC as num from Contact as c 
+                        inner join Account as a
+                        on c.aid = a.aid
+                        inner join CheckedBatchSC as cb
+                        on a.aid = cb.aid'''
             cursor = connection.cursor()
             try:
                 cursor.execute(sql)
@@ -26,14 +30,12 @@ class Listofcheckedtransactions(APIView):
         except:
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
-
 class Checkreentrancydetail(APIView):
     def get(self, request):
         try:
             if request.method == 'GET':
-                sql = '''select cb.bid,co.lastname,cb.checkedDate,cb.noSC,cb.result
-                    from soliditycpn.checkedbatchsc cb join soliditycpn.contact co on cb.aid = co.id
-                    where cb.bid = %s'''
+                sql = '''SELECT result FROM CheckedBatchSC
+                        where aid = %s'''
             cursor = connection.cursor()
             try:
                 cursor.execute(sql, [request.GET['id']])

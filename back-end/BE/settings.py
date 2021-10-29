@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'smartconstract',
-    'context',
     'demo_middleware',
     'corsheaders',
     'LTLpro',
@@ -50,7 +49,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'Transactions',
     'tools',
-    'imargument',
 ]
 
 MIDDLEWARE = [

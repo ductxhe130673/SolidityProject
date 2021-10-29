@@ -1,10 +1,10 @@
 <template>
   <div class="container" id="add-vul">
-    <div id="header">Contract-Specific Property Template - Setting</div>
+    <div id="header">Contract-Specific Property Template - Template</div>
     <div class="row">
       <div class="col-2">Name</div>
       <div class="col-10">
-        <input class="form-control" type="text" value="Property 1" />
+        <input class="form-control" type="text" value="" />
       </div>
     </div>
     <div class="row">
@@ -19,13 +19,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-2">Formular</div>
+      <div class="col-2">Formula</div>
       <div class="col-10">
-        <textarea name="" id="" cols="30" rows="5" class="form-control">
-            (GF{ variable 1 } ^ GF{ variable 2 }) => G({ function 3 }=> F{ function 4 })
-
-          </textarea
-        >
+        <formular-editor />
       </div>
     </div>
     <div class="row">
@@ -33,30 +29,48 @@
       <div class="col-10">
         <textarea name="" id="" cols="30" rows="5" class="form-control">
             If {variable 1} occurs infnitely often and {variable 2} occurs 
-inifnitely often, then each occurrence of {function 3} is 
-followed by an occurrence of {function 4}
+            inifnitely often, then each occurrence of {function 3} is 
+            followed by an occurrence of {function 4}
           </textarea
         >
       </div>
     </div>
     <div id="btn-group">
       <button class="btn btn-primary-outline btn-sm" @click="routing('add')">
-        Add
+        Next
       </button>
       <button
         class="btn btn-outline-secondary btn-sm"
         type="button"
         @click="routing('back')"
       >
-        Cancel
+        Back
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import FormularEditor from "../../../../components/FormularEditor.vue";
+import { GetGloLocArgOfSmartContract } from "../../../../services/data";
 export default {
+  data: function () {
+    return {};
+  },
+  mounted() {
+    this.fetchData();
+  },
+  components: {
+    FormularEditor,
+  },
+  computed: {
+  },
   methods: {
+    async fetchData() {
+      const res = await GetGloLocArgOfSmartContract(3);
+      console.log(res);
+      console.log(this.GetSCSelectedInfor.name);
+    },
     routing(param) {
       if (param == "add") {
         this.$router.push({ name: "Initial" });
@@ -112,7 +126,7 @@ export default {
   width: 100%;
 }
 select {
-  width: 50%;
+  width: 100%;
 }
 textarea {
   width: 100%;
@@ -122,7 +136,7 @@ textarea {
   display: flex;
   margin-left: 4%;
 }
-button:hover{
+button:hover {
   background-color: #1079cf;
   color: white;
 }
@@ -146,5 +160,20 @@ button {
   #add-vul {
     width: 90%;
   }
+}
+
+/* ---Formular Editor Style---- */
+#highlighting-content {
+  margin: 10px;
+  padding: 10px;
+  border: 0;
+  width: calc(100% - 32px);
+  height: 150px;
+  background-color: #f6f6f6;
+  font-size: 15pt;
+  font-family: normal normal 1em/1.2em monospace;
+  line-height: 20pt;
+  overflow: auto;
+  white-space: pre;
 }
 </style>

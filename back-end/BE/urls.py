@@ -21,12 +21,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('smartconstract/',include('smartconstract.urls')),
     path('login',views.loginpage),
-    path('context/',include('context.urls')),
     path('ltl/',include('LTLpro.urls')),
     path('ltltemplate/',include('ltltemplate.urls')),
     path('cpncontext/',include('cpncontext.urls')),
     path('auth/', include('account.urls')),
     path('select-sc/', include('Transactions.urls')),
     path('tools/',include('tools.urls')),
-    path('imargument/',include('imargument.urls')),
 ]

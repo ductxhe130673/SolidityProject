@@ -1,10 +1,11 @@
+
 from .serializer import GetSmartConstractSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Smartcontract
 from rest_framework.decorators import api_view
-from django.db import connection
+from smartconstract import dbcontext
 # Create your views here.
 
 
@@ -13,8 +14,7 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'GET':
                 smartConstractDB = Smartcontract.objects.all()
-                serialiSmartConstract = GetSmartConstractSerializer(
-                    smartConstractDB, many=True)
+                serialiSmartConstract = GetSmartConstractSerializer(smartConstractDB, many=True)
                 return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)
         except:
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
@@ -56,8 +56,6 @@ class SmartConstractAPIView(APIView):
             return Response({"message": "Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
 @api_view(['GET'])
 def getScById(request):
     try:
@@ -72,41 +70,50 @@ def getScById(request):
 
 
 @api_view(['GET'])
-def getFunctionAndArgumentBySmartcontractId(request):
+def getGBByScId(request):
     try:
-        if request.method == 'GET':
-            sql = '''select ssc.sid ,ssc.name as smartcontract_name,sft.fid as fucntion_id,sft.name as function_name,
-                     sag.id as argument_id,sag.name as argument_name
-                     from soliditycpn.smartcontract ssc join soliditycpn.functions sft 
-                     join soliditycpn.argument sag on sft.fid = sag.fid
-                     on ssc.sid=sft.sid
-                     where ssc.sid = %s'''
-        cursor = connection.cursor()
-        try:
-            cursor.execute(sql, [request.GET['id']])
-            data = cursor.fetchall()
-            return Response(data, status=status.HTTP_200_OK)
-        except Exception as e:
-            cursor.close
-    except:
-        return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+        resData = dbcontext.getGlobalVarBySmartContractId(request.GET['id'])
+        if resData is None:
+            return Response({"message": "Something Wrong!!!"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+# Get Argument 
+@api_view(['GET'])
+def getLocalVar(request):
+    try:
+        resData = dbcontext.getLocalVarByFuncId(request.GET['id'])
+        if resData is None:
+            return Response({"message": "Something Wrong!!!"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def getAllFunctionAndArgumentBySmartcontractId(request):
+def getFunctionVarArgu(request):
     try:
-        if request.method == 'GET':
-            sql = '''select ssc.sid ,ssc.name as smartcontract_name,sft.fid as fucntion_id,sft.name as function_name,
-                     sag.id as argument_id,sag.name as argument_name
-                     from soliditycpn.smartcontract ssc join soliditycpn.functions sft 
-                     join soliditycpn.argument sag on sft.fid = sag.fid
-                     on ssc.sid=sft.sid'''
-        cursor = connection.cursor()
-        try:
-            cursor.execute(sql)
-            data = cursor.fetchall()
-            return Response(data, status=status.HTTP_200_OK)
-        except Exception as e:
-            cursor.close
-    except:
-        return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+        funcDB = dbcontext.getFunctionBySCId(request.GET['id'])
+        gloVar = dbcontext.getGlobalVarBySmartContractId(request.GET['id'])
+        resData = {
+            "functions":funcDB,
+            "globalVar":gloVar
+        }
+        if resData['functions'] is None or resData['globalVar'] is None:
+            return Response({"message":"No Content"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def demo(request):
+    try:
+        resData = dbcontext.getArgumentByFuncID(request.GET['id'])
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
