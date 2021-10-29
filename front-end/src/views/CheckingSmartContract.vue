@@ -1,82 +1,54 @@
 <template>
   <div id="main">
     <div id="header">
-      <h1>Checking Smart Contracts</h1>
+      <h1>Generating CPN Model</h1>
     </div>
-    <div class="text">
-      <h5>Smart Contract</h5>
-    </div>
-    <div id="locate-1">
-      <div class="text-1">
-       
-      </div>
-      <div id="component">
-        <div class="table table-striped table-hover">
-          <table class="table" border="1">
-            <tr>
-              <th style="width: 30%">#</th>
-              <th>Contract Name</th>
-            </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
-              <!-- <td><input type="checkbox" /></td> -->
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div class="text-1">
-        <h5>Context</h5>
-      </div>
-       <input type="text" class="input-1" value="Gaming">
-          <div class="text-1">
-        <h5>LTL Property</h5>
-      </div>
-       <input type="text" class="input-1" value="Integer Overfow">
-       <div class="text-1">
-        <h5>Confguration</h5>
-         <a href="google.com" style="padding: 3px 0px 0px 59px">Link to the setting configuration</a>
-      </div>
-     
-       </div>
-  
-       
-    
-    <!-- <div class="text-2">
-      <span>Free-content</span>
+    <div class="text-2">
+      <span>Smart Contracts</span>
     </div>
     <div id="locate-1">
-      <div class="text-1">
-        <span>EitherLotto</span>
-      </div>
       <div id="component">
         <div class="table table-striped table-hover">
           <table class="table" border="1">
             <tr>
               <th>#</th>
-              <th>LTL Property</th>
-              <th>Type</th>
+              <th>Contract Name</th>
             </tr>
             <tr v-for="data in datatable" :key="data.id">
               <td>{{ data.id }}</td>
               <td>{{ data.var }}</td>
-              <td><input type="checkbox" /></td>
             </tr>
           </table>
         </div>
       </div>
-    </div> -->
-    <div id="processing-btn">
-      <button
-        v-if="step == 'initial' || step == 'generating'"
-        class="btn btn-primary-outline"
-        @click="generate"
-      >
-        Generate
-      </button>
-      <button v-else class="btn btn-primary-outline" @click="check">
-        Check
-      </button>
+    </div>
+    <div id="locate-2">
+      <div class="label">Context</div>
+      <div class="input-area">
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon3"
+          value="Gaming"
+        />
+      </div>
+    </div>
+    <div id="locate-3">
+      <div class="label">LTL Property</div>
+      <div class="input-area">
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon3"
+          value="Integer Overflow"
+        />
+      </div>
+    </div>
+    <div id="locate-4">
+      <div class="label">Configuration</div>
+      <div class="link-to">
+        <a href="" @click="navigate('config')">Link to setting Configuration</a>
+      </div>
     </div>
     <div class="contain-process">
       <div id="processing-section">
@@ -85,7 +57,7 @@
             v-if="showDownload"
             class="btn btn-primary btn-sm"
             href=""
-            download="Solidity"
+            download="test.lna"
             >Download</a
           >
         </div>
@@ -124,6 +96,26 @@
         </div>
       </div>
     </div>
+    <div id="processing-btn">
+      <button
+        v-if="step == 'initial' || step == 'generating'"
+        class="btn btn-primary-outline"
+        @click="generate"
+      >
+        Generate
+      </button>
+      <button
+        v-if="step == 'check'"
+        class="btn btn-primary-outline"
+        @click="check"
+      >
+        Check
+      </button>
+      <button v-if="step == 'finish'" class="btn btn-primary-outline">
+        Next
+      </button>
+      <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
+    </div>
   </div>
 </template>
 
@@ -134,16 +126,13 @@ export default {
   data() {
     return {
       datatable: [
-        { id: "1", var: "GV1" },
-        { id: "2", var: "GV2" },
-        { id: "3", var: "GV3" },
-        { id: "4", var: "GV4" },
+        { id: "1", var: "EtherGame" },
       ],
       step: "initial",
       list_selected_sc: [],
       list_selected_vuls: [],
       context: [],
-      user: { user_name: "Dinh Thanh Ha" },
+      user: { user_name: "Billy Tran" },
       error: true,
       view: "",
       results: [],
@@ -154,24 +143,44 @@ export default {
     };
   },
   methods: {
-    async callUnfoldingTool(){
-      const tName = "unfolding"
-      const tLna = ""
-      const tContext = ""
-      const tParam = ""
-      const res = await CheckService.callUnfoldingTools(tName,tLna,tContext,tParam)
-      console.log("here");
-      console.log(res)
+    navigate(param) {
+      if (param == "config") {
+        this.$router.push({ path: "" });
+      }
+      if (param == "back") {
+        this.$router.push({ name: "Initial" });
+      this.$store.commit("setIndex", 4);    
+
+      }
+
     },
-    
+    async callUnfoldingTool() {
+      const tName = "unfolding";
+      const tcontext_PATH_xml = "<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>";
+      const tltl_PATH_json = "{\n    \"type\": \"general\",\n    \"params\": {\n        \"name\": \"under_over_flow\",\n        \"inputs\": [\"currentBalance\"]\n    }\n}";
+      const res = await CheckService.callUnfoldingTools(
+        tName,
+        tcontext_PATH_xml,
+        tltl_PATH_json
+      );
+      console.log("here");
+      console.log(res);
+    },
+
     async callToolHelena() {
+      console.log("Call the helena tool");
       const tName = "helena";
+      this.$store.commit("Setrs","wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
         const mess = res.data.message;
         this.results.push(mess);
-      }else{
-        this.results.push("Can't run HELENA tools")
+        this.$store.commit("Setrs", mess);
+      } else {
+        console.log("Start mutation");
+        this.$store.commit("Setrs","11");
+        this.results.push("Can't run HELENA tools");
+        
       }
     },
     async callToolLTL() {
@@ -180,15 +189,15 @@ export default {
       if (res.status == 200 && res !== null && res != undefined) {
         const mess = res.data.message;
         this.results.push(mess);
-      }else{
-        this.results.push("Can't run LTL tools")
+      } else {
+        this.results.push("Can't run LTL tools");
       }
     },
     async checkContext() {
-      const toolName ="dcr2cpn"
-      const xml = ""
+      const toolName = "dcr2cpn";
+      const xml = "";
       // console.log(context);
-      const res = await CheckService.callDCNTools(toolName,xml);
+      const res = await CheckService.callDCNTools(toolName, xml);
       console.log(res);
     },
     move(id) {
@@ -212,27 +221,30 @@ export default {
       this.step = "generating";
       this.move("progress-bar-gen");
       await this.delay(2000);
-      this.step = "generated";
+      this.step = "check";
       this.$store.commit("data/SetProcessView", "check-sc");
+      this.$store.commit("setIndex", 6);    
       //dcr2cpn
-      await this.checkContext();
+      // await this.checkContext();
       //unfoding
       await this.callUnfoldingTool();
-      await this.callToolLTL();
+      // await this.callToolLTL();
     },
     async check() {
       this.step = "checking";
       this.move("progress-bar-check");
       await this.delay(2000);
-      if (this.error)
-        confirm(
-          "We have discover some counter-examples with the smart contract code. Do you want to look at them?"
-        );
+      // if (this.error)
+      //  confirm(
+      //    "We have discover some counter-examples with the smart contract code. Do you want to look at them?"
+      //  );
       this.step = "checked";
       await this.delay(2000);
       this.step = "finish";
       this.$store.commit("data/SetProcessView", "finish");
       this.callToolHelena();
+      this.$router.push({name:"checkingresult31"})
+      this.$store.commit("setIndex", 7);    
     },
     routing(processview) {
       this.$store.commit("data/SetProcessView", processview);
@@ -292,11 +304,15 @@ export default {
   mounted() {
     this.list_selected_sc = this.$store.getters["data/GetSelectedSC"];
     this.context = this.$store.getters["data/GetSelectedContext"];
-    this.list_selected_vuls =
-    this.$store.getters["data/GetSelectedVulnerbility"];
+    this.list_selected_vuls = this.$store.getters[
+      "data/GetSelectedVulnerbility"
+    ];
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {
+    done_result() {
+      return this.$store.getters.Getrs;
+    },
     selectedSc() {
       return this.list_selected_sc;
     },
@@ -312,19 +328,22 @@ export default {
   },
 };
 </script>
-<style>
+
+<style scoped>
 #header {
   text-align: center;
   margin-top: 2%;
   margin-bottom: 2%;
   font-weight: bold;
 }
-.contain-process {
+.contain-process {  
+  width: 50%;
+  margin: 0 auto;
   padding-bottom: 5%;
 }
 #locate-1 {
   border: 1px solid;
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
   padding-bottom: 3%;
 }
@@ -343,7 +362,9 @@ export default {
   border-radius: 4px;
   cursor: pointer;
 }
-
+.btn {
+  margin: 0 10%;
+}
 #locate-1 {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -355,37 +376,35 @@ export default {
   background-color: #1079cf;
   color: white;
 }
-.input-1{
-  margin: 25px 0px 0px 41px;
-  height: 35px;
-  width: 94%;
-}
 .text-1 {
   position: relative;
-  left: 1%;
-  top: 22px;
+  left: 15%;
+  top: 15px;
   z-index: 1;
-  height: 33px;
-  text-align: left;
-  display: flex;
+  height: 30px;
+  width: 8%;
+  background: white;
+  text-align: center;
 }
 .text-2 {
   position: relative;
-  left: 15%;
+  left: 20%;
   top: 15px;
   z-index: 1;
   height: 30px;
   width: 6.6%;
   background: white;
   text-align: center;
+  width: 140px;
 }
 .text {
   position: relative;
-  left: 10%;
-  top: 30px;
+  left: 15%;
+  top: 15px;
   z-index: 1;
   height: 30px;
-  width: 9.6%;
+  width: 3.6%;
+  background: white;
   text-align: center;
 }
 #component {
@@ -393,13 +412,9 @@ export default {
   width: 94%;
   padding-top: 2%;
   padding-bottom: 2%;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  border: 1px solid #d9edf7;
-  border-radius: 10px;
 }
 .table {
-  width: 100%;
+  width: 94%;
   margin: 0 auto;
 }
 .table tr:first-child {
@@ -460,5 +475,35 @@ export default {
 }
 #removeAll-holder {
   margin-top: 50px;
+}
+</style>
+<style scoped>
+/* -----Context Style------ */
+
+#locate-2,
+#locate-3,
+#locate-4 {
+  width: 70%;
+  margin: 0 auto;
+  padding: 3% 2%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  border: 1px solid #d9edf7;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 1% auto;
+}
+
+.label {
+  font-size: 25px;
+}
+.input-area {
+  width: 80%;
+}
+.link-to {
+  width: 80%;
+  display: flex;
+  align-items: center;
 }
 </style>

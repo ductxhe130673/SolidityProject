@@ -9,4 +9,4 @@ class  ltltemplate(models.Model):
     description= models.CharField(max_length=200)
 
     class Meta:
-        db_table = 'ltltemplate'
+        db_table = 'LTLTemplate'
