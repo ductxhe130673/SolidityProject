@@ -38,8 +38,6 @@
 
 
 <script>
-
-
 export default ({
     name: "Navbar",
     data: function(){
@@ -118,14 +116,12 @@ export default ({
 </script>
 
 <style scoped>
-
 .road-map {
     width: 1000px;
     height: 50px;
     border: 1px solid;
     position: absolute;
 }
-
 .road-map-text{
     width: 100px;
     height: 30px;
@@ -148,7 +144,6 @@ nav {
     padding: 5px 10px;
 /*     box-shadow: 0px 0px 4px rgb(48, 47, 47); */
 }
-
 .nav__left {
     display: flex;
     align-items: center;
@@ -157,7 +152,6 @@ nav {
     height: 70px;
     border: 2px solid black;
 }
-
 .nav__left .name {
     flex-basis: 10%;
     margin-right: 8%;
@@ -167,7 +161,6 @@ nav {
     color: black;
     font-weight: bold;
 }
-
 .nav__search {
     display: flex;
     align-items: center;
@@ -176,7 +169,6 @@ nav {
     border-radius: 50px;
     height: 40px;
 }
-
 .nav__search input {
     outline: none;
     border: none;
@@ -184,7 +176,6 @@ nav {
     padding: 0 10px;
     color: #484849;
 }
-
 .nav__mid {
     flex-basis: 80%;
     display: flex;
@@ -195,14 +186,12 @@ nav {
     padding-right: 10px;
     padding-left: 10px;
 }
-
 .icon {
     padding: 10px 1.2vw;
     border-radius: 5px;
     cursor: pointer;
     align-items: center;
 }
-
 .icon i {
     font-size: 30px;
 }
@@ -210,7 +199,6 @@ nav {
     background-color: #e6e6e9;
     transition: ease-in-out 0.1s;
 }
-
 .nav__right {
     display: flex;
     align-items: center;
@@ -219,7 +207,6 @@ nav {
     border: 2px solid black;
     
 }
-
 .avatar {
     display: flex;
     align-items: center;
@@ -228,12 +215,10 @@ nav {
     padding: 5px 10px;
     color: #616264;
 }
-
 .avatar:hover {
     background: #c7c7c9;
     transition: ease-in-out 0.1s;
 }
-
 .avatar__img {
     height: 30px;
     width: 30px;
@@ -241,19 +226,16 @@ nav {
     object-fit: cover;
     margin-right: 5px;
 }
-
 .buttons {
     display: flex;
     align-items: center;
 }
-
 .buttons i {
     padding: 10px;
     margin: 0 1px;
     border-radius: 50%;
     background: #e4e6eb;
 }
-
 .buttons i:hover {
     background: #c7c7c9;
     transition: ease-in-out 0.1s;
@@ -307,27 +289,21 @@ display: none;
         display: none;
     }
 }
-
 @media only screen and (max-width:938px) {
-
     .nav__search {
         border-radius: 50%;
         padding: 10px;
     }
-
     .nav__search i {
         border-radius: 50%;
     }
-
     .nav__search input {
         display: none;
     }
 }
-
 @media only screen and (max-width:540px) {
     .avatar {
         display: none;
     }
 }
-
 </style>

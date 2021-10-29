@@ -58,7 +58,6 @@ export default {
       if (param == "addsc") {
         this.$router.push({ name: "SelectSmartContract" });
         this.$store.commit("setIndex", 2);      
-
       }
       if (param == "back") {
         this.$router.push({ name: "Index" });
@@ -71,11 +70,9 @@ export default {
        this.setid(data);
      }
   },
-
   computed: {
     ...mapGetters(["getListTransaction","getid"]),
   },
-
   created() {
     this.getListTran();
     
@@ -127,13 +124,11 @@ export default {
   z-index: 2;
   position: relative;
 }
-
 h1 {
   text-align: center;
   font-size: 35px;
   font-weight: bold;
 }
-
 .atable {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -191,12 +186,10 @@ h1 {
 .Button {
   margin-top: 80px;
 }
-
 a {
   text-decoration: none;
   color: black;
 }
-
 a:hover {
   color: red;
   text-decoration: underline red wavy;

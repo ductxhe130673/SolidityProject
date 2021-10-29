@@ -153,7 +153,6 @@ svg {
   background: #5A5C6C;
   color: #fff;
 }
-
 #Polygon-1 , #Polygon-2 , #Polygon-3 , #Polygon-4 , #Polygon-4, #Polygon-5 {
   animation: float 1s infinite ease-in-out alternate;
 }
@@ -169,14 +168,12 @@ svg {
 #Polygon-5 {
   animation-delay: .8s; 
 }
-
 /* -- current process -- */
 #current-process{
   width: 400px;
   height: 60px;
   margin-top: 40px;
   background-image: linear-gradient(to right, #f5f3f3, #d6d4d4);
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -194,11 +191,9 @@ svg {
 #current-process #cp-button{
   height: 30px;
   width: 80px;
-
   border: 1px solid #918f8f;
   border-color: #918f8f;
   color: #918f8f;
-
   padding: 8px 12px;
   margin-right: 10px;
   cursor: pointer;
@@ -237,5 +232,4 @@ svg {
       margin-top: 30px;
   }
 }
-
 </style>

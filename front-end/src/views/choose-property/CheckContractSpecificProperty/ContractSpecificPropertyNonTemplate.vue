@@ -9,21 +9,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-2">Formular</div>
+        <div class="col-2">Formula</div>
         <div class="col-9">
-          <!-- <LTLEditor @update="getLTLCode" :code="ltlcode" /> -->
-          <textarea name="" id="" cols="30" rows="7" class="form-control">
-            G ({ function 1 } => (¬{ function 2 } U { function 3 }))
-          </textarea>
+         <formular-editor/>
         </div>
       </div>
       <div class="row">
       <div class="col-2">Description</div>
       <div class="col-9">
         <textarea name="" id="" cols="30" rows="5" class="form-control">
-            If {variable 1} occurs infnitely often and {variable 2} occurs 
-inifnitely often, then each occurrence of {function 3} is 
-followed by an occurrence of {function 4}
+            Not currentBalance overflow
           </textarea
         >
       </div>
@@ -47,11 +42,11 @@ followed by an occurrence of {function 4}
 </template>
 
 <script>
-// import LTLEditor from "../../../components/LTLEditor.vue";
+import FormularEditor from "../../../components/FormularEditor.vue"
 export default {
-  // components: {
-  //   LTLEditor,
-  // },
+  components: {
+    FormularEditor
+  },
   methods: {
     getLTLCode(code) {
       this.ltlcode = code;

@@ -9,7 +9,7 @@
         <ul>
           <li>
             Contract-Specific Property: You will choose the functions and using
-            template or non-template to design your LTL formular.
+            template or non-template to design your LTL formula.
           </li>
           <li>
             General Vulnerability: You will select the common vulnerability from
@@ -22,13 +22,19 @@
           class="link-button"
           @click="goCSP"
           :class="{ choosen_button: getCurrentChoose == 'csps-choosetypes' }"
-          >Check a Contract-Specifc Property</a
-        >
+          >Check a Contract-Specifc Property
+        </a>
         <a
           class="link-button"
           @click="goGV"
           :class="{ choosen_button: getCurrentChoose == 'check-general-vul' }"
           >Check a General Vulnerability
+        </a>
+        <a
+          class="link-button"
+          @click="goBack"
+          :class="{ choosen_button: getCurrentChoose == 'check-general-vul' }"
+          >Back
         </a>
       </div>
       <div id="showConfirmation" v-if="showDialog">
@@ -45,20 +51,23 @@ export default {
   data() {
     return {};
   },
-  methods:{
-    goCSP(){
-      this.$router.push({name:"CSPSettingType"})
+  methods: {
+    goCSP() {
+      this.$router.push({ name: "CSPSettingType" });
     },
-    goGV(){
-      this.$router.push({name:"GenaralVulSetting"})
-    }
-  }
+    goGV() {
+      this.$router.push({ name: "GenaralVulSetting" });
+    },
+    goBack() {
+      this.$router.push({ name: "ContextOfSmartContract" });
+    },
+  },
 };
 </script>
 
 <style scoped>
 #pc-body {
-  width: 600px;
+  width: 640px;
   margin: 0 auto;
   margin-top: 100px;
   padding: 20px;
@@ -77,11 +86,11 @@ export default {
 #pcb-content p {
   font-size: 16px;
   font-weight: bold;
-  color: rgb(97, 97, 97);
+  color: rgb(0, 0, 0);
 }
 #pcb-content li {
   font-size: 14px;
-  color: rgb(145, 144, 144);
+  color: rgb(0, 0, 0);
 }
 #pcb-button {
   margin-top: 40px;
@@ -90,20 +99,22 @@ export default {
   justify-content: space-between;
 }
 .link-button {
-  background-color: #0090f2;
-  padding: 4px 15px;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 14px;
-  transition: all 0.3s linear;
   cursor: pointer;
-  text-decoration: none;
-  margin-right: 10px;
+  /* width: 30%; */
+  height: 2%;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  /* font-weight: 600; */
+  padding: 4px 3px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 .link-button:hover {
-  background-color: #156fac;
-  color: #fff;
+  background-color: #1079cf;
+  color: white;
 }
 .choosen_button {
   background-color: #105a8b;
