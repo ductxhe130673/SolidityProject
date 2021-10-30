@@ -80,6 +80,18 @@ def getGBByScId(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
+# Get functions by smartcontract id
+@api_view(['GET'])
+def getFuntionByScId(request):
+    try:
+        resData = dbcontext.getFunctionBySCId(request.GET['id'])
+        if resData is None:
+            return Response({"message": "Something Wrong!!!"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)        
+
 
 # Get Argument 
 @api_view(['GET'])
@@ -108,6 +120,21 @@ def getFunctionVarArgu(request):
     except Exception as e:
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def addNewInitialMarking(request):
+    try:
+        resData = dbcontext.addNewInitialMarking(request.GET['num_user'],request.GET['IM_type'])
+        # print(request.GET['IM_type'])
+        # print(request.GET['num_user'])
+        # print(resData)
+        if resData is None :
+            return Response({"message": "Fail To Add New InitialMarking!!!"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def demo(request):

@@ -6,4 +6,4 @@ from .models import ltltemplate
 class ltltemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ltltemplate
-        fields = ['__all__']
+        fields = '__all__'

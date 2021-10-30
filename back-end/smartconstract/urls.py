@@ -8,5 +8,7 @@ urlpatterns = [
     path('scbyid',views.getScById),
     path('globalvarialbe',views.getGBByScId),
     path('localvariable',views.getLocalVar),
+    path('getfunction',views.getFuntionByScId),
     path('getvariablefunctionargu',views.getFunctionVarArgu),
+    path('addnewinitialmarking',views.addNewInitialMarking),
 ]
