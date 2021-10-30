@@ -127,6 +127,7 @@ export default {
     return {
       datatable: [
         { id: "1", var: "EtherGame" },
+        { id: "2", var: "	EtherLotto" },
       ],
       step: "initial",
       list_selected_sc: [],
@@ -145,7 +146,7 @@ export default {
   methods: {
     navigate(param) {
       if (param == "config") {
-        this.$router.push({ path: "" });
+        this.$router.push({ name: "InitialMarkingLink" });
       }
       if (param == "back") {
         this.$router.push({ name: "Initial" });
@@ -330,6 +331,11 @@ export default {
 </script>
 
 <style scoped>
+#main{
+  height: 100%;
+  width: 100%;
+  
+}
 #header {
   text-align: center;
   margin-top: 2%;
@@ -339,11 +345,11 @@ export default {
 .contain-process {  
   width: 50%;
   margin: 0 auto;
-  padding-bottom: 5%;
+  padding-bottom: 10%;
 }
 #locate-1 {
   border: 1px solid;
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   padding-bottom: 3%;
 }
@@ -424,6 +430,7 @@ export default {
 #processing-btn {
   margin: 40px;
   text-align: center;
+  margin-top: -90px;
 }
 #download {
   text-align: right;
@@ -483,7 +490,7 @@ export default {
 #locate-2,
 #locate-3,
 #locate-4 {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   padding: 3% 2%;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,

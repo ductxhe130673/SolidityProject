@@ -1,7 +1,7 @@
 <template>
   <div id="initial-marking">
     <div id="initial-marking-header">
-      Confguration
+      Configuration
     </div>
     <div id="initial-marking-input">
       <div id="header-section">
@@ -374,7 +374,6 @@ export default {
 #initial-marking-input{
   width: 60%;
   margin-left: 20%;
-
   display: flex;
   justify-content: space-between;
 }
