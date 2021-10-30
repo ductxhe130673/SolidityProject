@@ -4,7 +4,6 @@ export default {
     async getListTran({ commit }) {
         try {
             var result = await CheckedService.GetCommonSmartContracts();
-            console.log(result.data)
             commit('SET_LIST_POSTS',result.data)
             if(result.data.status === 200) {
                 commit('SET_LIST_POSTS',result.data)
