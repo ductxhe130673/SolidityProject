@@ -109,7 +109,7 @@ def getFunctionVarArgu(request):
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def demo(request):
+def getArguByFunctionId(request):
     try:
         resData = dbcontext.getArgumentByFuncID(request.GET['id'])
         return Response(resData, status=status.HTTP_201_CREATED)

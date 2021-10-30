@@ -7,6 +7,7 @@ import InitialMarkingSetting from "../views/InitialMarkingSetting.vue"
 import ChooseProperty from "../views/ChooseProperty"
 
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
+import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
@@ -72,6 +73,12 @@ export const routes = [
         name: 'ListOfCheckedTransactions',
         component: ListOfCheckedTransactions,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | listofcheckedtransactions` },
+      },
+      {
+        path: 'checkreentrancydetail',
+        name: 'CheckRentrancy',
+        component: CheckReenTrancyDetail,
+        meta: {requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail`}
       },
       {
         path: 'checking-result',
