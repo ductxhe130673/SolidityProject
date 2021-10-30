@@ -7,7 +7,7 @@ import InitialMarkingSetting from "../views/InitialMarkingSetting.vue"
 import ChooseProperty from "../views/ChooseProperty"
 
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
-import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
+import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -20,6 +20,8 @@ import LTLCheckingOption from "../views/choose-property/LTLCheckingOption.vue"
 import ContractSpecificProperty from "../views/choose-property/CheckContractSpecificProperty/ContractSpecificProperty.vue"
 import CSPTemplateSetting from "../views/choose-property/CheckContractSpecificProperty/CSPTemplate/CSPTemplateSetting.vue"
 import CheckingSmartContract from "../views/CheckingSmartContract.vue"
+import checkingresult31 from "../views/checkingresult31.vue"
+
 import ContractSpecificPropertyNonTemplate from "../views/choose-property/CheckContractSpecificProperty/ContractSpecificPropertyNonTemplate.vue"
 
 import ChooseEleOfSC from "../views/choose-property/CheckGeneralVul/ChooseElementOfTheSmartContract.vue"
@@ -38,13 +40,9 @@ import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
 import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 
-import GenerateLNAfileSuccessfully from "../views/GenerateLNAfileSuccessfully.vue"
-import CheckSmartContractProgress from "../views/CheckSmartContractProgress.vue"
-import CheckedSuccessfully from "../views/CheckedSuccessfully.vue"
-
-import FinalDetailResult from "../views/FinalDetailResult.vue"
-import tab from "../views/tab.vue"
+import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import { DOMAIN_TITLE } from '../.env'
+
 
 export const routes = [{
         path: "/",
@@ -77,7 +75,15 @@ export const routes = [{
             {
                 path: 'checkreentrancydetail',
                 name: 'CheckRentrancy',
-                component: CheckReenTrancyDetail
+                component: CheckReenTrancyDetail,
+                meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` }
+            },
+
+
+            {
+                path: 'checking-result',
+                name: 'CheckingResult',
+                component: CheckingResult
             },
             {
                 path: 'select-smart-contract',
@@ -171,6 +177,12 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
     },
     {
+        path: "/check-rs",
+        name: "checkingresult31",
+        component: checkingresult31,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
         path: "/list-context",
         name: "ListContext",
         component: ListContext,
@@ -232,43 +244,6 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
-    {
-        path: "/generate-LS",
-        name: "GenerateLNAfileSuccessfully",
-        component: GenerateLNAfileSuccessfully,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    },
-    {
-        path: "/checking-scp",
-        name: "CheckSmartContractProgress",
-        component: CheckSmartContractProgress,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    },
-    {
-        path: "/checkingS",
-        name: "CheckedSuccessfully",
-        component: CheckedSuccessfully,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    },
-    {
-        path: "/finalDr",
-        name: "FinalDetailResult",
-        component: FinalDetailResult,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    },
-    {
-        path: "/tab",
-        name: "tab",
-        component: tab,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    },
-    {
-        path: "/checkingsc",
-        name: "CheckingSmartContract",
-        component: CheckingSmartContract,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
-    },
-
 ]
 
 /*
