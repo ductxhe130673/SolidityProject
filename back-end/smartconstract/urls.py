@@ -11,4 +11,11 @@ urlpatterns = [
     path('getfunction',views.getFuntionByScId),
     path('getvariablefunctionargu',views.getFunctionVarArgu),
     path('addnewinitialmarking',views.addNewInitialMarking),
+    path('addnewbalancedtypefixed',views.addNewBalanceTypeFixed),
+    path('addnewbalancedtyperandom',views.addNewBalanceTypeRandom),
+    path('addnewimfunction',views.addNewIMFunction),
+    path('addnewimargument',views.addNewIMArgument),
+    path('addnewlnafile',views.addNewLNAFile),
+    path('addnewcheckedbatchsc',views.addNewCheckedBatchSC),
+    path('addnewcheckedsmartcontractdetail',views.addNewCheckedSmartContractDetail),
 ]

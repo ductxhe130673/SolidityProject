@@ -181,7 +181,7 @@ def addNewBalanceTypeRandom(blfrom,blto,blvalue,imid):
         connection.close() 
 
 # TYPE IM_TYPE3 : MAP ?????
-def addNewBalanceTypeFixed(blfrom,blto,blvalue,blrange,imid):
+def addNewBalanceTypeMap(blfrom,blto,blvalue,blrange,imid):
     try:
         sql = '''INSERT INTO Balance (blfrom,blto,blvalue,blrange,imid) VALUES (%s,%s,%s,%s,%s);'''
         cursor = connection.cursor()

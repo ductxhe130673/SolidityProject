@@ -9,6 +9,7 @@ import ChooseProperty from "../views/ChooseProperty"
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
+import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -77,6 +78,12 @@ export const routes = [
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | listofcheckedtransactions` },
       },
       {
+        path: 'checkreentrancydetail',
+        name: 'CheckRentrancy',
+        component: CheckReenTrancyDetail,
+        meta: {requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail`}
+      },
+      {
         path: 'checking-result',
         name: 'CheckingResult',
         component: CheckingResult
@@ -100,6 +107,7 @@ export const routes = [
     ],
     meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` },
   },
+  
   {
     path: "/context/",
     name: "SelectContext",
