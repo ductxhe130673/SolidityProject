@@ -10,5 +10,9 @@ export default {
     },
     getlistSmartContract: state => {
         return state.listSmartContract;
+    }, 
+    getListTemplate : state => {
+        console.log('---------state.listTemp',state.listTemp);
+        return state.listTemp;
     }
 }
