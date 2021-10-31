@@ -113,7 +113,6 @@ const mutations = {
     },
     /* -- index -- */
     setIndex(state, data) {
-        console.log('data', data);
         state.index = data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
@@ -155,6 +154,7 @@ const mutations = {
         state.data.configVul = vul
     },
     SetInitialMarking(state, new_initial_data) {
+        console.log('datanerew---', new_initial_data);
         state.data.initialMarkingInfor = new_initial_data
     },
     /* -- view -- */
