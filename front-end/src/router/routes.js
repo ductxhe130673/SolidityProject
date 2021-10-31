@@ -8,6 +8,7 @@ import ChooseProperty from "../views/ChooseProperty"
 
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
+import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -39,8 +40,6 @@ import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
 import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
-
-import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import { DOMAIN_TITLE } from '../.env'
 
 
