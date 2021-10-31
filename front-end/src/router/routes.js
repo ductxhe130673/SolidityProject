@@ -8,7 +8,7 @@ import ChooseProperty from "../views/ChooseProperty"
 
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
-import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
+// import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -40,7 +40,12 @@ import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
 import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
+
 import { DOMAIN_TITLE } from '../.env'
+
+
+import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
+import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
 
 export const routes = [{
@@ -77,8 +82,6 @@ export const routes = [{
                 component: CheckReenTrancyDetail,
                 meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` }
             },
-
-
             {
                 path: 'checking-result',
                 name: 'CheckingResult',
@@ -176,6 +179,12 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
     },
     {
+        path: "/InitialMarkingLink",
+        name: "InitialMarkingLink",
+        component: InitialMarkingLink,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial Marking Link` },
+    },
+    {
         path: "/check-rs",
         name: "checkingresult31",
         component: checkingresult31,
@@ -243,7 +252,6 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
-
 ]
 
 /*

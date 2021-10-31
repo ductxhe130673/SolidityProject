@@ -63,7 +63,7 @@
     <div id="locate-4">
       <div class="label">Configuration</div>
       <div class="link-to">
-        <a href="" @click="navigate('config')">Link to setting Configuration</a>
+        <a href="" @click="navigate('config')"> Link to setting Configuration</a>
       </div>
     </div>
     <div class="contain-process">
@@ -181,7 +181,7 @@ export default {
     },
     navigate(param) {
       if (param == "config") {
-        this.$router.push({ path: "" });
+        this.$router.push({ name: "InitialMarkingLink" });
       }
       if (param == "back") {
         this.$router.push({ name: "Initial" });
@@ -364,6 +364,11 @@ export default {
 </script>
 
 <style scoped>
+#main{
+  height: 100%;
+  width: 100%;
+  
+}
 #header {
   text-align: center;
   margin-top: 2%;
@@ -373,11 +378,11 @@ export default {
 .contain-process {
   width: 50%;
   margin: 0 auto;
-  padding-top: 5%;
+  padding-bottom: 10%;
 }
 #locate-1 {
   border: 1px solid;
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   padding-bottom: 3%;
 }
@@ -459,6 +464,7 @@ export default {
 #processing-btn {
   margin: 40px;
   text-align: center;
+  margin-top: -90px;
 }
 #download {
   text-align: right;
@@ -518,7 +524,7 @@ export default {
 #locate-2,
 #locate-3,
 #locate-4 {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   padding: 3% 2%;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
@@ -541,6 +547,7 @@ export default {
   display: flex;
   align-items: center;
   text-decoration: underline;
+  padding-left: 10px;
 }
 span {
   float: right;

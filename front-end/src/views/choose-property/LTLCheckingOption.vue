@@ -86,11 +86,11 @@ export default {
 #pcb-content p {
   font-size: 16px;
   font-weight: bold;
-  color: rgb(97, 97, 97);
+  color: rgb(0, 0, 0);
 }
 #pcb-content li {
   font-size: 14px;
-  color: rgb(145, 144, 144);
+  color: rgb(0, 0, 0);
 }
 #pcb-button {
   margin-top: 40px;
@@ -100,14 +100,14 @@ export default {
 }
 .link-button {
   cursor: pointer;
-  width: 30%;
+  /* width: 30%; */
   height: 2%;
   border: 1px solid #2196f3;
   text-align: center;
   color: #2196f3;
   font-size: 13px;
   line-height: 22px;
-  font-weight: 600;
+  /* font-weight: 600; */
   padding: 4px 3px;
   border-radius: 4px;
   cursor: pointer;
