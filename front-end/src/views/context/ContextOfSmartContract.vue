@@ -23,13 +23,13 @@
         <p>Type</p>
       </div>
       <div class="col-10">
-        <select
+        <select 
           class="form-select input-sm"
           aria-label="Default select example"
         >
           <option>--- Select Type ---</option>
           <option v-for="c in contexts" :key="c" :value="c">
-            {{ c.name1 }}
+            {{ c.context_type }}
           </option>
         </select>
       </div>
@@ -53,7 +53,7 @@
         class="btn btn-outline-primary btn-sm"
         @click="routing('add')"
       >
-        Add
+        Next
       </button>
       <button
         id="btn1"
@@ -61,7 +61,15 @@
         class="btn btn-outline-primary btn-sm"
         @click="OpenUploadContext"
       >
-        Up a Context File
+        Upload a Context File
+      </button>
+      <button
+        id="btn2"
+        type="button back-btn"
+        class="btn btn-outline-primary btn-sm"
+        @click="routing('ship')"
+      >
+        Skip
       </button>
       <button
         id="btn2"
@@ -86,6 +94,7 @@
 <script>
 import UploadContext from "./UpLoadContext.vue";
 import {GetAllcpncontext} from "../../services/data"
+// console.log('--------',document.getElementById("context").value); 
 export default {
   components: { UploadContext },
   data() {
@@ -95,6 +104,7 @@ export default {
       contextSC: [],
       showComponents: false,
       selectComponents: "",
+      selected: '0',
     };
   },
   computed: {
@@ -112,7 +122,11 @@ export default {
     async initData() {
       this.contexts = await GetAllcpncontext();
     },
-    
+    // onChangeContext(){
+    //   console.log('--------',document.getElementById("context").value);
+    //  if(document.getElementById("context").value === 'EtherLotto Context') 
+    //   document.getElementById("type").innerHTML = "Type1";
+    // },
     cComponents() {
       this.showComponents = false;
     },
@@ -126,14 +140,18 @@ export default {
     routing(param) {
       if (param == "add") {
         this.$router.push({ name: "LTLCheckOption" });
-        this.$store.commit("setIndex", 4);      
+         this.$store.commit("setIndex", 4);    
       }
       if (param == "upfile") {
         this.$router.push({ name: "UpLoadContext" });
       }
+      if (param == "ship") {
+        this.$router.push({ name: "LTLCheckOption" });
+         this.$store.commit("setIndex", 4);    
+      }
       if (param == "back") {
         this.$router.push({ name: "SelectSmartContract" });
-        this.$store.commit("setIndex", 2);      
+         this.$store.commit("setIndex", 2);    
       }
     },
   },
@@ -213,5 +231,8 @@ export default {
   #section {
     width: 100%;
   }
+}
+.back-btn{
+  
 }
 </style>

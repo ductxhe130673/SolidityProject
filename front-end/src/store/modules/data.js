@@ -1,15 +1,27 @@
 const state = {
+    rs: 'asdasdas',
     used: false,
     version: 2,
-    date_modified: 0,
     index : 0,
+    date_modified: 0,
     data: {
         selectedSc: [],
-        selectedSCInfor: {},
+        selectedSCInfor: {name:"hello"},
         selectedContext: [],
         selectedVulnerbility: [],
-        configVul: {}
+        configVul: {},
+        initialMarkingInfor: {
+          NumberOfUser: null,
+          Balance:{
+            type: "fixed",
+            fixed: null,
+            random: {from: null, to: null},
+            map: null
+          },
+          Funtion_params: {}
+        },    
     },
+
     views: {
         process: 'sc-selection',
         road_page: 1,
@@ -20,6 +32,9 @@ const state = {
   }
   
   const getters = {
+    Getrs: state => {
+      return state.rs;
+    },
     /* -- data -- */
     GetSelectedSC: state => {
       return state.data.selectedSc;
@@ -36,9 +51,12 @@ const state = {
     GetConfigVul: state => {
       return state.data.configVul;
     },
-    /* -- index -- */
-    getIndex : state =>{
-      return state.data.index;
+    GetInitialMarking: state => {
+      return state.data.initialMarkingInfor;
+    },
+     /* -- index -- */
+     getIndex : state =>{
+      return state.index;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -46,9 +64,14 @@ const state = {
     GetCurrentPage: (state) => state.views.current_page,
     GetFourthStepViews: (state) => state.views.fourth_step_views,
     GetFourthStepViewsList: (state) => state.views.fourth_step_views_list,
+    
   }
   
   const mutations = {
+    Setrs(state,value){
+      console.log("commit result");
+      state.rs = value;
+    },
       /* -- used */
     SetUsedState(state,value){
         state.used = value
@@ -73,10 +96,6 @@ const state = {
           fourth_step_views: "property-coptions",
         }
     },
-     /* -- index -- */
-     setIndex(state, data){
-       state.index = data;
-     },
       /* -- data -- */
     SetDataState(state,data){
         state.data = data
@@ -92,6 +111,10 @@ const state = {
     },
     SetSCSelectedInfo(state, newArr){
       state.data.selectedSCInfor = newArr;
+    },
+     /* -- index -- */
+     setIndex(state, data){
+      state.index = data;
     },
     NewSCSelectedInfor(state, {sc_id, sc_info}) {
       var vuls = state.data.selectedVulnerbility
@@ -130,6 +153,9 @@ const state = {
     },
     SetConfigVul(state, vul){
       state.data.configVul = vul
+    },
+    SetInitialMarking(state, new_initial_data){
+      state.data.initialMarkingInfor = new_initial_data
     },
     /* -- view -- */
     SetViewsState(state,views){

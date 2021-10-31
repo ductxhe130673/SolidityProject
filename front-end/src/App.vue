@@ -47,6 +47,7 @@ export default {
       },
   },
 };
+
 </script>
 
 <style>
@@ -62,4 +63,4 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
-</style>
+</style

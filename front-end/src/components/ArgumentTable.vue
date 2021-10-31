@@ -85,7 +85,7 @@ export default {
   padding-bottom: 3%;
 }
 .table{
-  width:100%;
+  width:80%;
   margin: 0 auto
 }
 .table tr:first-child{

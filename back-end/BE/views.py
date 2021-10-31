@@ -18,7 +18,7 @@ def loginpage(request):
                 'id': '12',
                 'Username': 'sa',
                 'Password': '1',
-                'Realname': 'Hanh Ng',
+                'Realname': 'Billy Tran',
                 'Role': 'user',
             }
 

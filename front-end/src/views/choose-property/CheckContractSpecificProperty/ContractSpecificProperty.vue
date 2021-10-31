@@ -73,20 +73,22 @@ export default {
   justify-content: space-between;
 }
 .link-button {
-  background: #0090f2;
-  padding: 4px 15px;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 14px;
-  transition: all 0.3s linear;
   cursor: pointer;
-  text-decoration: none;
-  margin-right: 10px;
+  width: 18%;
+  height: 2%;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 600;
+  padding: 4px 3px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 .link-button:hover {
-  background: #156fac;
-  color: #fff;
+  background-color: #1079cf;
+  color: white;
 }
 .choosen_button {
   background-color: #105a8b;
