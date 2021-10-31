@@ -14,5 +14,9 @@ export default {
     },
     SET_LIST_SMART_CONTRACT(state,data){
         state.listSmartContract = data;
+    },
+    SET_LIST_LTL_TEMPLATE(state, data){
+        console.log('data-------',data);
+        state.listTemp = data; 
     }
 }

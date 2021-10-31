@@ -150,13 +150,12 @@ nav {
     flex-basis: 10%;
     width: 150px;
     height: 70px;
-    border: 2px solid black;
+    border: 1px solid black;
 }
 .nav__left .name {
     flex-basis: 10%;
-    margin-right: 8%;
-    margin-left: 15%;
-    font-size: 30px;
+    margin-left: 21%;
+    font-size: 24px;
     cursor: pointer;
     color: black;
     font-weight: bold;
@@ -182,7 +181,7 @@ nav {
     align-items: center;
     width: 150px;
     height: 70px;
-    border: 2px solid black;
+    border: 1px solid black;
     padding-right: 10px;
     padding-left: 10px;
 }
@@ -204,7 +203,7 @@ nav {
     align-items: center;
      width: 150px;
     height: 70px;
-    border: 2px solid black;
+    border: 1px solid black;
     
 }
 .avatar {
