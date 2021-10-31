@@ -1,3 +1,4 @@
+from django.test import TestCase
 from django.http import request, response
 from django.test import TestCase,SimpleTestCase
 from rest_framework.test import APITestCase

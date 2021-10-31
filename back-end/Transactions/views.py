@@ -67,14 +67,14 @@ class Listofcheckedtransactions(APIView):
 
 
 class Checkreentrancydetail(APIView):
-    def get(self, request):
+    def get(self,request):
         try:
             if request.method == 'GET':
                 sql = '''SELECT result FROM CheckedBatchSC
                         where aid = %s'''
             cursor = connection.cursor()
             try:
-                cursor.execute(sql, [request.GET['id']])
+                cursor.execute(sql,[request.GET['id']])
                 data = cursor.fetchall()
                 return Response(data, status=status.HTTP_200_OK)
             except Exception as e:
