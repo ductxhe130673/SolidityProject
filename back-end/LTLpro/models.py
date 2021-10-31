@@ -9,4 +9,5 @@ class  LTLpro(models.Model):
 	tpid = models.IntegerField(null = True);
 
 	class Meta:
+		managed = False
 		db_table = "provul"
