@@ -7,6 +7,7 @@ import InitialMarkingSetting from "../views/InitialMarkingSetting.vue"
 import ChooseProperty from "../views/ChooseProperty"
 
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
+import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
 // import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
@@ -44,7 +45,7 @@ import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 import { DOMAIN_TITLE } from '../.env'
 
 
-import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
+//import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
 

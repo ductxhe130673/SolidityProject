@@ -3,7 +3,7 @@ db = mysql.connector.connect(
     host = "localhost",
     user="root",
     passwd = "123456",
-    database="soliditycpn"
+    database="test_soliditycpn"
 )
 mycursor = db.cursor()
 mycursor.execute("""CREATE TABLE Account (

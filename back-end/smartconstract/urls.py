@@ -9,4 +9,5 @@ urlpatterns = [
     path('globalvarialbe',views.getGBByScId),
     path('localvariable',views.getLocalVar),
     path('getvariablefunctionargu',views.getFunctionVarArgu),
+    path('getargubyfunctionid', views.getArguByFunctionId)
 ]

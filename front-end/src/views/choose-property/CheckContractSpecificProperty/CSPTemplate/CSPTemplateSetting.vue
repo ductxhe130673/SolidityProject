@@ -69,8 +69,8 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await GetGloLocArgOfSmartContract(3);
-      console.log(res);
+      const res = await GetGloLocArgOfSmartContract(1);
+      console.log('getglo-----',res);
       console.log(this.GetSCSelectedInfor.name);
     },
    async fetchTemplate() {

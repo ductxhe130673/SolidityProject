@@ -15,6 +15,7 @@ class cpncontextAPIView(APIView):
 
 	    #----------GET ALL LTL properties-----------
 	def get(self,request):
+		print("abc", request)
 		try:
 			if request.method == 'GET':
 				cpnContext = cpncontext.objects.all()
@@ -22,6 +23,7 @@ class cpncontextAPIView(APIView):
 				return Response(serializeLTLpro.data, status=status.HTTP_202_ACCEPTED)
 				# return render(request, 'ContextOfSmartContract.vue', {'cpncontext': serializeLTLpro}, status= status.HTTP_202_ACCEPTED)
 		except Exception as e: 
+			print("ERROR=====",e)
 			return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 	
 	def post(self,request):
