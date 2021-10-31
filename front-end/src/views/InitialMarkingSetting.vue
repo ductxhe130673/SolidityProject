@@ -1,7 +1,7 @@
 <template>
   <div id="initial-marking">
     <div id="initial-marking-header">
-      Confguration
+      Configuration
     </div>
     <div id="initial-marking-input">
       <div id="header-section">
@@ -345,10 +345,9 @@ export default {
     routing(param) {
       if (param == "save") {
         this.$router.push({ name: "CheckSmartContract" });
-         this.$store.commit("setIndex", 5);    
       }
       if (param == "back") {
-        this.$router.push({ name: "CSPSettingType" });   
+        this.$router.push({ name: "CSPSettingType" });
       }
     },
     setFunctionParam(func){
@@ -375,7 +374,6 @@ export default {
 #initial-marking-input{
   width: 60%;
   margin-left: 20%;
-
   display: flex;
   justify-content: space-between;
 }
@@ -516,8 +514,8 @@ export default {
 /* button */
 #processing-btn{
   width: 60%;
-  height: 80px;
-  margin-left: 20%;
+  height: 120px;
+  margin-left: 25%;
   display: flex;
   justify-content: space-between;
   align-items: center;
