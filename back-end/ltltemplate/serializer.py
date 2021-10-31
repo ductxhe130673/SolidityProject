@@ -6,5 +6,6 @@ from .models import ltltemplate
 class ltltemplateSerializer(serializers.ModelSerializer):
     class Meta:
         model = ltltemplate
-        fields = '__all__'
+        fields = ['lteid', 'name', 'formula', 'description','ltyid'] 
+        #fields = '__all__'
         # fields = ['lteid', 'name', 'formula', 'description','ltyid']

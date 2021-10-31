@@ -22,9 +22,10 @@
                   :to="{path:'checkreentrancydetail', query: { id: item[0] }}"
                   tag="a"
                   class="lk"
-                  >{{ item[1] +' '+item[2]}}</router-link
+                  >{{ item[1]}}</router-link
                 ></div>
               </td>
+              <td>{{ item[2] }}</td>
               <td>{{ item[3] }}</td>
               <td>{{ item[4] }}</td>
             </tr>
