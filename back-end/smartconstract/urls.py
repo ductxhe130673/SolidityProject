@@ -18,4 +18,5 @@ urlpatterns = [
     path('addnewlnafile',views.addNewLNAFile),
     path('addnewcheckedbatchsc',views.addNewCheckedBatchSC),
     path('addnewcheckedsmartcontractdetail',views.addNewCheckedSmartContractDetail),
+    path('addnewbalance',views.addNewBalance),
 ]

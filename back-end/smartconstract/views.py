@@ -159,7 +159,8 @@ def addNewBalanceTypeRandom(request):
 @api_view(['POST'])
 def addNewIMFunction(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['fun_name'],request.GET['sender_from'],request.GET['sender_to'],request.GET['imid'])
+        imid = dbcontext.getLastInsertIDFromInitialMarking()
+        resData = dbcontext.addNewIMFunction(request.GET['fun_name'],request.GET['sender_from'],request.GET['sender_to'],imid)
         if resData is None :
             return Response({"message": "Fail To Add New IMFunction!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -170,7 +171,8 @@ def addNewIMFunction(request):
 @api_view(['POST'])
 def addNewIMArgument(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'],request.GET['imfid'])
+        imfid = dbcontext.getIMFunctionIDByIMIDAndFuncName(request.GET['fun_name'],request.GET['imid'])
+        resData = dbcontext.addNewIMFunction(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'],imfid)
         if resData is None :
             return Response({"message": "Fail To Add New IMArgumentt!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -211,6 +213,18 @@ def addNewCheckedSmartContractDetail(request):
     except Exception as e:
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
+
+@api_view(['POST'])
+def addNewBalance(request):
+    try:
+        imid = dbcontext.getLastInsertIDFromInitialMarking()
+        resData = dbcontext.addNewBalance(request.GET['balanceType'],request.GET['blfrom'],request.GET['blto'],request.GET['blvalue'],request.GET['blrange'],imid)
+        if resData is None :
+            return Response({"message": "Fail To Add New Balance!!!"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        print(e)
+        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)         
 
 @api_view(['GET'])
 def demo(request):

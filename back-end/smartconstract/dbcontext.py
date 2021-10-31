@@ -279,6 +279,61 @@ def addNewCheckedSmartContractDetail(sid,bid):
     finally:
         connection.close() 
 
+# GET LAST INSERT ID FROM INITIALMARKING
+def getLastInsertIDFromInitialMarking():
+    try:
+        sql = '''SELECT imid FROM initialmarking ORDER BY imid DESC LIMIT 1;;'''
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchall()
+        return row
+    except:
+        return None
+    finally:
+        connection.close()
+
+
+# ADD NEW BALANCE
+def addNewBalance(balanceType,blfrom,blto,blvalue,blrange,imid):
+    try:
+        if balanceType == "Fixed":
+            sql = '''INSERT INTO Balance (blvalue,imid) VALUES (%s,%s);'''
+            cursor = connection.cursor()
+            cursor.execute(sql, ([blvalue],[imid]))
+            row = cursor.fetchall()
+            return "Add New Balance Successfull"
+        if balanceType == "Random":
+            sql = '''INSERT INTO Balance (blfrom,blto,blvalue,imid) VALUES (%s,%s,%s,%s);'''
+            cursor = connection.cursor()
+            cursor.execute(sql, ([blfrom],[blto],[blvalue],[imid]))
+            row = cursor.fetchall()
+            return "Add New Balance Successfull"
+        if balanceType == "Map":
+            sql = '''INSERT INTO Balance (blfrom,blto,blvalue,blrange,imid) VALUES (%s,%s,%s,%s,%s);'''
+            cursor = connection.cursor()
+            cursor.execute(sql, ([blfrom],[blto],[blvalue],[blrange],[imid]))
+            row = cursor.fetchall()
+            return "Add New Balance Successfull"        
+    except Exception as e:
+        print(e)
+        return None
+    finally:
+        connection.close() 
+
+# GET IMFUNTIONID FROM IMFUNCTION BY INITIALMARKINGID AND FUNCTION_NAME
+def getIMFunctionIDByIMIDAndFuncName(fun_name,imid):
+    try:
+        sql = '''select imfid from imfunction where fun_name like '%"%s"%' and imid = %s;'''
+        cursor = connection.cursor()
+        cursor.execute(sql, [fun_name],[imid])
+        row = cursor.fetchall()
+        return row
+    except:
+        return None
+    finally:
+        connection.close()
+
+
 #mycursor = db.cursor()
 #sqlFomular = "INSERT INTO InitialMarking (num_user,IM_type) VALUES (%s,%s)"
 #multi = [
