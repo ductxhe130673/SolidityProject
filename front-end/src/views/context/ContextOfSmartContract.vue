@@ -23,7 +23,7 @@
         <p>Type</p>
       </div>
       <div class="col-10">
-        <select
+        <select 
           class="form-select input-sm"
           aria-label="Default select example"
         >
@@ -94,6 +94,7 @@
 <script>
 import UploadContext from "./UpLoadContext.vue";
 import {GetAllcpncontext} from "../../services/data"
+// console.log('--------',document.getElementById("context").value); 
 export default {
   components: { UploadContext },
   data() {
@@ -103,6 +104,7 @@ export default {
       contextSC: [],
       showComponents: false,
       selectComponents: "",
+      selected: '0',
     };
   },
   computed: {
@@ -120,7 +122,11 @@ export default {
     async initData() {
       this.contexts = await GetAllcpncontext();
     },
-    
+    // onChangeContext(){
+    //   console.log('--------',document.getElementById("context").value);
+    //  if(document.getElementById("context").value === 'EtherLotto Context') 
+    //   document.getElementById("type").innerHTML = "Type1";
+    // },
     cComponents() {
       this.showComponents = false;
     },

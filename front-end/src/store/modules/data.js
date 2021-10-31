@@ -19,7 +19,7 @@ const state = {
             map: null
           },
           Funtion_params: {}
-        },       
+        },    
     },
 
     views: {
@@ -56,7 +56,7 @@ const state = {
     },
      /* -- index -- */
      getIndex : state =>{
-      return state.data.index;
+      return state.index;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -64,6 +64,7 @@ const state = {
     GetCurrentPage: (state) => state.views.current_page,
     GetFourthStepViews: (state) => state.views.fourth_step_views,
     GetFourthStepViewsList: (state) => state.views.fourth_step_views_list,
+    
   }
   
   const mutations = {
@@ -113,7 +114,6 @@ const state = {
     },
      /* -- index -- */
      setIndex(state, data){
-       console.log('data',data);
       state.index = data;
     },
     NewSCSelectedInfor(state, {sc_id, sc_info}) {

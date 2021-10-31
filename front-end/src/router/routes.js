@@ -64,8 +64,7 @@ export const routes = [
     component: Register,
     meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
   },
-
-
+  
   {
     path: "/select-sc/",
     name: "SelectSc",

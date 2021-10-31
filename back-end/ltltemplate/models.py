@@ -4,9 +4,9 @@ from django.db import models
 class  ltltemplate(models.Model):
     lteid= models.IntegerField(primary_key=True)
     name= models.CharField(max_length=200)
-    formula=models.TextField()
+    formula=models.CharField(max_length=200)
     template_type = models.CharField(max_length=200)
-    description= models.TextField()
+    description= models.CharField(max_length=200)
 
     class Meta:
         db_table = 'LTLTemplate'
