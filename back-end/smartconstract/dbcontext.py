@@ -1,5 +1,4 @@
 from django.db import connection
-import datetime
 # GetGlobalBySCID
 def getGlobalVarBySmartContractId(id):
     try:
@@ -247,6 +246,8 @@ def addNewLNAFile(hcpnfile,propfile):
         return None
     finally:
         connection.close()         
+
+import datetime
 
 # INSERT INTO CheckedBatchSC
 def addNewCheckedBatchSC(aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result):
