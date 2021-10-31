@@ -56,7 +56,7 @@ const getters = {
     },
     /* -- index -- */
     getIndex: state => {
-        return state.data.index;
+        return state.index;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -64,6 +64,7 @@ const getters = {
     GetCurrentPage: (state) => state.views.current_page,
     GetFourthStepViews: (state) => state.views.fourth_step_views,
     GetFourthStepViewsList: (state) => state.views.fourth_step_views_list,
+
 }
 
 const mutations = {
@@ -154,7 +155,6 @@ const mutations = {
         state.data.configVul = vul
     },
     SetInitialMarking(state, new_initial_data) {
-        console.log('datanerew---', new_initial_data);
         state.data.initialMarkingInfor = new_initial_data
     },
     /* -- view -- */

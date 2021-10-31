@@ -11,10 +11,9 @@
       <div class="col-2">Template</div>
       <div class="col-10">
         <select name="" class="form-select">
-          <option value="">Template 1</option>
-          <option value="">Template 2</option>
-          <option value="">Template 3</option>
-          <option value="">Template 4</option>
+          <option v-for="item in templates" :key="item" :value="item">
+            {{ item.name }}
+          </option>
         </select>
       </div>
     </div>
@@ -52,13 +51,16 @@
 
 <script>
 import FormularEditor from "../../../../components/FormularEditor.vue";
-import { GetGloLocArgOfSmartContract } from "../../../../services/data";
+import { GetGloLocArgOfSmartContract, GetAllltltemplates } from "../../../../services/data";
 export default {
   data: function () {
-    return {};
+    return {
+      templates:[]
+    };
   },
   mounted() {
     this.fetchData();
+    this.fetchTemplate();
   },
   components: {
     FormularEditor,
@@ -70,6 +72,10 @@ export default {
       const res = await GetGloLocArgOfSmartContract(3);
       console.log(res);
       console.log(this.GetSCSelectedInfor.name);
+    },
+   async fetchTemplate() {
+      this.templates = await GetAllltltemplates();
+      console.log('-------this.templates',this.templates);
     },
     routing(param) {
       if (param == "add") {
