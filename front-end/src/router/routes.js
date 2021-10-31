@@ -40,10 +40,13 @@ import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
 import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
+
+import { DOMAIN_TITLE } from '../.env'
+
+
 import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
-import { DOMAIN_TITLE } from '../.env'
 
 export const routes = [{
         path: "/",
@@ -63,7 +66,6 @@ export const routes = [{
         component: Register,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
     },
-
     {
         path: "/select-sc/",
         name: "SelectSc",
@@ -98,7 +100,6 @@ export const routes = [{
         ],
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` },
     },
-
     {
         path: "/context/",
         name: "SelectContext",
