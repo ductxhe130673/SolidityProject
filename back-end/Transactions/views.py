@@ -74,7 +74,7 @@ class Checkreentrancydetail(APIView):
                         where aid = %s'''
             cursor = connection.cursor()
             try:
-                cursor.execute(sql,[request.GET['id']])
+                cursor.execute(sql,[request.GET['id']] )
                 data = cursor.fetchall()
                 return Response(data, status=status.HTTP_200_OK)
             except Exception as e:

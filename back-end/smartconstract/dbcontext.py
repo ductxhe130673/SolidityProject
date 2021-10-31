@@ -1,4 +1,4 @@
-from django.db import connection,transaction
+from django.db import connection
 import datetime
 # GetGlobalBySCID
 def getGlobalVarBySmartContractId(id):
@@ -57,7 +57,7 @@ def getFunctionBySCId(id):
         for row in dbData:
             element = {
                 "fid":row[0],
-                "name":row[1],
+                # "name":row[1],
                 # "bodyContent":row[2],
                 "argument":getArgumentByFuncID(row[0]),
                 "localVar":getLocalVarByFuncId(row[0])
