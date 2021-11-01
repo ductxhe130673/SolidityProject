@@ -148,59 +148,12 @@ def getInitialMarkingTypeByInitialMarkingID(imId):
     finally:
         connection.close() 
 
-#INSERT INTO BALANCE
-# TYPE IM_TYPE1 : FIXED
-def addNewBalanceTypeFixed(blvalue,imid):
-    try:
-        sql = '''INSERT INTO Balance (blvalue,imid) VALUES (%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([blvalue],[imid]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New Balance Successfull"
-    except Exception as e:
-        print(e)
-        return None
-    finally:
-        connection.close()  
-
-# TYPE IM_TYPE2 : RANDOM
-def addNewBalanceTypeRandom(blfrom,blto,blvalue,imid):
-    try:
-        sql = '''INSERT INTO Balance (blfrom,blto,blvalue,imid) VALUES (%s,%s,%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([blfrom],[blto],[blvalue],[imid]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New Balance Successfull"
-    except Exception as e:
-        print(e)
-        return None
-    finally:
-        connection.close() 
-
-# TYPE IM_TYPE3 : MAP ?????
-def addNewBalanceTypeMap(blfrom,blto,blvalue,blrange,imid):
-    try:
-        sql = '''INSERT INTO Balance (blfrom,blto,blvalue,blrange,imid) VALUES (%s,%s,%s,%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([blfrom],[blto],[blvalue],[blrange],[imid]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New Balance Successfull"
-    except Exception as e:
-        print(e)
-        return None
-    finally:
-        connection.close()  
-
-
 # INSERT INTO IMFunction
-def addNewIMFunction(fun_name,sender_from,sender_to,imid):
+def addNewIMFunction(fun_name,sender_from,sender_to):
     try:
         sql = '''INSERT INTO IMFunction (fun_name,sender_from,sender_to,imid) VALUES (%s,%s,%s,%s);'''
         cursor = connection.cursor()
-        cursor.execute(sql, ([fun_name],[sender_from],[sender_to],[imid]))
+        cursor.execute(sql, ([fun_name],[sender_from],[sender_to],[getLastInsertIDFromInitialMarking()]))
         row = cursor.fetchall()
         # transaction.commit()
         return "Add New IMFunction Successfull"
@@ -211,12 +164,11 @@ def addNewIMFunction(fun_name,sender_from,sender_to,imid):
         connection.close()      
 
 # INSERT INTO IMArgument
-# chua laay IMfunctionID ??
-def addNewIMArgument(arg_name,IMfrom,IMto,imfid):
+def addNewIMArgument(arg_name,IMfrom,IMto):
     try:
         sql = '''INSERT INTO IMArgument (arg_name,IMfrom,IMto,imfid) VALUES (%s,%s,%s,%s);'''
         cursor = connection.cursor()
-        cursor.execute(sql, ([arg_name],[IMfrom],[IMto],[imfid]))
+        cursor.execute(sql, ([arg_name],[IMfrom],[IMto],[getLastInsertIDFromIMFunction()]))
         row = cursor.fetchall()
         # transaction.commit()
         return "Add New IMArgumentt Successfull"
@@ -279,7 +231,7 @@ def addNewCheckedSmartContractDetail(sid,bid):
     finally:
         connection.close() 
 
-# GET LAST INSERT ID FROM INITIALMARKING
+# GET LAST INSERTED ID FROM INITIALMARKING
 def getLastInsertIDFromInitialMarking():
     try:
         sql = '''SELECT imid FROM initialmarking ORDER BY imid DESC LIMIT 1;;'''
@@ -294,24 +246,24 @@ def getLastInsertIDFromInitialMarking():
 
 
 # ADD NEW BALANCE
-def addNewBalance(balanceType,blfrom,blto,blvalue,blrange,imid):
+def addNewBalance(balanceType,blfrom,blto,blvalue,blrange):
     try:
         if balanceType == "Fixed":
             sql = '''INSERT INTO Balance (blvalue,imid) VALUES (%s,%s);'''
             cursor = connection.cursor()
-            cursor.execute(sql, ([blvalue],[imid]))
+            cursor.execute(sql, ([blvalue],[getLastInsertIDFromInitialMarking()]))
             row = cursor.fetchall()
             return "Add New Balance Successfull"
         if balanceType == "Random":
-            sql = '''INSERT INTO Balance (blfrom,blto,blvalue,imid) VALUES (%s,%s,%s,%s);'''
+            sql = '''INSERT INTO Balance (blfrom,blto,imid) VALUES (%s,%s,%s);'''
             cursor = connection.cursor()
-            cursor.execute(sql, ([blfrom],[blto],[blvalue],[imid]))
+            cursor.execute(sql, ([blfrom],[blto],[getLastInsertIDFromInitialMarking()]))
             row = cursor.fetchall()
             return "Add New Balance Successfull"
         if balanceType == "Map":
-            sql = '''INSERT INTO Balance (blfrom,blto,blvalue,blrange,imid) VALUES (%s,%s,%s,%s,%s);'''
+            sql = '''INSERT INTO Balance (blrange,imid) VALUES (,%s,%s);'''
             cursor = connection.cursor()
-            cursor.execute(sql, ([blfrom],[blto],[blvalue],[blrange],[imid]))
+            cursor.execute(sql, ([blrange],[getLastInsertIDFromInitialMarking()]))
             row = cursor.fetchall()
             return "Add New Balance Successfull"        
     except Exception as e:
@@ -332,6 +284,20 @@ def getIMFunctionIDByIMIDAndFuncName(fun_name,imid):
         return None
     finally:
         connection.close()
+
+# GET LAST INSERTED ID FROM IMFUNCTION
+def getLastInsertIDFromIMFunction():
+    try:
+        sql = '''SELECT imfid FROM IMFunction ORDER BY imfid DESC LIMIT 1;'''
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchall()
+        return row
+    except:
+        return None
+    finally:
+        connection.close()
+
 
 
 #mycursor = db.cursor()
