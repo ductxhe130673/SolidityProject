@@ -95,7 +95,7 @@ def getArgumentByFuncID(id):
 # GetCPNContextIDByNameAndContextType
 def getCPNContextIDByNameAndContextType(name,context_type):
     try:
-        sql = '''SELECT * FROM cpncontext where name like '%"%s"%' and context_type like '%"%s"%;'''
+        sql = '''SELECT * FROM cpncontext where name like '%"%s"%' and context_type like '%"%s"%';'''
         # SELECT * FROM cpncontext where name like '%a%' and context_type like '%y%'
         cursor = connection.cursor()
         cursor.execute(sql, [name],[context_type])
