@@ -9,4 +9,5 @@ class  ltltemplate(models.Model):
     description= models.CharField(max_length=200)
 
     class Meta:
+        managed = False
         db_table = 'LTLTemplate'
