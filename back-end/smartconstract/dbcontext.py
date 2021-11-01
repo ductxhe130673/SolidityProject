@@ -261,7 +261,7 @@ def addNewBalance(balanceType,blfrom,blto,blvalue,blrange):
             row = cursor.fetchall()
             return "Add New Balance Successfull"
         if balanceType == "Map":
-            sql = '''INSERT INTO Balance (blrange,imid) VALUES (,%s,%s);'''
+            sql = '''INSERT INTO Balance (blrange,imid) VALUES (%s,%s);'''
             cursor = connection.cursor()
             cursor.execute(sql, ([blrange],[getLastInsertIDFromInitialMarking()]))
             row = cursor.fetchall()
