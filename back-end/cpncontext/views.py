@@ -15,7 +15,6 @@ class cpncontextAPIView(APIView):
 
 	    #----------GET ALL LTL properties-----------
 	def get(self,request):
-		print("abc", request)
 		try:
 			if request.method == 'GET':
 				cpnContext = cpncontext.objects.all()
@@ -23,7 +22,6 @@ class cpncontextAPIView(APIView):
 				return Response(serializeLTLpro.data, status=status.HTTP_202_ACCEPTED)
 				# return render(request, 'ContextOfSmartContract.vue', {'cpncontext': serializeLTLpro}, status= status.HTTP_202_ACCEPTED)
 		except Exception as e: 
-			print("ERROR=====",e)
 			return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 	
 	def post(self,request):
@@ -40,7 +38,7 @@ class cpncontextAPIView(APIView):
 	def put(self,request):
 		try:
 			if request.method == 'PUT':
-				idContext = request.data['id']
+				idContext = request.data['cid']
 				contextById = cpncontext.objects.get(id=idContext)
 				serializeUpdate = cpncontextSerializer(instance=contextById, data=request.data)
 				if serializeUpdate.is_valid():
@@ -57,5 +55,6 @@ class cpncontextAPIView(APIView):
 				contextDelete = cpncontext.objects.get(id=idContextDelete)
 				contextDelete.delete()
 				return Response('Success',status=status.HTTP_200_OK)
-		except:
+		except Exception as e:
+			print('ERROR====',e)
 			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)

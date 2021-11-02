@@ -8,4 +8,3 @@ class cpncontextSerializer(serializers.ModelSerializer):
         model = cpncontext
         # fields = ['name', 'description', ]
         fields = '__all__'
-        # fields = '__all__'
