@@ -148,7 +148,7 @@ def addNewIMFunction(request):
 @api_view(['POST'])
 def addNewIMArgument(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'])
+        resData = dbcontext.addNewIMArgument(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'])
         if resData is None :
             return Response({"message": "Fail To Add New IMArgumentt!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -172,8 +172,8 @@ def addNewLNAFile(request):
 @api_view(['POST'])
 def addNewCheckedBatchSC(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['aid'],request.GET['lnid'],request.GET['lteid'],request.GET['cid'],
-        request.GET['imid'],request.GET['noSC'],request.GET['checkedDate'],request.GET['status'],request.GET['LTLformula'],request.GET['result'])
+        resData = dbcontext.addNewCheckedBatchSC(request.GET['aid'],request.GET['lteid'],request.GET['cid']
+        ,request.GET['noSC'],request.GET['status'],request.GET['LTLformula'],request.GET['result'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedBatchSC!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -185,7 +185,7 @@ def addNewCheckedBatchSC(request):
 @api_view(['POST'])
 def addNewCheckedSmartContractDetail(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['sid'],request.GET['bid'])
+        resData = dbcontext.addNewCheckedSmartContractDetail(request.GET['sid'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedSmartContractDetail !!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
