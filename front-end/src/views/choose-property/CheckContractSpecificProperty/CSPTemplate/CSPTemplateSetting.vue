@@ -41,8 +41,7 @@
       <button
         class="btn btn-outline-secondary btn-sm"
         type="button"
-        @click="routing('back')"
-      >
+        @click="routing('back')">
         Back
       </button>
     </div>
@@ -79,7 +78,7 @@ export default {
     },
     routing(param) {
       if (param == "add") {
-        this.$router.push({ name: "Initial" });
+        this.$router.push({ name: "Initial" }); 
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
