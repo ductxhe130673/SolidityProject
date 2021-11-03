@@ -10,7 +10,7 @@ class cpncontext(models.Model):
     description= models.TextField(max_length=700,db_column='description')
 
     class Meta:
-        #managed = False
+        managed = False
         db_table = 'CPNContext'
 
     
