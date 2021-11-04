@@ -16,25 +16,14 @@ def InsertIMG(FilePath):
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO LNAFile (hcpnfile,propfile) VALUES (%s,%s)"
 multi = [
-<<<<<<< HEAD
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-=======
-    (InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"C:\Capstone\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
->>>>>>> origin/sprint#2
+    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
 
 
 ]

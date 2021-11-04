@@ -10,6 +10,7 @@
         <select
           class="form-select input-sm"
           aria-label="Default select example"
+          v-model="selectedContext"
         >
           <option>--- Select Context ---</option>
           <option v-for="c in contexts" :key="c" :value="c">
@@ -23,15 +24,7 @@
         <p>Type</p>
       </div>
       <div class="col-10">
-        <select 
-          class="form-select input-sm"
-          aria-label="Default select example"
-        >
-          <option>--- Select Type ---</option>
-          <option v-for="c in contexts" :key="c" :value="c">
-            {{ c.context_type }}
-          </option>
-        </select>
+        <input class="form-control" type="text" :value="selectedContext.context_type" />
       </div>
     </div>
 
@@ -100,7 +93,7 @@ export default {
   data() {
     return {
       contexts: [],
-      selectedContext: [],
+      selectedContext: {},
       contextSC: [],
       showComponents: false,
       selectComponents: "",
@@ -111,22 +104,19 @@ export default {
     getShowComponents() {
       return this.showComponents;
     },
-    getSelectComponents() {
+    getSelectComponents(){
       return this.selectComponents;
     },
   },
+  
   mounted() {
     this.initData()
   },
   methods: {
     async initData() {
       this.contexts = await GetAllcpncontext();
+        console.log(' this.selectedContext', this.selectedContext);
     },
-    // onChangeContext(){
-    //   console.log('--------',document.getElementById("context").value);
-    //  if(document.getElementById("context").value === 'EtherLotto Context') 
-    //   document.getElementById("type").innerHTML = "Type1";
-    // },
     cComponents() {
       this.showComponents = false;
     },
@@ -139,6 +129,7 @@ export default {
     },
     routing(param) {
       if (param == "add") {
+        this.$store.commit("SetSelectedContext", this.selectedContext )
         this.$router.push({ name: "LTLCheckOption" });
          this.$store.commit("setIndex", 4);    
       }
@@ -192,6 +183,12 @@ export default {
   margin-top: 50px;
   margin-bottom: 50px;
   padding-bottom: 5%;
+}
+#context-type {
+  width: 100%;
+  height: 80%;
+  border-radius: 3px;
+  border: 1px solid black;
 }
 #btns button {
   margin-left: 40px;
