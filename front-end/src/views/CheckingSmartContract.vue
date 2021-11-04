@@ -11,8 +11,24 @@
         <div class="table table-striped table-hover">
           <table class="table" border="1">
             <tr>
-              <th>#</th>
-              <th>Contract Name</th>
+              <th>
+                #<span
+                  ><a-icon id="icon" type="caret-up" @click="sort('asId')" />
+                  <a-icon id="icon" type="caret-down" @click="sort('deId')" />
+                </span>
+              </th>
+              <th>
+                Contract Name
+                <span
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('asName')" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                    @click="sort('deName')"
+                /></span>
+              </th>
             </tr>
             <tr v-for="data in datatable" :key="data.id">
               <td>{{ data.id }}</td>
@@ -47,7 +63,7 @@
     <div id="locate-4">
       <div class="label">Configuration</div>
       <div class="link-to">
-        <a href="" @click="navigate('config')">Link to setting Configuration</a>
+        <a href="" @click="navigate('config')"> Link to setting Configuration</a>
       </div>
     </div>
     <div class="contain-process">
@@ -114,7 +130,9 @@
       <button v-if="step == 'finish'" class="btn btn-primary-outline">
         Next
       </button>
-      <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
+      <button class="btn btn-primary-outline" @click="navigate('back')">
+        Back
+      </button>
     </div>
   </div>
 </template>
@@ -127,7 +145,8 @@ export default {
     return {
       datatable: [
         { id: "1", var: "EtherGame" },
-        { id: "2", var: "	EtherLotto" },
+        { id: "2", var: "AtherGame" },
+        { id: "3", var: "CtherGame" },
       ],
       step: "initial",
       list_selected_sc: [],
@@ -144,21 +163,37 @@ export default {
     };
   },
   methods: {
+    sort(mess) {
+      switch (mess) {
+        case "asId":
+          this.datatable.sort((a, b) => a.id - b.id);
+          break;
+        case "deId":
+          this.datatable.sort((a, b) => b.id - a.id);
+          break;
+        case "asName":
+          this.datatable.sort((a, b) => (a.var < b.var ? 1 : -1));
+          break;
+        case "deName":
+          this.datatable.sort((a, b) => (a.var > b.var ? 1 : -1));
+          break;
+      }
+    },
     navigate(param) {
       if (param == "config") {
         this.$router.push({ name: "InitialMarkingLink" });
       }
       if (param == "back") {
         this.$router.push({ name: "Initial" });
-      this.$store.commit("setIndex", 4);    
-
+        this.$store.commit("setIndex", 4);
       }
-
     },
     async callUnfoldingTool() {
       const tName = "unfolding";
-      const tcontext_PATH_xml = "<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>";
-      const tltl_PATH_json = "{\n    \"type\": \"general\",\n    \"params\": {\n        \"name\": \"under_over_flow\",\n        \"inputs\": [\"currentBalance\"]\n    }\n}";
+      const tcontext_PATH_xml =
+        "<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>";
+      const tltl_PATH_json =
+        '{\n    "type": "general",\n    "params": {\n        "name": "under_over_flow",\n        "inputs": ["currentBalance"]\n    }\n}';
       const res = await CheckService.callUnfoldingTools(
         tName,
         tcontext_PATH_xml,
@@ -171,7 +206,7 @@ export default {
     async callToolHelena() {
       console.log("Call the helena tool");
       const tName = "helena";
-      this.$store.commit("Setrs","wait a seconds...");
+      this.$store.commit("Setrs", "wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
         const mess = res.data.message;
@@ -179,9 +214,8 @@ export default {
         this.$store.commit("Setrs", mess);
       } else {
         console.log("Start mutation");
-        this.$store.commit("Setrs","11");
+        this.$store.commit("Setrs", "11");
         this.results.push("Can't run HELENA tools");
-        
       }
     },
     async callToolLTL() {
@@ -224,7 +258,7 @@ export default {
       await this.delay(2000);
       this.step = "check";
       this.$store.commit("data/SetProcessView", "check-sc");
-      this.$store.commit("setIndex", 6);    
+      this.$store.commit("setIndex", 6);
       //dcr2cpn
       // await this.checkContext();
       //unfoding
@@ -244,8 +278,8 @@ export default {
       this.step = "finish";
       this.$store.commit("data/SetProcessView", "finish");
       this.callToolHelena();
-      this.$router.push({name:"checkingresult31"})
-      this.$store.commit("setIndex", 7);    
+      this.$router.push({ name: "checkingresult31" });
+      this.$store.commit("setIndex", 7);
     },
     routing(processview) {
       this.$store.commit("data/SetProcessView", processview);
@@ -305,9 +339,8 @@ export default {
   mounted() {
     this.list_selected_sc = this.$store.getters["data/GetSelectedSC"];
     this.context = this.$store.getters["data/GetSelectedContext"];
-    this.list_selected_vuls = this.$store.getters[
-      "data/GetSelectedVulnerbility"
-    ];
+    this.list_selected_vuls =
+      this.$store.getters["data/GetSelectedVulnerbility"];
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {
@@ -342,7 +375,7 @@ export default {
   margin-bottom: 2%;
   font-weight: bold;
 }
-.contain-process {  
+.contain-process {
   width: 50%;
   margin: 0 auto;
   padding-bottom: 10%;
@@ -367,6 +400,7 @@ export default {
   padding: 4px 3px;
   border-radius: 4px;
   cursor: pointer;
+  margin-bottom: 4%;
 }
 .btn {
   margin: 0 10%;
@@ -512,5 +546,15 @@ export default {
   width: 80%;
   display: flex;
   align-items: center;
+  text-decoration: underline;
+  padding-left: 10px;
+}
+span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
 }
 </style>

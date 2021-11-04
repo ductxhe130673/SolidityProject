@@ -9,4 +9,5 @@ class Context(models.Model):
     description= models.CharField(max_length=700)
 
     class Meta:
+        managed = False
         db_table = 'Context'

@@ -30,3 +30,25 @@ class Smartcontract(models.Model):
         managed = False
         db_table = 'SmartContract'
 
+class Functions(models.Model):
+    fid = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+    bodyContent = models.TextField(blank=True, null=True)
+    sid = models.ForeignKey(Smartcontract, models.DO_NOTHING, db_column='sid')
+
+    class Meta:
+        managed = False
+        db_table = 'Function'      
+
+class Argument(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+    vartype = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
+    type = models.CharField(max_length=50, db_collation='utf8_general_ci', blank=True, null=True)
+    value = models.IntegerField()
+    fid = models.ForeignKey(Functions, models.DO_NOTHING, db_column='sid')
+
+    class Meta:
+        managed = False
+        db_table = 'Argument'          
+
