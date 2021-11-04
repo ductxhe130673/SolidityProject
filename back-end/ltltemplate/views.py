@@ -41,3 +41,16 @@ class ltltemplateAPIView(APIView):
 				return Response({"message":"Create fail!!!"},status=status.HTTP_400_BAD_REQUEST)
 		except Exception:
 			return Response({"message":"A"},status=status.HTTP_400_BAD_REQUEST)
+
+	def put(self,request):
+		try:
+			if request.method == 'PUT':
+				idLTLTemplate = request.data['id']
+				ltltemplateById = ltltemplate.objects.get(id=idLTLTemplate)
+				serializeUpdate = ltltemplateSerializer(instance=ltltemplateById, data=request.data)
+				if serializeUpdate.is_valid():
+					serializeUpdate.save()
+					return Response({"message":"Update Successfully!!!"},status=status.HTTP_202_ACCEPTED)
+				return Response({"message":"SmartConstract Data Invalid!!!"},status=status.HTTP_409_CONFLICT)
+		except:
+			return Response({"message":"Fail!!"},status=status.HTTP_404_NOT_FOUND)

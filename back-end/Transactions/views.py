@@ -2,7 +2,6 @@ from warnings import catch_warnings
 from MySQLdb._mysql import result
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 from rest_framework import status
 from .serializers import SerializerCheckedbatchsc
 from .models import Checkedbatchsc
@@ -71,6 +70,7 @@ class Checkreentrancydetail(APIView):
                 sql = '''select result from soliditycpn.checkedbatchsc where bid = %s'''
             cursor = connection.cursor()
             try:
+                print('ID====',request.GET['id'])
                 cursor.execute(sql,[request.GET['id']] )
                 data = cursor.fetchall()
                 return Response(data, status=status.HTTP_200_OK)
