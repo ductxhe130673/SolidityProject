@@ -45,6 +45,7 @@ import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 import { DOMAIN_TITLE } from '../.env'
 
 
+
 //import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
@@ -253,6 +254,7 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
+
 ]
 
 /*
