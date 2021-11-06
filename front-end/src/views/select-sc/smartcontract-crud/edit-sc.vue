@@ -8,13 +8,30 @@
         <h2 class="label">Name</h2>
         <input class="input-name input-type" type="text" v-model="nameSc" />
       </div>
+      <div class="type-area area">
+        <div class="label">Smart Contract Type</div>
+        <div class="option input-type">
+          <select class="form-select" id="inputGroupSelect01" v-model="selected">
+            <option value="common">Common</option>
+            <option value="private">Private</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+      </div>
       <div class="editor-area area">
+        <div class="label">Content</div>
+        <div class="AceEditor">
         <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)"/>
+        </div>
+      </div>
+      <div class="description">
+        <div class="label">Description</div>
+        <textarea name="" id="" cols="30" rows="5"></textarea>
       </div>
       <div class="button-area area">
         <div class="button-add-cancell">
           <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
-          <button id="button-cancel" type="button" @click="clickHandler('back')">Back</button>
+          <button id="button-cancel" type="button" @click="clickHandler('back')">Cancel</button>
         </div>
       </div>
     </div>
@@ -66,12 +83,10 @@ export default {
 <style scoped>
 #editsc {
   background-color: rgb(241, 240, 240);
- 
- 
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 110vh;
 }
 #type-select {
   width: 300px;
@@ -92,21 +107,33 @@ export default {
   margin-bottom: 30px;
   position: relative;
 }
+.option {
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+}
 /* router style */
 a.router-link-active {
   color: white;
   text-decoration: none;
 }
 .body {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
+  width: 1000px;
 }
 /* header style */
 /* name area */
 .name-area,
 .type-area {
   width: 500px;
+}
+.description{
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 50px;
 }
 .label {
   font-style: normal;
@@ -116,17 +143,28 @@ a.router-link-active {
   left: 0;
 }
 .input-name {
-  width: 250px;
+  width: 600px;
   border: 1px solid;
   border-radius: 2px;
   overflow: hidden;
 }
 /* editor area */
 .editor-area {
-  width: 600px;
+  /* width: 600px; */
   overflow: hidden;
   position: relative;
-  left: 40px;
+  display: flex;
+  /* left: 40px; */
+}
+.AceEditor{
+  height: 350px;
+  margin-left: 185px;
+}
+/* textarea */
+textarea{
+  width: 600px;
+  height: 250px;
+  margin-left: 160px;
 }
 /* button style */
 .button-add-cancell button {
@@ -150,6 +188,7 @@ a.router-link-active {
 }
 .button-add-cancell {
   position: relative;
-  left: 40px;
+  /* left: 40px; */
+  margin-left: 35%;
 }
 </style>

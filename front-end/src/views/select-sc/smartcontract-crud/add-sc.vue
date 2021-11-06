@@ -11,7 +11,7 @@
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
         <div class="option input-type">
-          <div class="common-option" v-if="isSuperior">
+          <!-- <div class="common-option" v-if="isSuperior">
             <label for="common">Common</label>
             <input
               class="radio"
@@ -40,8 +40,14 @@
               type="radio"
               v-model="selectOption"
             />
-          </div>
+          </div> -->
+          <select class="form-select" id="inputGroupSelect01" v-model="selected">
+            <option value="common">Common</option>
+            <option value="private">Private</option>
+            <option value="pending">Pending</option>
+          </select>
         </div>
+        
         <div class="option input-type" v-if="author === 'admin'">
           <select name="" id="type-select">
             <option value="">Private</option>
@@ -144,9 +150,8 @@ export default {
   align-items: center;
 }
 .option {
-  width: 250px;
+  width: 65%;
   display: flex;
-  /* background-color: red; */
   justify-content: space-between;
 }
 /* router style */
@@ -177,7 +182,7 @@ a.router-link-active {
 /* name area */
 .name-area,
 .type-area {
-  width: 500px;
+  width: 520px;
 }
 .label {
   font-style: normal;
@@ -187,7 +192,7 @@ a.router-link-active {
   left: 0;
 }
 .input-name {
-  width: 250px;
+  width: 65%;
   border: 1px solid;
   border-radius: 2px;
   overflow: hidden;
