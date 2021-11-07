@@ -150,8 +150,6 @@
     </div>
   </div>
   <!-- 
-    
-
     <div id="amsb-footer">
       <div id="itb-entries">Show {{ numOfRecod }}/{{ numOfItems }} entries</div>
       <div id="itb-cnpage">
@@ -362,13 +360,13 @@ export default {
       this.showConfirmation = true;
     },
     refuseSC() {
-       this.showConfirmation = true;
+      
       this.alertDialog = {
         title: "Alert",
         message: "Are you sure to refuse the change from Private to Common?",
         confirmbtn: "Yes",
       };
-     
+      this.showConfirmation = true;
      
     },
 
