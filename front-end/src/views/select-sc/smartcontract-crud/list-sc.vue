@@ -477,7 +477,6 @@ table {
 }
 table td,
 table th {
-  padding: 8px;
   border: 1px solid #ddd;
 }
 table tr:nth-child(even) {

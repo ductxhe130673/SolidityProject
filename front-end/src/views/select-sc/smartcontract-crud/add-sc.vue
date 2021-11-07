@@ -11,7 +11,7 @@
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
         <div class="option input-type">
-          <div class="common-option" v-if="isSuperior">
+          <div class="common-option" >
             <label for="common">Common</label>
             <input
               class="radio"
@@ -21,7 +21,7 @@
               v-model="selectOption"
             />
           </div>
-          <div class="common-option" v-else>
+          <div class="common-option">
             <label for="common">Pending</label>
             <input
               class="radio"
@@ -42,7 +42,7 @@
             />
           </div>
         </div>
-        <div class="option input-type" v-if="author === 'admin'">
+        <div class="option input-type" v-if="isAdmin">
           <select name="" id="type-select">
             <option value="">Private</option>
             <option value="">Common</option>
@@ -82,7 +82,8 @@ export default {
       nameSc: "",
       options: this.$route.params.options,
       code: "",
-      demoEditSC: "test add sc"
+      demoEditSC: "test add sc",
+      isAdmin : false,
     };
   },
   methods: {
