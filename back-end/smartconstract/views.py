@@ -1,7 +1,7 @@
 from .serializer import GetSmartConstractSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, status
 from .models import Smartcontract
 from rest_framework.decorators import api_view
 from smartconstract import dbcontext
@@ -23,6 +23,7 @@ class SmartConstractAPIView(APIView):
             if request.method == 'POST':
                 serializeClient = GetSmartConstractSerializer(
                     data=request.data)
+                print(serializeClient)
                 if serializeClient.is_valid():
                     serializeClient.save()
                     return Response({"message": "Created"}, status=status.HTTP_201_CREATED)
@@ -213,3 +214,32 @@ def getArguByFunctionId(request):
     except Exception as e:
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#@api_view(['PUT'])     
+#def updateSC(request, pk):
+#    try:
+#         SmartConstractByID = Smartcontract.objects.get(pk=pk)
+#         print(pk)
+#    except Smartcontract.DoesNotExist:
+#        return Response(status=status.HTTP_404_NOT_FOUND)
+
+#    if request.method == 'PUT':
+#        serializer = GetSmartConstractSerializer(SmartConstractByID,data=request.data) 
+#        print(serializer)
+#        if serializer.is_valid():
+#            serializer.save()
+#            return Response(serializer.errors, status=status.HTTP_202_ACCEPTED)
+#        return Response({"message": "SmartConstract Data Invalid!!!"}, status=status.HTTP_409_CONFLICT)
+
+#@api_view(['DELETE'])     
+#def deleteSC(request, pk):
+#    try:
+#         SmartConstractByID = Smartcontract.objects.get(pk=pk)
+#         print(SmartConstractByID)
+#    except Smartcontract.DoesNotExist:
+#        return Response('Fail !!!',status=status.HTTP_404_NOT_FOUND)
+
+#    if  request.method == 'DELETE':
+#          SmartConstractByID.delete()
+#          return Response('Success', status=status.HTTP_204_NO_CONTENT)
