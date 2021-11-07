@@ -5,13 +5,13 @@
       <div id="removeSC-holder">
         <confirm
           @cancel="closeConfirm"
-          @confirm="deleteSC()"
-          :dialog="deleteDialog"
+          @confirm="cfdeleteSC()"
+          :dialog="alertDialog"
         />
       </div>
     </div>
     <!-- btn accept -->
-    <div id="showConfirmation" v-if="showConfirmationA">
+    <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
         <confirm
           @cancel="closeConfirm"
@@ -21,12 +21,12 @@
       </div>
     </div>
     <!-- btn refuse  -->
-    <div id="showConfirmation" v-if="showConfirmationR">
+    <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
         <confirm
           @cancel="closeConfirm"
           @confirm="refuseSC()"
-          :dialog="refuseDialog"
+          :dialog="alertDialog"
         />
       </div>
     </div>
@@ -123,7 +123,7 @@
               <button
                 type="button"
                 class="btn btn-outline-primary"
-                @click="deleteSC()"
+                @click="deleteSC"
               >
                 Delete
               </button>
@@ -225,9 +225,7 @@ export default {
       num_of_page: 0,
       pageNum: 1,
       showConfirmation: false,
-      deleteDialog: {},
-      acceptDialog:{},
-      refuseDialog:{},
+      alertDialog: {},
       scDelete: null,
     };
   },
@@ -347,7 +345,7 @@ export default {
     },
 
     deleteSC() {
-      this.deleteDialog = {
+      this.alertDialog = {
         title: "Alert",
         message: "Do you want to delete the Smart Contract out of the system?",
         confirmbtn: "Yes",
@@ -356,7 +354,7 @@ export default {
       
     },
     acceptSC() {
-      this.acceptDialog = {
+      this.alertDialog = {
         title: "Alert",
         message: "Do you want to change the Smart Contract type from Private to Common?",
         confirmbtn: "Yes",
@@ -365,7 +363,7 @@ export default {
     },
     refuseSC() {
        this.showConfirmation = true;
-      this.refuseDialog = {
+      this.alertDialog = {
         title: "Alert",
         message: "Are you sure to refuse the change from Private to Common?",
         confirmbtn: "Yes",
