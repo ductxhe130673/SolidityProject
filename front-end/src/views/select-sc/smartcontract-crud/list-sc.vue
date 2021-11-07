@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <!-- btn delete -->
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
         <confirm
           @cancel="closeConfirm"
-          @confirm="cfdeleteSC()"
+          @confirm="deleteSC()"
           :dialog="alertDialog"
         />
       </div>
@@ -31,14 +31,16 @@
       </div>
     </div>
     <div class="row align-items-md-center">
-      <div class="col-2">
+      <div class="col-3 ">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
+           <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
           <a>List</a></span
         >
       </div>
-      <div class="col-8 text-center"><h1>Smart Contracts List</h1></div>
+      <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
     </div>
+    <div class="container">
     <div class="row">
       <div class="col">
         <p>Date</p>
@@ -112,7 +114,7 @@
           <td class="align-items">
              {{ data.description }}
             <span class="col" id="btn"> 
-              <button type="button" class="btn btn-outline-primary">
+              <button type="button" class="btn btn-outline-primary" @click="editSC()">
                 Edit
               </button>
               <button
@@ -153,6 +155,7 @@
         Add
       </button>
     </div>
+  </div>
   </div>
   <!-- 
     <div id="amsb-footer">
@@ -230,7 +233,7 @@ export default {
       showConfirmation: false,
       alertDialog: {},
       scDelete: null,
-      isAdmin : false,
+      isAdmin : true,
     };
   },
   mounted() {
