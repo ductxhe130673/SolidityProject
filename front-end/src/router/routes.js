@@ -42,7 +42,13 @@ import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
 import ListVul from "../views/vuls-crud/list-vulnerabilities.vue"
 
+import SelectFunction from "../views/add-sagemented/SelectFunction.vue"
+import SelectGlobalVariable from "../views/add-sagemented/SelectGlobalVariable.vue"
+import SelectLocalVariable from "../views/add-sagemented/SelectLocalVariable.vue"
+import SelectContract from "../views/add-sagemented/SelectSmartContract.vue"
+
 import { DOMAIN_TITLE } from '../.env'
+
 
 
 //import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
@@ -162,7 +168,26 @@ export const routes = [{
                 name: "VulSummary",
                 component: VulnerabilitySummary
             },
-
+                {
+                path: "select-function",
+                name: "SelectFuntion",
+                component: SelectFunction
+            },
+            {
+                path: "select-global-variable",
+                name: "SelectGlobalVariable",
+                component: SelectGlobalVariable
+            },
+            {
+                path: "select-local-variable",
+                name: "SelectLocalVariable",
+                component: SelectLocalVariable
+            },
+            {
+                path: "select-smart-contract",
+                name: "SelectContract",
+                component: SelectContract
+            },
 
         ],
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | choose property` },
@@ -253,6 +278,7 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
+
 ]
 
 /*

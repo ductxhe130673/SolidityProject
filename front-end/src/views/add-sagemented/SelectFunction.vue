@@ -1,54 +1,10 @@
 <template>
   <div id="initial-marking">
     <div id="initial-marking-header">
-      Configuration
+      Select functions of the smart contract
     </div>
     <div id="initial-marking-input">
-      <div id="header-section">
-        <div class="number-cell">
-          Number of users
-        </div>
-        <div class="multi-cell">
-          Balance
-        </div>
-        <div class="function-cell">
-          Function parameters
-        </div>
-      </div>
       <div id="input-section">
-        <div class="number-cell">
-          <input type="text" placeholder="0" v-model="init_marking.NumberOfUser" id="number-user" class="input-text-form">
-        </div>
-        <div class="multi-cell">
-          <div id="multi-radio-chooses">
-            <div class="radio-choose">
-              <input type="radio" name="radio" class="radio-buttons" value="fixed" v-model="init_marking.Balance.type">
-              <span>Fixed</span>
-            </div>
-            <div class="radio-choose">
-              <input type="radio" name="radio" class="radio-buttons" value="random" v-model="init_marking.Balance.type">
-              <span>Random</span>
-            </div>
-            <div class="radio-choose">
-              <input type="radio" name="radio" class="radio-buttons" value="map" v-model="init_marking.Balance.type">
-              <span>Map</span>
-            </div>
-          </div>
-          <div id="multi-input-forms">
-            <input type="text" class="input-text-form" v-model="init_marking.Balance.fixed" id="fixed-input-form" placeholder="0" v-if="getSelectedRadio == 'fixed'">
-            <div id="random-input-form" v-if="getSelectedRadio == 'random'">
-              <div id="input-from-range">
-                <span>From:</span>
-                <input type="text" placeholder="0" v-model="init_marking.Balance.random.from" class="input-text-form">
-              </div>
-              <div id="input-to-range">
-                <span>To:</span>
-                <input type="text" placeholder="10" v-model="init_marking.Balance.random.to" class="input-text-form">
-              </div>
-            </div>
-            <input type="text" v-model="init_marking.Balance.map" class="input-text-form" id="map-input-form" placeholder="0,1,2" v-if="getSelectedRadio == 'map'">
-          </div>
-        </div>
         <div class="function-cell">
             <div id="list-smart-contract">
               <ul class="nav nav-tabs">
@@ -79,21 +35,10 @@
                       <span class="material-icons"> swap_vert </span>
                     </div>
                     <div class="table-cell header-cell third-cell">
-                      Arguments
-                    </div>
-                  </div>
-
-                  <div class="table-row" v-for="(func, index) in getSelectedSc" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
-                    <div class="table-cell first-cell">{{ index+1 }}</div>
-                    <div class="table-cell second-cell">{{ func.name }}</div>
-                    <div class="table-cell third-cell">
-                      <div class="input-param-text" @click="setFunctionParam(func.fid)">Input Params</div>
+                      Selected
                     </div>
                   </div>
                 </div>
-            </div>
-            <div v-if="function_cell_selection == 'params'">
-                <function-table :list_argument="getFunctionArgument" @changeInitMarking="updateInitMarking"/>
             </div>
           </div>
         </div>
@@ -101,21 +46,17 @@
     </div>
     <div id="processing-btn">
       <div class="pr-button" @click="routing('save')">
-        Next
+        OK
       </div>
       <div class="pr-button" @click="routing('back')">
-        Back
+        Cancel
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import functionTable from "./initmarking/FunctionTable.vue"
 export default {
-  components: {
-    "function-table": functionTable,
-  },
   data() {
     return {
       radio_seleted: "fixed",
@@ -293,7 +234,6 @@ export default {
   },
   computed:{
     getSelectedRadio(){
-      console.log('this.init_marking',this.init_marking);
       return this.init_marking.Balance.type
     },
     getSelectedSc(){
@@ -346,12 +286,9 @@ export default {
     routing(param) {
       if (param == "save") {
         this.$router.push({ name: "CheckSmartContract" });
-        this.$store.commit("setIndex", 5)
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
-        this.$store.commit("setIndex", 4)
-
       }
     },
     setFunctionParam(func){
@@ -369,8 +306,8 @@ export default {
 }
 
 #initial-marking-header{
-  height: 60px;
-  padding-top: 10px;
+  padding-top: 35px;
+  padding-right: 200px;
   font-size: 30px;
   font-weight: bold;
   text-align: center;
@@ -387,7 +324,8 @@ export default {
 }
 
 #input-section{
-  flex-basis: 80%;
+  flex-basis: 90%;
+  padding-top: 10%;
 }
 
 .number-cell{
@@ -517,16 +455,16 @@ export default {
 
 /* button */
 #processing-btn{
-  width: 60%;
+  width: 20%;
   height: 120px;
-  margin-left: 25%;
+  margin-left: 36%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 #processing-btn .pr-button {
   cursor: pointer;
-  width: 20%;
+  width: 40%;
   height: 30px;
   border: 1px solid #2196f3;
   text-align: center;
