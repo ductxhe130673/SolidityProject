@@ -1,5 +1,11 @@
 <template>
   <div id="editsc">
+    <div class="link">
+        <span>
+          <a href="/" class="link-primary text-decoration-underline">Home</a> >
+          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a>List</a></span>
+    </div>
     <div class="header">
       <div class="title"><h1>Edit the Smart Contract code</h1></div>
     </div>
@@ -10,13 +16,48 @@
       </div>
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
-        <div class="option input-type">
-          <select class="form-select" id="inputGroupSelect01" v-model="selected">
+        <div class="option input-type" v-if="isAdmin">
+          <select class="form-select" id="inputGroupSelect01">
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
         </div>
+
+        <div class="option input-type" v-if="!isAdmin">
+          <div class="common-option" v-if="isSuperior">
+            <input
+              class="radio"
+              id="common"
+              value="common"
+              type="radio"
+              v-model="selectOption"
+            />
+            <label for="common">Common</label>
+          </div>
+          <div class="common-option" v-else>
+            <input
+              class="radio"
+              id="common"
+              value="pending"
+              type="radio"
+              v-model="selectOption"
+            />
+            <label for="common">Pending</label>
+          </div>
+          <div class="private-option">
+            <input
+              class="radio"
+              id="private"
+              value="private"
+              type="radio"
+              v-model="selectOption"
+            />
+            <label for="private">Private</label>
+          </div>
+        </div>
+
+
       </div>
       <div class="editor-area area">
         <div class="label">Content</div>
@@ -51,7 +92,8 @@ export default {
       nameSc: this.$route.params.name,
       //code: GetSmartContractCode(this.$route.params.sc_id),
       code: this.$route.params.code,
-      demoEditSC: "test edit sc"
+      demoEditSC: "test edit sc",
+      isAdmin: true,
     };
   },
   mounted(){
@@ -86,7 +128,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 110vh;
+  height: 115vh;
 }
 #type-select {
   width: 300px;
@@ -108,9 +150,14 @@ export default {
   position: relative;
 }
 .option {
-  width: 600px;
+  width: 350px;
   display: flex;
   justify-content: space-between;
+}
+.link{
+  margin-right: 85%;
+  font-size: 15px;
+  margin-top: 20px;
 }
 /* router style */
 a.router-link-active {
@@ -118,10 +165,10 @@ a.router-link-active {
   text-decoration: none;
 }
 .body {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center; */
-  width: 1000px;
+  /* align-items: center;
+  width: 1000px; */
 }
 /* header style */
 /* name area */
@@ -143,7 +190,7 @@ a.router-link-active {
   left: 0;
 }
 .input-name {
-  width: 600px;
+  width: 350px;
   border: 1px solid;
   border-radius: 2px;
   overflow: hidden;
@@ -190,5 +237,24 @@ textarea{
   position: relative;
   /* left: 40px; */
   margin-left: 35%;
+}
+input[type="radio"] {
+  transform: scale(1.6);
+}
+label {
+  margin-left: 10px;
+}
+label:hover {
+  cursor: pointer;
+}
+.common-option,
+.private-option {
+  border: 1px solid rgb(241, 240, 240);
+  border-radius: 15px;
+  width: 100px;
+}
+.common-option:hover,
+.private-option:hover {
+  background-color: #bcc6d4;
 }
 </style>

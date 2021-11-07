@@ -1,5 +1,11 @@
 <template>
   <div id="addsc">
+    <div class="link">
+        <span>
+          <a href="/" class="link-primary text-decoration-underline">Home</a> >
+          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a>List</a></span>
+    </div>
     <div class="header">
       <div class="title"><h1>Create a new Smart Contract code</h1></div>
     </div>
@@ -10,8 +16,19 @@
       </div>
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
-        <div class="option input-type">
-          <!-- <div class="common-option" v-if="isSuperior">
+        
+        <!-- <div class="option input-type" v-if="author === 'admin'"> -->
+          <div class="option input-type" v-if="isAdmin">
+          <select class="form-select" id="inputGroupSelect01">
+            <option value="common">Common</option>
+            <option value="private">Private</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+
+
+        <div class="option input-type" v-if="!isAdmin">
+          <div class="common-option" v-if="isSuperior">
             <label for="common">Common</label>
             <input
               class="radio"
@@ -40,23 +57,26 @@
               type="radio"
               v-model="selectOption"
             />
-          </div> -->
-          <select class="form-select" id="inputGroupSelect01" v-model="selected">
-            <option value="common">Common</option>
-            <option value="private">Private</option>
-            <option value="pending">Pending</option>
-          </select>
+          </div>
         </div>
         
-        <div class="option input-type" v-if="author === 'admin'">
-          <select name="" id="type-select">
-            <option value="">Private</option>
-            <option value="">Common</option>
-          </select>
-        </div>
+        
       </div>
-      <div class="editor-area area">
+      <div class="editor-area area" v-if="isAdmin">
         <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)"/>
+      </div>
+      
+      <div v-if="!isAdmin">
+        <div class="editor-area area" >   
+          <div class="label">Content</div>
+          <div class="AceEditor">
+            <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)"/>
+          </div>
+        </div>
+        <div class="description">
+          <div class="label">Description</div>
+            <textarea name="" id="" cols="30" rows="5"></textarea>
+          </div>
       </div>
       <div class="button-area area">
         <div class="button-add-cancell">
@@ -88,7 +108,8 @@ export default {
       nameSc: "",
       options: this.$route.params.options,
       code: "",
-      demoEditSC: "test add sc"
+      demoEditSC: "test add sc",
+      isAdmin: true,
     };
   },
   methods: {
@@ -150,7 +171,10 @@ export default {
   align-items: center;
 }
 .option {
-  width: 65%;
+  /* width: 65%;
+  display: flex;
+  justify-content: space-between; */
+  width: 350px;
   display: flex;
   justify-content: space-between;
 }
@@ -162,14 +186,20 @@ a.router-link-active {
 .body {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center;
+  width: 1000px; */
 }
 #addsc {
   background-color: rgb(241, 240, 240);
-  height: 100vh;
+  height: 115vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.link{
+  margin-right: 85%;
+  font-size: 15px;
+  margin-top: 20px;
 }
 /* header style */
 .title {
@@ -182,7 +212,13 @@ a.router-link-active {
 /* name area */
 .name-area,
 .type-area {
-  width: 520px;
+  width: 500px;
+}
+.description{
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 50px;
 }
 .label {
   font-style: normal;
@@ -192,17 +228,28 @@ a.router-link-active {
   left: 0;
 }
 .input-name {
-  width: 65%;
+  width: 350px;
   border: 1px solid;
   border-radius: 2px;
   overflow: hidden;
 }
 /* editor area */
 .editor-area {
-  width: 600px;
+  /* width: 600px; */
   overflow: hidden;
   position: relative;
-  left: 40px;
+  /* left: 40px; */
+  display: flex;
+}
+.AceEditor{
+  height: 350px;
+  margin-left: 185px;
+}
+/* textarea */
+textarea{
+  width: 600px;
+  height: 250px;
+  margin-left: 160px;
 }
 /* button style */
 .button-add-cancell button {
@@ -226,7 +273,8 @@ a.router-link-active {
 }
 .button-add-cancell {
   position: relative;
-  left: 40px;
+  /* left: 40px; */
+  margin-left: 33%;
 }
 input[type="radio"] {
   transform: scale(1.6);
@@ -247,4 +295,5 @@ label:hover {
 .private-option:hover {
   background-color: #bcc6d4;
 }
+
 </style>
