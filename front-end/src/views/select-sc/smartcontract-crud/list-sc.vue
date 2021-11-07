@@ -42,7 +42,6 @@
     <div class="row">
       <div class="col">
         <p>Date</p>
-
         <a-date-picker
           :default-value="moment('01/01/2021', dateFormat)"
           :format="dateFormat"
@@ -55,12 +54,8 @@
       <div class="col">
         <p>Type</p>
         <div class="input-group mb-3">
-          <select
-            class="form-select"
-            id="inputGroup"
-            v-model="selected"
-          >
-            <option value="common">Common</option>
+          <select class="form-select" id="inputGroup" v-model="selected">
+            <option value="common" v-if="isAdmin">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
@@ -115,8 +110,8 @@
           <td>{{ data.type }}</td>
           <td>{{ data.date }}</td>
           <td class="align-items">
-            {{ data.description }}
-            <span>
+             {{ data.description }}
+            <span class="col" id="btn"> 
               <button type="button" class="btn btn-outline-primary">
                 Edit
               </button>
@@ -127,10 +122,20 @@
               >
                 Delete
               </button>
-              <button type="button" class="btn btn-outline-primary" @click="acceptSC()">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                @click="acceptSC()"
+                v-if="isAdmin"
+              >
                 Accept
               </button>
-              <button type="button" class="btn btn-outline-primary" @click="refuseSC()">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                @click="refuseSC()"
+                v-if="isAdmin"
+              >
                 Refuse
               </button></span
             >
@@ -225,6 +230,7 @@ export default {
       showConfirmation: false,
       alertDialog: {},
       scDelete: null,
+      isAdmin : false,
     };
   },
   mounted() {
@@ -296,7 +302,6 @@ export default {
   },
   methods: {
     moment,
-   
 
     // get common contracts
     async fetchData() {
@@ -349,25 +354,23 @@ export default {
         confirmbtn: "Yes",
       };
       this.showConfirmation = true;
-      
     },
     acceptSC() {
       this.alertDialog = {
         title: "Alert",
-        message: "Do you want to change the Smart Contract type from Private to Common?",
+        message:
+          "Do you want to change the Smart Contract type from Private to Common?",
         confirmbtn: "Yes",
       };
       this.showConfirmation = true;
     },
     refuseSC() {
-      
       this.alertDialog = {
         title: "Alert",
         message: "Are you sure to refuse the change from Private to Common?",
         confirmbtn: "Yes",
       };
       this.showConfirmation = true;
-     
     },
 
     // deleteSC(sc_id, sc_name, option) {
@@ -448,12 +451,14 @@ export default {
 </script>
 
 <style scoped>
-h1{
+h1 {
   font-size: 50px;
 }
 .align-items {
   display: flex;
   align-items: center;
+ 
+ 
 }
 .row {
   margin-top: 2%;
@@ -496,6 +501,10 @@ table span {
 #icon {
   display: block;
   height: 8px;
+}
+#btn{
+  text-align: right;
+ 
 }
 /* --- box --- */
 .chosen_box {
