@@ -32,7 +32,7 @@ export default {
 
     async setListSmartContract({commit}) {
         try {
-            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract/');
+            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
             commit('SET_LIST_SMART_CONTRACT',result.data)
             if(result.data.status === 200) {
                 commit('SET_LIST_SMART_CONTRACT',result.data)
