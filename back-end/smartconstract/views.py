@@ -21,21 +21,20 @@ class SmartConstractAPIView(APIView):
     def post(self, request):
         try:
             if request.method == 'POST':
-                serializeClient = GetSmartConstractSerializer(
-                    data=request.data)
-                print(serializeClient)
+                serializeClient = GetSmartConstractSerializer(data=request.data)
                 if serializeClient.is_valid():
                     serializeClient.save()
                     return Response({"message": "Created"}, status=status.HTTP_201_CREATED)
                 return Response({"message": "Create fail!!!"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+        except Exception as e:
+            print('ERROR======',e)
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 serializeUpdate = GetSmartConstractSerializer(
                     instance=SmartConstractByID, data=request.data)
                 if serializeUpdate.is_valid():
@@ -49,7 +48,7 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 SmartConstractByID.delete()
                 return Response('Success', status=status.HTTP_200_OK)
         except:
@@ -124,13 +123,14 @@ def getFunctionVarArgu(request):
 # INSERT INTO INITIAL MARKING
 @api_view(['POST'])
 def addNewInitialMarking(request):
+    print('Number======',request.GET['num_user'])
     try:
         resData = dbcontext.addNewInitialMarking(request.GET['num_user'],request.GET['IM_type'])
         if resData is None :
             return Response({"message": "Fail To Add New InitialMarking!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
     except Exception as e:
-        print(e)
+        print('ERROR========',e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 # INSERT INTO IMFUNCTION
