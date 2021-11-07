@@ -34,7 +34,7 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 serializeUpdate = GetSmartConstractSerializer(
                     instance=SmartConstractByID, data=request.data)
                 if serializeUpdate.is_valid():
@@ -48,7 +48,7 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 SmartConstractByID.delete()
                 return Response('Success', status=status.HTTP_200_OK)
         except:

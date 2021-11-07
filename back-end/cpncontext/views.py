@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from rest_framework.serializers import Serializer
 from rest_framework import exceptions
-from .serializer import cpncontextSerializer
+from .serializer import cpncontextSerializer, cpncontextSerializerPost
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -22,9 +22,11 @@ class cpncontextAPIView(APIView):
 			return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 	
 	def post(self,request):
+		print(f'request {request}')
+		print(f'request data {request.data}')
 		try:
 			if request.method == 'POST':
-				serializeContext = cpncontextSerializer(data=request.data)
+				serializeContext = cpncontextSerializerPost(data=request.data)
 				if serializeContext.is_valid():
 					serializeContext.save()
 					return Response({"message":"Created"},status=status.HTTP_201_CREATED)
@@ -34,16 +36,20 @@ class cpncontextAPIView(APIView):
 			return Response({"message":"A"},status=status.HTTP_400_BAD_REQUEST)
 	
 	def put(self,request):
+		# print('ID====',request.GET['cid'])
+		print(f'request Put {request}')
+		print(f'request PUT data {request.data}')
 		try:
 			if request.method == 'PUT':
-				idContext = request.GET['cid']
-				print('ID====',request.GET['cid'])
+				idContext = request.data['cid']
+				print("ID======",idContext)
 				contextById = cpncontext.objects.get(cid=idContext)
+
 				serializeUpdate = cpncontextSerializer(instance=contextById, data=request.data)
 				if serializeUpdate.is_valid():
 					serializeUpdate.save()
 					return Response({"message":"Update Successfully!!!"},status=status.HTTP_202_ACCEPTED)
-				return Response({"message":"SmartConstract Data Invalid!!!"},status=status.HTTP_409_CONFLICT)
+				return Response({"message":"CPNContext Data Invalid!!!"},status=status.HTTP_409_CONFLICT)
 		except Exception as e:
 			print('ERROR=====',e)
 			return Response({"message":"Fail!!"},status=status.HTTP_404_NOT_FOUND)
