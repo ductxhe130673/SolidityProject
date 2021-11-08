@@ -236,6 +236,7 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | edit smart contracts` },
         props: true
     },
+
     {
         path: "/add-sc",
         name: "AddSc",
