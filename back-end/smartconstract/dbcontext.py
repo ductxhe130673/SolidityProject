@@ -56,7 +56,7 @@ def getFunctionBySCId(id):
         for row in dbData:
             element = {
                 "fid":row[0],
-                # "name":row[1],
+                "name":row[1],
                 # "bodyContent":row[2],
                 "argument":getArgumentByFuncID(row[0]),
                 "localVar":getLocalVarByFuncId(row[0])
@@ -120,7 +120,7 @@ def addNewInitialMarking(num_user,IM_type):
         cursor.execute(sql, ([num_user],[IM_type]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New Successfull"
+        return "Add New InitialMarking Successfully"
     except Exception as e:
         print(e)
         return None
@@ -148,62 +148,17 @@ def getInitialMarkingTypeByInitialMarkingID(imId):
     finally:
         connection.close() 
 
-#INSERT INTO BALANCE
-# TYPE IM_TYPE1 : FIXED
-def addNewBalanceTypeFixed(blvalue,imid):
-    try:
-        sql = '''INSERT INTO Balance (blvalue,imid) VALUES (%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([blvalue],[imid]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New Balance Successfull"
-    except Exception as e:
-        print(e)
-        return None
-    finally:
-        connection.close()  
-
-# TYPE IM_TYPE2 : RANDOM
-def addNewBalanceTypeRandom(blfrom,blto,blvalue,imid):
-    try:
-        sql = '''INSERT INTO Balance (blfrom,blto,blvalue,imid) VALUES (%s,%s,%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([blfrom],[blto],[blvalue],[imid]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New Balance Successfull"
-    except Exception as e:
-        print(e)
-        return None
-    finally:
-        connection.close() 
-
-# TYPE IM_TYPE3 : MAP ?????
-def addNewBalanceTypeMap(blfrom,blto,blvalue,blrange,imid):
-    try:
-        sql = '''INSERT INTO Balance (blfrom,blto,blvalue,blrange,imid) VALUES (%s,%s,%s,%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([blfrom],[blto],[blvalue],[blrange],[imid]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New Balance Successfull"
-    except Exception as e:
-        print(e)
-        return None
-    finally:
-        connection.close()  
-
-
 # INSERT INTO IMFunction
-def addNewIMFunction(fun_name,sender_from,sender_to,imid):
+def addNewIMFunction(fun_name,sender_from,sender_to):
     try:
+        imid = getLastInsertIDFromInitialMarking()
+        print(imid)
         sql = '''INSERT INTO IMFunction (fun_name,sender_from,sender_to,imid) VALUES (%s,%s,%s,%s);'''
         cursor = connection.cursor()
         cursor.execute(sql, ([fun_name],[sender_from],[sender_to],[imid]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New IMFunction Successfull"
+        return "Add New IMFunction Successfully"
     except Exception as e:
         print(e)
         return None
@@ -211,15 +166,16 @@ def addNewIMFunction(fun_name,sender_from,sender_to,imid):
         connection.close()      
 
 # INSERT INTO IMArgument
-# chua laay IMfunctionID ??
-def addNewIMArgument(arg_name,IMfrom,IMto,imfid):
+def addNewIMArgument(arg_name,IMfrom,IMto):
     try:
+        imfid = getLastInsertIDFromIMFunction()
+        print(imfid)
         sql = '''INSERT INTO IMArgument (arg_name,IMfrom,IMto,imfid) VALUES (%s,%s,%s,%s);'''
         cursor = connection.cursor()
         cursor.execute(sql, ([arg_name],[IMfrom],[IMto],[imfid]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New IMArgumentt Successfull"
+        return "Add New IMArgumentt Successfully"
     except Exception as e:
         print(e)
         return None
@@ -240,7 +196,7 @@ def addNewLNAFile(hcpnfile,propfile):
         cursor.execute(sql, ([InsertIMG(hcpnfile)],[InsertIMG(propfile)]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New LNAFile Successfull"
+        return "Add New LNAFile Successfully"
     except Exception as e:
         print(e)
         return None
@@ -250,14 +206,27 @@ def addNewLNAFile(hcpnfile,propfile):
 import datetime
 
 # INSERT INTO CheckedBatchSC
-def addNewCheckedBatchSC(aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result):
-    try:
-        sql = '''INSERT INTO CheckedBatchSC (aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'''
-        cursor = connection.cursor()
-        cursor.execute(sql, ([aid],[lnid],[lteid],[cid],[imid],[noSC],[datetime.datetime.now()],[status],[LTLformula],[result]))
-        row = cursor.fetchall()
-        # transaction.commit()
-        return "Add New CheckedBatchSC Successfull"
+def addNewCheckedBatchSC(aid,lteid,cid,noSC,status,LTLformula,result):
+    try:    
+        if status == '1': 
+         print(status)
+         lnid = getLastInsertIDFromLNAFile()
+         imid = getLastInsertIDFromInitialMarking()
+         sql = '''INSERT INTO CheckedBatchSC (aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result) VALUES (%s,%s,%s,%s,%s,%s,%s,1,%s,%s);'''
+         cursor = connection.cursor()
+         cursor.execute(sql, ([aid],[lnid],[lteid],[cid],[imid],[noSC],[datetime.datetime.now()],[LTLformula],[result]))
+         row = cursor.fetchall()
+         # transaction.commit()
+         return "Add New CheckedBatchSC Successfully"
+        else:
+         lnid = getLastInsertIDFromLNAFile()
+         imid = getLastInsertIDFromInitialMarking()
+         sql = '''INSERT INTO CheckedBatchSC (aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result) VALUES (%s,%s,%s,%s,%s,%s,%s,0,%s,%s);'''
+         cursor = connection.cursor()
+         cursor.execute(sql, ([aid],[lnid],[lteid],[cid],[imid],[noSC],[datetime.datetime.now()],[LTLformula],[result]))
+         row = cursor.fetchall()
+         # transaction.commit()
+         return "Add New CheckedBatchSC Successfully"   
     except Exception as e:
         print(e)
         return None
@@ -265,28 +234,29 @@ def addNewCheckedBatchSC(aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLform
         connection.close()  
 
 # INSERT INTO CheckedSmartContractDetail
-def addNewCheckedSmartContractDetail(sid,bid):
+def addNewCheckedSmartContractDetail(sid):
     try:
+        bid = getLastInsertIDFromCheckedBatchSC()
         sql = '''INSERT INTO CheckedSmartContractDetail (sid,bid) VALUES (%s,%s);'''
         cursor = connection.cursor()
         cursor.execute(sql, ([sid],[bid]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New CheckedSmartContractDetail Successfull"
+        return "Add New CheckedSmartContractDetail Successfully"
     except Exception as e:
         print(e)
         return None
     finally:
         connection.close() 
 
-# GET LAST INSERT ID FROM INITIALMARKING
+# GET LAST INSERTED ID FROM INITIALMARKING
 def getLastInsertIDFromInitialMarking():
     try:
-        sql = '''SELECT imid FROM initialmarking ORDER BY imid DESC LIMIT 1;;'''
+        sql = '''SELECT imid FROM soliditycpn.initialmarking ORDER BY imid DESC LIMIT 1;'''
         cursor = connection.cursor()
         cursor.execute(sql)
-        row = cursor.fetchall()
-        return row
+        row = cursor.fetchone()
+        return row[0]
     except:
         return None
     finally:
@@ -294,26 +264,27 @@ def getLastInsertIDFromInitialMarking():
 
 
 # ADD NEW BALANCE
-def addNewBalance(balanceType,blfrom,blto,blvalue,blrange,imid):
+def addNewBalance(balanceType,blfrom,blto,blvalue,blrange):
     try:
+        imid = getLastInsertIDFromInitialMarking()
         if balanceType == "Fixed":
             sql = '''INSERT INTO Balance (blvalue,imid) VALUES (%s,%s);'''
             cursor = connection.cursor()
             cursor.execute(sql, ([blvalue],[imid]))
             row = cursor.fetchall()
-            return "Add New Balance Successfull"
+            return "Add New Balance Successfully"
         if balanceType == "Random":
-            sql = '''INSERT INTO Balance (blfrom,blto,blvalue,imid) VALUES (%s,%s,%s,%s);'''
+            sql = '''INSERT INTO Balance (blfrom,blto,imid) VALUES (%s,%s,%s);'''
             cursor = connection.cursor()
-            cursor.execute(sql, ([blfrom],[blto],[blvalue],[imid]))
+            cursor.execute(sql, ([blfrom],[blto],[imid]))
             row = cursor.fetchall()
-            return "Add New Balance Successfull"
+            return "Add New Balance Successfully"
         if balanceType == "Map":
-            sql = '''INSERT INTO Balance (blfrom,blto,blvalue,blrange,imid) VALUES (%s,%s,%s,%s,%s);'''
+            sql = '''INSERT INTO Balance (blrange,imid) VALUES (%s,%s);'''
             cursor = connection.cursor()
-            cursor.execute(sql, ([blfrom],[blto],[blvalue],[blrange],[imid]))
+            cursor.execute(sql, ([blrange],[imid]))
             row = cursor.fetchall()
-            return "Add New Balance Successfull"        
+            return "Add New Balance Successfully"        
     except Exception as e:
         print(e)
         return None
@@ -326,22 +297,48 @@ def getIMFunctionIDByIMIDAndFuncName(fun_name,imid):
         sql = '''select imfid from imfunction where fun_name like '%"%s"%' and imid = %s;'''
         cursor = connection.cursor()
         cursor.execute(sql, [fun_name],[imid])
-        row = cursor.fetchall()
+        row = cursor.fetchone()
         return row
     except:
         return None
     finally:
         connection.close()
 
+# GET LAST INSERTED ID FROM IMFUNCTION
+def getLastInsertIDFromIMFunction():
+    try:
+        sql = '''SELECT imfid FROM soliditycpn.IMFunction ORDER BY imfid DESC LIMIT 1;'''
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
+    except:
+        return None
+    finally:
+        connection.close()
 
-#mycursor = db.cursor()
-#sqlFomular = "INSERT INTO InitialMarking (num_user,IM_type) VALUES (%s,%s)"
-#multi = [
-#    (10,"IM_type1"),
-#    (20,"IM_type2"),
-#    (30,"IM_type3"),
-#    ]
-#mycursor.executemany(sqlFomular,multi)
-#db.commit()
+# GET LAST INSERTED ID FROM LNAFILE
+def getLastInsertIDFromLNAFile():
+    try:
+        sql = '''SELECT lnid FROM soliditycpn.lnafile ORDER BY lnid DESC LIMIT 1;'''
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
+    except:
+        return None
+    finally:
+        connection.close()        
 
-
+# GET LAST INSERTED ID FROM CHECKEDBATCHSC
+def getLastInsertIDFromCheckedBatchSC():
+    try:
+        sql = '''SELECT bid FROM soliditycpn.checkedbatchsc ORDER BY bid DESC LIMIT 1;'''
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
+    except:
+        return None
+    finally:
+        connection.close() 

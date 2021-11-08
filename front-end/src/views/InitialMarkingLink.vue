@@ -1,204 +1,438 @@
 <template>
-    <div id="initial-link">
-        <div id="initial-link-header">
-            Configuration
-        </div>
-        <div id="initial-marking-link-input">
-            <div id="header-section">
-                <div class="multi-cell">
-                    Type
-                </div>
-                <div class="user-cell">
-                    User parameters
-                </div>
-                <div class="function-cell">
-                    Function parameters
-                </div>
-            </div>
-            <div id="input-section">
-                <div class="multi-cell">
-                    <div id="multi-radio-choose">
-                        <div class="radio-choose">
-                            <input type="radio" name="radio" class="radio-buttons" value="fixed">
-                            <span>Fixed</span>
-                        </div>
-                        <div class="radio-choose">
-                            <input type="radio" name="radio" class="radio-buttons" value="random">
-                            <span>Random</span>
-                        </div>
-                        <div class="radio-choose">
-                            <input type="radio" name="radio" class="radio-buttons" value="map" checked>
-                            <span>Map</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="user-cell">
-                  <table class="table table-striped" border="2">
-                    <thead>
-                        <tr>
-                            <th>#<span class="material-icons"> swap_vert </span></th>
-                            <th>User<span class="material-icons"> swap_vert </span></th>
-                            <th>Balance<span class="material-icons"> swap_vert </span></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>User 1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>User 2</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>User 3</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>...</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-                <div class="function-cell">
-                    <div id="list-smart-contract">
-                        <ul class="nav nav-tabs">
-                            <li
-                            class="nav-item d-inline-block text-truncate"
-                            v-for="item in list_smart_contract"
-                            :key="item.id"
-                            >
-                            <a
-                            class="nav-link"
-                            v-on:click="selected_sc = item.id"
-                            v-bind:class="{ active: item.id == selected_sc}"
-                            >{{ item.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="sm-information-table">
-                        <ul class="nav nav-tabs">
-                            <li
-                            class="nav-item d-inline-block text-truncate"
-                            v-for="item in list_function"
-                            :key="item.id"                            
-                            >
-                            <a
-                            class="nav-link"
-                            v-on:click="selected_sc = item.id"
-                            v-bind:class="{ active: item.id == selected_sc}"                
-                            >{{ item.name }}</a>
-                            </li> 
-                        </ul>
-                        <div id="fc-information-table">
-                            <div id="sender-value-section">
-                                <span>Sender value</span>
-                                <input type="text" placeholder="2">
-                                <span>To</span>
-                                <input type="text" placeholder="10">
-                            </div>
-                            
-                        <table class="table table-striped table-hover table-sm" id="table-function">
-                            <thead class="table-inside">
-                                <tr>
-                                    <th>#<span class="material-icons"> swap_vert </span></th>
-                                    <th>Argument<span class="material-icons"> swap_vert </span></th>
-                                    <th>Value<span class="material-icons"> swap_vert </span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Argument 1</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Argument 2</td>
-                                    <td>5</td>
-                                </tr>
-                                <tr>
-                                    <td>...</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        </div>                    
-                    </div>            
-                </div>
-            </div>
-        </div>
-        
-        <div id="processing-btn">
-            <button class="pr-button" @click="routing('back')">Back</button>
-        </div>
+  <div id="initial-marking">
+    <div id="initial-marking-header">
+      Configuration
     </div>
+    <div id="initial-marking-input">
+      <div id="header-section">
+        <div class="multi-cell">
+          Type
+        </div>
+        <div class="user-cell">
+          User parameters
+        </div>
+        <div class="function-cell">
+          Function parameters
+        </div>
+      </div>
+      <div id="input-section">
+        <div class="multi-cell">
+          <div id="multi-radio-chooses">
+            <div class="radio-choose">
+              <input type="radio" name="radio" class="radio-buttons" value="fixed" v-model="init_marking.Balance.type">
+              <span>Fixed</span>
+            </div>
+            <div class="radio-choose">
+              <input type="radio" name="radio" class="radio-buttons" value="random" v-model="init_marking.Balance.type">
+              <span>Random</span>
+            </div>
+            <div class="radio-choose">
+              <input type="radio" name="radio" class="radio-buttons" value="map" v-model="init_marking.Balance.type">
+              <span>Map</span>
+            </div>
+          </div>
+        </div>
+        <div class="user-cell">
+                <div id="table-list">
+                  <div class="table-row" id="header-row">
+                    <div class="table-cell header-cell first-cell">
+                      #
+                      <span class="material-icons"> swap_vert </span>
+                    </div>
+                    <div class="table-cell header-cell second-cell">
+                      Users
+                      <span class="material-icons"> swap_vert </span>
+                    </div>
+                    <div class="table-cell header-cell third-cell">
+                      Balance
+                    </div>
+                  </div>
 
+                  <div class="table-row" v-for="(func, index) in getSelectedSc" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
+                    <div class="table-cell first-cell">{{ index+1 }}</div>
+                    <div class="table-cell second-cell">{{ func.name }}</div>
+                    <div class="table-cell third-cell">
+                      <div class="input-param-text" @click="setFunctionParam(func.fid)">Input Params</div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        <div class="user-cell">
+        <div id="list-smart-contract">
+              <ul class="nav nav-tabs">
+                  <li
+                  class="nav-item d-inline-block text-truncate"
+                  v-for="item in list_smart_contract"
+                  :key="item.id"
+                >
+                  <a
+                    class="nav-link"
+                    v-on:click="selected_sc = item.id"
+                    v-bind:class="{ active: item.id == selected_sc}"
+                    >{{ item.name }}</a
+                  >
+                </li>
+              </ul>
+          </div>
+          <div id="sm-information-table">
+            <ul class="nav nav-tabs">
+                  <li
+                  class="nav-item d-inline-block text-truncate"
+                 v-for="item in list_function"
+                  :key="item.id"    
+                >
+                  <a
+                    class="nav-link"
+                    v-on:click="selected_sc = item.id"
+                    v-bind:class="{ active: item.id == selected_sc}"
+                    >{{ item.name }}</a
+                  >
+                </li>
+            </ul>
+            <div id="sender-value-section">
+                <span>Sender value</span>
+                <input type="text" placeholder="2">
+                <span>To</span>
+                <input type="text" placeholder="10">
+            </div>
+            <div v-if="function_cell_selection == 'function'">
+              <div id="table-list">
+                <div class="table-row" id="header-row">
+                  <div class="table-cell header-cell first-cell">
+                    #
+                  <span class="material-icons"> swap_vert </span>
+                  </div>
+                  <div class="table-cell header-cell second-cell">
+                      Functions
+                      <span class="material-icons"> swap_vert </span>
+                  </div>
+                  <div class="table-cell header-cell third-cell">
+                      Arguments
+                  </div>
+                </div>
+
+                <div class="table-row" v-for="(func, index) in getSelectedSc" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
+                  <div class="table-cell first-cell">{{ index+1 }}</div>
+                  <div class="table-cell second-cell">{{ func.name }}</div>
+                  <div class="table-cell third-cell">
+                    <div class="input-param-text" @click="setFunctionParam(func.fid)">Input Params</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="function_cell_selection == 'params'">
+                <function-table :list_argument="getFunctionArgument" @changeInitMarking="updateInitMarking"/>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+    <div id="processing-btn">
+            <button class="pr-button" @click="routing('back')">Back</button>
+    </div>
+  </div>
 </template>
-<script>
-export default{
-    data(){
-        return{
-            info: [],
-            id: null,
-            radio_seleted: "map",
-            function_cell_selected: "function",
-            list_smart_contract: [{name:"smart I",id:1},{name:"smart II",id:2},{name:"smart III",id:3},{name:"smart IV",id:4}],
-            list_function: [{name: "Function 1", id:1},{name: "Function 2",id:2}],
-        };
-    },
-    methods: {
-        routing(param){
-            if(param == "back"){
-                this.$router.push({name: "CheckSmartContract"});
-                this.$store.commit("setIndex",0);
-            }
-        }
-    }
-}
 
+<script>
+export default {
+  components: {
+   
+  },
+  data() {
+    return {
+      radio_seleted: "fixed",
+      function_cell_selected: "function",
+      list_smart_contract: [{name:"smart I",id:1},{name:"smart II",id:2},{name:"smart III",id:3},{name:"smart IV",id:4}],
+      list_function: [{name: "Function 1", id:1},{name: "Function 2",id:2}],
+      smart_contract_infors: {1:{
+                              "name": "smart I",
+                              "functions": [
+                                  {
+                                      "fid": 3,
+                                      "name": "bidding",
+                                      "argument": [
+                                          {
+                                              "id": 1,
+                                              "name": "biddingTime",
+                                              "vartype": "state",
+                                              "type": "uint",
+                                              "value": 1,
+                                              "fid": 3
+                                          },
+                                          {
+                                              "id": 2,
+                                              "name": "revealTime",
+                                              "vartype": "local",
+                                              "type": "uint",
+                                              "value": 3,
+                                              "fid": 3
+                                          }
+                                      ],
+                                      "localVar": []
+                                  },
+                                  {
+                                      "fid": 4,
+                                      "name": "reveal",
+                                      "argument": [
+                                          {
+                                              "id": 4,
+                                              "name": "blindedBid",
+                                              "vartype": "local",
+                                              "type": "bytes32",
+                                              "value": 7,
+                                              "fid": 4
+                                          }
+                                      ],
+                                      "localVar": []
+                                  },
+                                  {
+                                      "fid": 5,
+                                      "name": "claimReward",
+                                      "argument": [
+                                        
+                                      ],
+                                      "localVar": [
+                                          {
+                                              "id": 2,
+                                              "name": "length",
+                                              "vartype": "public",
+                                              "type": "unit",
+                                              "value": "bids[msg.sender].length"
+                                          },
+                                          {
+                                              "id": 3,
+                                              "name": "refund",
+                                              "vartype": "public",
+                                              "type": "unit",
+                                              "value": "+= bid.deposit"
+                                          },
+                                          {
+                                              "id": 4,
+                                              "name": "bid",
+                                              "vartype": "public",
+                                              "type": "var",
+                                              "value": "bids[msg.sender][i]"
+                                          },
+                                          {
+                                              "id": 5,
+                                              "name": "(value,fake,secret)",
+                                              "vartype": "public",
+                                              "type": "var",
+                                              "value": "(_values[i], _fake[i], _secret[i])"
+                                          }
+                                      ]
+                                  },
+                                  {
+                                      "fid": 6,
+                                      "name": "playAround",
+                                      "argument": [
+                                          {
+                                              "id": 8,
+                                              "name": "bidder",
+                                              "vartype": "local",
+                                              "type": "address",
+                                              "value": 4,
+                                              "fid": 6
+                                          },
+                                          {
+                                              "id": 9,
+                                              "name": "value",
+                                              "vartype": "state",
+                                              "type": "uint",
+                                              "value": 6,
+                                              "fid": 6
+                                          }
+                                      ],
+                                      "localVar": []
+                                  }
+                              ],
+                              "globalVar": [
+                                  {
+                                      "id" : 1,
+                                      "name": "beneficiary",
+                                      "vartype": "address",
+                                      "type": "public",
+                                      "value": ""
+                                  },
+                                  {
+                                      "id" : 2,
+                                      "name": "auctionStart",
+                                      "vartype": "uint",
+                                      "type": "public",
+                                      "value": ""
+                                  },
+                                  {
+                                      "id" : 3,
+                                      "name": "biddingEnd",
+                                      "vartype": "uint",
+                                      "type": "public",
+                                      "value": ""
+                                  },
+                                  {
+                                      "id" : 4,
+                                      "name": "revealEnd",
+                                      "vartype": "uint",
+                                      "type": "public",
+                                      "value": ""
+                                  },
+                                  {
+                                      "id" : 5,
+                                      "name": "ended",
+                                      "vartype": "bool",
+                                      "type": "public",
+                                      "value": ""
+                                  },
+                                  {
+                                      "id" : 6,
+                                      "name": "highestBidder",
+                                      "vartype": "address",
+                                      "type": "public",
+                                      "value": ""
+                                  },
+                                  {
+                                      "id" : 7,
+                                      "name": "highestBid",
+                                      "vartype": "uint",
+                                      "type": "public",
+                                      "value": ""
+                                  }
+                              ]
+                          }},
+      selected_sc: 1,
+      selected_function: null,
+      init_marking: {}
+    };
+  },
+  beforeMount(){
+    this.initInitialMarkingHolder()
+  },
+  watch: {
+    init_marking: {
+      handler(val){
+        this.$store.commit("SetInitialMarking", val);
+      },
+      deep: true
+    }
+  },
+  computed:{
+    getSelectedRadio(){
+      console.log('this.init_marking',this.init_marking);
+      return this.init_marking.Balance.type
+    },
+    getSelectedSc(){
+      if(this.selected_sc in this.smart_contract_infors){
+        return this.smart_contract_infors[this.selected_sc].functions
+      }else{
+        return []
+      }
+    },
+    function_cell_selection(){
+      return this.function_cell_selected
+    },
+    getFunctionArgument(){
+      return this.init_marking.Funtion_params[this.selected_sc].functions[this.selected_function]
+    }
+  },
+  methods: {
+    updateInitMarking(val){
+      this.function_cell_selected = "function"
+      this.selected_function = null
+      this.init_marking.Funtion_params[this.selected_sc].functions[this.selected_function] = val
+    },
+     updateUser(){
+      this.function_cell_selected = "user"
+    },
+    initInitialMarkingHolder(){
+      this.init_marking = this.$store.getters["GetInitialMarking"]; 
+      for(let i = 0; i < this.list_smart_contract.length; i++){
+        let sm = this.list_smart_contract[i]
+
+        if(!(sm.id in this.init_marking.Funtion_params)){
+          this.init_marking.Funtion_params[sm.id] = {name: sm.name,functions: {}}
+        }
+
+        if(sm.id in this.smart_contract_infors){
+          let sm_func_infor = this.smart_contract_infors[sm.id].functions
+          for(let j = 0; j < sm_func_infor.length; j++){
+            let sm_func =  sm_func_infor[j]
+            if(!(sm_func.fid in this.init_marking.Funtion_params[sm.id].functions)){
+                this.init_marking.Funtion_params[sm.id].functions[sm_func.fid] = {name: sm_func.name, sender_value:{from:null,to:null}, arguments: {}}
+            }
+            let sm_func_args = sm_func.argument
+            for(let m = 0; m < sm_func_args.length; m++){
+              let arg = sm_func_args[m]
+              if(!(arg.id in this.init_marking.Funtion_params[sm.id].functions[sm_func.fid].arguments)){
+                this.init_marking.Funtion_params[sm.id].functions[sm_func.fid].arguments[arg.id] = {name: arg.name, from: null, to: null}
+              }
+            }
+          }
+        }
+      }
+    },
+    routing(param) {
+      if (param == "back") {
+        this.$router.push({ name: "CheckSmartContract" });
+        this.$store.commit("setIndex", 5)
+      }
+    },
+    setFunctionParam(func){
+            this.function_cell_selected = "params"
+            this.selected_function = func
+    },
+  },
+};
 </script>
 <style scoped>
-#initial-link{
+#initial-marking{
   height: 100%;
   width: 100%;
   min-width: 900px;
 }
-#initial-link-header{
+
+#initial-marking-header{
   height: 60px;
   padding-top: 10px;
   font-size: 30px;
   font-weight: bold;
   text-align: center;
 }
-#initial-marking-link-input{
+#initial-marking-input{
   width: 60%;
   margin-left: 20%;
   display: flex;
   justify-content: space-between;
 }
+
 #header-section{
   flex-basis: 20%;
-  font-size: 14px;
 }
+
 #input-section{
   flex-basis: 80%;
 }
-.multi-cell{
-  height: 120px;
-  margin-top: 120px;
-}
-.function-cell{
+
+.number-cell{
+  height: 40px;
   margin-top: 20px;
 }
-.user-cell{
-    height: 300px;
+
+.multi-cell{
+  height: 70px;
+  margin-top: 20px;
 }
-#multi-radio-choose{
+
+.user-cell{
+  margin-top: 37px;
+}
+.function-cell{
+  margin-top: 269px;
+}
+
+#number-user{
+  width: 100%;
+}
+
+#multi-radio-chooses{
   display: flex;
 }
 
@@ -229,6 +463,7 @@ export default{
   display: flex;
   justify-content: space-between;
 }
+
 .nav-item .active {
   color: white;
   background-color: #383838;
@@ -244,37 +479,20 @@ export default{
   margin-right: 3px;
   cursor: pointer;
 }
+
 #sm-information-table{
   border: black solid; 
   padding: 3% 2% 3% 2%;
 }
-#fc-information-table{
-  border: black solid; 
-  padding: 3% 2% 3% 2%;
-}
-#sender-value-section{
-  margin-top: 10px;
-}
 
-#sender-value-section span{
-  font-size: 14px;
-}
-#sender-value-section input{
-  width: 80px;
-  height: 25px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-#table-function{
-    margin-top: 20px;
-}
 
-/* Function */
+/* function */
+
 #table-list {
   width: 100%;
   margin: auto;
   font-size: 0.9em;
-  height: 300px;
+  height: 249px;
   overflow-y: auto;
   border-radius: 4px;
   border: 2px solid black;
@@ -300,7 +518,19 @@ export default{
 .even_row{
   background-color: rgb(226, 224, 224);
 }
-
+.table-cell{
+  padding-top: 15px;
+}
+.first-cell{
+  flex-basis: 12%;
+  padding-left: 5px;
+}
+.second-cell{
+  flex-basis: 58%;
+}
+.third-cell{
+  flex-basis: 30%;
+}
 .input-param-text{
   color: rgb(42, 42, 214);
   cursor: pointer;
@@ -308,16 +538,10 @@ export default{
 .input-param-text:hover{
   color: rgb(78, 78, 243);
 }
-.table thead tr {
-    background-color:darkgrey;
-    color:black;
-    
-}
-tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
-}
+
+/* button */
 #processing-btn{
-  width: 60%;
+    width: 60%;
   height: 100px;
   margin-left: 30%;
   justify-content: space-between;
@@ -325,8 +549,8 @@ tbody tr:nth-of-type(odd) {
   margin-top: 100px;
 }
 #processing-btn .pr-button {
-  cursor: pointer;
-  width: 20%;
+   cursor: pointer;
+  width: 12%;
   height: 30px;
   border: 1px solid #2196f3;
   color: #2196f3;
@@ -335,10 +559,27 @@ tbody tr:nth-of-type(odd) {
   font-weight: 600;
   padding-top: 4px;
   border-radius: 4px;
-  margin-left: 30%;
+  margin-left: 38%;
 }
 #processing-btn .pr-button:hover {
-  background-color: #176fd4;
+  background-color: #1079cf;
   color: white;
+}
+.btn{
+  margin: 0 3%;
+}
+#sender-value-section{
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#sender-value-section span{
+  font-size: 14px;
+}
+#sender-value-section input{
+  width: 80px;
+  height: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 </style>

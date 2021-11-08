@@ -4,15 +4,15 @@
     <div class="row">
       <div class="col-2">Name</div>
       <div class="col-10">
-        <input class="form-control" type="text" value="" />
+        <input class="form-control" type="text" value="" v-model="name" />
       </div>
     </div>
     <div class="row">
       <div class="col-2">Template</div>
       <div class="col-10">
-        <select name="" class="form-select">
-          <option v-for="item in templates" :key="item" :value="item">
-            {{ item.name }}
+        <select name="" class="form-select" v-model="template">
+          <option v-for="item in listTemplates" :key="item" :value="item">
+            {{ item.template_type }}
           </option>
         </select>
       </div>
@@ -26,10 +26,10 @@
     <div class="row">
       <div class="col-2">Description</div>
       <div class="col-10">
-        <textarea name="" id="" cols="30" rows="5" class="form-control">
-            If {variable 1} occurs infnitely often and {variable 2} occurs 
+        <textarea name="" id="description-area" cols="30" rows="5" class="form-control" v-model="template.description">
+            <!-- If {variable 1} occurs infnitely often and {variable 2} occurs 
             inifnitely often, then each occurrence of {function 3} is 
-            followed by an occurrence of {function 4}
+            followed by an occurrence of {function 4} -->
           </textarea
         >
       </div>
@@ -55,7 +55,9 @@ import { GetGloLocArgOfSmartContract, GetAllltltemplates } from "../../../../ser
 export default {
   data: function () {
     return {
-      templates:[]
+      name: '',
+      listTemplates:[],
+      template: {},
     };
   },
   mounted() {
@@ -74,8 +76,7 @@ export default {
       console.log(this.GetSCSelectedInfor.name);
     },
    async fetchTemplate() {
-      this.templates = await GetAllltltemplates();
-      console.log('-------this.templates',this.templates);
+      this.listTemplates = await GetAllltltemplates();
     },
     routing(param) {
       if (param == "add") {

@@ -7,7 +7,7 @@ const state = {
     data: {
         selectedSc: [],
         selectedSCInfor: { name: "hello" },
-        selectedContext: [],
+        selectedContext: {},
         selectedVulnerbility: [],
         configVul: {},
         initialMarkingInfor: {
@@ -21,7 +21,6 @@ const state = {
             Funtion_params: {}
         },
     },
-
     views: {
         process: 'sc-selection',
         road_page: 1,
@@ -66,7 +65,6 @@ const getters = {
     GetFourthStepViewsList: (state) => state.views.fourth_step_views_list,
 
 }
-
 const mutations = {
     Setrs(state, value) {
         console.log("commit result");
@@ -84,7 +82,7 @@ const mutations = {
         state.data = {
             selectedSc: [],
             selectedSCInfor: {},
-            selectedContext: [],
+            selectedContext: {},
             selectedVulnerbility: [],
             configVul: {}
         }
@@ -102,9 +100,11 @@ const mutations = {
     },
     SetSelectedSC(state, newArr) {
         state.data.selectedSc = newArr;
+        console.log('newArr',newArr);
     },
     SetSelectedContext(state, newArr) {
         state.data.selectedContext = newArr;
+
     },
     SetSelectedVulnerbility(state, newArr) {
         state.data.selectedVulnerbility = newArr;
@@ -185,6 +185,7 @@ const mutations = {
         state.date_modified = value.date_modified
         state.views = value.views
         state.data = value.data
+        console.log('value------', value);
     }
 }
 
