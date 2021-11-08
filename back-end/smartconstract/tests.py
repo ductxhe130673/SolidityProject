@@ -4,12 +4,15 @@ from rest_framework import status
 
 class SimpleTest(TestCase):
     def test_smartcontract_get_all(self):
-        response = self.client.get('http://127.0.0.1:8000/smartconstract/select-smart-contract/')
+        response = self.client.get(
+            'http://127.0.0.1:8000/smartconstract/select-smart-contract')
         self.assertEqual(response.status_code,status.HTTP_200_OK)
 
 # TESTCASE CHAY NHUNG POSTMAN CHUA CHAY
     def test_create_new_smartcontract(self):
-        response = self.client.post('http://127.0.0.1:8000/smartconstract/select-smart-contract/', data={'name': 'abc', 'type': 'new', 'content': 'abc', 'description': 'abc', 'aid': '1'}) 
+        response = self.client.post('http://127.0.0.1:8000/smartconstract/select-smart-contract',
+         data={'name': 'abc', 'type': 'new', 'content': 'abc', 'description': 'abc', 'aid': '1'},
+         content_type='application/json') 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED) 
 
 # LOI
@@ -57,10 +60,10 @@ class SimpleTest(TestCase):
 #        self.assertEqual(response.status_code, status.HTTP_201_CREATED)  
 
 # LOI TESTCASE  , CON BEN POSTMAN CHAY OKE
-#    def test_insert_into_initialmarking(self):
-#        data={'num_user': '4', 'IM_type': 'new'}
-#        response = self.client.post('http://127.0.0.1:8000/smartconstract/addnewinitialmarking',data=data) 
-#        self.assertEqual(response.status_code, status.HTTP_201_CREATED)         
+    def test_insert_into_initialmarking(self):
+        response = self.client.post(
+            'http://127.0.0.1:8000/smartconstract/addnewinitialmarking',data={'num_user': '5', 'IM_type': 'new'}) 
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)         
 
 # LOI TESTCASE  , CON BEN POSTMAN CHAY OKE
 #    def test_insertIntoFunctions(self):

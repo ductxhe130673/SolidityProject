@@ -23,7 +23,6 @@ class SmartConstractAPIView(APIView):
             if request.method == 'POST':
                 serializeClient = GetSmartConstractSerializer(
                     data=request.data)
-                print(serializeClient)
                 if serializeClient.is_valid():
                     serializeClient.save()
                     return Response({"message": "Created"}, status=status.HTTP_201_CREATED)
