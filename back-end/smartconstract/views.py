@@ -21,20 +21,20 @@ class SmartConstractAPIView(APIView):
     def post(self, request):
         try:
             if request.method == 'POST':
-                serializeClient = GetSmartConstractSerializer(
-                    data=request.data)
+                serializeClient = GetSmartConstractSerializer(data=request.data)
                 if serializeClient.is_valid():
                     serializeClient.save()
                     return Response({"message": "Created"}, status=status.HTTP_201_CREATED)
                 return Response({"message": "Create fail!!!"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+        except Exception as e:
+            print('ERROR======',e)
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 serializeUpdate = GetSmartConstractSerializer(
                     instance=SmartConstractByID, data=request.data)
                 if serializeUpdate.is_valid():
@@ -48,7 +48,7 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 SmartConstractByID.delete()
                 return Response('Success', status=status.HTTP_200_OK)
         except:
@@ -123,32 +123,33 @@ def getFunctionVarArgu(request):
 # INSERT INTO INITIAL MARKING
 @api_view(['POST'])
 def addNewInitialMarking(request):
+    #print(request.POST.get['num_user'])
     try:
-        resData = dbcontext.addNewInitialMarking(request.GET['num_user'],request.GET['IM_type'])
+        resData = dbcontext.addNewInitialMarking(request.data['num_user'],request.data['IM_type'])
         if resData is None :
             return Response({"message": "Fail To Add New InitialMarking!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
     except Exception as e:
-        print(e)
+        print('ERROR========',e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 # INSERT INTO IMFUNCTION
 @api_view(['POST'])
 def addNewIMFunction(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['fun_name'],request.GET['sender_from'],request.GET['sender_to'])
+        resData = dbcontext.addNewIMFunction(request.data['fun_name'],request.data['sender_from'],request.data['sender_to'])
         if resData is None :
             return Response({"message": "Fail To Add New IMFunction!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
     except Exception as e:
-        print(e)
+        print('ERROR========',e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
 # INSERT INTO IMARGUMENT
 @api_view(['POST'])
 def addNewIMArgument(request):
     try:
-        resData = dbcontext.addNewIMArgument(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'])
+        resData = dbcontext.addNewIMArgument(request.data['arg_name'],request.data['IMfrom'],request.data['IMto'])
         if resData is None :
             return Response({"message": "Fail To Add New IMArgumentt!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -160,7 +161,7 @@ def addNewIMArgument(request):
 @api_view(['POST'])
 def addNewLNAFile(request):
     try:
-        resData = dbcontext.addNewLNAFile(request.GET['hcpnfile'],request.GET['propfile'])
+        resData = dbcontext.addNewLNAFile(request.data['hcpnfile'],request.data['propfile'])
         if resData is None :
             return Response({"message": "Fail To Add New LNAFile!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -172,8 +173,8 @@ def addNewLNAFile(request):
 @api_view(['POST'])
 def addNewCheckedBatchSC(request):
     try:
-        resData = dbcontext.addNewCheckedBatchSC(request.GET['aid'],request.GET['lteid'],request.GET['cid']
-        ,request.GET['noSC'],request.GET['status'],request.GET['LTLformula'],request.GET['result'])
+        resData = dbcontext.addNewCheckedBatchSC(request.data['aid'],request.data['lteid'],request.data['cid']
+        ,request.data['noSC'],request.data['status'],request.data['LTLformula'],request.data['result'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedBatchSC!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -185,7 +186,7 @@ def addNewCheckedBatchSC(request):
 @api_view(['POST'])
 def addNewCheckedSmartContractDetail(request):
     try:
-        resData = dbcontext.addNewCheckedSmartContractDetail(request.GET['sid'])
+        resData = dbcontext.addNewCheckedSmartContractDetail(request.data['sid'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedSmartContractDetail !!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -197,7 +198,7 @@ def addNewCheckedSmartContractDetail(request):
 @api_view(['POST'])
 def addNewBalance(request):
     try:
-        resData = dbcontext.addNewBalance(request.GET['balanceType'],request.GET['blfrom'],request.GET['blto'],request.GET['blvalue'],request.GET['blrange'])
+        resData = dbcontext.addNewBalance(request.data['balanceType'],request.data['blfrom'],request.data['blto'],request.data['blvalue'],request.data['blrange'])
         if resData is None :
             return Response({"message": "Fail To Add New Balance!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
