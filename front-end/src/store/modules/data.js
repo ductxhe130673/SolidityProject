@@ -199,7 +199,6 @@ const mutations = {
         state.date_modified = value.date_modified
         state.views = value.views
         state.data = value.data
-        console.log('value------', value);
     }
 }
 

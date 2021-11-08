@@ -87,7 +87,6 @@ export default {
   },
   methods: {
     updateContent(value){
-      //console.log(value)
       this.demoEditSC = value;
     },
     async clickHandler(action) {

@@ -67,7 +67,6 @@ export default {
     },
     ...mapActions(["getListTran", "setid"]),
     set(data) {
-      console.log(data);
       this.setid(data);
     },
   },

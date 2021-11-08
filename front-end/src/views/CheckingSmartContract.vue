@@ -347,7 +347,6 @@ export default {
       this.list_selected_sc.forEach(function (item) {
           listSC.push(item.name);
       })
-      console.log('----up----',listSC);
       return listSC;  
     },
     done_result() {

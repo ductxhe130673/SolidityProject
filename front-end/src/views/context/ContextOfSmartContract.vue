@@ -87,7 +87,7 @@
 <script>
 import UploadContext from "./UpLoadContext.vue";
 import {GetAllcpncontext} from "../../services/data"
-// console.log('--------',document.getElementById("context").value); 
+
 export default {
   components: { UploadContext },
   data() {
@@ -116,7 +116,6 @@ export default {
   methods: {
     async initData() {
       this.contexts = await GetAllcpncontext();
-        console.log(' this.selectedContext', this.selectedContext);
     },
     cComponents() {
       this.showComponents = false;

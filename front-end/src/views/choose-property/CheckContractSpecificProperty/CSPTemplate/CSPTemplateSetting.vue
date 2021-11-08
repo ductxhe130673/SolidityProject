@@ -75,11 +75,9 @@ export default {
     async fetchData() {
       const res = await GetGloLocArgOfSmartContract(1);
       console.log('getglo-----',res);
-      console.log(this.GetSCSelectedInfor.name); 
     },
    async fetchTemplate() {
       this.listTemplates = await GetAllltltemplates();
-    console.log('this.template',this.template);
     },
     routing(param) {
       if (param == "add") {
