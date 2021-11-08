@@ -293,6 +293,7 @@ export default {
   },
   computed:{
     getSelectedRadio(){
+      console.log('this.init_marking',this.init_marking);
       return this.init_marking.Balance.type
     },
     getSelectedSc(){
@@ -345,9 +346,12 @@ export default {
     routing(param) {
       if (param == "save") {
         this.$router.push({ name: "CheckSmartContract" });
+        this.$store.commit("setIndex", 5)
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
+        this.$store.commit("setIndex", 4)
+
       }
     },
     setFunctionParam(func){

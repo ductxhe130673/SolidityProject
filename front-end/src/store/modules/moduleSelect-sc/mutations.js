@@ -16,7 +16,6 @@ export default {
         state.listSmartContract = data;
     },
     SET_LIST_LTL_TEMPLATE(state, data){
-        console.log('data-------',data);
         state.listTemp = data; 
     }
 }

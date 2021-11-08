@@ -11,7 +11,7 @@ export class ContextService extends BaseService{
     */
     static async GetAllContext() {
         try {
-            const response = await this.request({ auth: true }).get(`${this.getUnity()}/api/`) // ->  http://127.0.0.1:8000/context/api/
+            const response = await this.request({ auth: true }).get(`${this.getUnity()}/api`) // ->  http://127.0.0.1:8000/context/api/
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText
@@ -26,7 +26,7 @@ export class ContextService extends BaseService{
                 "content": content,
                 "description": description
             }
-            const response = await this.request({ auth: true }).post(`${this.getUnity()}/api/`, paraData)
+            const response = await this.request({ auth: true }).post(`${this.getUnity()}/api`, paraData)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText
@@ -37,7 +37,7 @@ export class ContextService extends BaseService{
     static async DeleteContext(id) {
         try {
             console.log(id)
-            const response = await this.request({ auth: true }).delete(`${this.getUnity()}/api/?id=${id}`)
+            const response = await this.request({ auth: true }).delete(`${this.getUnity()}/api?id=${id}`)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText
@@ -55,7 +55,7 @@ export class ContextService extends BaseService{
                 "content": ContextById.data.content ,
                 "description": ct_description
             }
-            const response = await this.request({ auth: true }).put(`${this.getUnity()}/api/`, paraData)
+            const response = await this.request({ auth: true }).put(`${this.getUnity()}/api`, paraData)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText
