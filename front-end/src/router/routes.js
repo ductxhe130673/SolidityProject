@@ -50,6 +50,7 @@ import SelectContract from "../views/add-sagemented/SelectSmartContract.vue"
 import { DOMAIN_TITLE } from '../.env'
 
 
+
 //import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
@@ -277,6 +278,7 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
+
 ]
 
 /*

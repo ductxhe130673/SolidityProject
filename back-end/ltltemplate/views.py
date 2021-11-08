@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from rest_framework.serializers import Serializer
 from rest_framework import exceptions
-from .serializer import ltltemplateSerializer
+from .serializer import ltltemplateSerializer, ltltemplateSerializerPost
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -32,12 +32,42 @@ class ltltemplateAPIView(APIView):
 	# 		return Response({"message":"Get Data Fail!!"},status=status.HTTP_400_BAD_REQUEST)
 	
 	def post(self,request):
+		print(f'request {request}')
+		print(f'request data {request.data}')
 		try:
 			if request.method == 'POST':
-				serializerLTLTemplate = ltltemplateSerializer(data=request.data)
+				serializerLTLTemplate = ltltemplateSerializerPost(data=request.data)
 				if serializerLTLTemplate.is_valid():
 					serializerLTLTemplate.save()
 					return Response({"message":"Created"},status=status.HTTP_201_CREATED)
 				return Response({"message":"Create fail!!!"},status=status.HTTP_400_BAD_REQUEST)
-		except Exception:
+		except Exception as e:
+			print("ERROR====", e)
 			return Response({"message":"A"},status=status.HTTP_400_BAD_REQUEST)
+
+	def put(self,request):
+		print(f'request Put {request}')
+		print(f'request PUT data {request.data}')
+		try:
+			if request.method == 'PUT':
+				idLTLTemplate = request.data['lteid']
+				ltltemplateById = ltltemplate.objects.get(lteid=idLTLTemplate)
+				serializeUpdate = ltltemplateSerializer(instance=ltltemplateById, data=request.data)
+				if serializeUpdate.is_valid():
+					serializeUpdate.save()
+					return Response({"message":"Update Successfully!!!"},status=status.HTTP_202_ACCEPTED)
+				return Response({"message":"LTLTemplate Data Invalid!!!"},status=status.HTTP_409_CONFLICT)
+		except Exception as e:
+			print("ERROR=====",e)
+			return Response({"message":"Fail!!"},status=status.HTTP_404_NOT_FOUND)
+
+	def delete(self,request):
+		try:
+			if request.method =='DELETE':
+				idLTLDelete = request.GET['lteid']
+				ltltemplateDelete = ltltemplate.objects.get(lteid=idLTLDelete)
+				ltltemplateDelete.delete()
+				return Response('Success',status=status.HTTP_200_OK)
+		except Exception as e:
+			print('ERROR====',e)
+			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)

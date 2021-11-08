@@ -1,7 +1,7 @@
 from .serializer import GetSmartConstractSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, status
 from .models import Smartcontract
 from rest_framework.decorators import api_view
 from smartconstract import dbcontext
@@ -21,20 +21,20 @@ class SmartConstractAPIView(APIView):
     def post(self, request):
         try:
             if request.method == 'POST':
-                serializeClient = GetSmartConstractSerializer(
-                    data=request.data)
+                serializeClient = GetSmartConstractSerializer(data=request.data)
                 if serializeClient.is_valid():
                     serializeClient.save()
                     return Response({"message": "Created"}, status=status.HTTP_201_CREATED)
                 return Response({"message": "Create fail!!!"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+        except Exception as e:
+            print('ERROR======',e)
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 serializeUpdate = GetSmartConstractSerializer(
                     instance=SmartConstractByID, data=request.data)
                 if serializeUpdate.is_valid():
@@ -48,7 +48,7 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
-                SmartConstractByID = Smartcontract.objects.get(id=idClient)
+                SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 SmartConstractByID.delete()
                 return Response('Success', status=status.HTTP_200_OK)
         except:
@@ -120,47 +120,24 @@ def getFunctionVarArgu(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
+# INSERT INTO INITIAL MARKING
 @api_view(['POST'])
 def addNewInitialMarking(request):
+    print('Number======',request.GET['num_user'])
     try:
         resData = dbcontext.addNewInitialMarking(request.GET['num_user'],request.GET['IM_type'])
-        # print(request.GET['IM_type'])
-        # print(request.GET['num_user'])
-        # print(resData)
         if resData is None :
             return Response({"message": "Fail To Add New InitialMarking!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
     except Exception as e:
-        print(e)
+        print('ERROR========',e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def addNewBalanceTypeFixed(request):
-    try:
-        resData = dbcontext.addNewBalanceTypeFixed(request.GET['blvalue'],request.GET['imid'])
-        if resData is None :
-            return Response({"message": "Fail To Add New Balance!!!"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(resData, status=status.HTTP_201_CREATED)
-    except Exception as e:
-        print(e)
-        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)      
-
-@api_view(['POST'])
-def addNewBalanceTypeRandom(request):
-    try:
-        resData = dbcontext.addNewBalanceTypeRandom(request.GET['blfrom'],request.GET['blto'],request.GET['blvalue'],request.GET['imid'])
-        if resData is None :
-            return Response({"message": "Fail To Add New Balance!!!"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(resData, status=status.HTTP_201_CREATED)
-    except Exception as e:
-        print(e)
-        return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
-
+# INSERT INTO IMFUNCTION
 @api_view(['POST'])
 def addNewIMFunction(request):
     try:
-        imid = dbcontext.getLastInsertIDFromInitialMarking()
-        resData = dbcontext.addNewIMFunction(request.GET['fun_name'],request.GET['sender_from'],request.GET['sender_to'],imid)
+        resData = dbcontext.addNewIMFunction(request.GET['fun_name'],request.GET['sender_from'],request.GET['sender_to'])
         if resData is None :
             return Response({"message": "Fail To Add New IMFunction!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -168,11 +145,11 @@ def addNewIMFunction(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
+# INSERT INTO IMARGUMENT
 @api_view(['POST'])
 def addNewIMArgument(request):
     try:
-        imfid = dbcontext.getIMFunctionIDByIMIDAndFuncName(request.GET['fun_name'],request.GET['imid'])
-        resData = dbcontext.addNewIMFunction(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'],imfid)
+        resData = dbcontext.addNewIMArgument(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'])
         if resData is None :
             return Response({"message": "Fail To Add New IMArgumentt!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -180,6 +157,7 @@ def addNewIMArgument(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
+# INSERT INTO LNAFILE
 @api_view(['POST'])
 def addNewLNAFile(request):
     try:
@@ -191,11 +169,12 @@ def addNewLNAFile(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
+# INSERT INTO CHECKEDBATHCSC
 @api_view(['POST'])
 def addNewCheckedBatchSC(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['aid'],request.GET['lnid'],request.GET['lteid'],request.GET['cid'],
-        request.GET['imid'],request.GET['noSC'],request.GET['checkedDate'],request.GET['status'],request.GET['LTLformula'],request.GET['result'])
+        resData = dbcontext.addNewCheckedBatchSC(request.GET['aid'],request.GET['lteid'],request.GET['cid']
+        ,request.GET['noSC'],request.GET['status'],request.GET['LTLformula'],request.GET['result'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedBatchSC!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -203,10 +182,11 @@ def addNewCheckedBatchSC(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
+# INSERT INTO CHECKEDSMARTCONTRACTDETAIL        
 @api_view(['POST'])
 def addNewCheckedSmartContractDetail(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.GET['sid'],request.GET['bid'])
+        resData = dbcontext.addNewCheckedSmartContractDetail(request.GET['sid'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedSmartContractDetail !!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -214,18 +194,18 @@ def addNewCheckedSmartContractDetail(request):
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
+# INSERT INTO BALANCE
 @api_view(['POST'])
 def addNewBalance(request):
     try:
-        imid = dbcontext.getLastInsertIDFromInitialMarking()
-        resData = dbcontext.addNewBalance(request.GET['balanceType'],request.GET['blfrom'],request.GET['blto'],request.GET['blvalue'],request.GET['blrange'],imid)
+        resData = dbcontext.addNewBalance(request.GET['balanceType'],request.GET['blfrom'],request.GET['blto'],request.GET['blvalue'],request.GET['blrange'])
         if resData is None :
             return Response({"message": "Fail To Add New Balance!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
     except Exception as e:
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)         
-
+    
 @api_view(['GET'])
 def getArguByFunctionId(request):
     try:
@@ -234,3 +214,32 @@ def getArguByFunctionId(request):
     except Exception as e:
         print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#@api_view(['PUT'])     
+#def updateSC(request, pk):
+#    try:
+#         SmartConstractByID = Smartcontract.objects.get(pk=pk)
+#         print(pk)
+#    except Smartcontract.DoesNotExist:
+#        return Response(status=status.HTTP_404_NOT_FOUND)
+
+#    if request.method == 'PUT':
+#        serializer = GetSmartConstractSerializer(SmartConstractByID,data=request.data) 
+#        print(serializer)
+#        if serializer.is_valid():
+#            serializer.save()
+#            return Response(serializer.errors, status=status.HTTP_202_ACCEPTED)
+#        return Response({"message": "SmartConstract Data Invalid!!!"}, status=status.HTTP_409_CONFLICT)
+
+#@api_view(['DELETE'])     
+#def deleteSC(request, pk):
+#    try:
+#         SmartConstractByID = Smartcontract.objects.get(pk=pk)
+#         print(SmartConstractByID)
+#    except Smartcontract.DoesNotExist:
+#        return Response('Fail !!!',status=status.HTTP_404_NOT_FOUND)
+
+#    if  request.method == 'DELETE':
+#          SmartConstractByID.delete()
+#          return Response('Success', status=status.HTTP_204_NO_CONTENT)

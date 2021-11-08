@@ -3,7 +3,7 @@ db = mysql.connector.connect(
     host = "localhost",
     user="root",
     passwd = "123456",
-    database="test_soliditycpn"
+    database="soliditycpn"
 )
 mycursor = db.cursor()
 mycursor.execute("""CREATE TABLE Account (
@@ -112,8 +112,8 @@ lteid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 formula text,
 template_type nvarchar(200),
-description text
-
+description text,
+aid int not null references Account(aid)
 )
 
 """)
@@ -123,7 +123,8 @@ cid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 content text,
 context_type nvarchar(200),
-description text
+description text,
+aid int not null references Account(aid)
 )
 
 """)
