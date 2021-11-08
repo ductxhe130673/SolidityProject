@@ -8,6 +8,8 @@ const state = {
         selectedSc: [],
         selectedSCInfor: { name: "hello" },
         selectedContext: {},
+        selectedTemplate: {},
+        nameCSP: '',
         selectedVulnerbility: [],
         configVul: {},
         initialMarkingInfor: {
@@ -44,6 +46,9 @@ const getters = {
     GetSelectedContext: state => {
         return state.data.selectedContext;
     },
+    GetSelectedTemplate: state => {
+        return state.data.selectedTemplate;
+    },
     GetSelectedVulnerbility: state => {
         return state.data.selectedVulnerbility;
     },
@@ -57,6 +62,10 @@ const getters = {
     getIndex: state => {
         return state.index;
     },
+    getNameCSP: state =>{
+        return state.nameCSP;
+    },
+
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
     GetRoadPage: (state) => state.views.road_page,
@@ -83,6 +92,7 @@ const mutations = {
             selectedSc: [],
             selectedSCInfor: {},
             selectedContext: {},
+            selectedTemplate:{},
             selectedVulnerbility: [],
             configVul: {}
         }
@@ -100,11 +110,12 @@ const mutations = {
     },
     SetSelectedSC(state, newArr) {
         state.data.selectedSc = newArr;
-        console.log('newArr',newArr);
     },
-    SetSelectedContext(state, newArr) {
-        state.data.selectedContext = newArr;
-
+    SetSelectedContext(state, data) {
+        state.data.selectedContext = data;
+    },
+    SetSelectedTemplate(state, data) {
+        state.data.selectedTemplate = data;
     },
     SetSelectedVulnerbility(state, newArr) {
         state.data.selectedVulnerbility = newArr;
@@ -115,6 +126,9 @@ const mutations = {
     /* -- index -- */
     setIndex(state, data) {
         state.index = data;
+    },
+    setNameCSP(state, data) {
+        state.nameCSP = data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility

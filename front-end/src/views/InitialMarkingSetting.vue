@@ -118,11 +118,11 @@ export default {
   },
   data() {
     return {
-      radio_seleted: "fixed",
+      radio_seleted: "",
       function_cell_selected: "function",
-      list_smart_contract: [{name:"smart I",id:1},{name:"smart II",id:2},{name:"smart III",id:3},{name:"smart IV",id:4}],
+      list_smart_contract: [],
       smart_contract_infors: {1:{
-                              "name": "smart I",
+                              "name": "SimpleDice",
                               "functions": [
                                   {
                                       "fid": 3,
@@ -282,6 +282,7 @@ export default {
   },
   beforeMount(){
     this.initInitialMarkingHolder()
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
   },
   watch: {
     init_marking: {
@@ -293,7 +294,7 @@ export default {
   },
   computed:{
     getSelectedRadio(){
-      console.log('this.init_marking',this.init_marking);
+      console.log(this.init_marking.Balance.type,'hihih');
       return this.init_marking.Balance.type
     },
     getSelectedSc(){
@@ -345,6 +346,8 @@ export default {
     },
     routing(param) {
       if (param == "save") {
+        console.log('hohoho', this.init_marking);
+        this.$store.commit("SetInitialMarking", this.init_marking)
         this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", 5)
       }

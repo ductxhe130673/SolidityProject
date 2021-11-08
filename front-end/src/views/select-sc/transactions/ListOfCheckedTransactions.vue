@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="header">
-    <h1>Checked Smart Contract List</h1>
+      <h1>Checked Smart Contract List</h1>
     </div>
     <div class="blue">
       <div class="atable">
@@ -11,19 +11,21 @@
               <th style="width: 10%" scope="col">#</th>
               <th style="width: 30%" scope="col">Checker</th>
               <th style="width: 25%" scope="col">Checked Date</th>
-              <th style="width: 35%" scope="col"> Number of smart contracts </th>
+              <th style="width: 35%" scope="col">Number of smart contracts</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, index) in getListTransaction" v-bind:key="index">
               <th scope="row">{{ index + 1 }}</th>
               <td>
-                <div v-on:click="set(item.bid)" v-bind:id="item.bid"><router-link
-                  :to="{path:'checking-result', query: { id: item[0] }}"
-                  tag="a"
-                  class="lk"
-                  >{{ item[1] +' '+item[2]}}</router-link
-                ></div>
+                <div v-on:click="set(item.bid)" v-bind:id="item.bid">
+                  <router-link
+                    :to="{ path: 'checking-result', query: { id: item[0] } }"
+                    tag="a"
+                    class="lk"
+                    >{{ item[1] + " " + item[2] }}</router-link
+                  >
+                </div>
               </td>
               <td>{{ item[3] }}</td>
               <td>{{ item[4] }}</td>
@@ -50,32 +52,30 @@ export default {
     };
   },
   methods: {
-    
     routing(param) {
       if (param == "next") {
         this.$router.push({ name: "CheckRentrancy" });
       }
       if (param == "addsc") {
         this.$router.push({ name: "SelectSmartContract" });
-        this.$store.commit("setIndex", 2);      
+        this.$store.commit("setIndex", 2);
       }
       if (param == "back") {
         this.$router.push({ name: "Index" });
-        this.$store.commit("setIndex", 0); 
+        this.$store.commit("setIndex", 0);
       }
     },
-    ...mapActions(["getListTran","setid"]),
-    set(data){
+    ...mapActions(["getListTran", "setid"]),
+    set(data) {
       console.log(data);
-       this.setid(data);
-     }
+      this.setid(data);
+    },
   },
   computed: {
-    ...mapGetters(["getListTransaction","getid"]),
+    ...mapGetters(["getListTransaction", "getid"]),
   },
   created() {
     this.getListTran();
-    
   },
 };
 </script>
@@ -116,8 +116,7 @@ export default {
 }
 .blue {
   border: 1px solid #d9edf7;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: -40px;
   background: none;
   margin-top: 65px;
@@ -130,8 +129,7 @@ h1 {
   font-weight: bold;
 }
 .atable {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-left: 50px;
   margin-top: 50px;
   margin-right: 50px;

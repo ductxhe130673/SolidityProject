@@ -12,7 +12,7 @@
       <div class="col-10">
         <select name="" class="form-select" v-model="template">
           <option v-for="item in listTemplates" :key="item" :value="item">
-            {{ item.template_type }}
+            {{ item.name }}
           </option>
         </select>
       </div>
@@ -63,6 +63,8 @@ export default {
   mounted() {
     this.fetchData();
     this.fetchTemplate();
+    this.template = this.$store.state.data.data.selectedTemplate;
+    this.name = this.$store.state.data.nameCSP;
   },
   components: {
     FormularEditor,
@@ -73,13 +75,16 @@ export default {
     async fetchData() {
       const res = await GetGloLocArgOfSmartContract(1);
       console.log('getglo-----',res);
-      console.log(this.GetSCSelectedInfor.name);
+      console.log(this.GetSCSelectedInfor.name); 
     },
    async fetchTemplate() {
       this.listTemplates = await GetAllltltemplates();
+    console.log('this.template',this.template);
     },
     routing(param) {
       if (param == "add") {
+        this.$store.commit("SetSelectedTemplate", this.template);
+        this.$store.commit("setNameCSP", this.name)
         this.$router.push({ name: "Initial" });
       }
       if (param == "back") {

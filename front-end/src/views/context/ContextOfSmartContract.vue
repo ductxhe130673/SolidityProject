@@ -110,6 +110,7 @@ export default {
   },
   
   mounted() {
+    this.selectedContext =  this.$store.state.data.data.selectedContext;
     this.initData()
   },
   methods: {

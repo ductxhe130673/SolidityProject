@@ -30,9 +30,9 @@
                 /></span>
               </th>
             </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
+            <tr v-for="(item , index) in filterSC" :key="index">
+              <td>{{ index+1 }}</td>
+              <td>{{ item }}</td>
             </tr>
           </table>
         </div>
@@ -45,7 +45,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          value="Gaming"
+          :value= "this.context.name"
         />
       </div>
     </div>
@@ -63,7 +63,7 @@
     <div id="locate-4">
       <div class="label">Configuration</div>
       <div class="link-to">
-        <a href="" @click="navigate('config')"> Link to setting Configuration</a>
+        <a @click="navigate('config')"> Link to setting Configuration</a>
       </div>
     </div>
     <div class="contain-process">
@@ -143,11 +143,6 @@ import CheckService from "../services/check.service";
 export default {
   data() {
     return {
-      datatable: [
-        { id: "1", var: "EtherGame" },
-        { id: "2", var: "AtherGame" },
-        { id: "3", var: "CtherGame" },
-      ],
       step: "initial",
       list_selected_sc: [],
       list_selected_vuls: [],
@@ -162,20 +157,23 @@ export default {
       currentSC: null,
     };
   },
+  beforeMount(){
+    this.list_selected_sc = this.$store.state.data.data.selectedSc;
+  },
   methods: {
     sort(mess) {
       switch (mess) {
         case "asId":
-          this.datatable.sort((a, b) => a.id - b.id);
+          this.list_selected_sc.sort((a, b) => a.aid - b.aid);
           break;
         case "deId":
-          this.datatable.sort((a, b) => b.id - a.id);
+          this.list_selected_sc.sort((a, b) => b.aid - a.aid);
           break;
         case "asName":
-          this.datatable.sort((a, b) => (a.var < b.var ? 1 : -1));
+          this.list_selected_sc.sort((a, b) => (a.name < b.name ? 1 : -1));
           break;
         case "deName":
-          this.datatable.sort((a, b) => (a.var > b.var ? 1 : -1));
+          this.list_selected_sc.sort((a, b) => (a.name > b.name ? 1 : -1));
           break;
       }
     },
@@ -337,13 +335,21 @@ export default {
     },
   },
   mounted() {
-    this.list_selected_sc = this.$store.getters["data/GetSelectedSC"];
-    this.context = this.$store.getters["data/GetSelectedContext"];
+    this.context = this.$store.state.data.data.selectedContext
+    console.log('this.context',this.context , 'this.list_selected_sc',this.list_selected_sc);
     this.list_selected_vuls =
       this.$store.getters["data/GetSelectedVulnerbility"];
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {
+    filterSC(){
+      var listSC = []; 
+      this.list_selected_sc.forEach(function (item) {
+          listSC.push(item.name);
+      })
+      console.log('----up----',listSC);
+      return listSC;  
+    },
     done_result() {
       return this.$store.getters.Getrs;
     },
