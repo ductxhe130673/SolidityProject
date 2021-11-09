@@ -5,7 +5,10 @@ from subprocess import Popen, PIPE, STDOUT
 
 
 # for Windows
-path = r"C:\Capstone\SolidityProject\tools"
+
+
+path = r"D:\Demo\SolidityProject\tools"
+
 
 # for Ubuntu
 # path = r"G:\CapstoneProject\SolidityProject\tools"

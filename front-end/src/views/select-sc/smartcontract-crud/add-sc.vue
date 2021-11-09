@@ -38,7 +38,7 @@
               v-model="selectOption"
             />
           </div>
-          <div class="common-option" v-else>
+          <div class="common-option">
             <label for="common">Pending</label>
             <input
               class="radio"
