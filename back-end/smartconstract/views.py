@@ -60,7 +60,7 @@ def getScById(request):
     try:
         if request.method == 'GET':
             idClient = request.GET['id']
-            smartConstractDB = Smartcontract.objects.get(id=idClient)
+            smartConstractDB = Smartcontract.objects.get(sid=idClient)
             serialiSmartConstract = GetSmartConstractSerializer(
                 smartConstractDB)
             return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)
