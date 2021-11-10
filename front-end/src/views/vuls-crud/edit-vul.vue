@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="header">
-      Edit an LTL Vulnerability
+      Update the LTL Property Template
     </div>
     <div class="body">
       <div class="row" id="name-section">
@@ -10,6 +10,19 @@
           <input class="form-control" type="text" v-model="name" />
         </div>
       </div>
+
+      <!-- <div class="editor-area">
+        <span class="title">Formular</span>
+        <LTLEditor :code.sync="codeModel" @change="changedLTL($event)" />
+      </div> -->
+      
+      <div class="row">
+        <div class="title col-2">Formula</div>
+        <div class="col-10">
+          <formular-editor/>
+        </div>
+      </div>
+
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
@@ -22,10 +35,7 @@
           ></textarea>
         </div>
       </div>
-      <div class="editor-area">
-        <span class="title">Formular</span>
-        <!-- <LTLEditor :code.sync="codeModel" @change="changedLTL($event)" /> -->
-      </div>
+    
       <div id="group-btn">
         <button id="button-add" type="button" @click="clickHandler('save')">
           Save
@@ -45,7 +55,11 @@
 <script>
 // import LTLEditor from "../../components/LTLEditor.vue";
 import { GetLtlById, UpdateLtl } from "../../services/data";
+import FormularEditor from "../../components/FormularEditor.vue"
 export default {
+  components: {
+    FormularEditor
+  },
   data() {
     return {
       id: this.$route.params.vul_id,
@@ -114,7 +128,7 @@ export default {
 #main {
   background-color: rgb(241, 240, 240);
   align-items: center;
-  height: 100%;
+  height: 100vh;
   margin: 0;
 }
 #header {
@@ -136,6 +150,9 @@ export default {
 #name-section {
   margin-bottom: 30px;
 }
+textarea{
+  height: 250px;
+}
 /* editor area */
 .editor-area {
   width: 100%;
@@ -150,6 +167,7 @@ export default {
   display: flex;
   justify-content: space-evenly;
   margin-top: 30px;
+  margin-left: 25px;
 }
 #group-btn button {
   width: 170px;
