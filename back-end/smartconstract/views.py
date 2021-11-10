@@ -15,7 +15,8 @@ class SmartConstractAPIView(APIView):
                 smartConstractDB = Smartcontract.objects.all()
                 serialiSmartConstract = GetSmartConstractSerializer(smartConstractDB, many=True)
                 return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)
-        except:
+        except Exception as e:
+            print("ERROR====", e)
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
@@ -31,6 +32,8 @@ class SmartConstractAPIView(APIView):
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
+        print(f'request Put {request}')
+        print(f'request PUT data {request.data}')
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']
@@ -123,9 +126,9 @@ def getFunctionVarArgu(request):
 # INSERT INTO INITIAL MARKING
 @api_view(['POST'])
 def addNewInitialMarking(request):
-    print('Number======',request.GET['num_user'])
+    print('Number======',request.data['num_user'])
     try:
-        resData = dbcontext.addNewInitialMarking(request.GET['num_user'],request.GET['IM_type'])
+        resData = dbcontext.addNewInitialMarking(request.data['num_user'],request.data['IM_type'])
         if resData is None :
             return Response({"message": "Fail To Add New InitialMarking!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
