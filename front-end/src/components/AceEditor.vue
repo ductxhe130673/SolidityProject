@@ -48,15 +48,15 @@ export default {
 
 <style scoped>
 #ace-editor {
-  /* width: 600px; */
+  width: 600px;
   height: 400px;
 }
-.tool-bar {
+/* .tool-bar {
   height: 30px;
   width: 100%;
   background-color: rgb(49, 98, 170);
   border-radius: 4px 4px 0 0;
-}
+} */
 </style>
 <style>
 .ace_content {
