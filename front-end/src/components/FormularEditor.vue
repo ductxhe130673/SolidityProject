@@ -19,15 +19,13 @@ data: function () {
       select_variable_value: "",
       select_variable_id: "",
       select_variable_type: "",
-      selected_template: "",
-      ltlcode:"¬outOf Range(currentBalance)",
+      selected_template: {},
       ltltemplate: [],
-      description: "",
     };
   },
-  mounted() {
-    this.ltlcode = this.$store.state.data.data.selectedTemplate.formula;
-    this.updateContent(1, this.ltlcode);
+  beforeMount() {
+    this.selected_template = this.$store.state.data.data.selectedTemplate;
+    this.updateContent(1, this.selected_template.formula);
   },
    computed: {
     isSelectVariable() {
@@ -46,8 +44,8 @@ data: function () {
       const data = this.ltltemplate.find((i) => {
         return i.lteid == value;
       });
-      this.ltlcode= data.formula;
-      this.description = data.description;
+      this.selected_template.formula= data.formula;
+      this.selected_template.description = data.description;
     },
     updateSelection(new_value) {
       if (new_value != "") {

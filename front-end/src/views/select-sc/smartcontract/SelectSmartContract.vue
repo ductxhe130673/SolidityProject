@@ -70,6 +70,7 @@ export default {
   },
   mounted(){
     this.checkedNames = this.$store.state.data.data.selectedSc;
+    console.log('hello',this.checkedNames);
   },
   methods: {
    routing(param) {

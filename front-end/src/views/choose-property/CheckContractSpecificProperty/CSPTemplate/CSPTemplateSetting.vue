@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-2">Template</div>
       <div class="col-10">
-        <select name="" class="form-select" v-model="template">
+        <select name="" class="form-select" v-model="template" @change="onChangTemplate()">
           <option v-for="item in listTemplates" :key="item" :value="item">
             {{ item.name }}
           </option>
@@ -27,9 +27,6 @@
       <div class="col-2">Description</div>
       <div class="col-10">
         <textarea name="" id="description-area" cols="30" rows="5" class="form-control" v-model="template.description">
-            <!-- If {variable 1} occurs infnitely often and {variable 2} occurs 
-            inifnitely often, then each occurrence of {function 3} is 
-            followed by an occurrence of {function 4} -->
           </textarea
         >
       </div>
@@ -72,6 +69,9 @@ export default {
   computed: {
   },
   methods: {
+    // onChangTemplate(){
+    //   this.$store.commit("SetSelectedTemplate", this.template);
+    // },
     async fetchData() {
       const res = await GetGloLocArgOfSmartContract(1);
       console.log('getglo-----',res);

@@ -12,6 +12,7 @@ const state = {
         nameCSP: '',
         selectedVulnerbility: [],
         configVul: {},
+        ltlProperty : [],
         initialMarkingInfor: {
             NumberOfUser: null,
             Balance: {
@@ -65,7 +66,9 @@ const getters = {
     getNameCSP: state =>{
         return state.nameCSP;
     },
-
+    getLtlProperty: state => {
+        return state.data.ltlProperty;
+    },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
     GetRoadPage: (state) => state.views.road_page,
@@ -129,6 +132,9 @@ const mutations = {
     },
     setNameCSP(state, data) {
         state.nameCSP = data;
+    },
+    setLtlProperty(state, data){
+        state.data.ltlProperty= data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility

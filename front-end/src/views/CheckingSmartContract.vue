@@ -139,6 +139,8 @@
 
 <script>
 import CheckService from "../services/check.service";
+import  { GetLtl }  from "../services/data";
+
 
 export default {
   data() {
@@ -150,6 +152,7 @@ export default {
       user: { user_name: "Billy Tran" },
       error: true,
       view: "",
+      ltlProperty: [],
       results: [],
       showConfirmation: false,
       dialog: {},
@@ -159,6 +162,7 @@ export default {
   },
   beforeMount(){
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
+    this.fetchLTLProp();
   },
   methods: {
     sort(mess) {
@@ -176,6 +180,10 @@ export default {
           this.list_selected_sc.sort((a, b) => (a.name > b.name ? 1 : -1));
           break;
       }
+    },
+    async fetchLTLProp() {
+      this.ltlProperty = await GetLtl();
+      console.log('hihi', this.ltlProperty);
     },
     navigate(param) {
       if (param == "config") {
@@ -335,8 +343,8 @@ export default {
     },
   },
   mounted() {
-    this.context = this.$store.state.data.data.selectedContext
-    console.log('this.context',this.context , 'this.list_selected_sc',this.list_selected_sc);
+    this.context = this.$store.state.data.data.selectedContext;
+    // console.log('--hihiltl',ltlProperty);
     this.list_selected_vuls =
       this.$store.getters["data/GetSelectedVulnerbility"];
     this.view = this.$store.getters["data/GetProcessView"];
