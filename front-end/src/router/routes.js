@@ -53,6 +53,7 @@ import { DOMAIN_TITLE } from '../.env'
 
 //import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
+import SelectVarReentrancy from "../views/SelectVarReentrancy.vue"
 
 
 export const routes = [{
@@ -168,7 +169,7 @@ export const routes = [{
                 name: "VulSummary",
                 component: VulnerabilitySummary
             },
-                {
+            {
                 path: "select-function",
                 name: "SelectFuntion",
                 component: SelectFunction
@@ -278,6 +279,12 @@ export const routes = [{
         component: EditVul,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
+    },
+    {
+        path: "/SelectVarReentrancy",
+        name: "SelectVarReentrancy",
+        component: SelectVarReentrancy,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy` },
     },
 
 ]
