@@ -75,7 +75,6 @@
               </div>
             </div>
           </div>
-        
       </div>
     </div>
     <div id="processing-btn">
@@ -131,7 +130,6 @@ export default{
                 },
             ]
         };
-        
     },
     computed:{
     getSelectedFunc(){

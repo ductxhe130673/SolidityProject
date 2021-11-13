@@ -54,7 +54,8 @@ import { DOMAIN_TITLE } from '../.env'
 //import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 import SelectVarReentrancy from "../views/SelectVarReentrancy.vue"
-
+import SelectFuncReentrancyOp1 from "../views/SelectFuncReentrancyOp1.vue"
+import SelectFuncReentrancyOp2 from "../views/SelectFuncReentrancyOp2.vue"
 
 export const routes = [{
         path: "/",
@@ -285,6 +286,18 @@ export const routes = [{
         name: "SelectVarReentrancy",
         component: SelectVarReentrancy,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy` },
+    },
+    {
+        path: "/SelectFuncReentrancyOp1",
+        name: "SelectFuncReentrancyOp1",
+        component: SelectFuncReentrancyOp1,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op1` },
+    },
+    {
+        path: "/SelectFuncReentrancyOp2",
+        name: "SelectFuncReentrancyOp2",
+        component: SelectFuncReentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op2` },
     },
 
 ]
