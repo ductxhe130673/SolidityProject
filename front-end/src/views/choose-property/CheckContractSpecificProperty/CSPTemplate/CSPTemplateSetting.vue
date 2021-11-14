@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-2">Template</div>
       <div class="col-10">
-        <select name="" class="form-select" v-model="template" @change="onChangTemplate()">
+        <select name="" class="form-select" v-model="template">
           <option v-for="item in listTemplates" :key="item" :value="item">
             {{ item.name }}
           </option>
@@ -38,8 +38,7 @@
       <button
         class="btn btn-outline-secondary btn-sm"
         type="button"
-        @click="routing('back')"
-      >
+        @click="routing('back')">
         Back
       </button>
     </div>

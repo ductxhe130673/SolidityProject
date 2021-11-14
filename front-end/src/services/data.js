@@ -172,12 +172,12 @@ export async function AddNewSmartContracts(sc_id, sc_name, options, content) {
     await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content)
 }
 
-export async function UpdateSmartContractCode(sc_id, name_sc, code) {
+export async function UpdateSmartContractCode(sc_id, name_sc, code, description, option) {
     // if(sc_id in SmartContractCode){
     //   SmartContractCode[sc_id] = code
     // }
     console.log(code)
-    await SmartContractsService.UpdateSmartContracts(sc_id, name_sc, code)
+    await SmartContractsService.UpdateSmartContracts(sc_id, name_sc, code, description, option)
 }
 /* --------------------Delete SmartContract----------------- */
 export function DeleteSmartContracts(sc_id, options) {

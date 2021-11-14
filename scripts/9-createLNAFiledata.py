@@ -25,7 +25,6 @@ multi = [
     (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
      InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
 
-
 ]
 mycursor.executemany(sqlFomular, multi)
 db.commit()
