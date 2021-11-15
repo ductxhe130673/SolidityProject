@@ -3,8 +3,8 @@
         <div id="d-header">{{this.dialog.title}}<hr></div>
         <div id="d-content">{{this.dialog.message}}</div>
         <div id="btn-group" class="container">
-            <button class="btn btn-secondary btn-sm" @click="cancel">Cancel</button>
-            <button class="btn btn-success btn-sm" @click="confirm">{{this.dialog.confirmbtn}}</button>
+            <button class="btn btn-light btn-sm" @click="cancel">No</button>
+            <button class="btn btn-primary btn-sm" @click="confirm">{{this.dialog.confirmbtn}}</button>
         </div>
     </div>
 </template>
@@ -35,12 +35,14 @@ export default {
     font-size: 23px;
     height: 60px;
     color: #3a7694;
+    text-align: center;
 }
 hr{
     margin-top: 10px;
 }
 #d-content{
     height: 60px;
+    text-align: center;
 }
 #btn-group{
     width: 50%;

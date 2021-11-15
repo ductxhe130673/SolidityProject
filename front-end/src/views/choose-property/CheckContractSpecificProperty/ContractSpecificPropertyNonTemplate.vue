@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-2">Name</div>
         <div class="col-9">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" placeholder="Check format">
         </div>
       </div>
       <div class="row">

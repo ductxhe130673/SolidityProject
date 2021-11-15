@@ -32,31 +32,13 @@ export default {
 
     async setListSmartContract({commit}) {
         try {
-            console.log("setListSmartContract");
-            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract/');
-            console.log('result',result);
+            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
             commit('SET_LIST_SMART_CONTRACT',result.data)
             if(result.data.status === 200) {
                 commit('SET_LIST_SMART_CONTRACT',result.data)
             }
-            console.log("setListSmartContract");
         } catch(error) {
             console.log("error", error);
         }
     },
-
-    // async setListLTLTemplate({commit}) {
-    //     try {
-    //         console.log("setListLTLTemplate");
-    //         var result = await Axios.get('http://127.0.0.1:8000/ltltemplate/api/');
-    //         console.log('result',result);
-    //         commit('SET_LIST_LTL_TEMPLATE',result.data)
-    //         if(result.data.status === 200) {
-    //             commit('SET_LIST_LTL_TEMPLATE',result.data)
-    //         }
-    //         console.log("setListLTLTemplate");
-    //     } catch(error) {
-    //         console.log("error", error);
-    //     }
-    // }
 }

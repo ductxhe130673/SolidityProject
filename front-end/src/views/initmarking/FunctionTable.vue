@@ -55,6 +55,7 @@ export default ({
         }
     },
     beforeMount(){
+      console.log('table');
       this.own_list_argument = this.list_argument
     },
     methods:{

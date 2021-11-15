@@ -1,8 +1,11 @@
+from django.contrib import admin
 from django.urls import path
-from .import views
 from .views import cpncontextAPIView
+from cpncontext import views
 
 urlpatterns = [
-    path('api/', views.cpncontextAPIView.as_view()),
+    path('admin/', admin.site.urls),
+    path('api', cpncontextAPIView.as_view()),
+    path('cpncontextbyid', views.getCPNcontextById),
     # path('ltlbyid',views.getLTLById)
 ]

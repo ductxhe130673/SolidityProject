@@ -43,4 +43,7 @@ mycursor.execute("""alter table CheckedSmartContractDetail ADD CONSTRAINT fk_id1
 references SmartContract (sid);""")
 mycursor.execute("""alter table CheckedSmartContractDetail ADD CONSTRAINT fk_id18SCDCBSC FOREIGN KEY(bid)
 references CheckedBatchSC (bid);""")
-
+mycursor.execute("""alter table LTLTemplate ADD CONSTRAINT fk_id19LTL FOREIGN KEY(aid)
+references Account (aid);""")
+mycursor.execute("""alter table CPNContext ADD CONSTRAINT fk_id20CPN FOREIGN KEY(aid)
+references Account (aid);""")

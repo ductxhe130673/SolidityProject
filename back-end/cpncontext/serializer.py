@@ -6,4 +6,9 @@ from .models import cpncontext
 class cpncontextSerializer(serializers.ModelSerializer):
     class Meta:
         model = cpncontext
+        # fields = ['name', 'description', ]
         fields = '__all__'
+class cpncontextSerializerPost(serializers.ModelSerializer):
+    class Meta:
+        model = cpncontext
+        fields = ['name', 'content', 'context_type', 'description', 'aid',]

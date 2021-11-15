@@ -6,7 +6,7 @@ export class cpncontextService extends BaseService {
     }
     static async GetAllcpncontext() {
         try {
-            const response = await this.request({ auth: true }).get(`${this.getUnity()}/api/`)
+            const response = await this.request({ auth: true }).get(`${this.getUnity()}/api`)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText

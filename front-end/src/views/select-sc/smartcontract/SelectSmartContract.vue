@@ -68,11 +68,15 @@ export default {
       checkedNames: []
     };
   },
+  mounted(){
+    this.checkedNames = this.$store.state.data.data.selectedSc;
+  },
   methods: {
    routing(param) {
       if (param == "add") {
+        this.$store.commit("SetSelectedSC", this.checkedNames)
         this.$router.push({ name: "ContextOfSmartContract" });
-        this.$store.commit("setIndex", 3);      
+        this.$store.commit("setIndex", 3); 
       }
       if (param == "back") {
         this.$router.push({ name: "ListOfCheckedTransactions" });

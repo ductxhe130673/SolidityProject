@@ -1,125 +1,184 @@
 <template>
-  <div id="body">
+  <div class="container-fluid">
+    <!-- btn delete -->
     <div id="showConfirmation" v-if="showConfirmation">
-        <div id="removeSC-holder">
-            <confirm @cancel="closeConfirm" @confirm="cfDeleteSC()" :dialog="deleteDialog"/>
-        </div>
+      <div id="removeSC-holder">
+        <confirm @cancel="closeConfirm" @confirm="deleteSC()" :dialog="alertDialog" />
+      </div>
     </div>
-    <div id="first-section"></div>
-    <div id="second-section"></div>
-    <div id="third-section">
-      <div id="select-section">
-        <div
-          class="select-box"
-          :class="{ chosen_box: chosen_table == 'common' }"
-          @click="ChooseTable('common')"
-        >
-          <p>Common Smart Contracts</p>
-        </div>
-        <div
-          class="select-box"
-          :class="{ chosen_box: chosen_table == 'private' }"
-          @click="ChooseTable('private')"
-        >
-          <p>Private Smart Contracts</p>
-        </div>
-        <div
-          class="select-box"
-          :class="{ chosen_box: chosen_table == 'pending' }"
-          @click="ChooseTable('pending')"
-          v-if="isSuperior"
-        >
-          <p>Pending Smart Contracts</p>
-        </div>
+    <!-- btn accept -->
+    <div id="showConfirmation" v-if="showConfirmation">
+      <div id="removeSC-holder">
+        <confirm @cancel="closeConfirm" @confirm="acceptSC()" :dialog="acceptDialog" />
       </div>
-      <div id="table-section">
-        <div id="table-name">
-          <div id="add-button" @click="addSmartContract" v-if="showAddButton">
-            Add
-          </div>
-          <p>{{ GetTableName }}</p>
+    </div>
+    <!-- btn refuse  -->
+    <div id="showConfirmation" v-if="showConfirmation">
+      <div id="removeSC-holder">
+        <confirm @cancel="closeConfirm" @confirm="refuseSC()" :dialog="alertDialog" />
+      </div>
+    </div>
+    <div class="row align-items-md-center">
+      <div class="col-3">
+        <span>
+          <a href="/" class="link-primary text-decoration-underline">Home</a> >
+          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+       </span
+        >
+      </div>
+      <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p>Date</p>
+          <a-date-picker
+            :default-value="moment('01/01/2021', dateFormat)"
+            :format="dateFormat"
+          />
         </div>
-        <div id="table-body">
-          <div id="table-header" class="table-row">
-            <div class="index-cell table-cell">#</div>
-            <div class="name-cell table-cell">Smart contracts name</div>
-            <div class="date-modified-cell table-cell">Date modified</div>
-            <div class="action-cell table-cell">Action</div>
-          </div>
-          <div id="table-content">
-            <div v-for="(sc, idx) in getShowList" :key="idx" class="table-row">
-              <div class="index-cell table-cell">
-                {{ inc(idx) }}
-              </div>
-              <div class="name-cell table-cell">
-                {{ sc.name }}
-              </div>
-               
-              <div class="date-modified-cell table-cell">
-                <!-- {{ convertDate(sc.date_modified) }} -->
-              </div>
-              <div class="action-cell table-cell">
-                <div v-if="chosen_table != 'pending'">
-                  <i class="material-icons" @click="editSC(sc.id, sc.name, sc.content)"
-                    >edit</i
-                  >
-                  <i
-                    class="material-icons"
-                    @click="deleteSC(sc.id, sc.name, chosen_table)"
-                    >delete</i
-                  >
-                </div>
-                <div v-else>
-                  <i class="material-icons" @click="editSC(sc.id, sc.name, sc.content)"
-                    >edit</i
-                  >
-                  <i
-                    class="material-icons"
-                    @click="acceptPendingSC(sc.id, sc.name, sc.content)"
-                    >check_circle_outline</i
-                  >
-                  <i
-                    class="material-icons"
-                    @click="deleteSC(sc.id, sc.name, chosen_table)"
-                    >delete</i
-                  >
-                </div>
-              </div>
-            </div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+
+        <div class="col">
+          <p>Type</p>
+          <div class="input-group mb-3">
+            <select class="form-select" id="inputGroup" v-model="selected">
+              <option value="0">All</option>
+              <option value="common" v-if="isAdmin">Common</option>
+              <option value="private">Private</option>
+              <option value="pending">Pending</option>
+            </select>
           </div>
         </div>
       </div>
-      <div id="amsb-footer">
-        <div id="itb-entries">
-          Show {{ numOfRecod }}/{{ numOfItems }} entries
-        </div>
-        <div id="itb-cnpage">
-          <i class="material-icons" id="itb-first-page-icon" @click="goPage(1)"
-            >first_page</i
-          >
-          <i
-            class="material-icons"
-            id="itb-pre-page-icon"
-            @click="goPage(pageNum > 1 ? pageNum - 1 : 1)"
-            >chevron_left</i
-          >
-          <div id="itb-cnpage-count">{{ countPageNum }}</div>
-          <i
-            class="material-icons"
-            id="itb-next-page-icon"
-            @click="goPage(pageNum < numOfPage ? pageNum + 1 : numOfPage)"
-            >chevron_right</i
-          >
-          <i
-            class="material-icons"
-            id="itb-last-page-icon"
-            @click="goPage(numOfPage)"
-            >last_page</i
-          >
-        </div>
+      <div class="row">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>
+                #
+                <span
+                  ><a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </th>
+
+              <th>
+                Name<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th>
+                Type<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th>
+                Date<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th style="width: 50%">
+                Description<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+            </tr>
+          </thead>
+          <tr v-for="(item, index) in filterlist" v-bind:key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.date }}</td>
+            <td class="align-items">
+              {{ item.description }}
+              <span class="col" id="btn">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="editSC(item.sid)"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="deleteSC(item.sid)"
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="acceptSC(item.sid)"
+                  v-if="isAdmin"
+                >
+                  Accept
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="refuseSC(item.sid)"
+                  v-if="isAdmin"
+                >
+                  Refuse
+                </button></span
+              >
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row">
+        <button
+          style="width: 50px"
+          type="button"
+          class="btn btn-outline-primary"
+          @click="addSmartContract()"
+        >
+          Add
+        </button>
       </div>
     </div>
   </div>
+  <!-- 
+    <div id="amsb-footer">
+      <div id="itb-entries">Show {{ numOfRecod }}/{{ numOfItems }} entries</div>
+      <div id="itb-cnpage">
+        <i class="material-icons" id="itb-first-page-icon" @click="goPage(1)"
+          >first_page</i
+        >
+        <i
+          class="material-icons"
+          id="itb-pre-page-icon"
+          @click="goPage(pageNum > 1 ? pageNum - 1 : 1)"
+          >chevron_left</i
+        >
+        <div id="itb-cnpage-count">{{ countPageNum }}</div>
+        <i
+          class="material-icons"
+          id="itb-next-page-icon"
+          @click="goPage(pageNum < numOfPage ? pageNum + 1 : numOfPage)"
+          >chevron_right</i
+        >
+        <i
+          class="material-icons"
+          id="itb-last-page-icon"
+          @click="goPage(numOfPage)"
+          >last_page</i
+        >
+      </div>
+    </div>
+   -->
 </template>
 
 <script>
@@ -129,64 +188,67 @@ import {
   GetPrivateSmartContracts,
   DeleteSmartContracts,
   AcceptPendingSmartContracts,
+  RefusePendingSmartContracts,
 } from "../../../services/data";
-
-import ConfirmationDialog from "../../../components/ConfirmationDialog.vue" 
+import moment from "moment";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  components: {'confirm': ConfirmationDialog},
+  // components: { confirm: ConfirmationDialog },
   data() {
     return {
-      chosen_table: "common",
-      list_smart_contracts: {
-        common: [],
-        private: [],
-        pending: [],
-      },
-
+      choose_SC: "",
+      dateFormat: "DD/MM/YYYY",
+      selected: "0",
       num_of_record: 7,
       num_of_page: 0,
       pageNum: 1,
       showConfirmation: false,
-      deleteDialog: {},
-      scDelete: null
+      alertDialog: {},
+      scDelete: null,
+      isAdmin: true,
     };
   },
   mounted() {
     this.fetchData();
-    // this.list_smart_contracts.common = GetCommonSmartContracts();
-    // this.list_smart_contracts.private = GetPrivateSmartContracts();
-    // this.list_smart_contracts.pending = GetPendingSmartContracts();
   },
   computed: {
-    GetTableName() {
-      if (this.chosen_table == "common") {
-        return "Common Smart Contracts";
-      }
-      if (this.chosen_table == "private") {
-        return "Private Smart Contracts";
-      }
-      if (this.chosen_table == "pending") {
-        return "Pending Smart Contracts";
-      }
-      return "Invalid Table";
+    ...mapGetters(["getlistSmartContract"]),
+    filterlist() {
+      const { selected } = this;
+      if (selected === "0") return this.getlistSmartContract;
+      var items = [];
+      this.getlistSmartContract.forEach(function (item) {
+        if (item.type === selected) {
+          items.push(item);
+        }
+      });
+      return items;
     },
-    showAddButton() {
-      return (
-        this.chosen_table != "pending" &&
-        (this.chosen_table != "common" ||
-          this.$store.state.user.currentUser.role == "admin")
-      );
-    },
+    // GetTableName() {
+    //   if (this.chosen_table == "common") {
+    //     return "Common Smart Contracts";
+    //   }
+    //   if (this.chosen_table == "private") {
+    //     return "Private Smart Contracts";
+    //   }
+    //   if (this.chosen_table == "pending") {
+    //     return "Pending Smart Contracts";
+    //   }
+    //   return "Invalid Table";
+    // },
+    // showAddButton() {
+    //   return (
+    //     this.chosen_table != "pending" &&
+    //     (this.chosen_table != "common" ||
+    //       this.$store.state.user.currentUser.role == "admin")
+    //   );
+    // },
     isSuperior() {
       return this.$store.state.user.currentUser.role == "admin";
     },
     getShowList() {
       let ret = [];
-      for (
-        let i = 0;
-        i < this.list_smart_contracts[this.chosen_table].length;
-        i++
-      ) {
+      for (let i = 0; i < this.list_smart_contracts[this.chosen_table].length; i++) {
         if (
           (this.pageNum - 1) * this.num_of_record <= i &&
           this.pageNum * this.num_of_record > i
@@ -218,10 +280,23 @@ export default {
       return Math.ceil(this.numOfItems / this.num_of_record);
     },
   },
+  created() {
+    this.setListSmartContract();
+  },
   methods: {
+    async deleteSmartContract(sid) {
+      await DeleteSmartContracts(sid);
+    },
+    async acceptSmartContract(sid) {
+      await AcceptPendingSmartContracts(sid);
+    },
+     async refuseSmartContract(sid) {
+      await RefusePendingSmartContracts(sid);
+    },
+    moment,
+    ...mapActions(["setListSmartContract"]),
     // get common contracts
     async fetchData() {
-      console.log('Lay Data')
       this.list_smart_contracts.common = await GetCommonSmartContracts();
       this.list_smart_contracts.private = await GetPrivateSmartContracts();
       this.list_smart_contracts.pending = await GetPendingSmartContracts();
@@ -236,8 +311,7 @@ export default {
       var hourstring = "" + date.getHours();
       var minutestring = "" + date.getMinutes();
       hourstring = hourstring.length == 1 ? "0" + hourstring : hourstring;
-      minutestring =
-        minutestring.length == 1 ? "0" + minutestring : minutestring;
+      minutestring = minutestring.length == 1 ? "0" + minutestring : minutestring;
       datestring = datestring.length == 1 ? "0" + datestring : datestring;
       monthstring = monthstring.length == 1 ? "0" + monthstring : monthstring;
       return (
@@ -262,57 +336,112 @@ export default {
         params: { options: this.chosen_table, parent_path: "/list-sc" },
       });
     },
-    deleteSC(sc_id, sc_name, option) {
-      
-        this.deleteDialog={title: "Delete Smart Contract", message:  "Are you sure to delete the Smart Contract named: '" + sc_name + "' ?", confirmbtn: 'Delete'}
-        this.showConfirmation = true;
-        this.scDelete = {sc_id: sc_id, option: option}
+
+    deleteSC(sc_id) {
+      // this.showConfirmation = true;
+      // this.alertDialog = {
+      //   title: "Alert",
+      //   message: "",
+      //   confirmbtn: "Yes",
+      // };
+      if(confirm('Do you want to delete the Smart Contract out of the system?') === true){
+        this.deleteSmartContract(sc_id)
+        this.$router.go(0);       
+      }
     },
-    cfDeleteSC(){
-      let sc_id = this.scDelete.sc_id;
-      let option = this.scDelete.option
-      DeleteSmartContracts(sc_id, option);
-        if (option == "common"){
-          let list_smart_contracts_afterdelete =  this.list_smart_contracts.common.filter((i)=>{
-          return i.id != sc_id
-          })
-          this.list_smart_contracts.common=list_smart_contracts_afterdelete
-        }else if (option == "private"){
-          let list_smart_contracts_afterdelete =  this.list_smart_contracts.private.filter((i)=>{
-          return i.id != sc_id
-          })
-          this.list_smart_contracts.private=list_smart_contracts_afterdelete
-        }else if (option == "pending"){
-          let list_smart_contracts_afterdelete =  this.list_smart_contracts.pending.filter((i)=>{
-          return i.id != sc_id
-          })
-          this.list_smart_contracts.pending=list_smart_contracts_afterdelete
-        }
+    acceptSC(sc_id) {
+      // this.alertDialog = {
+      //   title: "Alert",
+      //   message: "Do you want to change the Smart Contract type from Private to Common?",
+      //   confirmbtn: "Yes",
+      // };
+      if(confirm('Do you want to change the Smart Contract type from Private to Common?') === true){
+        this.acceptSmartContract(sc_id)
+        this.$router.go(0);
+       }
+    },
+    refuseSC(sc_id) {
+      console.log('sc', this.choose_SC);
+      // this.alertDialog = {
+      //   title: "Alert",
+      //   message: "Are you sure to refuse the change from Private to Common?",
+      //   confirmbtn: "Yes",
+      // };
+       if(confirm('Do you want to change the Smart Contract type from Common to Private?') === true){
+        this.refuseSmartContract(sc_id)
+        this.$router.go(0);
+       }
         
-        // this.fetchData();
-        this.closeConfirm()
     },
-    closeConfirm(){
-            this.showConfirmation = false
-        },
+
+    // deleteSC(sc_id) {
+    //   this.deleteDialog = {
+    //     title: "Delete Smart Contract",
+    //     message:
+    //       "Do you sure to delete the Smart Contract out of the system?",
+    //     confirmbtn: "Yes",
+    //   };
+    //   this.isShowConfirmDelete = true;
+    //   this.scDelete = sc_id;
+    //   console.log('this.scDelete',this.scDelete);
+    //     this.deleteSmartContract(this.scDelete);
+
+    // },
+    // cfDeleteSC() {
+    //   let sc_id = this.scDelete.sc_id;
+    //   let option = this.scDelete.option;
+    //   DeleteSmartContracts(sc_id, option);
+    //   if (option == "common") {
+    //     let list_smart_contracts_afterdelete =
+    //       this.list_smart_contracts.common.filter((i) => {
+    //         return i.id != sc_id;
+    //       });
+    //     this.list_smart_contracts.common = list_smart_contracts_afterdelete;
+    //   } else if (option == "private") {
+    //     let list_smart_contracts_afterdelete =
+    //       this.list_smart_contracts.private.filter((i) => {
+    //         return i.id != sc_id;
+    //       });
+    //     this.list_smart_contracts.private = list_smart_contracts_afterdelete;
+    //   } else if (option == "pending") {
+    //     let list_smart_contracts_afterdelete =
+    //       this.list_smart_contracts.pending.filter((i) => {
+    //         return i.id != sc_id;
+    //       });
+    //     this.list_smart_contracts.pending = list_smart_contracts_afterdelete;
+    //   }
+
+    //   // this.fetchData();
+    //   this.closeConfirm();
+    // },
+
+    closeConfirm() {
+      this.isShowConfirmDelete = false;
+      this.isShowConfirmAccept = false;
+      this.isShowConfirmRefuse = false;
+    },
     editSC(sc_id, sc_name, sc_code) {
       this.$router.push({
         name: "EditSc",
-        params: { sc_id: sc_id, name: sc_name, code: sc_code, parent_path: "/list-sc" },
+        params: {
+          sc_id: sc_id,
+          name: sc_name,
+          code: sc_code,
+          parent_path: "/list-sc",
+        },
       });
     },
-    acceptPendingSC(sc_id, sc_name, sc_code) {
-       if (
-        confirm(
-          "Are you sure to accept the pending Smart Contract named: '" + sc_name + "' ?"
-        )
-      ) {
-        AcceptPendingSmartContracts(sc_id, sc_name, sc_code);
-      
-        this.fetchData();
-        }
-     
-    },
+    // acceptPendingSC(sc_id, sc_name, sc_code) {
+    //   if (
+    //     confirm(
+    //       "Are you sure to accept the pending Smart Contract named: '" + sc_name + "' ?"
+    //     )
+    //   ) {
+    //     AcceptPendingSmartContracts(sc_id, sc_name, sc_code);
+
+    //     this.fetchData();
+    //   }
+    // },
     goPage(value) {
       this.pageNum = value;
     },
@@ -326,157 +455,57 @@ export default {
 </script>
 
 <style scoped>
-#body {
-  width: 100%;
-  min-width: 750px;
+h1 {
+  font-size: 50px;
 }
-#first-section {
-  height: 100px;
-  width: 100%;
-  background-color: #fafafa;
-  border-bottom: 1px solid #d8d7d7;
-  border-top: 1px solid #d8d7d7;
-}
-#second-section {
-  height: 600px;
-  width: 100%;
-  background-color: #ffffff;
-}
-#third-section {
-  height: 600px;
-  width: 86%;
-  margin: 0 auto;
-  margin-top: -700px;
-
-  background-color: transparent;
-}
-
-#select-section {
-  width: 100%;
-  height: 70px;
-}
-
-.select-box {
-  width: 200px;
-  height: 40px;
-
-  display: inline-block;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  margin-right: 10px;
-
-  border: 0.5px solid #d8d7d7;
-  border-radius: 4px;
-
-  font-size: 15px;
-  text-align: center;
-  vertical-align: middle;
-
-  cursor: pointer;
-}
-.select-box p {
-  margin-top: 8px;
-  color: #1967d2;
-}
-.select-box:hover {
-  background-color: #e9eef7;
-}
-
-#table-section {
-  width: 100%;
-  height: 560px;
-
-  background-color: white;
-  border: 1px solid #d8d7d7;
-  border-radius: 8px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-}
-#table-name {
-  width: 100%;
-  height: 80px;
-
-  border-bottom: 1px solid #d8d7d7;
-  text-align: center;
-
-  color: #6b6e73;
-  padding: 12px;
-}
-#table-name p {
-  font-size: 32px;
-}
-#table-name #add-button {
-  position: absolute;
-  margin-top: 15px;
-  margin-left: 2%;
-
-  height: 30px;
-  width: 60px;
-  border: 1px solid #5c5b5b;
-  box-shadow: 2px 2px 0px 0px rgb(78, 77, 77);
-  padding: 2px;
-  cursor: pointer;
-}
-#table-name #add-button:hover {
-  background-color: #d8d7d7;
-  color: #272626;
-}
-#table-body {
-  width: 100%;
-  height: 520px;
-  overflow-y: auto;
-}
-#table-header {
-  background-color: #c9dff0;
-  color: #4d4c4c;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-/* --- table row --- */
-.table-row {
-  width: 100%;
-  height: 60px;
-
+.align-items {
   display: flex;
   align-items: center;
-  color: #585858;
-
-  border-bottom: 0.5px solid #d8d7d7;
 }
-.index-cell {
-  height: 24px;
-  flex-basis: 10%;
-  text-align: center;
+.row {
+  margin-top: 2%;
+  padding-right: 10px;
 }
-.name-cell {
-  height: 24px;
-  flex-basis: 40%;
+button {
+  margin-right: 5px;
+  margin-top: 5px;
 }
-.date-modified-cell {
-  height: 24px;
-  flex-basis: 30%;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.action-cell {
-  height: 40px;
-  flex-basis: 20%;
-  text-align: center;
+table td,
+table th {
+  border: 1px solid #ddd;
 }
-.action-cell i {
-  padding: 8px;
-  color: #858383;
-  cursor: pointer;
-}
-.table-cell {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.table-row:hover {
-  background-color: #fafafa;
-}
-.action-cell i:hover {
-  color: #5e5d5d;
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  background-color: #d9edf7;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: black;
+  text-indent: inherit;
+}
+
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
+#btn {
+  text-align: right;
+}
 /* --- box --- */
 .chosen_box {
   background-color: #e4ecfa;
@@ -513,19 +542,19 @@ export default {
   color: #424141;
 }
 
- /*---- showConfirmation */
- #showConfirmation{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.2);
-    z-index: 1;
-    align-items: center;
-    justify-content: center;
+/*---- showConfirmation */
+#showConfirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
 }
-#removeSC-holder{
-    margin-top: 200px;
+#removeSC-holder {
+  margin-top: 200px;
 }
 </style>

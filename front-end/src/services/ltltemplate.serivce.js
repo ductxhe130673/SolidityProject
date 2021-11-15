@@ -6,7 +6,7 @@ export class ltltemplateService extends BaseService {
     }
     static async GetAllltltemplates() {
         try {
-            const response = await this.request({ auth: true }).get(`${this.getUnity()}/api/`)
+            const response = await this.request({ auth: true }).get(`${this.getUnity()}/api`)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText
