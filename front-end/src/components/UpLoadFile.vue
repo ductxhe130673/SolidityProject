@@ -21,7 +21,7 @@
           {{ this.dialog.confirmbtn }}
         </button>
         <button class="btn btn-outline-primary btn-sm" @click="cancel">
-          No
+          Cancel
         </button>
       </div>
     </div>
