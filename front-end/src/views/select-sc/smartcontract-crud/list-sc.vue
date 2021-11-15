@@ -23,7 +23,7 @@
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
-          <a>List</a></span
+       </span
         >
       </div>
       <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
@@ -188,9 +188,9 @@ import {
   GetPrivateSmartContracts,
   DeleteSmartContracts,
   AcceptPendingSmartContracts,
+  RefusePendingSmartContracts,
 } from "../../../services/data";
 import moment from "moment";
-// import ConfirmationDialog from "../../../components/ConfirmationDialog.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   // components: { confirm: ConfirmationDialog },
@@ -210,9 +210,6 @@ export default {
   },
   mounted() {
     this.fetchData();
-    // this.list_smart_contracts.common = GetCommonSmartContracts();
-    // this.list_smart_contracts.private = GetPrivateSmartContracts();
-    // this.list_smart_contracts.pending = GetPendingSmartContracts();
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
@@ -287,8 +284,14 @@ export default {
     this.setListSmartContract();
   },
   methods: {
-    async deleteSmartContract(aid) {
-      await DeleteSmartContracts(aid);
+    async deleteSmartContract(sid) {
+      await DeleteSmartContracts(sid);
+    },
+    async acceptSmartContract(sid) {
+      await AcceptPendingSmartContracts(sid);
+    },
+     async refuseSmartContract(sid) {
+      await RefusePendingSmartContracts(sid);
     },
     moment,
     ...mapActions(["setListSmartContract"]),
@@ -341,25 +344,34 @@ export default {
       //   message: "",
       //   confirmbtn: "Yes",
       // };
-      confirm('Do you want to delete the Smart Contract out of the system?');
-      this.deleteSmartContract(sc_id)
+      if(confirm('Do you want to delete the Smart Contract out of the system?') === true){
+        this.deleteSmartContract(sc_id)
+        this.$router.go(0);       
+      }
+    },
+    acceptSC(sc_id) {
+      // this.alertDialog = {
+      //   title: "Alert",
+      //   message: "Do you want to change the Smart Contract type from Private to Common?",
+      //   confirmbtn: "Yes",
+      // };
+      if(confirm('Do you want to change the Smart Contract type from Private to Common?') === true){
+        this.acceptSmartContract(sc_id)
         this.$router.go(0);
+       }
     },
-    acceptSC() {
-      this.alertDialog = {
-        title: "Alert",
-        message: "Do you want to change the Smart Contract type from Private to Common?",
-        confirmbtn: "Yes",
-      };
-      this.showConfirmation = true;
-    },
-    refuseSC() {
-      this.alertDialog = {
-        title: "Alert",
-        message: "Are you sure to refuse the change from Private to Common?",
-        confirmbtn: "Yes",
-      };
-      this.showConfirmation = true;
+    refuseSC(sc_id) {
+      console.log('sc', this.choose_SC);
+      // this.alertDialog = {
+      //   title: "Alert",
+      //   message: "Are you sure to refuse the change from Private to Common?",
+      //   confirmbtn: "Yes",
+      // };
+       if(confirm('Do you want to change the Smart Contract type from Common to Private?') === true){
+        this.refuseSmartContract(sc_id)
+        this.$router.go(0);
+       }
+        
     },
 
     // deleteSC(sc_id) {
@@ -419,17 +431,17 @@ export default {
         },
       });
     },
-    acceptPendingSC(sc_id, sc_name, sc_code) {
-      if (
-        confirm(
-          "Are you sure to accept the pending Smart Contract named: '" + sc_name + "' ?"
-        )
-      ) {
-        AcceptPendingSmartContracts(sc_id, sc_name, sc_code);
+    // acceptPendingSC(sc_id, sc_name, sc_code) {
+    //   if (
+    //     confirm(
+    //       "Are you sure to accept the pending Smart Contract named: '" + sc_name + "' ?"
+    //     )
+    //   ) {
+    //     AcceptPendingSmartContracts(sc_id, sc_name, sc_code);
 
-        this.fetchData();
-      }
-    },
+    //     this.fetchData();
+    //   }
+    // },
     goPage(value) {
       this.pageNum = value;
     },

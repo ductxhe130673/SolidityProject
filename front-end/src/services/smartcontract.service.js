@@ -48,7 +48,6 @@ export class SmartContractsService extends BaseService {
 
     /*---------Create New Smartcontract--------- */
     static async CreateSmartContracts(id, sc_name, option, content) {
-        console.log('id, sc_name, type, content',id, sc_name, option, content);
         try {
             const paraData = {
                 "id": id,
@@ -120,7 +119,30 @@ export class SmartContractsService extends BaseService {
                 "aid":1
             }
             console.log(paraData)
-            const response = await this.request({ auth: true }).put(`${this.getUnity()}/api/`, paraData)
+            const response = await this.request({ auth: true }).put(`${this.getUnity()}/select-smart-contract`, paraData)
+            // const data = {
+            //     content: response.data.data,
+            //     headers: response.headers['']
+            // }
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
+    /*---------Refuse Pendind Smartcontract--------- */
+        static async RefusePendingSmartContracts(id, sc_name, code) {
+        try {
+            const paraData = {
+                "id": id,
+                "name": sc_name,
+                //"date_modified": smartContractById.data.date_modified,
+                "content": code,
+                "type": "private",
+                "aid":1
+            }
+            console.log(paraData)
+            const response = await this.request({ auth: true }).put(`${this.getUnity()}/select-smart-contract`, paraData)
             // const data = {
             //     content: response.data.data,
             //     headers: response.headers['']

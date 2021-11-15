@@ -80,8 +80,7 @@
 </template>
 
 <script>
-import {UpdateSmartContractCode,GetSmartContractCode} from "../../../services/data"
-// import EditorSc from "../../components/EditorSc.vue";
+import {UpdateSmartContractCode,GetSmartContractCode,GetSmartContractById} from "../../../services/data"
 import AceEditor from '../../../components/AceEditor.vue';
 export default {
   components: {AceEditor },
@@ -92,6 +91,7 @@ export default {
       nameSc: this.$route.params.name,
       code: GetSmartContractCode(this.$route.params.sc_id),
       // code: this.$route.params.code,
+      dataCurrent : {},
       demoEditSC: "test edit sc",
       isAdmin: true,
       descriptionSC: '',
@@ -100,8 +100,14 @@ export default {
   },
   mounted(){
       this.demoEditSC = this.code
+      // this.dataCurrent = this.getDataCurrent(sc_id);
+      console.log('this.dataCurrent',this.code);
   },
+
   methods:{
+     async getDataCurrent(sc_id){
+       await GetSmartContractById(sc_id);
+    },
     updateContent(value){
       //console.log(value)
       this.demoEditSC = value;
