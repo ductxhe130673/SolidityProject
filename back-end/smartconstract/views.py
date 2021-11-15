@@ -70,12 +70,11 @@ def getScById(request):
     try:
         if request.method == 'GET':
             idClient = request.GET['id']
-            smartConstractDB = Smartcontract.objects.get(sid=idClient)
+            smartConstractDB = Smartcontract.objects.get(id=idClient)
             serialiSmartConstract = GetSmartConstractSerializer(
                 smartConstractDB)
             return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)
-    except Exception as e:
-        print('ERROR !!!', e)
+    except:
         return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -134,9 +133,9 @@ def getFunctionVarArgu(request):
 # INSERT INTO INITIAL MARKING
 @api_view(['POST'])
 def addNewInitialMarking(request):
-    #print(request.POST.get['num_user'])
+    print('Number======',request.GET['num_user'])
     try:
-        resData = dbcontext.addNewInitialMarking(request.data['num_user'],request.data['IM_type'])
+        resData = dbcontext.addNewInitialMarking(request.GET['num_user'],request.GET['IM_type'])
         if resData is None :
             return Response({"message": "Fail To Add New InitialMarking!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -148,19 +147,19 @@ def addNewInitialMarking(request):
 @api_view(['POST'])
 def addNewIMFunction(request):
     try:
-        resData = dbcontext.addNewIMFunction(request.data['fun_name'],request.data['sender_from'],request.data['sender_to'])
+        resData = dbcontext.addNewIMFunction(request.GET['fun_name'],request.GET['sender_from'],request.GET['sender_to'])
         if resData is None :
             return Response({"message": "Fail To Add New IMFunction!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
     except Exception as e:
-        print('ERROR========',e)
+        print(e)
         return Response({"message": "Faill!!!"}, status=status.HTTP_400_BAD_REQUEST) 
 
 # INSERT INTO IMARGUMENT
 @api_view(['POST'])
 def addNewIMArgument(request):
     try:
-        resData = dbcontext.addNewIMArgument(request.data['arg_name'],request.data['IMfrom'],request.data['IMto'])
+        resData = dbcontext.addNewIMArgument(request.GET['arg_name'],request.GET['IMfrom'],request.GET['IMto'])
         if resData is None :
             return Response({"message": "Fail To Add New IMArgumentt!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -172,7 +171,7 @@ def addNewIMArgument(request):
 @api_view(['POST'])
 def addNewLNAFile(request):
     try:
-        resData = dbcontext.addNewLNAFile(request.data['hcpnfile'],request.data['propfile'])
+        resData = dbcontext.addNewLNAFile(request.GET['hcpnfile'],request.GET['propfile'])
         if resData is None :
             return Response({"message": "Fail To Add New LNAFile!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -184,8 +183,8 @@ def addNewLNAFile(request):
 @api_view(['POST'])
 def addNewCheckedBatchSC(request):
     try:
-        resData = dbcontext.addNewCheckedBatchSC(request.data['aid'],request.data['lteid'],request.data['cid']
-        ,request.data['noSC'],request.data['status'],request.data['LTLformula'],request.data['result'])
+        resData = dbcontext.addNewCheckedBatchSC(request.GET['aid'],request.GET['lteid'],request.GET['cid']
+        ,request.GET['noSC'],request.GET['status'],request.GET['LTLformula'],request.GET['result'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedBatchSC!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -197,7 +196,7 @@ def addNewCheckedBatchSC(request):
 @api_view(['POST'])
 def addNewCheckedSmartContractDetail(request):
     try:
-        resData = dbcontext.addNewCheckedSmartContractDetail(request.data['sid'])
+        resData = dbcontext.addNewCheckedSmartContractDetail(request.GET['sid'])
         if resData is None :
             return Response({"message": "Fail To Add New CheckedSmartContractDetail !!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
@@ -209,7 +208,7 @@ def addNewCheckedSmartContractDetail(request):
 @api_view(['POST'])
 def addNewBalance(request):
     try:
-        resData = dbcontext.addNewBalance(request.data['balanceType'],request.data['blfrom'],request.data['blto'],request.data['blvalue'],request.data['blrange'])
+        resData = dbcontext.addNewBalance(request.GET['balanceType'],request.GET['blfrom'],request.GET['blto'],request.GET['blvalue'],request.GET['blrange'])
         if resData is None :
             return Response({"message": "Fail To Add New Balance!!!"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(resData, status=status.HTTP_201_CREATED)
