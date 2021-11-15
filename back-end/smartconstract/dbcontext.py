@@ -169,13 +169,13 @@ def addNewIMFunction(fun_name,sender_from,sender_to):
 def addNewIMArgument(arg_name,IMfrom,IMto):
     try:
         imfid = getLastInsertIDFromIMFunction()
-        print("imfid = ",imfid)
+        print(imfid)
         sql = '''INSERT INTO IMArgument (arg_name,IMfrom,IMto,imfid) VALUES (%s,%s,%s,%s);'''
         cursor = connection.cursor()
         cursor.execute(sql, ([arg_name],[IMfrom],[IMto],[imfid]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New IMArgument Successfully"
+        return "Add New IMArgumentt Successfully"
     except Exception as e:
         print(e)
         return None
