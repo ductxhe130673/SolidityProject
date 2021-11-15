@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ltltemplate
 from rest_framework.decorators import api_view
+from django.db import connection
 # Create your views here.
 
 class ltltemplateAPIView(APIView):
@@ -69,5 +70,36 @@ class ltltemplateAPIView(APIView):
 				ltltemplateDelete.delete()
 				return Response('Success',status=status.HTTP_200_OK)
 		except Exception as e:
-			print('ERROR====',e)
-			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)
+			print('ERROR====', e)
+			return Response({"message": "Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getLTLTemplateById(request):
+    try:
+        if request.method == 'GET':
+            idLTL = request.GET['lteid']
+            ltltemplateDB = ltltemplate.objects.get(lteid=idLTL)
+            serialiltltemplate = ltltemplateSerializer(ltltemplateDB)
+            return Response(serialiltltemplate.data, status=status.HTTP_200_OK)
+    except Exception as e:
+		    print('ERROR====', e)
+    return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# @api_view(['GET'])
+# def getLTLTemplateById(request):
+#     try:
+#         if request.method == 'GET':
+#             sql = '''select * from soliditycpn.ltltemplate where lteid = %s'''
+#         cursor = connection.cursor()
+#         try:
+#             print('ID====', request.GET['lteid'])
+#             cursor.execute(sql, [request.GET['lteid']])
+#             data = cursor.fetchall()
+#             return Response(data, status=status.HTTP_200_OK)
+#         except Exception as e:
+# 			                  print('ERROR====', e)
+#         cursor.close
+#     except:
+#         return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)	

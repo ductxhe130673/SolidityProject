@@ -31,3 +31,9 @@ class SimpleTest(TestCase):
         response = self.client.delete(
             'http://127.0.0.1:8000/ltltemplate/api?lteid=12')
         self.assertEquals(response.status_code, 200)
+# Test cac ham GET
+class TestGetLTLTemplateById(TestCase):
+    # test get ltltemplate by ltltemplate ID
+    def test_get_ltltemplate_by_Id(self):
+         response =  self.client.get('http://127.0.0.1:8000/ltltemplate/ltltemplatebyid?lteid=2')
+         self.assertEqual(response.status_code, status.HTTP_200_OK) 
