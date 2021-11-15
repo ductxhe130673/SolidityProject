@@ -342,3 +342,39 @@ def getLastInsertIDFromCheckedBatchSC():
         return None
     finally:
         connection.close() 
+
+#Update table globalvariable when delete smartcontract
+def updateGlobalVariable(sid):
+    try:
+        sql = '''UPDATE soliditycpn.globalvariable SET sid = NULL WHERE sid = %s'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[sid])
+        return "Update Successful"
+    except:
+        return "Update Fail"
+    finally:
+        connection.close()
+
+#Update table function when delete smartcontract
+def updateFunction(sid):
+    try:
+        sql = '''UPDATE soliditycpn.functions SET sid = NULL WHERE sid = %s'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[sid])
+        return "Update Successful"
+    except:
+        return "Update Fail"
+    finally:
+        connection.close()
+
+#Detele checkedSmartcontractDetail
+def deleteCheckedDetail(sid):
+    try:
+        sql = '''delete from soliditycpn.checkedsmartcontractdetail where sid = %s'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[sid])
+        return "Delete Successful"
+    except:
+        return "Delete Fail"
+    finally:
+        connection.close()

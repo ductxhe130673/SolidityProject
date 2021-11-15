@@ -52,6 +52,12 @@ class SmartConstractAPIView(APIView):
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
+
+                modifyGlo = dbcontext.updateGlobalVariable(idClient)
+                modifyFunction = dbcontext.updateFunction(idClient)
+                deleteDetail = dbcontext.deleteCheckedDetail(idClient)
+                if modifyGlo is None or modifyFunction is None or deleteDetail is None:
+                    print("Not ready to delete")
                 SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 SmartConstractByID.delete()
                 return Response('Success', status=status.HTTP_200_OK)
