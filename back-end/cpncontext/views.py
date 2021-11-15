@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import cpncontext
+from rest_framework.decorators import api_view
 # Create your views here.
 
 class cpncontextAPIView(APIView):
@@ -64,3 +65,32 @@ class cpncontextAPIView(APIView):
 		except Exception as e:
 			print('ERROR====',e)
 			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getCPNcontextById(request):
+    try:
+        if request.method == 'GET':
+            idCPN = request.GET['cid']
+            cpncontextDB = cpncontext.objects.get(cid=idCPN)
+            serialicpncontext= cpncontextSerializer(cpncontextDB)
+            return Response(serialicpncontext.data, status=status.HTTP_200_OK)
+    except Exception as e:
+		    print('ERROR====',e)
+    return Response({"message": "Get CPNContext By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)			
+
+# @api_view(['GET'])
+# def getCPNContextById(request):
+#     try:
+#         if request.method == 'GET':
+#             sql = '''select * from soliditycpn.cpncontext where cid = %s'''
+#         cursor = connection.cursor()
+#         try:
+#             print('ID====', request.GET['cid'])
+#             cursor.execute(sql, [request.GET['cid']])
+#             data = cursor.fetchall()
+#             return Response(data, status=status.HTTP_200_OK)
+#         except Exception as e:
+# 			                  print('ERROR====', e)
+#         cursor.close
+#     except:
+#         return Response({"message": "Get CPNContext By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)	
