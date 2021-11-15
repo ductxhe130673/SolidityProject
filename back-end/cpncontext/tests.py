@@ -31,3 +31,10 @@ class SimpleTest(TestCase):
         response = self.client.delete(
             'http://127.0.0.1:8000/cpncontext/api?cid=4')
         self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+# Test cac ham GET
+class TestGetCPNContextById(TestCase):
+    # test get cpncontext by cpncontext ID
+    def test_get_cpncontext_by_Id(self):
+         response =  self.client.get('http://127.0.0.1:8000/cpncontext/cpncontextbyid?cid=2')
+         self.assertEqual(response.status_code, status.HTTP_200_OK)
