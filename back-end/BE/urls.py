@@ -26,5 +26,5 @@ urlpatterns = [
     path('cpncontext/',include('cpncontext.urls')),
     path('auth/', include('account.urls')),
     path('select-sc/', include('Transactions.urls')),
-    path('tools/',include('tools.urls'))
+    path('tools/',include('tools.urls')),
 ]
