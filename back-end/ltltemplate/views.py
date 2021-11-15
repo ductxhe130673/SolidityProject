@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ltltemplate
 from rest_framework.decorators import api_view
+from ltltemplate import dbcontext
 # Create your views here.
 
 class ltltemplateAPIView(APIView):
@@ -65,6 +66,7 @@ class ltltemplateAPIView(APIView):
 		try:
 			if request.method =='DELETE':
 				idLTLDelete = request.GET['lteid']
+				modify = dbcontext.modifyCheckedDetail(idLTLDelete)
 				ltltemplateDelete = ltltemplate.objects.get(lteid=idLTLDelete)
 				ltltemplateDelete.delete()
 				return Response('Success',status=status.HTTP_200_OK)

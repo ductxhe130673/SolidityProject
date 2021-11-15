@@ -6,8 +6,7 @@ from rest_framework import status
 class SimpleTest(TestCase):
     # test get all smartcontract
     def test_smartcontract_get_all(self):
-        response = self.client.get(
-            'http://127.0.0.1:8000/smartconstract/select-smart-contract')
+        response = self.client.get('http://127.0.0.1:8000/smartconstract/select-smart-contract')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # test create new smartcontract
