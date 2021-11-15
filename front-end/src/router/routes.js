@@ -53,9 +53,11 @@ import { DOMAIN_TITLE } from '../.env'
 
 //import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
-import SelectVarReentrancy from "../views/SelectVarReentrancy.vue"
+import SelectVarReentrancyOp1 from "../views/SelectVarReentrancyOp1.vue"
 import SelectFuncReentrancyOp1 from "../views/SelectFuncReentrancyOp1.vue"
 import SelectFuncReentrancyOp2 from "../views/SelectFuncReentrancyOp2.vue"
+import SelectSCRentrancyOp2 from "../views/SelectSCRentrancyOp2.vue"
+import SelectVarReentrancyOp2 from "../views/SelectVarReentrancyOp2.vue"
 
 export const routes = [{
         path: "/",
@@ -282,10 +284,10 @@ export const routes = [{
         props: true
     },
     {
-        path: "/SelectVarReentrancy",
-        name: "SelectVarReentrancy",
-        component: SelectVarReentrancy,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy` },
+        path: "/SelectVarReentrancyOp1",
+        name: "SelectVarReentrancyOp1",
+        component: SelectVarReentrancyOp1,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op1` },
     },
     {
         path: "/SelectFuncReentrancyOp1",
@@ -299,6 +301,18 @@ export const routes = [{
         component: SelectFuncReentrancyOp2,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op2` },
     },
+    {
+        path: "/SelectSCRentrancyOp2",
+        name: "SelectSCRentrancyOp2",
+        component: SelectSCRentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select SC Reentrancy Op2` },
+    },
+    {
+        path: "/SelectVarReentrancyOp2",
+        nam: "SelectVarReentrancyOp2",
+        component: SelectVarReentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op2` },
+    }
 
 ]
 
