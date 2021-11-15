@@ -48,6 +48,7 @@ class SmartConstractAPIView(APIView):
             return Response({"message": "Fail!!"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request):
+        print('DELETE', request.GET['id'])
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
@@ -63,7 +64,7 @@ def getScById(request):
     try:
         if request.method == 'GET':
             idClient = request.GET['id']
-            smartConstractDB = Smartcontract.objects.get(id=idClient)
+            smartConstractDB = Smartcontract.objects.get(sid=idClient)
             serialiSmartConstract = GetSmartConstractSerializer(
                 smartConstractDB)
             return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)

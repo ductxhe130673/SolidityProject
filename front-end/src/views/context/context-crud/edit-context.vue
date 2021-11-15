@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <div id="header">Edit a Context</div>
+    <div id="header">Update the Context</div>
     <div class="body">
       <div class="row" id="name-section">
         <div class="title col-2">Name</div>
@@ -8,6 +8,17 @@
           <input class="form-control" type="text" v-model="name" />
         </div>
       </div>
+
+      <div class="row" id="type-section">
+        <div class="title col-2">Type</div>
+        <div class="col-10">
+          <select class="form-select">
+            <option value="dcr">DCR</option>
+            <option value="bpmn">BPMN</option>
+          </select>
+        </div>
+      </div>
+
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
@@ -18,10 +29,17 @@
           ></textarea>
         </div>
       </div>
-      <div class="editor-area">
+      <!-- <div class="editor-area">
         <span class="title">Formular</span>
-        <!-- <EditorSc :code.sync="code" /> -->
+        <EditorSc :code.sync="code" />
+      </div> -->
+      <div class="row">
+        <div class="title col-2">Content</div>
+        <div class="col-10">
+          <input class="form-control" type="text">
+        </div>
       </div>
+
       <div id="group-btn">
         <button id="button-add" type="button" @click="clickHandler('save')">
           Save
@@ -99,7 +117,7 @@ export default {
 #main {
   background-color: rgb(241, 240, 240);
   align-items: center;
-  height: 100%;
+  height: 100vh;
   margin: 0;
 }
 #header {
@@ -121,6 +139,12 @@ export default {
 #name-section {
   margin-bottom: 30px;
 }
+#type-section{
+  margin-bottom: 20px;
+}
+textarea{
+  height: 250px;
+}
 /* editor area */
 .editor-area {
   width: 100%;
@@ -134,7 +158,8 @@ export default {
   align-items: center;
   display: flex;
   justify-content: space-evenly;
-  margin-top: 30px;
+  margin-top: 25px;
+  margin-left: 20px;
 }
 #group-btn button {
   width: 170px;
