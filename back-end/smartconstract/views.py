@@ -15,7 +15,8 @@ class SmartConstractAPIView(APIView):
                 smartConstractDB = Smartcontract.objects.all()
                 serialiSmartConstract = GetSmartConstractSerializer(smartConstractDB, many=True)
                 return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)
-        except:
+        except Exception as e:
+            print("ERROR====", e)
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
@@ -31,6 +32,8 @@ class SmartConstractAPIView(APIView):
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
+        print(f'request Put {request}')
+        print(f'request PUT data {request.data}')
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']
@@ -45,9 +48,16 @@ class SmartConstractAPIView(APIView):
             return Response({"message": "Fail!!"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request):
+        print('DELETE', request.GET['id'])
         try:
             if request.method == 'DELETE':
                 idClient = request.GET['id']
+
+                modifyGlo = dbcontext.updateGlobalVariable(idClient)
+                modifyFunction = dbcontext.updateFunction(idClient)
+                deleteDetail = dbcontext.deleteCheckedDetail(idClient)
+                if modifyGlo is None or modifyFunction is None or deleteDetail is None:
+                    print("Not ready to delete")
                 SmartConstractByID = Smartcontract.objects.get(sid=idClient)
                 SmartConstractByID.delete()
                 return Response('Success', status=status.HTTP_200_OK)

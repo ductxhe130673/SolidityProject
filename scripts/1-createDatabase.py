@@ -32,6 +32,7 @@ CREATE TABLE SmartContract (
 sid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 type nvarchar(50),
+createdDate date,
 content text ,
 description text,
 aid int not null references Account(aid)
@@ -61,7 +62,7 @@ name nvarchar(200),
 vartype nvarchar(200),
 type nvarchar(25),
 value nvarchar(200),
-sid int not null references SmartContract(sid)
+sid int references SmartContract(sid)
 )
 
 """)
@@ -70,7 +71,7 @@ CREATE TABLE Functions (
 fid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 bodyContent text,
-sid int not null references SmartContract(sid)
+sid int references SmartContract(sid)
 )
 
 """)
@@ -112,6 +113,7 @@ lteid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 formula text,
 template_type nvarchar(200),
+createdDate date,
 description text,
 aid int not null references Account(aid)
 )
@@ -123,6 +125,7 @@ cid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 content text,
 context_type nvarchar(200),
+createdDate date,
 description text,
 aid int not null references Account(aid)
 )
@@ -169,8 +172,8 @@ CREATE TABLE CheckedBatchSC (
 bid int primary key AUTO_INCREMENT,
 aid int not null references Account(aid),
 lnid int not null references LNAFile(lnid),
-lteid int not null references LTLTemplate(lteid),
-cid int not null references CPNContext(cid),
+lteid int references LTLTemplate(lteid),
+cid int references CPNContext(cid),
 imid int not null references InitialMarking(imid),
 noSC int,
 checkedDate date,
