@@ -28,14 +28,14 @@ multi = [
 =======
 >>>>>>> 306893983f03565afa03eee9211a703a2f9651cf
 
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Document\CapStone\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
 
 ]
 mycursor.executemany(sqlFomular, multi)

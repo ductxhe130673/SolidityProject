@@ -7,7 +7,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ltltemplate
 from rest_framework.decorators import api_view
+<<<<<<< HEAD
 from django.db import connection
+=======
+from ltltemplate import dbcontext
+>>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
 # Create your views here.
 
 class ltltemplateAPIView(APIView):
@@ -66,12 +70,18 @@ class ltltemplateAPIView(APIView):
 		try:
 			if request.method =='DELETE':
 				idLTLDelete = request.GET['lteid']
+				modify = dbcontext.modifyCheckedDetail(idLTLDelete)
 				ltltemplateDelete = ltltemplate.objects.get(lteid=idLTLDelete)
 				ltltemplateDelete.delete()
 				return Response('Success',status=status.HTTP_200_OK)
 		except Exception as e:
+<<<<<<< HEAD
 			print('ERROR====', e)
 			return Response({"message": "Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+=======
+			print('ERROR====',e)
+			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)
+>>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
 
 
 @api_view(['GET'])
@@ -102,4 +112,8 @@ def getLTLTemplateById(request):
 # 			                  print('ERROR====', e)
 #         cursor.close
 #     except:
+<<<<<<< HEAD
 #         return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)	
+=======
+#         return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)	
+>>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a

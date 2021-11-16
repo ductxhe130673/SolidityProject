@@ -2,7 +2,6 @@ from django.test import TestCase,TransactionTestCase
 from django.http import response
 from rest_framework import status
 
-
 class SimpleTest(TestCase):
     # test get all smartcontract
     def test_smartcontract_get_all(self):
@@ -22,13 +21,19 @@ class SimpleTest(TestCase):
     def test_update_smartcontract(self):
         response = self.client.put('http://127.0.0.1:8000/smartconstract/select-smart-contract',
                                    data={
-                                       'sid': '6','name': 'abc', 'type': 'new', 'content': 'abc', 'description': 'abc', 'aid': '1'},
+                                       'id': '6', 'name': 'abc', 'type': 'new', 'content': 'abc', 'description': 'abc', 'aid': '1'},
                                    content_type='application/json')
-        self.assertEquals(response.status_code, 202)
-    #test delete smartcontract
-    def test_delete_smartcontract(self):
-        response = self.client.delete('http://127.0.0.1:8000/smartconstract/select-smart-contract?id=6')
+        self.assertEquals(response.status_code, status.HTTP_202_ACCEPTED)
 
+    # test delete smartcontract
+    def test_delete_smartcontract(self):
+        response = self.client.delete(
+            'http://127.0.0.1:8000/smartconstract/select-smart-contract?id=6')
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
 class Test_Insert_Methods(TransactionTestCase):
    # test new insert into initialmanrking
     def test_insert_into_initialmarking(self):
@@ -229,4 +234,8 @@ class TestGetArgumentByFunctionId(TestCase):
     # test get argument by function ID,'id' not 'sid'
     def test_getArgument_by_FunctionId(self):
         response =  self.client.get('http://127.0.0.1:8000/smartconstract/getargubyfunctionid?sid=4')
+<<<<<<< HEAD
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST) 
+=======
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+>>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
