@@ -1,4 +1,5 @@
 import mysql.connector
+import datetime
 db = mysql.connector.connect(
     host = "localhost",
     user="root",
@@ -6,9 +7,9 @@ db = mysql.connector.connect(
     database="soliditycpn"
 )
 mycursor = db.cursor()
-sqlFomular = "INSERT INTO SmartContract (name,type,content,description,aid) VALUES (%s,%s,%s,%s,%s)"
+sqlFomular = "INSERT INTO SmartContract (name,type,createdDate,content,description,aid) VALUES (%s,%s,%s,%s,%s,%s)"
 multi = [
-    ("EtherGame","pending","""
+    ("EtherGame","pending",datetime.datetime.now(),"""
     uint public payoutMileStone1 = 3 ether;
     uint public mileStone1Reward = 2 ether;
     uint public payoutMileStone2 = 5 ether;
@@ -44,7 +45,7 @@ multi = [
         redeemableEther[msg.sender] = 0;
         msg.sender.transfer(redeemableEther[msg.sender]);
     }""","This is discription ",1),
-    ("indAuctionbl","private","""
+    ("indAuctionbl","private",datetime.datetime.now(),"""
     struct Bid {
     bytes32 blindedBid;
     uint deposit;
@@ -192,7 +193,7 @@ multi = [
         beneficiary.transfer(this.balance);
     }
     ""","This is discription ",2),
-    ("OpenAddressLottery","common","""
+    ("OpenAddressLottery","common",datetime.datetime.now(),"""
     struct SeedComponents{
         uint component1;
         uint component2;
@@ -271,7 +272,7 @@ multi = [
             participate();
     }
     ""","This is discription ",3),
-    ("EtherLotto","pending","""
+    ("EtherLotto","pending",datetime.datetime.now(),"""
     
     // Amount of ether needed for participating in the lottery.
     uint constant TICKET_AMOUNT = 10;
@@ -317,7 +318,7 @@ multi = [
         }
     }
     ""","This is discription ",4),
-    ("SimpleDice","common","""
+    ("SimpleDice","common",datetime.datetime.now(),"""
     
   struct gamblerarray {
       address etherAddress;
@@ -448,7 +449,7 @@ multi = [
       FeeRate = new_feerate;
   }
     ""","This is discription ",5),
-    ("Lotto","private","""
+    ("Lotto","private",datetime.datetime.now(),"""
     uint constant public blocksPerRound = 6800;
     // there are an infinite number of rounds (just like a real lottery that takes place every week). `blocksPerRound` decides how many blocks each round will last. 6800 is around a day.
 
