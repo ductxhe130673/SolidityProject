@@ -18,7 +18,9 @@ class  ltltemplate(models.Model):
     formula=models.CharField(max_length=200, db_column="formula")
     template_type = models.CharField(max_length=200, db_column="template_type")
     description= models.CharField(max_length=200, db_column="description")
+    createdDate = models.DateField(db_column="createdDate")
     aid = models.ForeignKey(Account, models.DO_NOTHING, db_column='aid')
+
     class Meta:
         managed = False
         db_table = 'LTLTemplate'

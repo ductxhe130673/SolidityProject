@@ -41,4 +41,16 @@ export default {
             console.log("error", error);
         }
     },
+
+    async setListLTL({commit}) {
+        try {
+            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
+            commit('SET_LIST_LTL_TEMPLATE',result.data)
+            if(result.data.status === 200) {
+                commit('SET_LIST_LTL_TEMPLATE',result.data)
+            }
+        } catch(error) {
+            console.log("error", error);
+        }
+    },
 }
