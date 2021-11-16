@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import cpncontext
+from cpncontext import dbcontext
 from rest_framework.decorators import api_view
 # Create your views here.
 
@@ -59,6 +60,7 @@ class cpncontextAPIView(APIView):
 		try:
 			if request.method =='DELETE':
 				idContextDelete = request.GET['cid']
+				modify = dbcontext.modifyCheckedDetail(idContextDelete)
 				contextDelete = cpncontext.objects.get(cid=idContextDelete)
 				contextDelete.delete()
 				return Response('Success',status=status.HTTP_200_OK)
