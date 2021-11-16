@@ -86,15 +86,15 @@
                   <div class="table-row" v-for="(func, index) in getSelectedSc" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
                     <div class="table-cell first-cell">{{ index+1 }}</div>
                     <div class="table-cell second-cell">{{ func.name }}</div>
-                    <div class="table-cell third-cell">
+                    <!-- <div class="table-cell third-cell">
                       <div class="input-param-text" @click="setFunctionParam(func.fid)">Input Params</div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
             </div>
-            <div v-if="function_cell_selection == 'params'">
+            <!-- <div v-if="function_cell_selection == 'params'">
                 <function-table :list_argument="getFunctionArgument" @changeInitMarking="updateInitMarking"/>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -111,11 +111,11 @@
 </template>
 
 <script>
-import functionTable from "./initmarking/FunctionTable.vue"
+// import functionTable from "./initmarking/FunctionTable.vue"
 export default {
-  components: {
-    "function-table": functionTable,
-  },
+  // components: {
+  //   "function-table": functionTable,
+  // },
   data() {
     return {
       radio_seleted: "fixed",

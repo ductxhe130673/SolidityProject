@@ -2,7 +2,7 @@
   <div class="container">
     <div id="dialog">
      
-        <h3>{{ this.dialog.title }}</h3>
+        <h4>{{ this.dialog.title }}</h4>
       
       <div id="d-content">
         <a-upload-dragger
