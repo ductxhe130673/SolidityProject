@@ -68,6 +68,9 @@ export default {
       checkedNames: []
     };
   },
+  mounted(){
+    this.checkedNames = this.$store.state.data.data.selectedSc;
+  },
   methods: {
    routing(param) {
       if (param == "add") {

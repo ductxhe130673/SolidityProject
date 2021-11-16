@@ -19,14 +19,14 @@
         
         <!-- <div class="option input-type" v-if="author === 'admin'"> -->
           <div class="option input-type" v-if="isAdmin">
-          <select class="form-select" id="inputGroupSelect01">
+          <select class="form-select" id="inputGroupSelect01" v-model="options">
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
         </div>
 
-
+<!-- 
         <div class="option input-type" v-if="!isAdmin">
           <div class="common-option" v-if="isSuperior">
             <label for="common">Common</label>
@@ -35,7 +35,7 @@
               id="common"
               value="common"
               type="radio"
-              v-model="selectOption"
+              v-model="options"
             />
           </div>
           <div class="common-option">
@@ -45,7 +45,7 @@
               id="common"
               value="pending"
               type="radio"
-              v-model="selectOption"
+              v-model="options"
             />
           </div>
           <div class="private-option">
@@ -55,11 +55,11 @@
               id="private"
               value="private"
               type="radio"
-              v-model="selectOption"
+              v-model="options"
             />
           </div>
         </div>
-        
+         -->
         
       </div>
       <div class="editor-area area" v-if="isAdmin">
@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       nameSc: "",
-      options: this.$route.params.options,
+      options: '',
       code: "",
       demoEditSC: "test add sc",
       isAdmin: true,
@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     updateContent(value){
-      //console.log(value)
       this.demoEditSC = value;
     },
     async clickHandler(action) {
@@ -130,6 +129,7 @@ export default {
         // if (res.status && res.status === 200) {
         //   this.$router.push(this.$route.params.parent_path);
         // }
+        console.log('this.option',this.option);
         await AddNewSmartContracts(this.hashValue(this.nameSc), this.nameSc, this.options, this.demoEditSC);
         this.$router.push(this.$route.params.parent_path);
 

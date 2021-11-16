@@ -8,8 +8,11 @@ const state = {
         selectedSc: [],
         selectedSCInfor: { name: "hello" },
         selectedContext: {},
+        selectedTemplate: {},
+        nameCSP: '',
         selectedVulnerbility: [],
         configVul: {},
+        ltlProperty : [],
         initialMarkingInfor: {
             NumberOfUser: null,
             Balance: {
@@ -44,6 +47,9 @@ const getters = {
     GetSelectedContext: state => {
         return state.data.selectedContext;
     },
+    GetSelectedTemplate: state => {
+        return state.data.selectedTemplate;
+    },
     GetSelectedVulnerbility: state => {
         return state.data.selectedVulnerbility;
     },
@@ -56,6 +62,12 @@ const getters = {
     /* -- index -- */
     getIndex: state => {
         return state.index;
+    },
+    getNameCSP: state =>{
+        return state.nameCSP;
+    },
+    getLtlProperty: state => {
+        return state.data.ltlProperty;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -83,6 +95,7 @@ const mutations = {
             selectedSc: [],
             selectedSCInfor: {},
             selectedContext: {},
+            selectedTemplate:{},
             selectedVulnerbility: [],
             configVul: {}
         }
@@ -100,11 +113,12 @@ const mutations = {
     },
     SetSelectedSC(state, newArr) {
         state.data.selectedSc = newArr;
-        console.log('newArr',newArr);
     },
-    SetSelectedContext(state, newArr) {
-        state.data.selectedContext = newArr;
-
+    SetSelectedContext(state, data) {
+        state.data.selectedContext = data;
+    },
+    SetSelectedTemplate(state, data) {
+        state.data.selectedTemplate = data;
     },
     SetSelectedVulnerbility(state, newArr) {
         state.data.selectedVulnerbility = newArr;
@@ -115,6 +129,12 @@ const mutations = {
     /* -- index -- */
     setIndex(state, data) {
         state.index = data;
+    },
+    setNameCSP(state, data) {
+        state.nameCSP = data;
+    },
+    setLtlProperty(state, data){
+        state.data.ltlProperty= data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility
@@ -185,7 +205,6 @@ const mutations = {
         state.date_modified = value.date_modified
         state.views = value.views
         state.data = value.data
-        console.log('value------', value);
     }
 }
 
