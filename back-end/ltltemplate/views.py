@@ -73,3 +73,34 @@ class ltltemplateAPIView(APIView):
 		except Exception as e:
 			print('ERROR====',e)
 			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getLTLTemplateById(request):
+    try:
+        if request.method == 'GET':
+            idLTL = request.GET['lteid']
+            ltltemplateDB = ltltemplate.objects.get(lteid=idLTL)
+            serialiltltemplate = ltltemplateSerializer(ltltemplateDB)
+            return Response(serialiltltemplate.data, status=status.HTTP_200_OK)
+    except Exception as e:
+		    print('ERROR====', e)
+    return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# @api_view(['GET'])
+# def getLTLTemplateById(request):
+#     try:
+#         if request.method == 'GET':
+#             sql = '''select * from soliditycpn.ltltemplate where lteid = %s'''
+#         cursor = connection.cursor()
+#         try:
+#             print('ID====', request.GET['lteid'])
+#             cursor.execute(sql, [request.GET['lteid']])
+#             data = cursor.fetchall()
+#             return Response(data, status=status.HTTP_200_OK)
+#         except Exception as e:
+# 			                  print('ERROR====', e)
+#         cursor.close
+#     except:
+#         return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)	
