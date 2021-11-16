@@ -26,6 +26,7 @@ data: function () {
     };
   },
   mounted() {
+    this.ltlcode = this.$store.state.data.data.selectedTemplate.formula;
     this.updateContent(1, this.ltlcode);
   },
    computed: {

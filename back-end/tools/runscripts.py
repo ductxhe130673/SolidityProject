@@ -6,7 +6,6 @@ from subprocess import Popen, PIPE, STDOUT
 
 # for Windows
 
-
 path = r"C:\Capstone\SolidityProject\tools"
 
 
