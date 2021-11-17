@@ -43,7 +43,7 @@
       </table>
     </div>
     <div id="action">
-      <div type="button" class="btn btn-outline-primary" @click="funtionNext()">Next</div>
+      <div type="button" class="btn btn-outline-primary" @click="routing('next')">Next</div>
       <div type="button" class="btn btn-outline-primary" @click="routing('back')">Back</div>
     </div>
   </div>
@@ -77,6 +77,18 @@ export default {
       ],
     };
   },
+  methods:{
+     routing(param) {
+      if (param == "back") {
+        this.$router.push({ name: "GenaralVulSetting" });
+        this.$store.commit("setIndex", 4);
+      }
+      if (param == "next") {
+        this.$router.push({ name: "Initial" });
+        this.$store.commit("setIndex", 4);
+      }
+    },
+  }
 };
 </script>
 <style scoped>

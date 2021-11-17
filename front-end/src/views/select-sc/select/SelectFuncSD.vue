@@ -68,10 +68,10 @@
       </div>
     </div>
     <div id="action">
-      <div type="button" class="btn btn-outline-primary" @click="funtionNext()">
+      <div type="button" class="btn btn-outline-primary" @click="routing('next')">
         Next
       </div>
-      <div type="button" class="btn btn-outline-primary" @click="funtionNext()"  v-if="list_smart_contract.length == 1">
+      <div type="button" class="btn btn-outline-primary" @click="routing('select')"  v-if="list_smart_contract.length == 1">
         Select another smart contract
       </div>
       <div
@@ -91,9 +91,9 @@ export default {
       function_cell_selected: "function",
       list_smart_contract: [
         { name: "Smart I", id: 1 },
-        { name: "Smart II", id: 2 },
-        { name: "Smart III", id: 3 },
-        { name: "Smart IV", id: 4 },
+        // { name: "Smart II", id: 2 },
+        // { name: "Smart III", id: 3 },
+        // { name: "Smart IV", id: 4 },
       ],
       smart_contract_infors: {
         1: {
@@ -259,7 +259,20 @@ export default {
       this.function_cell_selected = "params";
       this.selected_function = func;
     },
-    
+    routing(param) {
+      if (param == "select") {
+        this.$router.push({ name: "SelectSContractSD2" });
+        this.$store.commit("setIndex", 4);
+      }
+      if (param == "back") {
+        this.$router.push({ name: "GenaralVulSetting" });
+        this.$store.commit("setIndex", 4);
+      }
+      if (param == "next") {
+        this.$router.push({ name: "Initial" });
+        this.$store.commit("setIndex", 4);
+      }
+    },
   },
   
   computed: {
