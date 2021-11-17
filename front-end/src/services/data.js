@@ -263,24 +263,24 @@ export async function GetLtl() {
     return response.data
 }
 
-export async function GetLtlById(id_Ltl) {
-    const response = await LtlService.GetLtlById(id_Ltl)
+export async function GetLtltemplteById(id_Ltl) {
+    const response = await ltltemplateService.GetLtltemplteById(id_Ltl)
     return response.data
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLtl(name, description, fomular) {
-    return await LtlService.CreateLtl(name, description, fomular);
+export async function CreateLTLTemplate(name, description, fomular) {
+    return await ltltemplateService.CreateLTLTemplate(name, description, fomular);
 }
 
 /*---------DeleteLtl-------- */
-export async function DeleteLtl(id_Ltl) {
-    return await LtlService.DeleteLtl(id_Ltl)
+export async function DeleteLtlTemplate(id_Ltl) {
+    return await ltltemplateService.DeleteLtlTemplate(id_Ltl)
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtl(id_Ltl, ct_name, ct_description, fomular) {
-    return await LtlService.UpdateLtl(id_Ltl, ct_name, ct_description, fomular)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()

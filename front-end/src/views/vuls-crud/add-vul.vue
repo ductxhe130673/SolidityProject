@@ -41,7 +41,7 @@
 <script>
 // import LTLEditor from "../../components/LTLEditor.vue"
 import FormularEditor from "../../components/FormularEditor.vue"
-import {CreateLtl} from "../../services/data"
+import {CreateLTLTemplate} from "../../services/data"
 export default {
   components: {
     FormularEditor
@@ -64,16 +64,13 @@ export default {
       },
      async clickHandler(action){
         if(action == "save"){
-          if (this.name === undefined||this.code === undefined||this.description === undefined){
-          return
-        }
-        const response=  await CreateLtl(this.name, this.description, this.code)
-        console.log(response)
-            this.$router.push(this.$route.params.parent_path);
+        console.log(this.name,this.code,this.description)
+        this.code = "test"
+        await CreateLTLTemplate(this.name, this.description, this.code)
+        this.$router.push(this.$route.params.parent_path);
         } 
         else if(action == "cancel"){
-            if(!this.$route.params.parent_path) this.$router.push('/');
-            else this.$router.push(this.$route.params.parent_path);
+            this.$router.push(this.$route.params.parent_path);
         }
     }
   },
