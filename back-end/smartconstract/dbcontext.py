@@ -169,13 +169,13 @@ def addNewIMFunction(fun_name,sender_from,sender_to):
 def addNewIMArgument(arg_name,IMfrom,IMto):
     try:
         imfid = getLastInsertIDFromIMFunction()
-        print(imfid)
+        print("imfid = ",imfid)
         sql = '''INSERT INTO IMArgument (arg_name,IMfrom,IMto,imfid) VALUES (%s,%s,%s,%s);'''
         cursor = connection.cursor()
         cursor.execute(sql, ([arg_name],[IMfrom],[IMto],[imfid]))
         row = cursor.fetchall()
         # transaction.commit()
-        return "Add New IMArgumentt Successfully"
+        return "Add New IMArgument Successfully"
     except Exception as e:
         print(e)
         return None
@@ -342,3 +342,37 @@ def getLastInsertIDFromCheckedBatchSC():
         return None
     finally:
         connection.close() 
+def updateGlobalVariable(sid):
+    try:
+        sql = '''UPDATE soliditycpn.globalvariable SET sid = NULL WHERE sid = %s'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[sid])
+        return "Update Successful"
+    except:
+        return "Update Fail"
+    finally:
+        connection.close()
+
+#Update table function when delete smartcontract
+def updateFunction(sid):
+    try:
+        sql = '''UPDATE soliditycpn.functions SET sid = NULL WHERE sid = %s'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[sid])
+        return "Update Successful"
+    except:
+        return "Update Fail"
+    finally:
+        connection.close()
+
+#Detele checkedSmartcontractDetail
+def deleteCheckedDetail(sid):
+    try:
+        sql = '''delete from soliditycpn.checkedsmartcontractdetail where sid = %s'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[sid])
+        return "Delete Successful"
+    except:
+        return "Delete Fail"
+    finally:
+        connection.close()

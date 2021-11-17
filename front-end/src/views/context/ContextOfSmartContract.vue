@@ -124,6 +124,8 @@ export default {
 
   mounted() {
     this.initData();
+    this.selectedContext =  this.$store.state.data.data.selectedContext;
+   
   },
   methods: {
     upLoad() {

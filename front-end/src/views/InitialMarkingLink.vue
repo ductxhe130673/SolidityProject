@@ -19,15 +19,15 @@
         <div class="multi-cell">
           <div id="multi-radio-chooses">
             <div class="radio-choose">
-              <input type="radio" name="radio" class="radio-buttons" value="fixed" v-model="init_marking.Balance.type">
+              <input type="radio" name="radio" class="radio-buttons" value="fixed" v-model="init_marking.Balance.type" :disabled="!init_marking.Balance.type.fixed">
               <span>Fixed</span>
             </div>
             <div class="radio-choose">
-              <input type="radio" name="radio" class="radio-buttons" value="random" v-model="init_marking.Balance.type">
+              <input type="radio" name="radio" class="radio-buttons" value="random" v-model="init_marking.Balance.type" :disabled="!init_marking.Balance.type.random">
               <span>Random</span>
             </div>
             <div class="radio-choose">
-              <input type="radio" name="radio" class="radio-buttons" value="map" v-model="init_marking.Balance.type">
+              <input type="radio" name="radio" class="radio-buttons" value="map" v-model="init_marking.Balance.type" :disabled="!init_marking.Balance.type.map">
               <span>Map</span>
             </div>
           </div>
@@ -52,7 +52,7 @@
                     <div class="table-cell first-cell">{{ index+1 }}</div>
                     <div class="table-cell second-cell">{{ func.name }}</div>
                     <div class="table-cell third-cell">
-                      <div class="input-param-text" @click="setFunctionParam(func.fid)">Input Params</div>
+                     1
                     </div>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default {
   },
   data() {
     return {
-      radio_seleted: "fixed",
+      radio_seleted: "",
       function_cell_selected: "function",
       list_smart_contract: [{name:"smart I",id:1},{name:"smart II",id:2},{name:"smart III",id:3},{name:"smart IV",id:4}],
       list_function: [{name: "Function 1", id:1},{name: "Function 2",id:2}],
@@ -316,7 +316,6 @@ export default {
   },
   computed:{
     getSelectedRadio(){
-      console.log('this.init_marking',this.init_marking);
       return this.init_marking.Balance.type
     },
     getSelectedSc(){

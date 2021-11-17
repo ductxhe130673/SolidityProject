@@ -3,8 +3,8 @@
     <div class="link">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
-          <a>List</a></span>
+          <a href="http://192.168.1.6:8080/list-sc" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a>Edit</a></span>
     </div>
     <div class="header">
       <div class="title"><h1>Edit the Smart Contract code</h1></div>
@@ -17,13 +17,13 @@
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
         <div class="option input-type" v-if="isAdmin">
-          <select class="form-select" id="inputGroupSelect01">
+          <select class="form-select" id="inputGroupSelect01" v-model="selectOption">
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
         </div>
-
+<!-- 
         <div class="option input-type" v-if="!isAdmin">
           <div class="common-option" v-if="isSuperior">
             <input
@@ -55,7 +55,7 @@
             />
             <label for="private">Private</label>
           </div>
-        </div>
+        </div> -->
 
 
       </div>
@@ -67,7 +67,7 @@
       </div>
       <div class="description">
         <div class="label">Description</div>
-        <textarea name="" id="" cols="30" rows="5"></textarea>
+        <textarea cols="30" rows="5" v-model="descriptionSC"></textarea>
       </div>
       <div class="button-area area">
         <div class="button-add-cancell">
@@ -80,8 +80,7 @@
 </template>
 
 <script>
-import {UpdateSmartContractCode} from "../../../services/data"
-// import EditorSc from "../../components/EditorSc.vue";
+import {UpdateSmartContractCode,GetSmartContractCode,GetSmartContractById} from "../../../services/data"
 import AceEditor from '../../../components/AceEditor.vue';
 export default {
   components: {AceEditor },
@@ -89,17 +88,26 @@ export default {
 
   data() {
     return {
+      sc_id : this.$route.params.sc_id,
       nameSc: this.$route.params.name,
-      //code: GetSmartContractCode(this.$route.params.sc_id),
-      code: this.$route.params.code,
+      code: GetSmartContractCode(this.$route.params.sc_code),
+      dataCurrent : {},
       demoEditSC: "test edit sc",
       isAdmin: true,
+      descriptionSC: '',
+      selectOption : '',
     };
   },
   mounted(){
       this.demoEditSC = this.code
+      // this.dataCurrent = this.getDataCurrent(sc_id);
+      console.log('this.dataCurrent',this.code);
   },
+
   methods:{
+     async getDataCurrent(sc_id){
+       await GetSmartContractById(sc_id);
+    },
     updateContent(value){
       //console.log(value)
       this.demoEditSC = value;
@@ -108,7 +116,7 @@ export default {
       if(param == "save"){
         // UpdateSmartContractCode(this.$route.params.sc_id, this.code)
         // this.$router.push(this.$route.params.parent_path);
-        await UpdateSmartContractCode(this.$route.params.sc_id, this.nameSc,this.demoEditSC)
+        await UpdateSmartContractCode(this.sc_id, this.nameSc,this.demoEditSC, this.descriptionSC, this.selectOption)
         this.$router.push({
           name:"ListSc"
           })

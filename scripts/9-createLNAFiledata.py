@@ -16,7 +16,6 @@ def InsertIMG(FilePath):
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO LNAFile (hcpnfile,propfile) VALUES (%s,%s)"
 multi = [
-
     (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),
      InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
     (InsertIMG(r"D:\Demo\SolidityProject\scripts\XMLfile\finnal_model.lna"),

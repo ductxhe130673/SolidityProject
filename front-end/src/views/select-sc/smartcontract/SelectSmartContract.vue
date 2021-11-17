@@ -87,6 +87,9 @@ export default {
       upLoadDialog: {},
     };
   },
+  mounted(){
+    this.checkedNames = this.$store.state.data.data.selectedSc;
+  },
   methods: {
     upLoad() {
       this.upLoadDialog = {

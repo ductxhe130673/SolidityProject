@@ -47,17 +47,17 @@ export class SmartContractsService extends BaseService {
     }
 
     /*---------Create New Smartcontract--------- */
-    static async CreateSmartContracts(id, sc_name, type, content) {
+    static async CreateSmartContracts(id, sc_name, option, content) {
         try {
             const paraData = {
                 "id": id,
                 "name": sc_name,
                 //"date_modified": date_modified,
-                "type": type,
+                "type": option,
                 "content": content,
                 "aid":"1"
             }
-            const response = await this.request({ auth: true }).post(`${this.getUnity()}/api/`, paraData)
+            const response = await this.request({ auth: true }).post(`${this.getUnity()}/select-smart-contract`, paraData)
             // const data = {
             //     content: response.data.data,
             //     headers: response.headers['']
@@ -68,20 +68,35 @@ export class SmartContractsService extends BaseService {
             throw new ErrorWrapper(error, message)
         }
     }
-    /*---------Update Smartcontract--------- */
-    static async UpdateSmartContracts(id, sc_name, code) {
+    /*---------get smart contract by Id--------- */
+    static async GetSmartContractById(id) {
         const smartContractById = await this.request({ auth: true }).get(`${this.getUnity()}/scbyid?id=${id}`)
+        console.log('smartContractById',smartContractById);
+        try {
+            return new ResponseWrapper(smartContractById)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
+
+    /*---------Update Smartcontract--------- */
+    static async UpdateSmartContracts(id, sc_name, code, description, option) {
+        console.log('description',description);
+        // const smartContractById = await this.request({ auth: true }).get(`${this.getUnity()}/scbyid?id=${id}`)
         try {
             const paraData = {
                 "id": id,
                 "name": sc_name,
-                //"date_modified": smartContractById.data.date_modified,
+                // "date_modified": smartContractById.data.date_modified,
                 "content": code,
-                "type": smartContractById.data.type,
+                "description": description,
+                "type": option,
                 "aid":1
+                
             }
-            console.log(paraData)
-            const response = await this.request({ auth: true }).put(`${this.getUnity()}/api/`, paraData)
+            console.log('paraData',paraData)
+            const response = await this.request({ auth: true }).put(`${this.getUnity()}/select-smart-contract`, paraData)
             // const data = {
             //     content: response.data.data,
             //     headers: response.headers['']
@@ -104,7 +119,30 @@ export class SmartContractsService extends BaseService {
                 "aid":1
             }
             console.log(paraData)
-            const response = await this.request({ auth: true }).put(`${this.getUnity()}/api/`, paraData)
+            const response = await this.request({ auth: true }).put(`${this.getUnity()}/select-smart-contract`, paraData)
+            // const data = {
+            //     content: response.data.data,
+            //     headers: response.headers['']
+            // }
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
+    /*---------Refuse Pendind Smartcontract--------- */
+        static async RefusePendingSmartContracts(id, sc_name, code) {
+        try {
+            const paraData = {
+                "id": id,
+                "name": sc_name,
+                //"date_modified": smartContractById.data.date_modified,
+                "content": code,
+                "type": "private",
+                "aid":1
+            }
+            console.log(paraData)
+            const response = await this.request({ auth: true }).put(`${this.getUnity()}/select-smart-contract`, paraData)
             // const data = {
             //     content: response.data.data,
             //     headers: response.headers['']
@@ -117,14 +155,13 @@ export class SmartContractsService extends BaseService {
     }
     /*---------Delete Smartcontract--------- */
     static async DeleteSmartContracts(id) {
+        console.log('id',id);
         try {
-            console.log(id)
-            const response = await this.request({ auth: true }).delete(`${this.getUnity()}/api/?id=${id}`)
+            const response = await this.request({ auth: true }).delete(`${this.getUnity()}/select-smart-contract?id=${id}`)
             // const data = {
             //     content: response.data.data,
             //     headers: response.headers['']
             // }
-            console.log(response)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             const message = error.response.data ? error.response.data.error : error.response.statusText
