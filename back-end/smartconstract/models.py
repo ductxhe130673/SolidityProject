@@ -24,6 +24,7 @@ class Smartcontract(models.Model):
     name = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
     type = models.CharField(max_length=50, db_collation='utf8_general_ci', blank=True, null=True)
     content = models.TextField(blank=True, null=True)
+    createdDate = models.TextField(blank=True, null=True, db_column='createdDate')
     description = models.TextField(blank=True, null=True)
     aid = models.ForeignKey(Account, models.DO_NOTHING, db_column='aid')
 

@@ -98,7 +98,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.type }}</td>
-            <td>{{ item.date }}</td>
+            <td>{{ item.createdDate }}</td>
             <td class="align-items">
               {{ item.description }}
               <span class="col" id="btn">
@@ -216,6 +216,7 @@ export default {
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.getlistSmartContract;
+      console.log('this.getlistSmartContract',this.getlistSmartContract);
       var items = [];
       this.getlistSmartContract.forEach(function (item) {
         if (item.type === selected) {
@@ -224,25 +225,7 @@ export default {
       });
       return items;
     },
-    // GetTableName() {
-    //   if (this.chosen_table == "common") {
-    //     return "Common Smart Contracts";
-    //   }
-    //   if (this.chosen_table == "private") {
-    //     return "Private Smart Contracts";
-    //   }
-    //   if (this.chosen_table == "pending") {
-    //     return "Pending Smart Contracts";
-    //   }
-    //   return "Invalid Table";
-    // },
-    // showAddButton() {
-    //   return (
-    //     this.chosen_table != "pending" &&
-    //     (this.chosen_table != "common" ||
-    //       this.$store.state.user.currentUser.role == "admin")
-    //   );
-    // },
+
     isSuperior() {
       return this.$store.state.user.currentUser.role == "admin";
     },
