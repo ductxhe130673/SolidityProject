@@ -101,7 +101,7 @@ export default {
   mounted(){
       this.demoEditSC = this.code
       // this.dataCurrent = this.getDataCurrent(sc_id);
-      console.log('this.dataCurrent',this.code);
+      // console.log('this.dataCurrent',this.code);
   },
 
   methods:{

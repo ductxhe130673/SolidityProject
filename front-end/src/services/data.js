@@ -160,7 +160,7 @@ export function GetSmartContractCode(id) {
 //     listPendingSmartContracts.push({ id: sc_id, name: sc_name, type: "pending" })
 //   }
 // }
-export async function AddNewSmartContracts(sc_id, sc_name, options, content) {
+export async function AddNewSmartContracts(sc_id, sc_name, options, content, createdDate) {
     // AddNewSmartContractsInfor(sc_id,sc_name,options)
     // SmartContractCode[sc_id] = code
     // var d = new Date,
@@ -169,7 +169,7 @@ export async function AddNewSmartContracts(sc_id, sc_name, options, content) {
     //     [d.getHours(),
     //     d.getMinutes(),
     //     d.getSeconds()].join(':');
-    await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content)
+    await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content, createdDate)
 }
 export async function GetSmartContractById(sc_id) {
     await SmartContractsService.GetSmartContractById(sc_id.words[0])
@@ -258,8 +258,8 @@ export async function UpdateContext(id_context, ct_name, ct_description) {
 }
 /* ------LTL------- */
 
-export async function GetLtl() {
-    const response = await LtlService.GetAllLtl()
+export async function GetAllltltemplates() {
+    const response = await ltltemplateService.GetAllltltemplates()
     return response.data
 }
 
@@ -284,9 +284,5 @@ export async function UpdateLtl(id_Ltl, ct_name, ct_description, fomular) {
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()
-    return response.data
-}
-export async function GetAllltltemplates() {
-    const response = await ltltemplateService.GetAllltltemplates()
     return response.data
 }
