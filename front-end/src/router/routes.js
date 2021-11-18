@@ -46,6 +46,7 @@ import SelectFunction from "../views/add-sagemented/SelectFunction.vue"
 import SelectGlobalVariable from "../views/add-sagemented/SelectGlobalVariable.vue"
 import SelectLocalVariable from "../views/add-sagemented/SelectLocalVariable.vue"
 import SelectContract from "../views/add-sagemented/SelectSmartContract.vue"
+import RoadMap from "../views/RoadMap.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 
@@ -61,6 +62,13 @@ export const routes = [{
         component: Index,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
     },
+    {
+        path: "/roadmap",
+        name: "RoadMap",
+        component: RoadMap,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
+        props: true
+      },
     {
         path: "/login",
         name: "Login",
@@ -279,6 +287,7 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
+    
 
 ]
 
@@ -316,13 +325,7 @@ export const routes = [{
     meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create contract-specific property` },
     props: true
   },
-  {
-    path: "/roadmap",
-    name: "RoadMap",
-    component: RoadMap,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
-    props: true
-  },
+  
   {
     path: "/add-context",
     name: "AddContext",
