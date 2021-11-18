@@ -47,14 +47,14 @@ export class ltltemplateService extends BaseService {
     }
 
         /*---------Update LTLTemplate--------- */
-        static async UpdateLtlTemplate(id, name, description, fomular) {
+        static async UpdateLtlTemplate(id, name, description, fomular,date) {
             try {
                 const paraData = {
                     "lteid": id,
                     "name": name,
                     "formula": fomular,            // fix cung
                     "description": description,
-                    "createdDate": "2021-11-17",  // fix cung
+                    "createdDate": date,  // fix cung
                     "template_type": "test",       // fix cung
                     "aid": "1"        // fix cung
                 }
