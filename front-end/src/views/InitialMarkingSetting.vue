@@ -111,6 +111,7 @@
 </template>
 
 <script>
+// import functionTable from "./initmarking/FunctionTable.vue"
 // import { GetGloLocArgOfSmartContract } from "../services/data";
 import functionTable from "./initmarking/FunctionTable.vue"
 export default {
