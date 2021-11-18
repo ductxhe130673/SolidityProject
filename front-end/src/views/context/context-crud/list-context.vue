@@ -37,8 +37,9 @@
           <p>Type</p>
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
-              <option value="dcr">DCR</option>
-              <option value="cpn">CPN</option>
+              <option value="0">All</option>
+              <option value="type1">DCR</option>
+              <option value="type2">CPN</option>
             </select>
           </div>
         </div>
@@ -85,10 +86,10 @@
               </th>
             </tr>
           </thead>
-          <tr v-for="data in datatable" :key="data.id">
-            <td>{{ data.id }}</td>
+          <tr v-for="(data, index) in filterlist" :key="index">
+            <td>{{ index + 1 }}</td>
             <td>{{ data.name }}</td>
-            <td>{{ data.type }}</td>
+            <td>{{ data.context_type }}</td>
             <td>{{ data.date }}</td>
             <td class="align-items">
               {{ data.description }}
@@ -96,14 +97,14 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="editContext"
+                  @click="editContext(data.cid)"
                 >
                   Edit
                 </button>
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="deleteC"
+                  @click="deleteContext(data.cid)"
                 >
                   Delete
                 </button>
@@ -128,85 +129,87 @@
 
 <script>
 import moment from "moment";
-// import { GetContext, DeleteContext } from "../../../services/data";
+// import { mapActions, mapGetters } from "vuex";
+import { DeleteContext, GetAllContext } from "../../../services/data";
 import ConfirmationDialog from "../../../components/ConfirmationDialog.vue";
 export default {
   components: { confirm: ConfirmationDialog },
   data() {
     return {
-      datatable: [
-        {
-          id: "1",
-          name: "EtherGame",
-          type: "pending",
-          date: "20/11/2021",
-          description: "This is a smart contract about auction ",
-        },
-        {
-          id: "2",
-          name: "AtherGame",
-          type: "pending",
-          date: "5/11/2021",
-          description: "This is a smart contract about auction",
-        },
-        {
-          id: "3",
-          name: "CtherGame",
-          type: "pending",
-          date: "2/11/2021",
-          description: "This is a smart contract about auction",
-        },
-      ],
-      dateFormat: "DD/MM/YYYY",
-      selected: "dcr",
+      dateFormat: "",
+      selected: "0",
       showConfirmation: false,
       alertDialog: {},
-
-      // list_context: [],
+      list_context: [],
     };
   },
   mounted() {
     this.initData();
+    this.getDate();
   },
+  computed: {
+    filterlist() {
+      const { selected } = this;
+      if (selected === "0") return this.list_context;
+      var items = [];
+      this.list_context.forEach(function (item) {
+        if (item.context_type === selected) {
+          items.push(item);
+        }
+      });
+      return items;
+    },
+  },
+ 
   methods: {
+    getDate(){
+      this.dateFormat = moment().format("YYYY-MM-DD");
+    },
+    async DeleteContext(cid) {
+      await DeleteContext(cid);
+    },
     moment,
+    async initData() {
+      this.list_context = await GetAllContext();
+    },
     goAdd() {
       this.$router.push({
         name: "AddContext",
         params: { parent_path: "/list-context" },
       });
+
+      console.log(this.list_context);
     },
-    editContext(id) {
+    editContext(cid) {
       this.$router.push({
         name: "EditContext",
-        params: { context_id: id, parent_path: "/list-context" },
+        params: { id: cid, parent_path: "/list-context" },
       });
+
     },
-    deleteC() {
-      this.alertDialog = {
-        title: "Alert",
-        message: "Do you want to delete the Context out of the system?",
-        confirmbtn: "Yes",
-      };
-      this.showConfirmation = true;
-    },
+    // deleteC() {
+    //   this.alertDialog = {
+    //     title: "Alert",
+    //     message: "Do you want to delete the Context out of the system?",
+    //     confirmbtn: "Yes",
+    //   };
+    //   this.showConfirmation = true;
+    // },
+
     closeConfirm() {
       this.showConfirmation = false;
     },
-    // async deleteContext(id,ct_name) {
-    //   if(!confirm(`Do you want to delete context ${ct_name}`)){
-    //     return
-    //   }
-    //   const response = await DeleteContext(id);
-    //   if (response.status === 200) {
-    //       await this.initData()
-    //   }
-    // },
-    // async initData() {
-    //   this.list_context = await GetContext();
-    // },
+    deleteContext(cid) {
+      if (
+        confirm(
+          "Do you want to delete the Smart Contract out of the system?"
+        ) === true
+      ) {
+        this.DeleteContext(cid);
+        this.$router.go(0);
+      }
+    },
   },
-  created() {},
 };
 </script>
 
