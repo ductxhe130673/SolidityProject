@@ -12,9 +12,9 @@
       <div class="row" id="type-section">
         <div class="title col-2">Type</div>
         <div class="col-10">
-          <select class="form-select">
-            <option value="dcr">DCR</option>
-            <option value="bpmn">BPMN</option>
+          <select class="form-select" v-model="options">
+            <option value="type1">DCR</option>
+            <option value="type2">BPMN</option>
           </select>
         </div>
       </div>
@@ -36,7 +36,7 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="text">
+          <input class="form-control" type="text" v-model="content" />
         </div>
       </div>
       <div id="group-btn">
@@ -61,38 +61,39 @@ import { CreateContext } from "../../../services/data";
 export default {
   data() {
     return {
-      code: "pragma solidity >=0.4.22 <0.6.0;\npragma solidity ^0.5.6 ;\ncontract Ballot {\n}",
+      options: "",
       name: "",
       description: "",
+      content: "",
     };
   },
   // components: { EditorSc },
   methods: {
-    checkValidateContext() {
-      if (this.code !== "" && this.name !== "" && this.description !== "") {
-        return true;
-      }
-      return false;
-    },
+    //   async CreateContext(cid) {
+    //   await CreateContext(cid);
+    // },
+    // checkValidateContext() {
+    //   if (this.code !== "" && this.name !== "" && this.description !== "") {
+    //     return true;
+    //   }
+    //   return false;
+    // },
     async clickHandler(action) {
       if (action == "save") {
         //check validation of field context
-        if (!this.checkValidateContext()) {
-          alert('You must enter data to field!!!')
-          return;
-        }
-        const response = await CreateContext(
+        // if (!this.checkValidateContext()) {
+        //   alert('You must enter data to field!!!')
+        //   return;
+        // }
+        await CreateContext(
           this.name,
+          this.content,
           this.description,
-          this.code
+          this.options
         );
-        if (response && response.status === 201) {
-          // this.$router.push(this.$route.params.parent_path);
-          this.$router.push({name:"ListContext"});
-        }
+        this.$router.push(this.$route.params.parent_path);
       } else if (action == "cancel") {
-        if (!this.$route.params.parent_path) this.$router.push("/");
-        else this.$router.push(this.$route.params.parent_path);
+        this.$router.push(this.$route.params.parent_path);
       }
     },
   },
@@ -125,10 +126,10 @@ export default {
 #name-section {
   margin-bottom: 20px;
 }
-#type-section{
+#type-section {
   margin-bottom: 20px;
 }
-textarea{
+textarea {
   height: 250px;
 }
 /* editor area */

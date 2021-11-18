@@ -1,6 +1,6 @@
 import { SmartContractsService } from "./smartcontract.service"
 import { ContextService } from "./context.serivce"
-import { LtlService } from "./ltlpro.serivce"
+//import { LtlService } from "./ltlpro.serivce"
 import { cpncontextService } from "./cpncontext.serivce"
 import { ltltemplateService } from "./ltltemplate.serivce"
 
@@ -225,13 +225,13 @@ export function RefusePendingSmartContracts(sc_id, name_sc, code) {
 // }
 
 /* --------------Get GlobalVariable,LocalVariable,Argument of SmartContract by ID-------------- */
-export async function GetGloLocArgOfSmartContract(id){
+export async function GetGloLocArgOfSmartContract(id) {
     const res = await SmartContractsService.getArguLocalGlobalVar(id);
-    return res  
+    return res
 }
 
 /* ------Context------- */
-export async function GetContext() {
+export async function GetAllContext() {
     const response = await ContextService.GetAllContext()
     return response.data
 }
@@ -243,18 +243,18 @@ export async function GetContextById(id_context) {
 
 
 /*---------CreateAndModiftyContext--------- */
-export async function CreateContext(name, description, fomular) {
-    return await ContextService.CreateContext(name, fomular, description)
+export async function CreateContext(ct_name, content, description, option) {
+    return await ContextService.CreateContext(ct_name, content, description, option)
 }
 
 /*---------DeleteContext-------- */
 export async function DeleteContext(id_context) {
-    return await ContextService.DeleteContext(id_context)
+    ContextService.DeleteContext(id_context)
 }
 
 /*---------Update Context-------- */
-export async function UpdateContext(id_context, ct_name, ct_description) {
-    return await ContextService.UpdateContext(id_context, ct_name, ct_description)
+export async function UpdateContext(id_context, ct_name, option, description, content) {
+    return await ContextService.UpdateContext(id_context, ct_name, option, description, content)
 }
 /* ------LTL------- */
 
@@ -263,24 +263,24 @@ export async function GetAllltltemplates() {
     return response.data
 }
 
-export async function GetLtlById(id_Ltl) {
-    const response = await LtlService.GetLtlById(id_Ltl)
+export async function GetLtltemplteById(id_Ltl) {
+    const response = await ltltemplateService.GetLtltemplteById(id_Ltl)
     return response.data
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLtl(name, description, fomular) {
-    return await LtlService.CreateLtl(name, description, fomular);
+export async function CreateLTLTemplate(name, description, fomular,date) {
+    return await ltltemplateService.CreateLTLTemplate(name, description, fomular,date);
 }
 
 /*---------DeleteLtl-------- */
-export async function DeleteLtl(id_Ltl) {
-    return await LtlService.DeleteLtl(id_Ltl)
+export async function DeleteLtlTemplate(id_Ltl) {
+    return await ltltemplateService.DeleteLtlTemplate(id_Ltl)
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtl(id_Ltl, ct_name, ct_description, fomular) {
-    return await LtlService.UpdateLtl(id_Ltl, ct_name, ct_description, fomular)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()

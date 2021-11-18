@@ -37,6 +37,8 @@ import EditContext from "../views/context/context-crud/edit-context.vue"
 import ListSc from "../views/select-sc/smartcontract-crud/list-sc.vue"
 import EditSc from "../views/select-sc/smartcontract-crud/edit-sc.vue"
 import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
+import SelectSContractSD2 from "../views/select-sc/select/SelectSContractSD2.vue"
+import SelectFuncSD from "../views/select-sc/select/SelectFuncSD.vue"
 
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
@@ -108,6 +110,17 @@ export const routes = [{
                 name: 'UpLoadSc',
                 component: UpLoadSc
             },
+            {
+                path: 'selectscsd2',
+                name: 'SelectSContractSD2',
+                component: SelectSContractSD2
+            },
+            {
+                path: 'SelectFuncSD',
+                name: 'SelectFuncSD',
+                component: SelectFuncSD
+            }
+
         ],
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` },
     },
