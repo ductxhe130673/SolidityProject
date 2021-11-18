@@ -86,7 +86,6 @@ export default {
       }
     },
     updateContent(value) {
-      //console.log(value)
       this.demoEditSC = value;
     },
     computed: {
