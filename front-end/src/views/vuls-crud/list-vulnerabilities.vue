@@ -84,6 +84,13 @@
                   type="caret-down"
               /></span>
             </th>
+             <th>
+              <span
+                ><a-icon id="icon" type="caret-up" /><a-icon
+                  id="icon"
+                  type="caret-down"
+              /></span>
+            </th>
           </tr>
         </thead>
         <tr v-for="(data, index) in filterlist" :key="index">
@@ -91,8 +98,8 @@
           <td>{{ data.name }}</td>
           <td>{{ data.template_type }}</td>
           <td>{{ data.createdDate }}</td>
+          <td>{{ data.description }}</td>
           <td class="align-items">
-            {{ data.description }}
             <span class="col" id="btn">
               <button
                 type="button"

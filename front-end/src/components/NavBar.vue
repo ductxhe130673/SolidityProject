@@ -76,20 +76,23 @@ export default {
       this.showDia = !this.showDia;
     },
     goHome() {
-      this.goURL("/", "Index");
       this.$store.commit("setIndex", 0);
+      this.goURL("/", "Index");
     },
     // goListSC() {
     //   this.goURL("/list-sc", "ListSc");
     // },
     goRoadMap() {
+      this.$store.commit("setIndex", 0);
       this.goURL("/roadmap");
     },
     goLogin() {
+      this.$store.commit("setIndex", 0);
       this.goURL("/login");
     },
     goURL(url, name) {
       if (this.$route.path != url) {
+      this.$store.commit("setIndex", 0);
         this.$router.push({name: name});
       }
     },
