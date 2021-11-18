@@ -59,7 +59,7 @@
                 >
                   <a
                     class="nav-link"
-                    v-on:click="selected_sc = item.id"
+                    v-on:click="selectSC(item.id)"
                     v-bind:class="{ active: item.id == selected_sc}"
                     >{{ item.name }}</a
                   >
@@ -111,6 +111,8 @@
 </template>
 
 <script>
+// import functionTable from "./initmarking/FunctionTable.vue"
+// import { GetGloLocArgOfSmartContract } from "../services/data";
 import functionTable from "./initmarking/FunctionTable.vue"
 export default {
   components: {
@@ -120,168 +122,24 @@ export default {
     return {
       radio_seleted: "fixed",
       function_cell_selected: "function",
-      list_smart_contract: [{name:"smart I",id:1},{name:"smart II",id:2},{name:"smart III",id:3},{name:"smart IV",id:4}],
-      smart_contract_infors: {1:{
-                              "name": "smart I",
-                              "functions": [
-                                  {
-                                      "fid": 3,
-                                      "name": "bidding",
-                                      "argument": [
-                                          {
-                                              "id": 1,
-                                              "name": "biddingTime",
-                                              "vartype": "state",
-                                              "type": "uint",
-                                              "value": 1,
-                                              "fid": 3
-                                          },
-                                          {
-                                              "id": 2,
-                                              "name": "revealTime",
-                                              "vartype": "local",
-                                              "type": "uint",
-                                              "value": 3,
-                                              "fid": 3
-                                          }
-                                      ],
-                                      "localVar": []
-                                  },
-                                  {
-                                      "fid": 4,
-                                      "name": "reveal",
-                                      "argument": [
-                                          {
-                                              "id": 4,
-                                              "name": "blindedBid",
-                                              "vartype": "local",
-                                              "type": "bytes32",
-                                              "value": 7,
-                                              "fid": 4
-                                          }
-                                      ],
-                                      "localVar": []
-                                  },
-                                  {
-                                      "fid": 5,
-                                      "name": "claimReward",
-                                      "argument": [
-                                        
-                                      ],
-                                      "localVar": [
-                                          {
-                                              "id": 2,
-                                              "name": "length",
-                                              "vartype": "public",
-                                              "type": "unit",
-                                              "value": "bids[msg.sender].length"
-                                          },
-                                          {
-                                              "id": 3,
-                                              "name": "refund",
-                                              "vartype": "public",
-                                              "type": "unit",
-                                              "value": "+= bid.deposit"
-                                          },
-                                          {
-                                              "id": 4,
-                                              "name": "bid",
-                                              "vartype": "public",
-                                              "type": "var",
-                                              "value": "bids[msg.sender][i]"
-                                          },
-                                          {
-                                              "id": 5,
-                                              "name": "(value,fake,secret)",
-                                              "vartype": "public",
-                                              "type": "var",
-                                              "value": "(_values[i], _fake[i], _secret[i])"
-                                          }
-                                      ]
-                                  },
-                                  {
-                                      "fid": 6,
-                                      "name": "playAround",
-                                      "argument": [
-                                          {
-                                              "id": 8,
-                                              "name": "bidder",
-                                              "vartype": "local",
-                                              "type": "address",
-                                              "value": 4,
-                                              "fid": 6
-                                          },
-                                          {
-                                              "id": 9,
-                                              "name": "value",
-                                              "vartype": "state",
-                                              "type": "uint",
-                                              "value": 6,
-                                              "fid": 6
-                                          }
-                                      ],
-                                      "localVar": []
-                                  }
-                              ],
-                              "globalVar": [
-                                  {
-                                      "id" : 1,
-                                      "name": "beneficiary",
-                                      "vartype": "address",
-                                      "type": "public",
-                                      "value": ""
-                                  },
-                                  {
-                                      "id" : 2,
-                                      "name": "auctionStart",
-                                      "vartype": "uint",
-                                      "type": "public",
-                                      "value": ""
-                                  },
-                                  {
-                                      "id" : 3,
-                                      "name": "biddingEnd",
-                                      "vartype": "uint",
-                                      "type": "public",
-                                      "value": ""
-                                  },
-                                  {
-                                      "id" : 4,
-                                      "name": "revealEnd",
-                                      "vartype": "uint",
-                                      "type": "public",
-                                      "value": ""
-                                  },
-                                  {
-                                      "id" : 5,
-                                      "name": "ended",
-                                      "vartype": "bool",
-                                      "type": "public",
-                                      "value": ""
-                                  },
-                                  {
-                                      "id" : 6,
-                                      "name": "highestBidder",
-                                      "vartype": "address",
-                                      "type": "public",
-                                      "value": ""
-                                  },
-                                  {
-                                      "id" : 7,
-                                      "name": "highestBid",
-                                      "vartype": "uint",
-                                      "type": "public",
-                                      "value": ""
-                                  }
-                              ]
-                          }},
-      selected_sc: 1,
+      list_smart_contract: [],
+      smart_contract_infors: {},
+      selected_sc: null,
       selected_function: null,
       init_marking: {}
     };
   },
   beforeMount(){
-    this.initInitialMarkingHolder()
+    this.fetchData();
+    this.initInitialMarkingHolder(); 
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
+    let smi = this.$store.state.data.data.selectedSCInfor;
+    for(let i=0; i< smi.length; i++){ 
+      this.smart_contract_infors[smi[i].id] = smi[i].functions 
+    }
+    if(this.list_smart_contract.length > 0){
+      this.selected_sc = this.list_smart_contract[0].id
+    }
   },
   watch: {
     init_marking: {
@@ -293,11 +151,11 @@ export default {
   },
   computed:{
     getSelectedRadio(){
-      console.log('this.init_marking',this.init_marking);
       return this.init_marking.Balance.type
     },
     getSelectedSc(){
       if(this.selected_sc in this.smart_contract_infors){
+        console.log('selectedItem', this.selected_sc);
         return this.smart_contract_infors[this.selected_sc].functions
       }else{
         return []
@@ -311,13 +169,28 @@ export default {
     }
   },
   methods: {
+    selectSC(id){
+      if(this.selected_sc != id){
+        this.selected_sc = id
+        this.function_cell_selected = 'function'
+      }
+    },
+     async fetchData() {
+        this.list_smart_contract.forEach(element => {
+          console.log('element',element);
+          // const res = await GetGloLocArgOfSmartContract(element.aid);
+          // console.log('getglo-----hihi', res);
+       })
+    },
+
     updateInitMarking(val){
       this.function_cell_selected = "function"
       this.selected_function = null
       this.init_marking.Funtion_params[this.selected_sc].functions[this.selected_function] = val
     },
     initInitialMarkingHolder(){
-      this.init_marking = this.$store.getters["GetInitialMarking"]; 
+      this.init_marking = this.$store.state.data.data.initialMarkingInfor; 
+      console.log('this.init_marking',this.init_marking);
       for(let i = 0; i < this.list_smart_contract.length; i++){
         let sm = this.list_smart_contract[i]
 
@@ -326,17 +199,17 @@ export default {
         }
 
         if(sm.id in this.smart_contract_infors){
-          let sm_func_infor = this.smart_contract_infors[sm.id].functions
+          let sm_func_infor = this.smart_contract_infors[sm.id]
           for(let j = 0; j < sm_func_infor.length; j++){
             let sm_func =  sm_func_infor[j]
-            if(!(sm_func.fid in this.init_marking.Funtion_params[sm.id].functions)){
-                this.init_marking.Funtion_params[sm.id].functions[sm_func.fid] = {name: sm_func.name, sender_value:{from:null,to:null}, arguments: {}}
+            if(!(sm_func.id in this.init_marking.Funtion_params[sm.id].functions)){
+                this.init_marking.Funtion_params[sm.id].functions[sm_func.id] = {name: sm_func.name, sender_value:{from:null,to:null}, arguments: {}}
             }
             let sm_func_args = sm_func.argument
             for(let m = 0; m < sm_func_args.length; m++){
               let arg = sm_func_args[m]
-              if(!(arg.id in this.init_marking.Funtion_params[sm.id].functions[sm_func.fid].arguments)){
-                this.init_marking.Funtion_params[sm.id].functions[sm_func.fid].arguments[arg.id] = {name: arg.name, from: null, to: null}
+              if(!(arg.id in this.init_marking.Funtion_params[sm.id].functions[sm_func.id].arguments)){
+                this.init_marking.Funtion_params[sm.id].functions[sm_func.id].arguments[arg.id] = {name: arg.name, from: null, to: null}
               }
             }
           }
@@ -345,6 +218,7 @@ export default {
     },
     routing(param) {
       if (param == "save") {
+        this.$store.commit("SetInitialMarking", this.init_marking)
         this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", 5)
       }

@@ -24,7 +24,11 @@
         <p>Type</p>
       </div>
       <div class="col-10">
-        <input class="form-control" type="text" :value="selectedContext.context_type" />
+        <input
+          class="form-control"
+          type="text"
+          :value="selectedContext.context_type"
+        />
       </div>
     </div>
 
@@ -41,82 +45,105 @@
     </div>
     <div id="btns">
       <button
-        id="btn1"
-        type="button"
-        class="btn btn-outline-primary btn-sm"
+      
         @click="routing('add')"
       >
         Next
       </button>
       <button
-        id="btn1"
-        type="button"
-        class="btn btn-outline-primary btn-sm"
-        @click="OpenUploadContext"
+        
+        @click="upLoad()"
       >
         Upload a Context File
       </button>
       <button
-        id="btn2"
-        type="button back-btn"
-        class="btn btn-outline-primary btn-sm"
+       
         @click="routing('ship')"
       >
         Skip
       </button>
       <button
-        id="btn2"
-        type="button"
-        class="btn btn-outline-primary btn-sm"
+
+        
         @click="routing('back')"
       >
         Back
       </button>
     </div>
-    <div id="showComponents" v-if="getShowComponents">
+    <div id="showConfirmation" v-if="showConfirmation">
+      <div id="removeSC-holder">
+        <confirm
+          @cancel="closeConfirm"
+          @confirm="routing('upfile')"
+          :dialog="upLoadDialog"
+        />
+      </div>
+    </div>
+    <!-- <div id="showComponents" v-if="getShowComponents">
       <div id="components-holder">
         <UploadContext
           @closeComponents="cComponents"
           v-if="getSelectComponents == 'uploadctx'"
         />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import UploadContext from "./UpLoadContext.vue";
-import {GetAllcpncontext} from "../../services/data"
-// console.log('--------',document.getElementById("context").value); 
+// import UploadContext from "./UpLoadContext.vue";
+import { GetAllcpncontext } from "../../services/data";
+import UpLoadFile from "../../components/UpLoadFile.vue";
+// console.log('--------',document.getElementById("context").value);
 export default {
-  components: { UploadContext },
+  components: {
+    // UploadContext,
+    confirm: UpLoadFile,
+  },
   data() {
     return {
       contexts: [],
       selectedContext: {},
       contextSC: [],
-      showComponents: false,
+      // showComponents: false,
       selectComponents: "",
-      selected: '0',
+      selected: "0",
+      //show dialog
+      showConfirmation: false,
+      upLoadDialog: {},
     };
   },
   computed: {
-    getShowComponents() {
-      return this.showComponents;
-    },
-    getSelectComponents(){
+    // getShowComponents() {
+    //   return this.showComponents;
+    // },
+    getSelectComponents() {
       return this.selectComponents;
     },
   },
-  
+
   mounted() {
-    this.initData()
+    this.initData();
+    this.selectedContext =  this.$store.state.data.data.selectedContext;
+   
   },
   methods: {
+    upLoad() {
+      this.upLoadDialog = {
+        title: "Choose a new Context file",
+        confirmbtn: "OK",
+      };
+      this.showConfirmation = true;
+    },
+    closeConfirm() {
+      this.showConfirmation = false;
+    },
+
     async initData() {
       this.contexts = await GetAllcpncontext();
-        console.log(' this.selectedContext', this.selectedContext);
+      console.log(" this.selectedContext", this.selectedContext);
     },
+
     cComponents() {
       this.showComponents = false;
     },
@@ -129,20 +156,20 @@ export default {
     },
     routing(param) {
       if (param == "add") {
-        this.$store.commit("SetSelectedContext", this.selectedContext )
+        this.$store.commit("SetSelectedContext", this.selectedContext);
         this.$router.push({ name: "LTLCheckOption" });
-         this.$store.commit("setIndex", 4);    
+        this.$store.commit("setIndex", 4);
       }
       if (param == "upfile") {
         this.$router.push({ name: "UpLoadContext" });
       }
       if (param == "ship") {
         this.$router.push({ name: "LTLCheckOption" });
-         this.$store.commit("setIndex", 4);    
+        this.$store.commit("setIndex", 4);
       }
       if (param == "back") {
         this.$router.push({ name: "SelectSmartContract" });
-         this.$store.commit("setIndex", 2);    
+        this.$store.commit("setIndex", 2);
       }
     },
   },
@@ -212,7 +239,7 @@ export default {
 }
 
 /* ---- showComponents ---- */
-#showComponents {
+/* #showComponents {
   position: fixed;
   top: 0;
   left: 0;
@@ -228,8 +255,22 @@ export default {
   #section {
     width: 100%;
   }
+} */
+
+/*---- showConfirmation */
+#showConfirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index:1 ;
+  align-items: center;
+  justify-content: center;
 }
-.back-btn{
-  
+#removeSC-holder {
+  margin-top: 180px;
 }
+
 </style>

@@ -38,8 +38,8 @@
         <p>Type</p>
         <div class="input-group mb-3">
           <select class="form-select" id="inputGroup" v-model="selected">
-            <option value="csp">CSP</option>
-            <option value="vul">Vulnerability</option>
+            <option value="type0">CSP</option>
+            <option value="type1">Vulnerability</option>
           </select>
         </div>
       </div>
@@ -84,27 +84,34 @@
                   type="caret-down"
               /></span>
             </th>
+             <th>
+              <span
+                ><a-icon id="icon" type="caret-up" /><a-icon
+                  id="icon"
+                  type="caret-down"
+              /></span>
+            </th>
           </tr>
         </thead>
-        <tr v-for="data in datatable" :key="data.id">
-          <td>{{ data.id }}</td>
+        <tr v-for="(data, index) in filterlist" :key="index">
+          <td>{{ index + 1 }}</td>
           <td>{{ data.name }}</td>
-          <td>{{ data.type }}</td>
-          <td>{{ data.date }}</td>
+          <td>{{ data.template_type }}</td>
+          <td>{{ data.createdDate }}</td>
+          <td>{{ data.description }}</td>
           <td class="align-items">
-            {{ data.description }}
             <span class="col" id="btn">
               <button
                 type="button"
                 class="btn btn-outline-primary"
-                @click="editVul"
+                @click="editVul(data.lteid)"
               >
                 Edit
               </button>
               <button
                 type="button"
                 class="btn btn-outline-primary"
-                @click="deleteVul"
+                @click="deleteVul(data.lteid)"
               >
                 Delete
               </button>
@@ -128,56 +135,51 @@
 </template>
 
 <script>
-// import { GetLtl, DeleteLtl } from "../../services/data";
+import { GetAllltltemplates,DeleteLtlTemplate } from "../../services/data";
 import ConfirmationDialog from "../../components/ConfirmationDialog.vue";
 import moment from "moment";
 export default {
   components: { confirm: ConfirmationDialog },
   data() {
     return {
-      datatable: [
-        {
-          id: "1",
-          name: "EtherGame",
-          type: "pending",
-          date: "20/11/2021",
-          description: "This is a smart contract about auction ",
-        },
-        {
-          id: "2",
-          name: "AtherGame",
-          type: "pending",
-          date: "5/11/2021",
-          description: "This is a smart contract about auction",
-        },
-        {
-          id: "3",
-          name: "CtherGame",
-          type: "pending",
-          date: "2/11/2021",
-          description: "This is a smart contract about auction",
-        },
-      ],
       dateFormat: "DD/MM/YYYY",
-      selected: "csp",
+      selected: "0",
       showConfirmation: false,
       alertDialog: {},
-      // list_vuls: []
+      list_vuls: []
     };
   },
   mounted() {
     this.initData();
   },
+  computed:{
+    filterlist() {
+      const { selected } = this;
+      if (selected === "0") return this.list_vuls;
+      var items = [];
+      this.list_vuls.forEach(function (item) {
+        if (item.template_type === selected) {
+          items.push(item);
+        }
+      });
+      return items;
+    },
+  },
   methods: {
     moment,
-    // async initData() {
-    //   this.list_vuls = await GetLtl();
-    // },
+    async initData() {
+      this.list_vuls = await GetAllltltemplates();
+    },
+        async deleteLtlTemplate(id) {
+      await DeleteLtlTemplate(id);
+    },
     goAdd() {
       this.$router.push({
         name: "AddVul",
         params: { parent_path: "/list-vul" },
       });
+    console.log('list_vuls',this.list_vuls);
+
     },
     editVul(id) {
       this.$router.push({
@@ -185,13 +187,13 @@ export default {
         params: { vul_id: id, parent_path: "/list-vul" },
       });
     },
-    deleteVul() {
-      this.alertDialog = {
-        title: "Alert",
-        message: "Do you want to delete the LTL Property Template out of the system?",
-        confirmbtn: "Yes",
-      };
-      this.showConfirmation = true;
+    deleteVul(id) {
+            if (
+        confirm("Do you want to delete the LTLTemplate out of the system?") === true
+      ) {
+        this.deleteLtlTemplate(id);
+        this.$router.go(0);
+      }
     },
     closeConfirm() {
       this.showConfirmation = false;

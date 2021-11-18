@@ -19,14 +19,14 @@
         
         <!-- <div class="option input-type" v-if="author === 'admin'"> -->
           <div class="option input-type" v-if="isAdmin">
-          <select class="form-select" id="inputGroupSelect01">
+          <select class="form-select" id="inputGroupSelect01" v-model="options">
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
         </div>
 
-
+<!-- 
         <div class="option input-type" v-if="!isAdmin">
           <div class="common-option" v-if="isSuperior">
             <label for="common">Common</label>
@@ -35,7 +35,7 @@
               id="common"
               value="common"
               type="radio"
-              v-model="selectOption"
+              v-model="options"
             />
           </div>
           <div class="common-option">
@@ -45,7 +45,7 @@
               id="common"
               value="pending"
               type="radio"
-              v-model="selectOption"
+              v-model="options"
             />
           </div>
           <div class="private-option">
@@ -55,11 +55,11 @@
               id="private"
               value="private"
               type="radio"
-              v-model="selectOption"
+              v-model="options"
             />
           </div>
         </div>
-        
+         -->
         
       </div>
       <div class="editor-area area" v-if="isAdmin">
@@ -99,22 +99,29 @@
 <script>
 import { AddNewSmartContracts } from "../../../services/data";
 // import {AceEditor} from "../../components/AceEditor.vue";
+import moment from "moment";
 import AceEditor from '../../../components/AceEditor.vue';
 export default {
   components: {AceEditor},
   name: "AddSc",
   data() {
     return {
+      dateFormat:"",
       nameSc: "",
-      options: this.$route.params.options,
+      options: '',
       code: "",
       demoEditSC: "test add sc",
       isAdmin: true,
     };
   },
+  mounted(){
+    this.getDate();
+  },
   methods: {
+     getDate(){
+      this.dateFormat = moment().format('YYYY-MM-DD');
+    },
     updateContent(value){
-      //console.log(value)
       this.demoEditSC = value;
     },
     async clickHandler(action) {
@@ -130,7 +137,8 @@ export default {
         // if (res.status && res.status === 200) {
         //   this.$router.push(this.$route.params.parent_path);
         // }
-        await AddNewSmartContracts(this.hashValue(this.nameSc), this.nameSc, this.options, this.demoEditSC);
+        console.log(' this.dateFormat', this.dateFormat);
+        await AddNewSmartContracts(this.hashValue(this.nameSc), this.nameSc, this.options, this.demoEditSC, this.dateFormat);
         this.$router.push(this.$route.params.parent_path);
 
       } else if (action == "cancel") {

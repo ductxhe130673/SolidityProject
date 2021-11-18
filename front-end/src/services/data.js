@@ -1,6 +1,6 @@
 import { SmartContractsService } from "./smartcontract.service"
 import { ContextService } from "./context.serivce"
-import { LtlService } from "./ltlpro.serivce"
+//import { LtlService } from "./ltlpro.serivce"
 import { cpncontextService } from "./cpncontext.serivce"
 import { ltltemplateService } from "./ltltemplate.serivce"
 
@@ -160,7 +160,7 @@ export function GetSmartContractCode(id) {
 //     listPendingSmartContracts.push({ id: sc_id, name: sc_name, type: "pending" })
 //   }
 // }
-export async function AddNewSmartContracts(sc_id, sc_name, options, content) {
+export async function AddNewSmartContracts(sc_id, sc_name, options, content, createdDate) {
     // AddNewSmartContractsInfor(sc_id,sc_name,options)
     // SmartContractCode[sc_id] = code
     // var d = new Date,
@@ -169,15 +169,18 @@ export async function AddNewSmartContracts(sc_id, sc_name, options, content) {
     //     [d.getHours(),
     //     d.getMinutes(),
     //     d.getSeconds()].join(':');
-    await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content)
+    await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content, createdDate)
+}
+export async function GetSmartContractById(sc_id) {
+    await SmartContractsService.GetSmartContractById(sc_id.words[0])
 }
 
-export async function UpdateSmartContractCode(sc_id, name_sc, code) {
+export async function UpdateSmartContractCode(sc_id, name_sc, code, description, option) {
     // if(sc_id in SmartContractCode){
     //   SmartContractCode[sc_id] = code
     // }
     console.log(code)
-    await SmartContractsService.UpdateSmartContracts(sc_id, name_sc, code)
+    await SmartContractsService.UpdateSmartContracts(sc_id, name_sc, code, description, option)
 }
 /* --------------------Delete SmartContract----------------- */
 export function DeleteSmartContracts(sc_id, options) {
@@ -196,7 +199,10 @@ export function AcceptPendingSmartContracts(sc_id, name_sc, code) {
         //   d.getSeconds()].join(':');
         //SmartContractsService.CreateSmartContracts(sc_id,sc_name,"common")
 }
-
+/* --------------------Accept Pending SmartContract----------------- */
+export function RefusePendingSmartContracts(sc_id, name_sc, code) {
+    SmartContractsService.RefusePendingSmartContracts(sc_id, name_sc, code)
+}
 
 // function deleteSmartContractFromList(list, sc_id) {
 //   for (let i = 0; i < list.length; i++) {
@@ -219,13 +225,13 @@ export function AcceptPendingSmartContracts(sc_id, name_sc, code) {
 // }
 
 /* --------------Get GlobalVariable,LocalVariable,Argument of SmartContract by ID-------------- */
-export async function GetGloLocArgOfSmartContract(id){
+export async function GetGloLocArgOfSmartContract(id) {
     const res = await SmartContractsService.getArguLocalGlobalVar(id);
-    return res  
+    return res
 }
 
 /* ------Context------- */
-export async function GetContext() {
+export async function GetAllContext() {
     const response = await ContextService.GetAllContext()
     return response.data
 }
@@ -237,50 +243,46 @@ export async function GetContextById(id_context) {
 
 
 /*---------CreateAndModiftyContext--------- */
-export async function CreateContext(name, description, fomular) {
-    return await ContextService.CreateContext(name, fomular, description)
+export async function CreateContext(ct_name, content, description, option) {
+    return await ContextService.CreateContext(ct_name, content, description, option)
 }
 
 /*---------DeleteContext-------- */
 export async function DeleteContext(id_context) {
-    return await ContextService.DeleteContext(id_context)
+    ContextService.DeleteContext(id_context)
 }
 
 /*---------Update Context-------- */
-export async function UpdateContext(id_context, ct_name, ct_description) {
-    return await ContextService.UpdateContext(id_context, ct_name, ct_description)
+export async function UpdateContext(id_context, ct_name, option, description, content) {
+    return await ContextService.UpdateContext(id_context, ct_name, option, description, content)
 }
 /* ------LTL------- */
 
-export async function GetLtl() {
-    const response = await LtlService.GetAllLtl()
+export async function GetAllltltemplates() {
+    const response = await ltltemplateService.GetAllltltemplates()
     return response.data
 }
 
-export async function GetLtlById(id_Ltl) {
-    const response = await LtlService.GetLtlById(id_Ltl)
+export async function GetLtltemplteById(id_Ltl) {
+    const response = await ltltemplateService.GetLtltemplteById(id_Ltl)
     return response.data
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLtl(name, description, fomular) {
-    return await LtlService.CreateLtl(name, description, fomular);
+export async function CreateLTLTemplate(name, description, fomular,date) {
+    return await ltltemplateService.CreateLTLTemplate(name, description, fomular,date);
 }
 
 /*---------DeleteLtl-------- */
-export async function DeleteLtl(id_Ltl) {
-    return await LtlService.DeleteLtl(id_Ltl)
+export async function DeleteLtlTemplate(id_Ltl) {
+    return await ltltemplateService.DeleteLtlTemplate(id_Ltl)
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtl(id_Ltl, ct_name, ct_description, fomular) {
-    return await LtlService.UpdateLtl(id_Ltl, ct_name, ct_description, fomular)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()
-    return response.data
-}
-export async function GetAllltltemplates() {
-    const response = await ltltemplateService.GetAllltltemplates()
     return response.data
 }
