@@ -40,33 +40,41 @@
 
 <script>
 // import LTLEditor from "../../components/LTLEditor.vue"
-import FormularEditor from "../../components/FormularEditor.vue"
-import {CreateLTLTemplate} from "../../services/data"
+import moment from "moment";
+import FormularEditor from "../../components/FormularEditor.vue";
+import {CreateLTLTemplate} from "../../services/data";
+
 export default {
   components: {
     FormularEditor
   },
   data() {
     return {
+      dateFormat : "",
       code: "",
       name: "",
       description: ""
     };
   },
   mounted(){
-      let el = document.getElementById("textarea-input");
-      el.style.height = 180 + 'px';
+    this.getDate();
+    let el = document.getElementById("textarea-input");
+    el.style.height = 180 + 'px';
+      
   },
   // components: { LTLEditor },
   methods: {
+      getDate(){
+        this.dateFormat = moment().format('YYYY-MM-DD');
+      },
       updateCode(code){
           this.code = code
       },
-     async clickHandler(action){
+    async clickHandler(action){
         if(action == "save"){
-        console.log(this.name,this.code,this.description)
+        console.log(this.name,this.code,this.description,this.dateFormat)
         this.code = "test"
-        await CreateLTLTemplate(this.name, this.description, this.code)
+        await CreateLTLTemplate(this.name, this.description, this.code,this.dateFormat)
         this.$router.push(this.$route.params.parent_path);
         } 
         else if(action == "cancel"){

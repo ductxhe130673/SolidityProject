@@ -27,14 +27,14 @@ export class ltltemplateService extends BaseService {
 
     
     /*---------Create New LTLTemplate--------- */
-    static async CreateLTLTemplate(name, description,formula) {
+    static async CreateLTLTemplate(name, description,formula,date) {
         try {
             const paraData = {
                 "name": name,
                 "formula": formula,
                 "description": description,
                 "template_type": "test",
-                "createdDate": "2021-11-17", // hard code, chua fix trong database,chuyen thanh ham getdate ben js
+                "createdDate": date, // hard code, chua fix trong database,chuyen thanh ham getdate ben js
                 //"createdDate": createdDate,
                 "aid":"1"
             }
