@@ -99,12 +99,14 @@
 <script>
 import { AddNewSmartContracts } from "../../../services/data";
 // import {AceEditor} from "../../components/AceEditor.vue";
+import moment from "moment";
 import AceEditor from '../../../components/AceEditor.vue';
 export default {
   components: {AceEditor},
   name: "AddSc",
   data() {
     return {
+      dateFormat:"",
       nameSc: "",
       options: '',
       code: "",
@@ -112,7 +114,13 @@ export default {
       isAdmin: true,
     };
   },
+  mounted(){
+    this.getDate();
+  },
   methods: {
+     getDate(){
+      this.dateFormat = moment().format('YYYY-MM-DD');
+    },
     updateContent(value){
       this.demoEditSC = value;
     },
@@ -129,8 +137,8 @@ export default {
         // if (res.status && res.status === 200) {
         //   this.$router.push(this.$route.params.parent_path);
         // }
-        console.log('this.option',this.option);
-        await AddNewSmartContracts(this.hashValue(this.nameSc), this.nameSc, this.options, this.demoEditSC);
+        console.log(' this.dateFormat', this.dateFormat);
+        await AddNewSmartContracts(this.hashValue(this.nameSc), this.nameSc, this.options, this.demoEditSC, this.dateFormat);
         this.$router.push(this.$route.params.parent_path);
 
       } else if (action == "cancel") {
