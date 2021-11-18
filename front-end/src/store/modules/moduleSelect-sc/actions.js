@@ -4,53 +4,65 @@ export default {
     async getListTran({ commit }) {
         try {
             var result = await CheckedService.GetCommonSmartContracts();
-            commit('SET_LIST_POSTS',result.data)
-            if(result.data.status === 200) {
-                commit('SET_LIST_POSTS',result.data)
+            commit('SET_LIST_POSTS', result.data)
+            if (result.data.status === 200) {
+                commit('SET_LIST_POSTS', result.data)
             }
-        } catch(error) {
+        } catch (error) {
             console.log("error", error);
         }
     },
 
-    setid({commit},data) {
+    setid({ commit }, data) {
         console.log("action setid")
-        commit('SET_ID',data)
-    }, 
+        commit('SET_ID', data)
+    },
 
-    async setlistcheck({ commit},data) {
+    async setlistcheck({ commit }, data) {
         try {
-            var result = await Axios.get('http://127.0.0.1:8000/select-sc/checkreentrancydetail/?id='+data);
-            commit('SET_LIST_CHECK',result.data)
-            if(result.data.status === 200) {
-                commit('SET_LIST_CHECK',result.data)
+            var result = await Axios.get('http://127.0.0.1:8000/select-sc/checkreentrancydetail/?id=' + data);
+            commit('SET_LIST_CHECK', result.data)
+            if (result.data.status === 200) {
+                commit('SET_LIST_CHECK', result.data)
             }
-        } catch(error) {
+        } catch (error) {
             console.log("error", error);
         }
     },
 
-    async setListSmartContract({commit}) {
-        try {
-            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
-            commit('SET_LIST_SMART_CONTRACT',result.data)
-            if(result.data.status === 200) {
-                commit('SET_LIST_SMART_CONTRACT',result.data)
-            }
-        } catch(error) {
-            console.log("error", error);
-        }
-    },
-
-    async setListLTL({commit}) {
+    async setListSmartContract({ commit }) {
         try {
             var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
-            commit('SET_LIST_LTL_TEMPLATE',result.data)
-            if(result.data.status === 200) {
-                commit('SET_LIST_LTL_TEMPLATE',result.data)
+            commit('SET_LIST_SMART_CONTRACT', result.data)
+            if (result.data.status === 200) {
+                commit('SET_LIST_SMART_CONTRACT', result.data)
             }
-        } catch(error) {
+        } catch (error) {
             console.log("error", error);
         }
     },
+
+    async setListLTL({ commit }) {
+        try {
+            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
+            commit('SET_LIST_LTL_TEMPLATE', result.data)
+            if (result.data.status === 200) {
+                commit('SET_LIST_LTL_TEMPLATE', result.data)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    },
+    async setListContext({ commit }) {
+        try {
+            var result = await Axios.get('http://127.0.0.1:8000/smartconstract/select-smart-contract');
+            commit('SET_LIST_CONTEXT', result.data)
+            if (result.data.status === 200) {
+                commit('SET_LIST_CONTEXT', result.data)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    },
+
 }
