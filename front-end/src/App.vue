@@ -34,7 +34,16 @@ export default {
         ContractSpecificProperty:true,
         ContractSpecificPropertyNonTemplate:true,
         GenaralVulSetting:true,
-        CheckSmartContract:true
+        CheckSmartContract:true,
+        ListSc : true,
+        EditSc : true,
+        AddSc : true,
+        AddContext : true,
+        EditContext : true,
+        ListContext : true,
+        AddVul : true,
+        EditVul : true,
+        ListVul : true,
       },
     };
   },

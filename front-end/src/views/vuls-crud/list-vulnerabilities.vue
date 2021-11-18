@@ -84,27 +84,34 @@
                   type="caret-down"
               /></span>
             </th>
+             <th>
+              <span
+                ><a-icon id="icon" type="caret-up" /><a-icon
+                  id="icon"
+                  type="caret-down"
+              /></span>
+            </th>
           </tr>
         </thead>
-        <tr v-for="(data, index) in filterlist" :key="data.id">
+        <tr v-for="(data, index) in filterlist" :key="index">
           <td>{{ index + 1 }}</td>
           <td>{{ data.name }}</td>
           <td>{{ data.template_type }}</td>
           <td>{{ data.createdDate }}</td>
+          <td>{{ data.description }}</td>
           <td class="align-items">
-            {{ data.description }}
             <span class="col" id="btn">
               <button
                 type="button"
                 class="btn btn-outline-primary"
-                @click="editVul"
+                @click="editVul(data.lteid)"
               >
                 Edit
               </button>
               <button
                 type="button"
                 class="btn btn-outline-primary"
-                @click="deleteVul"
+                @click="deleteVul(data.lteid)"
               >
                 Delete
               </button>
@@ -128,7 +135,7 @@
 </template>
 
 <script>
-import { GetAllltltemplates } from "../../services/data";
+import { GetAllltltemplates,DeleteLtlTemplate } from "../../services/data";
 import ConfirmationDialog from "../../components/ConfirmationDialog.vue";
 import moment from "moment";
 export default {
@@ -163,6 +170,9 @@ export default {
     async initData() {
       this.list_vuls = await GetAllltltemplates();
     },
+        async deleteLtlTemplate(id) {
+      await DeleteLtlTemplate(id);
+    },
     goAdd() {
       this.$router.push({
         name: "AddVul",
@@ -177,13 +187,13 @@ export default {
         params: { vul_id: id, parent_path: "/list-vul" },
       });
     },
-    deleteVul() {
-      this.alertDialog = {
-        title: "Alert",
-        message: "Do you want to delete the LTL Property Template out of the system?",
-        confirmbtn: "Yes",
-      };
-      this.showConfirmation = true;
+    deleteVul(id) {
+            if (
+        confirm("Do you want to delete the LTLTemplate out of the system?") === true
+      ) {
+        this.deleteLtlTemplate(id);
+        this.$router.go(0);
+      }
     },
     closeConfirm() {
       this.showConfirmation = false;
