@@ -23,8 +23,7 @@
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
-       </span
-        >
+        </span>
       </div>
       <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
     </div>
@@ -99,7 +98,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.type }}</td>
-            <td>{{ item.date }}</td>
+            <td>{{ item.createdDate }}</td>
             <td class="align-items">
               {{ item.description }}
               <span class="col" id="btn">
@@ -213,9 +212,11 @@ export default {
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
+
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.getlistSmartContract;
+      console.log('this.getlistSmartContract',this.getlistSmartContract);
       var items = [];
       this.getlistSmartContract.forEach(function (item) {
         if (item.type === selected) {
@@ -224,25 +225,7 @@ export default {
       });
       return items;
     },
-    // GetTableName() {
-    //   if (this.chosen_table == "common") {
-    //     return "Common Smart Contracts";
-    //   }
-    //   if (this.chosen_table == "private") {
-    //     return "Private Smart Contracts";
-    //   }
-    //   if (this.chosen_table == "pending") {
-    //     return "Pending Smart Contracts";
-    //   }
-    //   return "Invalid Table";
-    // },
-    // showAddButton() {
-    //   return (
-    //     this.chosen_table != "pending" &&
-    //     (this.chosen_table != "common" ||
-    //       this.$store.state.user.currentUser.role == "admin")
-    //   );
-    // },
+
     isSuperior() {
       return this.$store.state.user.currentUser.role == "admin";
     },
@@ -290,7 +273,7 @@ export default {
     async acceptSmartContract(sid) {
       await AcceptPendingSmartContracts(sid);
     },
-     async refuseSmartContract(sid) {
+    async refuseSmartContract(sid) {
       await RefusePendingSmartContracts(sid);
     },
     moment,
@@ -344,76 +327,34 @@ export default {
       //   message: "",
       //   confirmbtn: "Yes",
       // };
-      if(confirm('Do you want to delete the Smart Contract out of the system?') === true){
-        this.deleteSmartContract(sc_id)
-        this.$router.go(0);       
+      if (
+        confirm("Do you want to delete the Smart Contract out of the system?") === true
+      ) {
+        this.deleteSmartContract(sc_id);
+        this.$router.go(0);
       }
     },
     acceptSC(sc_id) {
-      // this.alertDialog = {
-      //   title: "Alert",
-      //   message: "Do you want to change the Smart Contract type from Private to Common?",
-      //   confirmbtn: "Yes",
-      // };
-      if(confirm('Do you want to change the Smart Contract type from Private to Common?') === true){
-        this.acceptSmartContract(sc_id)
+      if (
+        confirm(
+          "Do you want to change the Smart Contract type from Private to Common?"
+        ) === true
+      ) {
+        this.acceptSmartContract(sc_id);
         this.$router.go(0);
-       }
+      }
     },
     refuseSC(sc_id) {
-      console.log('sc', this.choose_SC);
-      // this.alertDialog = {
-      //   title: "Alert",
-      //   message: "Are you sure to refuse the change from Private to Common?",
-      //   confirmbtn: "Yes",
-      // };
-       if(confirm('Do you want to change the Smart Contract type from Common to Private?') === true){
-        this.refuseSmartContract(sc_id)
+      console.log("sc", this.choose_SC);
+      if (
+        confirm(
+          "Do you want to change the Smart Contract type from Common to Private?"
+        ) === true
+      ) {
+        this.refuseSmartContract(sc_id);
         this.$router.go(0);
-       }
-        
+      }
     },
-
-    // deleteSC(sc_id) {
-    //   this.deleteDialog = {
-    //     title: "Delete Smart Contract",
-    //     message:
-    //       "Do you sure to delete the Smart Contract out of the system?",
-    //     confirmbtn: "Yes",
-    //   };
-    //   this.isShowConfirmDelete = true;
-    //   this.scDelete = sc_id;
-    //   console.log('this.scDelete',this.scDelete);
-    //     this.deleteSmartContract(this.scDelete);
-
-    // },
-    // cfDeleteSC() {
-    //   let sc_id = this.scDelete.sc_id;
-    //   let option = this.scDelete.option;
-    //   DeleteSmartContracts(sc_id, option);
-    //   if (option == "common") {
-    //     let list_smart_contracts_afterdelete =
-    //       this.list_smart_contracts.common.filter((i) => {
-    //         return i.id != sc_id;
-    //       });
-    //     this.list_smart_contracts.common = list_smart_contracts_afterdelete;
-    //   } else if (option == "private") {
-    //     let list_smart_contracts_afterdelete =
-    //       this.list_smart_contracts.private.filter((i) => {
-    //         return i.id != sc_id;
-    //       });
-    //     this.list_smart_contracts.private = list_smart_contracts_afterdelete;
-    //   } else if (option == "pending") {
-    //     let list_smart_contracts_afterdelete =
-    //       this.list_smart_contracts.pending.filter((i) => {
-    //         return i.id != sc_id;
-    //       });
-    //     this.list_smart_contracts.pending = list_smart_contracts_afterdelete;
-    //   }
-
-    //   // this.fetchData();
-    //   this.closeConfirm();
-    // },
 
     closeConfirm() {
       this.isShowConfirmDelete = false;
@@ -431,17 +372,7 @@ export default {
         },
       });
     },
-    // acceptPendingSC(sc_id, sc_name, sc_code) {
-    //   if (
-    //     confirm(
-    //       "Are you sure to accept the pending Smart Contract named: '" + sc_name + "' ?"
-    //     )
-    //   ) {
-    //     AcceptPendingSmartContracts(sc_id, sc_name, sc_code);
 
-    //     this.fetchData();
-    //   }
-    // },
     goPage(value) {
       this.pageNum = value;
     },

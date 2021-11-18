@@ -47,12 +47,13 @@ export class SmartContractsService extends BaseService {
     }
 
     /*---------Create New Smartcontract--------- */
-    static async CreateSmartContracts(id, sc_name, option, content) {
+    static async CreateSmartContracts(id, sc_name, option, content, createdDate) {
+        console.log('createdDate',createdDate);
         try {
             const paraData = {
                 "id": id,
                 "name": sc_name,
-                //"date_modified": date_modified,
+                "createdDate": createdDate,
                 "type": option,
                 "content": content,
                 "aid":"1"
@@ -155,7 +156,6 @@ export class SmartContractsService extends BaseService {
     }
     /*---------Delete Smartcontract--------- */
     static async DeleteSmartContracts(id) {
-        console.log('id',id);
         try {
             const response = await this.request({ auth: true }).delete(`${this.getUnity()}/select-smart-contract?id=${id}`)
             // const data = {
