@@ -88,9 +88,9 @@ export default {
 
   data() {
     return {
+      sc_id : this.$route.params.sc_id,
       nameSc: this.$route.params.name,
-      code: GetSmartContractCode(this.$route.params.sc_id),
-      // code: this.$route.params.code,
+      code: GetSmartContractCode(this.$route.params.sc_code),
       dataCurrent : {},
       demoEditSC: "test edit sc",
       isAdmin: true,
@@ -116,7 +116,7 @@ export default {
       if(param == "save"){
         // UpdateSmartContractCode(this.$route.params.sc_id, this.code)
         // this.$router.push(this.$route.params.parent_path);
-        await UpdateSmartContractCode(this.$route.params.sc_id, this.nameSc,this.demoEditSC, this.descriptionSC, this.selectOption)
+        await UpdateSmartContractCode(this.sc_id, this.nameSc,this.demoEditSC, this.descriptionSC, this.selectOption)
         this.$router.push({
           name:"ListSc"
           })

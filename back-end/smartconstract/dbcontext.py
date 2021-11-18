@@ -342,7 +342,6 @@ def getLastInsertIDFromCheckedBatchSC():
         return None
     finally:
         connection.close() 
-
 def updateGlobalVariable(sid):
     try:
         sql = '''UPDATE soliditycpn.globalvariable SET sid = NULL WHERE sid = %s'''

@@ -11,4 +11,4 @@ class ltltemplateSerializer(serializers.ModelSerializer):
 class ltltemplateSerializerPost(serializers.ModelSerializer):
     class Meta:
         model = ltltemplate
-        fields = ['name', 'formula', 'template_type', 'description', 'aid',]
+        fields = ['name', 'formula', 'template_type', 'description', 'aid', 'createdDate' ]
