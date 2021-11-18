@@ -54,8 +54,8 @@
 
 <script>
 // import LTLEditor from "../../components/LTLEditor.vue";
-import { GetLtlById, UpdateLtl } from "../../services/data";
-import FormularEditor from "../../components/FormularEditor.vue"
+import { GetLtltemplteById, UpdateLtlTemplate } from "../../services/data";
+import FormularEditor from "../../components/FormularEditor.vue";
 export default {
   components: {
     FormularEditor
@@ -67,6 +67,7 @@ export default {
       name: "",
       description: "",
       ltl: { name: String, fomular: String, description: String },
+      dateFormat : ""
     };
   },
   watch: {
@@ -84,15 +85,16 @@ export default {
   // components: { LTLEditor },
   methods: {
     async initData() {
-      const data = await GetLtlById(this.id);
+      const data = await GetLtltemplteById(this.id);
       this.initModelLTL(data);
       this.codeModel = data.fomular;
       this.name = data.name;
       this.description = data.description;
+      this.dateFormat = data.createdDate;
     },
 
     Save() {
-      return UpdateLtl(this.id, this.name, this.description, this.codeModel);
+      return UpdateLtlTemplate(this.id, this.name, this.description, "hardcode",this.dateFormat);
     },
 
     async clickHandler(action) {

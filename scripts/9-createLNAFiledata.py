@@ -16,14 +16,14 @@ def InsertIMG(FilePath):
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO LNAFile (hcpnfile,propfile) VALUES (%s,%s)"
 multi = [
-    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
-    (InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.lna"),
-     InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
+    (InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.lna"),
+     InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\XMLfile\finnal_model.prop.lna")),
 
 ]
 mycursor.executemany(sqlFomular, multi)
