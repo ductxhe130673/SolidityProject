@@ -161,7 +161,7 @@ a.router-link-active {
 }
 .label {
   font-style: normal;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 100;
   position: relative;
   left: 0;

@@ -232,6 +232,7 @@ export default {
   padding: 4px 3px;
   border-radius: 4px;
   cursor: pointer;
+  background-color: white;
 }
 #btns button:hover {
   background-color: #1079cf;
