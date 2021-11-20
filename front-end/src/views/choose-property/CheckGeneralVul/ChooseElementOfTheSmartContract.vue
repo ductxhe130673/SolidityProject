@@ -6,19 +6,19 @@
                   <h1>Select Variables Of Smart Contract</h1>
               </div>
           </div>
-          <div class="function-cell">
-              <div id="list-function">
+          <div class="smart-cell">
+              <div id="list-smart">
                   <ul class="nav nav-tabs">
                       <li class="nav-item d-inline-block text-truncate"
-                      v-for="item in list_function"
+                      v-for="item in list_smart"
                       :key="item.id">
                       <a class="nav-link"
-                      v-on:click="selected_func = item.id"
-                      v-bind:class="{ active: item.id == selected_func}">{{item.name}}</a>
+                      v-on:click="selected_smart = item.id"
+                      v-bind:class="{ active: item.id == selected_smart}">{{item.name}}</a>
                       </li>
                   </ul>
               </div>
-              <div id="func-information-table">
+              <div id="Information-table">
                   <div id="table-list">
                       <div class="table-row" id="header-row">
                           <div class="table-cell header-cell first-cell">
@@ -39,6 +39,48 @@
                               Selected
                           </div>
                       </div>
+                      <div class="table-row" v-for="(func, index) in getSelectedSmart" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
+                          <div class="table-cell first-cell">{{index+1}}</div>
+                          <div class="table-cell second-cell">{{func.name}}</div>
+                          <div class="table-cell third-cell">
+                              <input type="radio" id="one" name="ch" v-model="checkedNames" :value="data"/>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="function">
+                    <div id="list-function">
+                      <ul class="nav nav-tabs">
+                        <li class="nav-item d-inline-block text-truncate"
+                        v-for="item in list_function"
+                        :key="item.id">
+                        <a class="nav-link"
+                        v-on:click="selected_func = item.id"
+                        v-bind:class="{ active: item.id == selected_func}">{{item.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div id="Func-table">
+                      <div id="table-list">
+                        <div class="table-row" id="header-row">
+                          <div class="table-cell header-cell first-cell">
+                              #
+                              <span>
+                                  <a-icon id="icon" type="caret-up" />
+                                  <a-icon id="icon" type="caret-down" />
+                              </span>
+                          </div>
+                          <div class="table-cell header-cell second-cell">
+                              Local variables
+                              <span>
+                                  <a-icon id="icon" type="caret-up" />
+                                  <a-icon id="icon" type="caret-down" />
+                              </span>
+                          </div>
+                          <div class="table-cell header-cell third-cell">
+                              Selected
+                          </div>
+                      </div>
                       <div class="table-row" v-for="(func, index) in getSelectedFunc" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
                           <div class="table-cell first-cell">{{index+1}}</div>
                           <div class="table-cell second-cell">{{func.name}}</div>
@@ -46,6 +88,8 @@
                               <input type="radio" id="one" name="ch" v-model="checkedNames" :value="data"/>
                           </div>
                       </div>
+                      </div>
+                    </div>
                   </div>
               </div>
           </div>
@@ -77,10 +121,11 @@ export default {
     data(){
         return {
             // function_cell_selected: "function"
-            list_function:[{name: "Smart Contract 1",id:1}, {name: "Smart Contract 2",id:2}, {name: "Smart Contract 3",id:3}],
-            function_infor: {1:{
-                "name": "Function 1",
-                "functions": [
+            list_smart:[{name: "Smart Contract 1",id:1}, {name: "Smart Contract 2",id:2}, {name: "Smart Contract 3",id:3}],
+            list_function:[{name: "Function 1",id:1}, {name: "Function 2", id:2}],
+            smart_infor: {1:{
+                "name": "Smart Contract 1",
+                "SmartContract": [
                     {
                         "fid": 1,
                         "name": "GV1",
@@ -99,7 +144,29 @@ export default {
                     },
                 ],
             }},
+            function_infor: {1:{
+              "name": "Function 1",
+              "functions": [
+                {
+                  "fid": 1,
+                  "name": "LV1",
+                },
+                {
+                  "fid": 2,
+                  "name": "LV2",
+                },
+                {
+                  "fid": 3,
+                  "name": "LV3",
+                },
+                {
+                  "fid": 4,
+                  "name": "LV4",
+                },
+              ]
+            }},
             selected_func:1,
+            selected_smart:1,
         };
     },
     computed:{
@@ -110,6 +177,13 @@ export default {
         return []
       }
     },
+    getSelectedSmart(){
+      if(this.selected_smart in this.smart_infor){
+        return this.smart_infor[this.selected_smart].SmartContract
+      }else{
+        return []
+      }
+    }
   },
 }
 </script>
@@ -148,11 +222,20 @@ table span {
   cursor: pointer;
 }
 
-#func-information-table{
+#Information-table{
   border: 1px black solid; 
   padding: 3% 2% 3% 2%;
 }
-
+#Func-table{
+  border: 1px black solid; 
+  padding: 5% 4% 5% 4%;
+}
+.smart-cell{
+  margin-top: 50px;
+}
+.function{
+  margin-top: 50px;
+}
 #table-list {
   width: 100%;
   margin: auto;

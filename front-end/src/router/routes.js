@@ -9,7 +9,6 @@ import ChooseProperty from "../views/ChooseProperty"
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
-// import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -53,13 +52,13 @@ import { DOMAIN_TITLE } from '../.env'
 
 
 
-//import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
+
 import InitialMarkingLink from "../views/InitialMarkingLink.vue"
-import SelectVarReentrancyOp1 from "../views/SelectVarReentrancyOp1.vue"
-import SelectFuncReentrancyOp1 from "../views/SelectFuncReentrancyOp1.vue"
-import SelectFuncReentrancyOp2 from "../views/SelectFuncReentrancyOp2.vue"
-import SelectSCRentrancyOp2 from "../views/SelectSCRentrancyOp2.vue"
-import SelectVarReentrancyOp2 from "../views/SelectVarReentrancyOp2.vue"
+import SelectVarReentrancyOp1 from "../views/choose-property/select-op/SelectVarReentrancyOp1.vue"
+import SelectFuncReentrancyOp1 from "../views/choose-property/select-op/SelectFuncReentrancyOp1.vue"
+import SelectFuncReentrancyOp2 from "../views/choose-property/select-op/SelectFuncReentrancyOp2.vue"
+import SelectSCRentrancyOp2 from "../views/choose-property/select-op/SelectSCRentrancyOp2.vue"
+import SelectVarReentrancyOp2 from "../views/choose-property/select-op/SelectVarReentrancyOp2.vue"
 
 export const routes = [{
         path: "/",
