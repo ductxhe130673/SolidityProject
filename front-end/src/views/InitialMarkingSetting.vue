@@ -223,7 +223,7 @@ export default {
         this.$store.commit("setIndex", 5)
       }
       if (param == "back") {
-        this.$router.push({ name: "CSPSettingType" });
+        this.$router.push({ name: "LTLCheckOption" });
         this.$store.commit("setIndex", 4)
 
       }

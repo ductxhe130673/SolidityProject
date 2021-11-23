@@ -71,9 +71,6 @@
       <div type="button" class="btn btn-outline-primary" @click="routing('next')">
         Next
       </div>
-      <div type="button" class="btn btn-outline-primary" @click="routing('select')"  v-if="list_smart_contract.length > 1">
-        Select another smart contract
-      </div>
       <div
         type="button"
         class="btn btn-outline-primary"
@@ -260,10 +257,6 @@ export default {
       this.selected_function = func;
     },
     routing(param) {
-      if (param == "select") {
-        this.$router.push({ name: "SelectSContractSD2" });
-        this.$store.commit("setIndex", 4);
-      }
       if (param == "back") {
         this.$router.push({ name: "GenaralVulSetting" });
         this.$store.commit("setIndex", 4);
