@@ -28,6 +28,7 @@ import ContractSpecificPropertyNonTemplate from "../views/choose-property/CheckC
 import ChooseEleOfSC from "../views/choose-property/CheckGeneralVul/ChooseElementOfTheSmartContract.vue"
 import GenaralVulSetting from "../views/choose-property/CheckGeneralVul/GenaralVulSetting.vue"
 import VulnerabilitySummary from "../views/choose-property/CheckGeneralVul/VulnerabilitySummary.vue"
+import SelectFuncTimeStampSkipEmpty from "../views/choose-property/select-op/SelectFuncTimeStampSkipEmpty.vue"
 
 import ListContext from "../views/context/context-crud/list-context.vue"
 import AddContext from "../views/context/context-crud/add-context.vue"
@@ -203,6 +204,11 @@ export const routes = [{
                 path: "select-smart-contract",
                 name: "SelectContract",
                 component: SelectContract
+            },
+            {
+                path: "SelectFTSSkip",
+                name: "SelectFuncTimeStampSkipEmpty",
+                component: SelectFuncTimeStampSkipEmpty
             },
 
         ],
