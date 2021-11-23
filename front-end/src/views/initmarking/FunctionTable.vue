@@ -29,7 +29,7 @@
                   </div>
                 </div>
 
-                <div class="table-params-row" v-for="(param, key, index) in own_list_argument.arguments" v-bind:key="key" :class="{ even_row: index % 2 == 0}">
+                <div class="table-params-row" v-for="(param, key, index) in own_list_argument.argument" v-bind:key="key" :class="{ even_row: index % 2 == 0}">
                   <div class="table-params-cell first-params-cell">{{ index+1 }}</div>
                   <div class="table-params-cell second-params-cell">{{ param.name }}</div>
                   <div class="table-params-cell third-params-cell">
@@ -55,8 +55,8 @@ export default ({
         }
     },
     beforeMount(){
-      console.log('table');
       this.own_list_argument = this.list_argument
+      console.log('own_list_argument',this.own_list_argument);
     },
     methods:{
         existParamTable(){
