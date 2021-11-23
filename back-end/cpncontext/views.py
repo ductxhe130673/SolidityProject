@@ -6,10 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import cpncontext
-<<<<<<< HEAD
-=======
 from cpncontext import dbcontext
->>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
 from rest_framework.decorators import api_view
 # Create your views here.
 
@@ -70,10 +67,6 @@ class cpncontextAPIView(APIView):
 		except Exception as e:
 			print('ERROR====',e)
 			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)
-<<<<<<< HEAD
-=======
-
->>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
 @api_view(['GET'])
 def getCPNcontextById(request):
     try:

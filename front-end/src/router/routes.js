@@ -9,7 +9,6 @@ import ChooseProperty from "../views/ChooseProperty"
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
-// import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -29,6 +28,7 @@ import ContractSpecificPropertyNonTemplate from "../views/choose-property/CheckC
 import ChooseEleOfSC from "../views/choose-property/CheckGeneralVul/ChooseElementOfTheSmartContract.vue"
 import GenaralVulSetting from "../views/choose-property/CheckGeneralVul/GenaralVulSetting.vue"
 import VulnerabilitySummary from "../views/choose-property/CheckGeneralVul/VulnerabilitySummary.vue"
+import SelectFuncTimeStampSkipEmpty from "../views/choose-property/select-op/SelectFuncTimeStampSkipEmpty.vue"
 
 import ListContext from "../views/context/context-crud/list-context.vue"
 import AddContext from "../views/context/context-crud/add-context.vue"
@@ -53,9 +53,13 @@ import { DOMAIN_TITLE } from '../.env'
 
 
 
-//import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
-import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
+import InitialMarkingLink from "../views/InitialMarkingLink.vue"
+import SelectVarReentrancyOp1 from "../views/choose-property/select-op/SelectVarReentrancyOp1.vue"
+import SelectFuncReentrancyOp1 from "../views/choose-property/select-op/SelectFuncReentrancyOp1.vue"
+import SelectFuncReentrancyOp2 from "../views/choose-property/select-op/SelectFuncReentrancyOp2.vue"
+import SelectSCRentrancyOp2 from "../views/choose-property/select-op/SelectSCRentrancyOp2.vue"
+import SelectVarReentrancyOp2 from "../views/choose-property/select-op/SelectVarReentrancyOp2.vue"
 
 export const routes = [{
         path: "/",
@@ -201,6 +205,11 @@ export const routes = [{
                 name: "SelectContract",
                 component: SelectContract
             },
+            {
+                path: "SelectFTSSkip",
+                name: "SelectFuncTimeStampSkipEmpty",
+                component: SelectFuncTimeStampSkipEmpty
+            },
 
         ],
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | choose property` },
@@ -292,6 +301,36 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
+    {
+        path: "/SelectVarReentrancyOp1",
+        name: "SelectVarReentrancyOp1",
+        component: SelectVarReentrancyOp1,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op1` },
+    },
+    {
+        path: "/SelectFuncReentrancyOp1",
+        name: "SelectFuncReentrancyOp1",
+        component: SelectFuncReentrancyOp1,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op1` },
+    },
+    {
+        path: "/SelectFuncReentrancyOp2",
+        name: "SelectFuncReentrancyOp2",
+        component: SelectFuncReentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op2` },
+    },
+    {
+        path: "/SelectSCRentrancyOp2",
+        name: "SelectSCRentrancyOp2",
+        component: SelectSCRentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select SC Reentrancy Op2` },
+    },
+    {
+        path: "/SelectVarReentrancyOp2",
+        nam: "SelectVarReentrancyOp2",
+        component: SelectVarReentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op2` },
+    }
 
 ]
 
