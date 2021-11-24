@@ -9,18 +9,12 @@
       </div>
     </div>
 
-    <div class="button">
-      <div class="container">
-        <div class="row up">
-          <div class="col-5">
-            <button type="button" class="btn btn-outline-primary" @click="routing('start')">
-              Start a new checking session
-            </button>
-          </div>
-          <div class="col-5 right">
-            <button type="button" class="btn btn-outline-primary" @click="routing('back')">Back</button>
-          </div>
-        </div>
+    <div id="processing-btn">
+      <div class="pr-button" @click="routing('start')">
+        Start a new checking session
+      </div>
+      <div class="pr-button" @click="routing('back')">
+        Back
       </div>
     </div>
   </div>
@@ -55,6 +49,7 @@ export default {
   font-weight: bolder;
   font-size: 30px;
   margin-bottom: 70px;
+  margin-top: 5%;
 }
 .main {
   display: flex;
@@ -68,10 +63,33 @@ export default {
   font-weight: bolder;
   margin-bottom: 100px;
 }
-.right {
-  text-align: right;
+/* button */
+#processing-btn{
+  width: 70%;
+  height: 120px;
+  margin-left: 15%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.up {
-  margin-bottom: 20px;
+#processing-btn .pr-button {
+  cursor: pointer;
+  width: 25%;
+  height: 30px;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 600;
+  padding-top: 4px;
+  border-radius: 4px;
+}
+#processing-btn .pr-button:hover {
+  background-color: #1079cf;
+  color: white;
+}
+.btn{
+  margin: 0 3%;
 }
 </style>

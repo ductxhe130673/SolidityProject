@@ -52,10 +52,15 @@
         </tbody>
       </table>
     </div>
-    <div id="action">
+    <!-- <div id="action">
       <div id="btn" @click="funtionNext()">Next</div>
       <div id="btn" @click="upLoad">Upload Smart Contract</div>
       <div id="btn" @click="routing('back')">Back</div>
+    </div> -->
+    <div id="processing-btn">
+      <div class="pr-button" @click="funtionNext()">Next</div>
+      <div class="pr-button" @click="upload">Upload Smart Contract</div>
+      <div class="pr-button" @click="routing('back')">Back</div>
     </div>
 
     <!-- <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" /> -->
@@ -195,7 +200,7 @@ h1 {
   border: 1px solid #d9edf7;
   border-radius: 10px;
 }
-#btn {
+/* #btn {
   cursor: pointer;
   width: 18%;
   height: 2%;
@@ -220,6 +225,35 @@ h1 {
   display: flex;
   justify-content: space-between;
   width: 70%;
+} */
+/* button */
+#processing-btn{
+  width: 60%;
+  height: 120px;
+  margin-left: 20%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#processing-btn .pr-button {
+  cursor: pointer;
+  width: 20%;
+  height: 30px;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 600;
+  padding-top: 4px;
+  border-radius: 4px;
+}
+#processing-btn .pr-button:hover {
+  background-color: #1079cf;
+  color: white;
+}
+.btn{
+  margin: 0 3%;
 }
 
 div#main {

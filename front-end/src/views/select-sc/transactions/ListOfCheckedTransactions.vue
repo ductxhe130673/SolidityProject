@@ -34,10 +34,13 @@
         </table>
       </div>
     </div>
-    <div id="action">
-      <div id="btn-addsc" @click="routing('addsc')">Start a new checking session</div>
-      <div id="btn-backnext" @click="routing('back')">Back</div>
-      <!-- <div id="btn-backnext" @click="routing('next')">Next</div> -->
+    <div id="processing-btn">
+      <div class="pr-button" @click="routing('addsc')">
+        Start a new checking session
+      </div>
+      <div class="pr-button" @click="routing('back')">
+        Back
+      </div>
     </div>
   </div>
 </template>
@@ -80,13 +83,19 @@ export default {
 </script>
 
 <style scoped>
-.main {
+#main {
+  padding-bottom: 10%;
   font-family: Arial, Helvetica, sans-serif;
 }
 #header {
   text-align: center;
   margin-bottom: 2%;
   margin-top: 2%;
+}
+h1 {
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
 }
 .table-inside {
   background-color: #d9edf7;
@@ -101,18 +110,6 @@ export default {
   height: 470px;
   color: black;
 }
-.grey {
-  width: 150px;
-  height: 30px;
-  color: black;
-}
-.grey {
-  margin-left: 11%;
-  margin-bottom: 25px;
-  background: white;
-  z-index: 3;
-  position: relative;
-}
 .blue {
   border: 1px solid #d9edf7;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -121,11 +118,6 @@ export default {
   margin-top: 65px;
   z-index: 2;
   position: relative;
-}
-h1 {
-  text-align: center;
-  font-size: 35px;
-  font-weight: bold;
 }
 .atable {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -136,52 +128,34 @@ h1 {
   border: 1px solid #d9edf7;
   border-radius: 10px;
 }
-#btn-addsc {
-  cursor: pointer;
-  width: 25%;
-  height: 2%;
-  border: 1px solid #2196f3;
-  text-align: center;
-  color: #2196f3;
-  font-size: 13px;
-  line-height: 22px;
-  font-weight: 600;
-  padding: 4px 3px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#btn-addsc:hover {
-  background-color: #1079cf;
-  color: white;
-}
-#btn-backnext {
-  cursor: pointer;
-  width: 12%;
-  height: 2%;
-  border: 1px solid #2196f3;
-  text-align: center;
-  color: #2196f3;
-  font-size: 13px;
-  line-height: 22px;
-  font-weight: 600;
-  padding: 4px 3px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#btn-backnext:hover {
-  background-color: #1079cf;
-  color: white;
-}
-#action {
-  margin: 0 auto;
-  margin-top: 4%;
+/* button */
+#processing-btn{
+  width: 60%;
+  height: 120px;
+  margin-left: 20%;
   display: flex;
   justify-content: space-between;
-  width: 60%;
-  padding-bottom: 5%;
+  align-items: center;
 }
-.Button {
-  margin-top: 80px;
+#processing-btn .pr-button {
+  cursor: pointer;
+  width: 20%;
+  height: 30px;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 600;
+  padding-top: 4px;
+  border-radius: 4px;
+}
+#processing-btn .pr-button:hover {
+  background-color: #1079cf;
+  color: white;
+}
+.btn{
+  margin: 0 3%;
 }
 a {
   text-decoration: none;
@@ -190,8 +164,5 @@ a {
 a:hover {
   color: red;
   text-decoration: underline red wavy;
-}
-div#main {
-  padding-bottom: 10%;
 }
 </style>
