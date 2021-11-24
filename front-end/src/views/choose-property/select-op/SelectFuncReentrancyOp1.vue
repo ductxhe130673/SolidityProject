@@ -1,96 +1,120 @@
 <template>
-    <div class="container">
-        <div class="header">
-            <div class="title">
-                <h1>Select a function of the smart contract</h1>
-            </div>
-        </div>
-        <div class="function_cell">
-            <div id="list-function">
-                <ul class="nav nav-tabs">
-                  <li class="nav-item d-inline-block text-truncate"
-                    v-for="item in list_smart_contract"
-                    :key="item.id">
-                  <a class="nav-link"
-                    v-on:click="selected_sc = item.id"
-                    v-bind:class="{ active: item.id == selected_sc}">{{item.name}}</a>
-                  </li> 
-                </ul>
-            </div>
-            <div id="func-information-table">
-                <div id="table-list">
-                  <div class="table-row" id="header-row">
-                    <div class="table-cell header-cell first-cell">
-                      #
-                      <span><a-icon id="icon" type="caret-up" />
-                      <a-icon id="icon" type="caret-down"/>
-                      </span>
-                    </div>
-                    <div class="table-cell header-cell second-cell">
-                      Local variable
-                      <span><a-icon id="icon" type="caret-up" />
-                      <a-icon id="icon" type="caret-down"/>
-                      </span>
-                    </div>
-                    <div class="table-cell header-cell third-cell">
-                      Selected
-                    </div> 
-                  </div>
-                <div class="table-row" v-for="(func, index) in getSelected_sc" v-bind:key="func.fid" :class="{ even_row: index % 2 == 0}">
-                  <div class="table-cell first-cell">{{index +1 }}</div>
-                    <div class="table-cell second-cell">{{func.name}}</div>
-                      <div class="table-cell third-cell">
-                        <input type="radio" id="one" name="ch" v-model="checkedNames" :value="data"/>
-                      </div>
-                </div>
-                </div>
-            </div>
-        </div>
-        <div id="processing-btn">
-          <div class="pr-button" @click="routing('save')">
-            Next
-          </div>
-          <div class="pr-button" @click="routing('back')">
-            Back
-          </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <div class="title">
+        <h1>Select a function of the smart contract</h1>
+      </div>
     </div>
+    <div class="function_cell">
+      <div id="list-function">
+        <ul class="nav nav-tabs">
+          <li
+            class="nav-item d-inline-block text-truncate"
+            v-for="item in list_smart_contract"
+            :key="item.id"
+          >
+            <a
+              class="nav-link"
+              v-on:click="selected_sc = item.id"
+              v-bind:class="{ active: item.id == selected_sc }"
+              >{{ item.name }}</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div id="func-information-table">
+        <div id="table-list">
+          <div class="table-row" id="header-row">
+            <div class="table-cell header-cell first-cell">
+              #
+              <span
+                ><a-icon id="icon" type="caret-up" />
+                <a-icon id="icon" type="caret-down" />
+              </span>
+            </div>
+            <div class="table-cell header-cell second-cell">
+              Local variable
+              <span
+                ><a-icon id="icon" type="caret-up" />
+                <a-icon id="icon" type="caret-down" />
+              </span>
+            </div>
+            <div class="table-cell header-cell third-cell">Selected</div>
+          </div>
+          <div
+            class="table-row"
+            v-for="(func, index) in getSelected_sc"
+            v-bind:key="func.fid"
+            :class="{ even_row: index % 2 == 0 }"
+          >
+            <div class="table-cell first-cell">{{ index + 1 }}</div>
+            <div class="table-cell second-cell">{{ func.name }}</div>
+            <div class="table-cell third-cell">
+              <input
+                type="radio"
+                id="one"
+                name="ch"
+                v-model="checkedNames"
+                :value="data"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="processing-btn">
+      <div class="pr-button" @click="routing('next')">Next</div>
+      <div class="pr-button" @click="routing('back')">Back</div>
+    </div>
+  </div>
 </template>
 <script>
-export default{
-    data() {
-        return {
-            list_smart_contract: [{name: "Smart Contract ", id: 1}],
-            smart_contract_infor: {1:{
-                "name": "Smart Contract ",
-                "functions": [
-                    {
-                        "fid": 1,
-                        "name": "Function 1",
-                    },
-                    {
-                        "fid": 2,
-                        "name": "Function 2",
-                    },
-                    {
-                        "fid": 3,
-                        "name": "Function 3",
-                    },
-                    {
-                        "fid": 4,
-                        "name": "Function 4",
-                    },
-                ],
-            }},
-            selected_sc: 1,
-        };
+export default {
+  data() {
+    return {
+      list_smart_contract: [{ name: "Smart Contract ", id: 1 }],
+      smart_contract_infor: {
+        1: {
+          name: "Smart Contract ",
+          functions: [
+            {
+              fid: 1,
+              name: "Function 1",
+            },
+            {
+              fid: 2,
+              name: "Function 2",
+            },
+            {
+              fid: 3,
+              name: "Function 3",
+            },
+            {
+              fid: 4,
+              name: "Function 4",
+            },
+          ],
+        },
+      },
+      selected_sc: 1,
+    };
+  },
+  computed: {
+    getSelected_sc() {
+      if (this.selected_sc in this.smart_contract_infor) {
+        return this.smart_contract_infor[this.selected_sc].functions;
+      } else {
+        return [];
+      }
     },
-    computed:{
-    getSelected_sc(){
-      if(this.selected_sc in this.smart_contract_infor){
-        return this.smart_contract_infor[this.selected_sc].functions
-      }else{
-        return []
+  },
+  methods: {
+    routing(param) {
+      if (param == "next") {
+        this.$router.push({ name: "SelectVarReentrancyOp1" });
+      }
+      if (param == "back") {
+        this.$router.push({ name: "GenaralVulSetting" });
       }
     },
   },
@@ -128,8 +152,8 @@ export default{
   cursor: pointer;
 }
 
-#func-information-table{
-  border: black solid; 
+#func-information-table {
+  border: black solid;
   padding: 3% 2% 3% 2%;
 }
 
@@ -144,12 +168,12 @@ export default{
   background: rgb(241, 240, 240);
 }
 
-.table-row{
+.table-row {
   display: flex;
   height: 50px;
   border: 2px solid #ddd;
 }
-#header-row{
+#header-row {
   background-color: rgb(196, 194, 194);
   font-weight: bold;
 }
@@ -160,27 +184,26 @@ export default{
   padding: 0;
   font-size: 100%;
 }
-.even_row{
+.even_row {
   background-color: rgb(226, 224, 224);
 }
-.table-cell{
+.table-cell {
   padding-top: 10px;
   font-size: 15px;
 }
-.first-cell{
+.first-cell {
   flex-basis: 10%;
   padding-left: 5px;
 }
-.second-cell{
+.second-cell {
   flex-basis: 60%;
 }
-.third-cell{
+.third-cell {
   flex-basis: 30%;
 }
 
-
 /* button */
-#processing-btn{
+#processing-btn {
   width: 45%;
   height: 120px;
   margin-left: 25%;
@@ -205,7 +228,7 @@ export default{
   background-color: #1079cf;
   color: white;
 }
-.btn{
+.btn {
   margin: 0 3%;
 }
 </style>

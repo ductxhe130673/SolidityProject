@@ -1,8 +1,6 @@
 <template>
   <div id="main">
-    <div id="header">
-      Update the LTL Property Template
-    </div>
+    <div id="header">Update the LTL Property Template</div>
     <div class="body">
       <div class="row" id="name-section">
         <div class="title col-2">Name</div>
@@ -15,11 +13,11 @@
         <span class="title">Formular</span>
         <LTLEditor :code.sync="codeModel" @change="changedLTL($event)" />
       </div> -->
-      
+
       <div class="row">
         <div class="title col-2">Formula</div>
         <div class="col-10">
-          <formular-editor/>
+          <formular-editor :ltlcode="codeModel" />
         </div>
       </div>
 
@@ -35,16 +33,10 @@
           ></textarea>
         </div>
       </div>
-    
+
       <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">
-          Save
-        </button>
-        <button
-          id="button-cancel"
-          type="button"
-          @click="clickHandler('cancel')"
-        >
+        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
+        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
           Cancel
         </button>
       </div>
@@ -58,7 +50,7 @@ import { GetLtltemplteById, UpdateLtlTemplate } from "../../services/data";
 import FormularEditor from "../../components/FormularEditor.vue";
 export default {
   components: {
-    FormularEditor
+    FormularEditor,
   },
   data() {
     return {
@@ -67,11 +59,11 @@ export default {
       name: "",
       description: "",
       ltl: { name: String, fomular: String, description: String },
-      dateFormat : ""
+      dateFormat: "",
     };
   },
   watch: {
-    codeModel: function(newVal) {
+    codeModel: function (newVal) {
       console.log(newVal);
     },
   },
@@ -94,14 +86,22 @@ export default {
     },
 
     Save() {
-      return UpdateLtlTemplate(this.id, this.name, this.description, "hardcode",this.dateFormat);
+      return UpdateLtlTemplate(
+        this.id,
+        this.name,
+        this.description,
+        this.codeModel,
+        this.dateFormat
+      );
     },
 
     async clickHandler(action) {
       if (action == "save") {
         await this.Save();
         this.$router.push(this.$route.params.parent_path);
+        this.$store.commit("setIsEditFormula", false);
       } else if (action == "cancel") {
+        this.$store.commit("setIsEditFormula", false);
         if (!this.$route.params.parent_path) this.$router.push("/");
         else this.$router.push(this.$route.params.parent_path);
       }
@@ -152,7 +152,7 @@ export default {
 #name-section {
   margin-bottom: 30px;
 }
-textarea{
+textarea {
   height: 250px;
 }
 /* editor area */

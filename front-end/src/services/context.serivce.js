@@ -20,6 +20,7 @@ export class ContextService extends BaseService {
         }
         /* ------------- Create A Context In Database------------ */
     static async CreateContext(ct_name, content, description, option) {
+        console.log('ct_name, content, description, option',ct_name, content, description, option);
             try {
                 const paraData = {
                     "name": ct_name,

@@ -73,16 +73,20 @@
 import AceEditor from "../../../components/AceEditor.vue";
 export default {
   data() {
-    return {};
+    return {
+      demoEditSC: this.$store.state.data.uploadSCFile.name
+    };
   },
   components: { AceEditor },
   methods: {
     routing(param) {
       if (param == "save") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setFileUploadSC", {})
       }
       if (param == "cancel") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setFileUploadSC",{})
       }
     },
     updateContent(value) {

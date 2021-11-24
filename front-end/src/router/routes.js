@@ -28,6 +28,7 @@ import ContractSpecificPropertyNonTemplate from "../views/choose-property/CheckC
 import ChooseEleOfSC from "../views/choose-property/CheckGeneralVul/ChooseElementOfTheSmartContract.vue"
 import GenaralVulSetting from "../views/choose-property/CheckGeneralVul/GenaralVulSetting.vue"
 import VulnerabilitySummary from "../views/choose-property/CheckGeneralVul/VulnerabilitySummary.vue"
+import SelectFuncTimeStampSkipEmpty from "../views/choose-property/select-op/SelectFuncTimeStampSkipEmpty.vue"
 
 import ListContext from "../views/context/context-crud/list-context.vue"
 import AddContext from "../views/context/context-crud/add-context.vue"
@@ -47,6 +48,7 @@ import SelectFunction from "../views/add-sagemented/SelectFunction.vue"
 import SelectGlobalVariable from "../views/add-sagemented/SelectGlobalVariable.vue"
 import SelectLocalVariable from "../views/add-sagemented/SelectLocalVariable.vue"
 import SelectContract from "../views/add-sagemented/SelectSmartContract.vue"
+import RoadMap from "../views/RoadMap.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 
@@ -66,6 +68,13 @@ export const routes = [{
         component: Index,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
     },
+    {
+        path: "/roadmap",
+        name: "RoadMap",
+        component: RoadMap,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
+        props: true
+      },
     {
         path: "/login",
         name: "Login",
@@ -203,6 +212,11 @@ export const routes = [{
                 path: "select-smart-contract",
                 name: "SelectContract",
                 component: SelectContract
+            },
+            {
+                path: "SelectFTSSkip",
+                name: "SelectFuncTimeStampSkipEmpty",
+                component: SelectFuncTimeStampSkipEmpty
             },
 
         ],
@@ -362,13 +376,7 @@ export const routes = [{
     meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create contract-specific property` },
     props: true
   },
-  {
-    path: "/roadmap",
-    name: "RoadMap",
-    component: RoadMap,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
-    props: true
-  },
+  
   {
     path: "/add-context",
     name: "AddContext",
