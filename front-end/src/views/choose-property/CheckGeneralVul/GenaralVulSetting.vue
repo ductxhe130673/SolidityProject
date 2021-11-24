@@ -8,25 +8,12 @@
           name="lteid"
           class="form-select"
           @change="changeid($event.target.value)"
+          v-model="select"
         >
           <option v-for="c in ltltemplate" :key="c.lteid" :value="c.lteid">
             {{ c.name }}
           </option>
         </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">Formular</div>
-      <div class="col-9">
-        <div
-          class="language-ltl"
-          id="highlighting-content"
-          spellcheck="false"
-          contenteditable=""
-          @input="updateInput"
-          @keydown.enter.prevent="keyEnter"
-          @keydown.tab.prevent="keyTab"
-        ></div>
       </div>
     </div>
     <div class="row">
@@ -98,9 +85,10 @@ export default {
         { lteid: 4, name: "Timestamp Dependence" },
         { lteid: 5, name: "Ship EmptyString Literal" },
         { lteid: 6, name: "Uninitialized Storage Variable" },
-        { lteid: 7  , name: "Others" },
+        { lteid: 7, name: "Others" },
       ],
       description: "",
+      select: 1,
     };
   },
   components: { ArgumentSelection, VariableSelection, FunctionSelection },
@@ -146,7 +134,18 @@ export default {
     routing(param) {
       /* let ltl_content = this.getNodeValue() ltl content se duoc gui ve phia backend*/
       if (param == "add") {
-        this.$router.push({ name: "ChooseElementOfSmartContract" });
+        if (this.select == 1 ) {
+           this.$router.push({ name: "ChooseElementOfSmartContract" });
+        } 
+        else if (this.select == 2) {
+          this.$router.push({ name: "SelectFuncReentrancyOp1" });
+        }
+        else if (this.select == 3) {
+          this.$router.push({ name: "SelectFuncSD" });
+        }
+        else if (this.select == 4) {
+          this.$router.push({ name: "SelectFuncTimeStampSkipEmpty" });
+        }
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
@@ -290,6 +289,7 @@ export default {
 }
 .row {
   margin-top: 20px;
+  margin-bottom: 5%;
 }
 .col-2 {
   font-size: 20px;

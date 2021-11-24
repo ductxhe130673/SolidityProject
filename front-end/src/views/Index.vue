@@ -108,7 +108,7 @@ export default ({
 
 <style scoped>
 #body {
-  height: 700px;
+  height: 800px;
   width: 100%;
   min-width: 420px;
   background-color: #f9f9f9;

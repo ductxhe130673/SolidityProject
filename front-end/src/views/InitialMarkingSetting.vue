@@ -138,9 +138,7 @@
               </div>
             </div>
             <div v-if="function_cell_selection == 'params'">
-              <function-table
-                :list_argument="getFunctionArgument"
-              />
+              <function-table :list_argument="getFunctionArgument" />
             </div>
           </div>
         </div>
@@ -154,7 +152,7 @@
 </template>
 
 <script>
-import { GetGloLocArgOfSmartContract } from '../services/data';
+import { GetGloLocArgOfSmartContract } from "../services/data";
 import FunctionTable from "./initmarking/FunctionTable.vue";
 export default {
   components: {
@@ -170,7 +168,7 @@ export default {
       selected_function: null,
       init_marking: {},
       functionSC: [],
-      func: {}
+      func: {},
     };
   },
   beforeMount() {
@@ -214,17 +212,16 @@ export default {
     },
   },
   methods: {
-    async getFuntionSC(sid){
-        const fun = await GetGloLocArgOfSmartContract(sid);
-        this.func = fun.data.functions
+    async getFuntionSC(sid) {
+      const fun = await GetGloLocArgOfSmartContract(sid);
+      this.func = fun.data.functions;
     },
     selectSC(sid) {
       if (this.selected_sc != sid) {
         this.selected_sc = sid;
         this.getFuntionSC(sid);
       }
-      console.log('this.func',this.func);
-
+      console.log("this.func", this.func);
     },
     updateInitMarking(val) {
       this.function_cell_selected = "function";
@@ -280,15 +277,14 @@ export default {
         console.log("this.smart_contract_infors", this.smart_contract_infors);
       }
       if (param == "back") {
-        this.$router.push({ name: "CSPSettingType" });
+        this.$router.push({ name: "LTLCheckOption" });
         this.$store.commit("setIndex", 4);
       }
     },
     setFunctionParam(funct) {
       this.function_cell_selected = "params";
-      for(let i = 0;i<this.func.length;i++){
-        if(this.func[i].fid === funct)
-          this.selected_function = this.func[i];
+      for (let i = 0; i < this.func.length; i++) {
+        if (this.func[i].fid === funct) this.selected_function = this.func[i];
       }
     },
   },

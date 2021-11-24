@@ -193,8 +193,9 @@ export async function GetLtltemplteById(id_Ltl) {
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLTLTemplate(name, description, fomular,date) {
-    return await ltltemplateService.CreateLTLTemplate(name, description, fomular,date);
+export async function CreateLTLTemplate(name,fomular, description,date) {
+    console.log('fomular',fomular);
+    return await ltltemplateService.CreateLTLTemplate(name,fomular, description ,date);
 }
 
 /*---------DeleteLtl-------- */

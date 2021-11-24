@@ -36,7 +36,7 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="text" v-model="content" />
+          <input class="form-control" type="file" @change="previewFiles" multiple/>
         </div>
       </div>
       <div id="group-btn">
@@ -64,7 +64,7 @@ export default {
       options: "",
       name: "",
       description: "",
-      content: "",
+      content: null,
     };
   },
   // components: { EditorSc },
@@ -78,8 +78,15 @@ export default {
     //   }
     //   return false;
     // },
+   previewFiles(event) {
+     this.content = event.target.files[0].name;
+     console.log('this.content',this.content);
+   },
     async clickHandler(action) {
       if (action == "save") {
+        if(this.content === ''){
+          alert("You have to select file to update!!!")
+        }
         //check validation of field context
         // if (!this.checkValidateContext()) {
         //   alert('You must enter data to field!!!')
@@ -91,7 +98,9 @@ export default {
           this.description,
           this.options
         );
-        this.$router.push(this.$route.params.parent_path);
+        this.$router.push({
+          name:"ListContext"
+          })
       } else if (action == "cancel") {
         this.$router.push(this.$route.params.parent_path);
       }
