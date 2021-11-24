@@ -30,11 +30,21 @@
 <script>
 export default {
   props: ["dialog"],
+  data(){
+    return{
+    fileUp : null
+    }
+  },
   methods: {
+    handleChange(e){
+      this.fileUp = e.file;
+      console.log('this.fileUp',this.fileUp);
+    },
     cancel() {
       this.$emit("cancel");
     },
     confirm() {
+      this.$store.commit("setFileUploadSC",this.fileUp)
       this.$emit("confirm");
     },
   },

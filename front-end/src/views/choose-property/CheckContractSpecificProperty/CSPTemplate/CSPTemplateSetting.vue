@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-2">Formula</div>
       <div class="col-10">
-        <formular-editor />
+        <formular-editor :ltlcode="getFormula"/>
       </div>
     </div>
     <div class="row">
@@ -66,6 +66,9 @@ export default {
     FormularEditor,
   },
   computed: {
+    getFormula(){
+      return this.template.formula;
+    }
   },
   methods: {
     // onChangTemplate(){

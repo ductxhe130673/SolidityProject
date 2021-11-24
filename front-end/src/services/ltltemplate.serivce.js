@@ -27,7 +27,8 @@ export class ltltemplateService extends BaseService {
 
     
     /*---------Create New LTLTemplate--------- */
-    static async CreateLTLTemplate(name, description,formula,date) {
+    static async CreateLTLTemplate(name, formula, description,date) {
+        console.log('name, formula, description,date',name, formula, description,date);
         try {
             const paraData = {
                 "name": name,
