@@ -23,6 +23,7 @@
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a>List</a>
         </span>
       </div>
       <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>

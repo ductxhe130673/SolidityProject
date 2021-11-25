@@ -1,5 +1,12 @@
 <template>
   <div id="main">
+     <div class="link">
+      <span>
+        <a href="/" class="link-primary text-decoration-underline">Home</a> >
+        <a href="http://192.168.0.100:8080/list-vul" class="link-primary text-decoration-underline">Context </a> >
+        <a>Edit</a></span
+      >
+    </div>
     <div id="header">
       Update the LTL Property Template
     </div>

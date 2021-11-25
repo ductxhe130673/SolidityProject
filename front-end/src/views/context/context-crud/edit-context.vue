@@ -1,5 +1,12 @@
 <template>
   <div id="main">
+    <div class="link">
+      <span>
+        <a href="/" class="link-primary text-decoration-underline">Home</a> >
+        <a href="http://192.168.0.100:8080/list-context" class="link-primary text-decoration-underline">Context </a> >
+        <a>Edit</a></span
+      >
+    </div>
     <div id="header">Update the Context</div>
     <div class="body">
       <div class="row" id="name-section">
@@ -36,7 +43,7 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="text" v-model="content">
+          <input class="form-control" type="text" v-model="content" />
         </div>
       </div>
 
@@ -70,7 +77,7 @@ export default {
       name: "",
       description: "",
       content: { name: String, code: String, description: String },
-      options: "0"
+      options: "0",
     };
   },
   // components: { EditorSc },
@@ -80,11 +87,10 @@ export default {
       this.initModelContext(data);
       this.content = data.content;
       this.name = data.name;
-      this.description = data.description; 
+      this.description = data.description;
       console.log(data.context_type);
     },
-  
-    
+
     async clickHandler(action) {
       if (action == "save") {
         // if (!this.checkChangeConText()) {
@@ -96,8 +102,14 @@ export default {
         //   alert('You do not edit!')
         // }
 
-        await UpdateContext(this.cid, this.name, this.options,this.description, this.content);
-      
+        await UpdateContext(
+          this.cid,
+          this.name,
+          this.options,
+          this.description,
+          this.content
+        );
+
         this.$router.push(this.$route.params.parent_path);
       } else if (action == "cancel") {
         // if (!this.$route.params.parent_path) this.$router.push("/");
@@ -111,11 +123,13 @@ export default {
       this.description = modelContext.description;
       this.options = modelContext.context_type;
     },
-    checkChangeConText(){
-      return this.name.trim() === this.name.trim() 
-      && this.code.trim() === this.code.trim() 
-      && this.description.trim() === this.description.trim()
-    }
+    checkChangeConText() {
+      return (
+        this.name.trim() === this.name.trim() &&
+        this.code.trim() === this.code.trim() &&
+        this.description.trim() === this.description.trim()
+      );
+    },
   },
   computed: {},
 };
@@ -146,10 +160,10 @@ export default {
 #name-section {
   margin-bottom: 30px;
 }
-#type-section{
+#type-section {
   margin-bottom: 20px;
 }
-textarea{
+textarea {
   height: 250px;
 }
 /* editor area */
