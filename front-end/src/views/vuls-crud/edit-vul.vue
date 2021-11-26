@@ -85,19 +85,15 @@ export default {
       this.dateFormat = data.createdDate;
     },
 
-    Save() {
-      return UpdateLtlTemplate(
-        this.id,
-        this.name,
-        this.description,
-        this.codeModel,
-        this.dateFormat
-      );
-    },
-
     async clickHandler(action) {
       if (action == "save") {
-        await this.Save();
+        await UpdateLtlTemplate(
+          this.id,
+          this.name,
+          this.description,
+          this.codeModel,
+          this.dateFormat
+        );
         this.$router.push(this.$route.params.parent_path);
         this.$store.commit("setIsEditFormula", false);
       } else if (action == "cancel") {

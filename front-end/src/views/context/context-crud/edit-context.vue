@@ -14,7 +14,7 @@
         <div class="col-10">
           <select class="form-select" v-model="options">
             <option value="type1">DCR</option>
-            <option value="type2">BPMN</option>
+            <option value="type2">CPN</option>
           </select>
         </div>
       </div>
@@ -22,11 +22,7 @@
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="description"
-          ></textarea>
+          <textarea class="form-control" type="text" v-model="description"></textarea>
         </div>
       </div>
       <!-- <div class="editor-area">
@@ -36,19 +32,13 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="text" v-model="content">
+          <input class="form-control" type="file" />
         </div>
       </div>
 
       <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">
-          Save
-        </button>
-        <button
-          id="button-cancel"
-          type="button"
-          @click="clickHandler('cancel')"
-        >
+        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
+        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
           Cancel
         </button>
       </div>
@@ -70,7 +60,7 @@ export default {
       name: "",
       description: "",
       content: { name: String, code: String, description: String },
-      options: "0"
+      options: "0",
     };
   },
   // components: { EditorSc },
@@ -80,11 +70,10 @@ export default {
       this.initModelContext(data);
       this.content = data.content;
       this.name = data.name;
-      this.description = data.description; 
+      this.description = data.description;
       console.log(data.context_type);
     },
-  
-    
+
     async clickHandler(action) {
       if (action == "save") {
         // if (!this.checkChangeConText()) {
@@ -96,8 +85,14 @@ export default {
         //   alert('You do not edit!')
         // }
 
-        await UpdateContext(this.cid, this.name, this.options,this.description, this.content);
-      
+        await UpdateContext(
+          this.cid,
+          this.name,
+          this.options,
+          this.description,
+          this.content
+        );
+
         this.$router.push(this.$route.params.parent_path);
       } else if (action == "cancel") {
         // if (!this.$route.params.parent_path) this.$router.push("/");
@@ -111,11 +106,13 @@ export default {
       this.description = modelContext.description;
       this.options = modelContext.context_type;
     },
-    checkChangeConText(){
-      return this.name.trim() === this.name.trim() 
-      && this.code.trim() === this.code.trim() 
-      && this.description.trim() === this.description.trim()
-    }
+    checkChangeConText() {
+      return (
+        this.name.trim() === this.name.trim() &&
+        this.code.trim() === this.code.trim() &&
+        this.description.trim() === this.description.trim()
+      );
+    },
   },
   computed: {},
 };
@@ -146,10 +143,10 @@ export default {
 #name-section {
   margin-bottom: 30px;
 }
-#type-section{
+#type-section {
   margin-bottom: 20px;
 }
-textarea{
+textarea {
   height: 250px;
 }
 /* editor area */

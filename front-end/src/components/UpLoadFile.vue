@@ -1,9 +1,8 @@
 <template>
   <div class="container">
     <div id="dialog">
-     
-        <h4>{{ this.dialog.title }}</h4>
-      
+      <h4>{{ this.dialog.title }}</h4>
+
       <div id="d-content">
         <a-upload-dragger
           name="file"
@@ -20,9 +19,7 @@
         <button class="btn btn-outline-primary btn-sm" @click="confirm">
           {{ this.dialog.confirmbtn }}
         </button>
-        <button class="btn btn-outline-primary btn-sm" @click="cancel">
-          Cancel
-        </button>
+        <button class="btn btn-outline-primary btn-sm" @click="cancel">Cancel</button>
       </div>
     </div>
   </div>
@@ -30,21 +27,21 @@
 <script>
 export default {
   props: ["dialog"],
-  data(){
-    return{
-    fileUp : null
-    }
+  data() {
+    return {
+      fileUp: null,
+    };
   },
   methods: {
-    handleChange(e){
+    handleChange(e) {
       this.fileUp = e.file;
-      console.log('this.fileUp',this.fileUp);
+      console.log("this.fileUp", this.fileUp);
     },
     cancel() {
       this.$emit("cancel");
     },
     confirm() {
-      this.$store.commit("setFileUploadSC",this.fileUp)
+      this.$store.commit("setFileUploadSC", this.fileUp);
       this.$emit("confirm");
     },
   },
@@ -54,13 +51,13 @@ export default {
 #dialog {
   width: 500px;
   height: 300px;
- 
+
   margin: auto;
   background-color: white;
   border-radius: 5px;
   padding: 15px;
 }
-h3 { 
+h3 {
   text-align: center;
   padding: 10px;
 }

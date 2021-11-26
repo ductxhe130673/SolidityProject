@@ -167,8 +167,9 @@ export async function GetContextById(id_context) {
 
 
 /*---------CreateAndModiftyContext--------- */
-export async function CreateContext(ct_name, content, description, option) {
-    return await ContextService.CreateContext(ct_name, content, description, option)
+export async function CreateContext(name, dateFormat, option, description, content) {
+    console.log('name, dateFormat, option, description, content',name, dateFormat, option, description, content);
+    return await ContextService.CreateContext(name,dateFormat, option, description, content)
 }
 
 /*---------DeleteContext-------- */
