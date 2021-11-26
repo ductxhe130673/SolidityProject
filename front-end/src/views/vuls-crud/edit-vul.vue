@@ -17,7 +17,7 @@
       <div class="row">
         <div class="title col-2">Formula</div>
         <div class="col-10">
-          <formular-editor :ltlcode="codeModel" />
+          <FormularEditor :ltlcode="codeModel" @input="updateMessage" />
         </div>
       </div>
 
@@ -64,22 +64,25 @@ export default {
   },
   watch: {
     codeModel: function (newVal) {
-      console.log(newVal);
+      console.log("newVal", newVal);
     },
   },
   mounted() {
-    // this.initData();
+    this.initData();
   },
-  async created() {
-    //get vulnerability by id from db: name, description
-    await this.initData();
-  },
+  // async created() {
+  //   //get vulnerability by id from db: name, description
+  //   await this.initData();
+  // },
   // components: { LTLEditor },
   methods: {
+    updateMessage(mes) {
+      this.codeModel = mes;
+    },
     async initData() {
       const data = await GetLtltemplteById(this.id);
       this.initModelLTL(data);
-      this.codeModel = data.fomular;
+      this.codeModel = data.formula;
       this.name = data.name;
       this.description = data.description;
       this.dateFormat = data.createdDate;
@@ -87,6 +90,7 @@ export default {
 
     async clickHandler(action) {
       if (action == "save") {
+        console.log("this.codeModel2", this.codeModel);
         await UpdateLtlTemplate(
           this.id,
           this.name,

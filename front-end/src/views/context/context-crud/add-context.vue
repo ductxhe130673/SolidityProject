@@ -69,15 +69,6 @@ export default {
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    //   async CreateContext(cid) {
-    //   await CreateContext(cid);
-    // },
-    // checkValidateContext() {
-    //   if (this.code !== "" && this.name !== "" && this.description !== "") {
-    //     return true;
-    //   }
-    //   return false;
-    // },
     previewFiles(event) {
       this.fileUpload = event.target.files[0];
     },
@@ -97,20 +88,6 @@ export default {
         }
         this.convertFileToText();
         this.content = this.$store.state.data.contentFile;
-        // console.log(
-        //   "e.target.result",
-        //   this.name,
-        //   this.dateFormat,
-        //   this.options,
-        //   this.description,
-        //   this.content
-        // );
-
-        //check validation of field context
-        // if (!this.checkValidateContext()) {
-        //   alert('You must enter data to field!!!')
-        //   return;
-        // }
         await CreateContext(
           this.name,
           this.dateFormat,

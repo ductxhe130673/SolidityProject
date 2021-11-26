@@ -32,7 +32,7 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="file" />
+          <input class="form-control" type="file" @change="previewFiles" multiple />
         </div>
       </div>
 
@@ -49,9 +49,11 @@
 <script>
 // import EditorSc from "../../../components/TextEditor.vue";
 import { GetContextById, UpdateContext } from "../../../services/data";
+import moment from "moment";
 export default {
   created() {
     this.initData();
+    this.getDate();
   },
   data() {
     return {
@@ -59,35 +61,43 @@ export default {
       code: "",
       name: "",
       description: "",
-      content: { name: String, code: String, description: String },
+      content: null,
       options: "0",
+      dateFormat: "",
     };
   },
   // components: { EditorSc },
   methods: {
+    getDate() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+    },
+    previewFiles(event) {
+      this.fileUpload = event.target.files[0];
+    },
+    convertFileToText() {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.$store.commit("setContentFile", e.target.result);
+      };
+      this.content = this.$store.state.data.contentFile;
+      reader.readAsText(this.fileUpload);
+      this.$store.commit("setFileUpload", this.fileUpload);
+    },
     async initData() {
       const data = await GetContextById(this.cid);
       this.initModelContext(data);
       this.content = data.content;
       this.name = data.name;
       this.description = data.description;
-      console.log(data.context_type);
     },
 
     async clickHandler(action) {
       if (action == "save") {
-        // if (!this.checkChangeConText()) {
-        //   const res = await this.SaveContext();
-        //   if (res.status && res.status === 200) {
-        //     this.$router.push(this.$route.params.parent_path);
-        //   }
-        // }else{
-        //   alert('You do not edit!')
-        // }
-
+        this.convertFileToText();
         await UpdateContext(
           this.cid,
           this.name,
+          this.dateFormat,
           this.options,
           this.description,
           this.content

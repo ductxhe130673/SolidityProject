@@ -17,20 +17,20 @@
 export default {
   data() {
     return {
-      contentSC:"//add your code here"
+      contentSC: this.$store.state.data.contentFile,
     };
   },
-  watch:{
-    codeSC:function(newVal, oldVal){
-      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`)
-      this.contentSC = this.codeSC
+  watch: {
+    codeSC: function (newVal, oldVal) {
+      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`);
+      this.contentSC = this.codeSC;
     },
-    contentSC:function(newVal, oldVal){
-      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`)
-      this.$emit('changeSC',newVal)
+    contentSC: function (newVal, oldVal) {
+      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`);
+      this.$emit("changeSC", newVal);
     },
   },
-  props:["codeSC"],
+  props: ["codeSC"],
   components: {
     editor: require("vue2-ace-editor"),
   },

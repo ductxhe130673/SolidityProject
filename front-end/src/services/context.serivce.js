@@ -49,13 +49,14 @@ export class ContextService extends BaseService {
             }
         }
         /*---------Update Context--------- */
-    static async UpdateContext(id, ct_name, option, description, content) {
+    static async UpdateContext(id, ct_name, dateFormat, option, description, content) {
             // const ContextById = await this.request({ auth: true }).get(`${this.getUnity()}/cpncontextbyid?cid=${id}`)
             // console.log(ContextById,ct_name,ct_description)
             try {
                 const paraData = {
                     "cid": id,
                     "name": ct_name,
+                    "createdDate" : dateFormat,
                     "context_type": option,
                     "description": description,
                     "content": content,

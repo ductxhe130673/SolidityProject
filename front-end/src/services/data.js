@@ -178,8 +178,8 @@ export async function DeleteContext(id_context) {
 }
 
 /*---------Update Context-------- */
-export async function UpdateContext(id_context, ct_name, option, description, content) {
-    return await ContextService.UpdateContext(id_context, ct_name, option, description, content)
+export async function UpdateContext(id_context, ct_name, dateFormat, option, description, content) {
+    return await ContextService.UpdateContext(id_context, ct_name,dateFormat, option, description, content)
 }
 /* ------LTL------- */
 
