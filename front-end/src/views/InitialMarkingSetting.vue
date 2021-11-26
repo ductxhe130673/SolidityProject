@@ -183,7 +183,6 @@ export default {
     if (this.list_smart_contract.length > 0) {
       this.selected_sc = this.list_smart_contract[0].sid;
     }
-    console.log("init_marking", this.init_marking);
   },
   watch: {
     init_marking: {
@@ -208,6 +207,7 @@ export default {
       return this.function_cell_selected;
     },
     getFunctionArgument() {
+      console.log("this.selected_function", this.selected_function);
       return this.selected_function;
     },
   },
@@ -215,11 +215,13 @@ export default {
     async getFuntionSC(sid) {
       const fun = await GetGloLocArgOfSmartContract(sid);
       this.func = fun.data.functions;
+      console.log("this.func", this.func);
     },
     selectSC(sid) {
       if (this.selected_sc != sid) {
         this.selected_sc = sid;
         this.getFuntionSC(sid);
+        console.log("init_marking", this.init_marking);
       }
       console.log("this.func", this.func);
     },
@@ -233,7 +235,7 @@ export default {
     initInitialMarkingHolder() {
       this.init_marking = this.$store.state.data.data.initialMarkingInfor;
       for (let i = 0; i < this.list_smart_contract.length; i++) {
-        let sm = this.list_smart_contract[i];
+        let sm = this.list_smart_contract[i]; //get tung smart contract
 
         if (!(sm.sid in this.init_marking.Funtion_params)) {
           this.init_marking.Funtion_params[sm.sid] = { name: sm.name, functions: {} };

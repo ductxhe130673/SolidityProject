@@ -5,6 +5,8 @@ const state = {
     index: 0,
     date_modified: 0,
     isEditFormula: false,
+    contentFile: '',
+    fileUpload: null,
     data: {
         uploadSCFile: {},
         selectedSc: [],
@@ -76,6 +78,12 @@ const getters = {
     },
     getFileUploadSC: state => {
         return state.data.uploadSCFile;
+    },
+    getContentFile: state =>{
+        return state.contentFile;
+    },
+    getFileUpload: state=>{
+        return state.fileUpload;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -150,7 +158,12 @@ const mutations = {
     setFileUploadSC(state, data){
         state.data.uploadSCFile= data;
     },
-    
+    setContentFile(state, data){
+        state.contentFile = data;
+    },
+    setFileUpload(state, data){
+        state.fileUpload = data;
+    },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility
         var list_gvs = sc_info.list_gvs

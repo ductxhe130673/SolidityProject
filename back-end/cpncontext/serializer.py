@@ -11,4 +11,4 @@ class cpncontextSerializer(serializers.ModelSerializer):
 class cpncontextSerializerPost(serializers.ModelSerializer):
     class Meta:
         model = cpncontext
-        fields = ['name', 'content', 'context_type', 'description', 'aid',]
+        fields = ['name', 'content', 'context_type', 'createdDate','description', 'aid',]

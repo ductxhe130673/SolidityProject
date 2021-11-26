@@ -48,7 +48,8 @@ export class ltltemplateService extends BaseService {
     }
 
         /*---------Update LTLTemplate--------- */
-        static async UpdateLtlTemplate(id, name, description, fomular,date) {
+        static async UpdateLtlTemplate(id, name, description, fomular ,date) {
+            console.log('fomular',fomular);
             try {
                 const paraData = {
                     "lteid": id,

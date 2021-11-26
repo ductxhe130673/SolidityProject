@@ -77,9 +77,6 @@ export default {
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    updateCode(code) {
-      this.code = code;
-    },
     async clickHandler(action) {
       if (action == "save") {
         await CreateLTLTemplate(this.name, this.code, this.description, this.dateFormat);

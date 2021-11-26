@@ -14,7 +14,7 @@
         <div class="col-10">
           <select class="form-select" v-model="options">
             <option value="type1">DCR</option>
-            <option value="type2">BPMN</option>
+            <option value="type2">CPN</option>
           </select>
         </div>
       </div>
@@ -22,11 +22,7 @@
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="description"
-          ></textarea>
+          <textarea class="form-control" type="text" v-model="description"></textarea>
         </div>
       </div>
       <!-- <div class="editor-area">
@@ -36,18 +32,12 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="file" @change="previewFiles" multiple/>
+          <input class="form-control" type="file" @change="previewFiles" multiple />
         </div>
       </div>
       <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">
-          Save
-        </button>
-        <button
-          id="button-cancel"
-          type="button"
-          @click="clickHandler('cancel')"
-        >
+        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
+        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
           Cancel
         </button>
       </div>
@@ -58,6 +48,8 @@
 <script>
 // import EditorSc from "../../../components/TextEditor.vue";
 import { CreateContext } from "../../../services/data";
+import moment from "moment";
+
 export default {
   data() {
     return {
@@ -65,42 +57,47 @@ export default {
       name: "",
       description: "",
       content: null,
+      fileUpload: null,
+      dateFormat: "",
     };
+  },
+  mounted() {
+    this.getDate();
   },
   // components: { EditorSc },
   methods: {
-    //   async CreateContext(cid) {
-    //   await CreateContext(cid);
-    // },
-    // checkValidateContext() {
-    //   if (this.code !== "" && this.name !== "" && this.description !== "") {
-    //     return true;
-    //   }
-    //   return false;
-    // },
-   previewFiles(event) {
-     this.content = event.target.files[0].name;
-     console.log('this.content',this.content);
-   },
+    getDate() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+    },
+    previewFiles(event) {
+      this.fileUpload = event.target.files[0];
+    },
+    convertFileToText() {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.$store.commit("setContentFile", e.target.result);
+      };
+      reader.readAsText(this.fileUpload);
+      this.$store.commit("setFileUpload", this.fileUpload);
+      console.log("e.target", this.fileUpload);
+    },
     async clickHandler(action) {
       if (action == "save") {
-        if(this.content === ''){
-          alert("You have to select file to update!!!")
+        if (this.fileUpload === "") {
+          alert("You have to select file to update!!!");
         }
-        //check validation of field context
-        // if (!this.checkValidateContext()) {
-        //   alert('You must enter data to field!!!')
-        //   return;
-        // }
+        this.convertFileToText();
+        this.content = this.$store.state.data.contentFile;
         await CreateContext(
           this.name,
-          this.content,
+          this.dateFormat,
+          this.options,
           this.description,
-          this.options
+          this.content
         );
         this.$router.push({
-          name:"ListContext"
-          })
+          name: "ListContext",
+        });
       } else if (action == "cancel") {
         this.$router.push(this.$route.params.parent_path);
       }
