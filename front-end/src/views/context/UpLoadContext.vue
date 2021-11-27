@@ -8,7 +8,7 @@
         <p>Name</p>
       </div>
       <div class="col-7">
-        <input class="form-control" type="text" v-model="fileupload_name" />
+        <input class="form-control" type="text" v-model="name" />
       </div>
     </div>
     <div class="row">
@@ -16,7 +16,7 @@
         <p>Type</p>
       </div>
       <div class="col-7">
-        <select class="form-select" name="">
+        <select class="form-select" name="" v-model="type">
           <option value="">DCR</option>
           <option value="">Free-cont</option>
           <option value="">type 3</option>
@@ -30,7 +30,7 @@
         <p>Content</p>
       </div>
       <div class="col-7">
-        <input class="form-control" type="text" />
+        <input class="form-control" type="text" v-model="file" />
       </div>
     </div>
 
@@ -45,6 +45,7 @@
           id=""
           cols="50"
           rows="5"
+          v-model="description"
         ></textarea>
       </div>
     </div>
@@ -53,22 +54,35 @@
       <button type="button" class="btn btn-outline-primary" @click="routing('OK')">
         OK
       </button>
-      <button type="button" class="btn btn-outline-primary" @click="routing('cancel')">Cancel</button>
+      <button type="button" class="btn btn-outline-primary" @click="routing('cancel')">
+        Cancel
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import { CreateContext } from "../../services/data";
 export default {
   data() {
     return {
-      fileupload_name: "",
-      items: [],
+      name: "",
+      description: "",
+      type: "",
+      file: "",
     };
   },
+  mounted() {
+    this.file = this.$store.state.data.data.uploadSCFile.name;
+  },
   methods: {
+    async saveContextFile() {
+      await CreateContext(this.name, this.file, this.description, this.type);
+    },
+
     routing(param) {
       if (param == "OK") {
+        this.saveContextFile();
         this.$router.push({ name: "ContextOfSmartContract" });
       } else if (param == "cancel") {
         this.$router.push({ name: "ContextOfSmartContract" });

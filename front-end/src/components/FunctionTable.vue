@@ -1,137 +1,114 @@
 <template>
- <div id ="main">
-   <div id ="header">
-     <h2>Select element of the smart contract</h2>
-   </div>
-    <div class="text">
-          <span>Function</span>
+  <div id="list-smart-contract">
+    <ul class="nav nav-tabs">
+      <li
+        class="nav-item d-inline-block text-truncate"
+        v-for="item in getListSmartContract"
+        :key="item.name + item.id"
+      >
+        <a
+          class="nav-link nav-link-top"
+          v-on:click="selected_sc = item.id"
+          v-bind:class="{ active: item.id == selected_sc }"
+          >{{ item.name }}</a
+        >
+      </li>
+    </ul>
+    <div id="sc-table-content">
+      <div id="sc-funtion">
+        <SelectTable
+          :selectValue="selectValue"
+          rowName="Functions"
+          :rowContent="getListFunction"
+          @changeValue="updateSelectedFunction"
+        />
       </div>
-   <div id = "component">
-          <div class="table table-striped table-hover">
-          <table class="table" border="1">
-            <tr>
-              <th>#</th>
-              <th>Function</th>
-              <th>Select</th>
-            </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
-              <td><input type="checkbox" :value="data.var" v-model="selected_variable" @click= "check_one"/></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div id="action">
-        <div id="sc-save" @click="save">Save</div>
-        <div id="sc-cancel" @click="cancel">Cancel</div>
-      </div>
-   </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import SelectTable from "./ElementSelectTable.vue";
+
 export default {
-  props: ["current_value"],
-  data () {
+  props: ["selectValue"],
+  components: { SelectTable },
+  data() {
     return {
-      selected_variable: [],
-      datatable: [
-        { id: '1', var: 'Func1' },
-        { id: '2', var: 'Func12' },
-        { id: '3', var: 'Func13' },
-        { id: '4', var: 'Func14' }
-      ]
-    }
+      list_smartcontract: [],
+      smarcontract_infor: [],
+
+      selected_sc: null,
+    };
   },
-  mounted(){
-    this.selected_variable.push(this.current_value)
+  mounted() {
+    this.list_smartcontract = this.$store.getters["data/GetSelectedSC"];
+    this.smarcontract_infor = this.$store.getters["data/GetSCSelectedInfor"];
+    console.log(
+      "this.list_smartcontract",
+      this.list_smartcontract,
+      this.smarcontract_infor
+    );
+    this.initSelectedSc();
+  },
+  computed: {
+    getListSmartContract() {
+      return this.list_smartcontract;
+    },
+    getListFunction() {
+      for (let i = 0; i < this.smarcontract_infor.length; i++) {
+        if (this.smarcontract_infor[i].id == this.selected_sc) {
+          return this.smarcontract_infor[i].functions;
+        }
+      }
+      return [];
+    },
   },
   methods: {
-    check_one(){
-      this.selected_variable = []
+    updateSelectedFunction(e) {
+      this.$emit("changeValue", e);
     },
-    save(){
-      this.$emit('updateCurrentSelectVariable',"'"+this.selected_variable[0]+"'")
+    initSelectedSc() {
+      this.selected_sc = this.list_smartcontract[0].id;
     },
-    cancel(){
-      this.$emit('updateCurrentSelectVariable',"")
-    }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-#header {
-  text-align: center;
-  margin-top: 8%;
-  margin-bottom: 3%
+#list-smart-contract {
+  width: 100%;
+  height: 100%;
+}
+.nav-item .active {
+  color: white;
+  background-color: #383838;
+  border: grey;
+}
+.nav-link {
+  color: #383838;
+  border: grey solid;
+  border-bottom: none;
+}
+.nav-link-top {
+  font-size: 14px;
+}
+.nav-link-under {
+  font-size: 12px;
+}
+.nav-item {
+  width: 20%;
+  margin-right: 3px;
+  cursor: pointer;
 }
 
-.text {
-  position: relative;
-  left: 15%;
-  top:15px;
-  z-index: 1;
-  height: 30px;
-  width: 6%;
-  background: white;
-  text-align: center;
-}
-#component{
-  margin: 0 auto;
-  border: 2px solid #332529;
-  width: 80%;
-  padding-top: 4%;
-  padding-bottom: 3%;
-}
-.table{
-  width:80%;
-  margin: 0 auto
-}
-.table tr:first-child{
-    background-color:#483125;
-    color: white;
-}
-#sc-save{
-   cursor: pointer;
-   width: 15%;
-    height: 2%;
-    background-color: #2196f3;
-    text-align: center;
-    color: white;
-    font-size: 13px;
-    line-height: 22px;
-    font-weight: 600;
-    padding: 4px 3px;
-    border-radius: 4px;
-    cursor: pointer;
-    border-width: 0px;
-}
-#sc-cancel{
-   cursor: pointer;
-   width: 15%;
-    height: 2%;
-    background-color: white;
-    text-align: center;
-    color: black;
-    font-size: 13px;
-    line-height: 22px;
-    font-weight: 600;
-    padding: 4px 3px;
-    border: 1px solid;
-    border-radius: 4px;
-    cursor: pointer;
+#sc-table-content {
+  border: black solid;
+  padding: 2% 6% 2% 6%;
+  height: calc(100% - 38px);
 }
 
-#sc-save:hover {
-    background-color: #1079cf;
+#sc-funtion {
+  height: 96%;
 }
-#action{
-  margin : 0 auto;
-  margin-top: 4%;
-   display: flex;
-  justify-content: space-between;
-  width: 60%;
-}
-
 </style>

@@ -1,88 +1,82 @@
 <template>
   <div id="addsc">
-      <div class="header">
-        <div class="title"><h1>Upload a new Smart Contract code</h1></div>
+    <div class="header">
+      <div class="title"><h1>Upload a new Smart Contract code</h1></div>
+    </div>
+    <div class="body">
+      <div class="name-area area">
+        <h2 class="label">Name</h2>
+        <input class="input-name input-type" type="text" v-model="nameSc" />
       </div>
-      <div class="body">
-        <div class="name-area area">
-          <h2 class="label">Name</h2>
-          <input class="input-name input-type" type="text" v-model="nameSc" />
+      <div class="type-area area">
+        <div class="label">Smart Contract Type</div>
+        <div class="option input-type">
+          <fieldset id="group1">
+            <input
+              type="radio"
+              v-model="selectOption"
+              class="radio"
+              name="group1"
+              value="Common"
+              :disabled="!isSuperior"
+            />Common
+            <input
+              type="radio"
+              v-model="selectOption"
+              class="radio"
+              name="group1"
+              value="Pending"
+            />Pending
+            <input
+              type="radio"
+              v-model="selectOption"
+              class="radio"
+              name="group1"
+              value="Private"
+            />Private
+          </fieldset>
         </div>
-        <div class="type-area area">
-          <div class="label">Smart Contract Type</div>
-          <div class="option input-type">
-            <div class="common-option" v-if="isSuperior">
-              <label for="common">Common</label>
-              <input
-                class="radio"
-                id="common"
-                value="common"
-                type="radio"
-                v-model="selectOption"
-              />
-            </div>
-            <div class="common-option" v-else>
-              <label for="common">Pending</label>
-              <input
-                class="radio"
-                id="common"
-                value="pending"
-                type="radio"
-                v-model="selectOption"
-              />
-            </div>
-            <div class="private-option">
-              <label for="private">Private</label>
-              <input
-                class="radio"
-                id="private"
-                value="private"
-                type="radio"
-                v-model="selectOption"
-              />
-            </div>
-          </div>
-          <div class="option input-type" v-if="author === 'admin'">
-            <select name="" id="type-select">
-              <option value="">Private</option>
-              <option value="">Common</option>
-            </select>
-          </div>
+        <div class="option input-type" v-if="author === 'admin'">
+          <select name="" id="type-select">
+            <option value="">Private</option>
+            <option value="">Common</option>
+          </select>
         </div>
-        <div class="editor-area area">
-          <ace-editor
-            v-bind:codeSC="demoEditSC"
-            @changeSC="updateContent($event)"
-          />
-        </div>
-        <div class="button-area area">
-          <div class="button-add-cancell">
-            <button id="button-add" type="button" @click="routing('save')">
-              Save
-            </button>
-            <button id="button-cancel" type="button" @click="routing('cancel')">
-              Cancel
-            </button>
-          </div>
+      </div>
+      <div class="editor-area area">
+        <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)" />
+      </div>
+      <div class="button-area area">
+        <div class="button-add-cancell">
+          <button id="button-add" type="button" @click="routing('save')">Save</button>
+          <button id="button-cancel" type="button" @click="routing('cancel')">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
 import AceEditor from "../../../components/AceEditor.vue";
 export default {
   data() {
-    return {};
+    return {
+      selectOption: "",
+      demoEditSC: this.$store.state.data.uploadSCFile.name,
+    };
   },
   components: { AceEditor },
   methods: {
     routing(param) {
       if (param == "save") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setFileUploadSC", {});
       }
       if (param == "cancel") {
         this.$router.push({ name: "SelectSmartContract" });
+        this.$store.commit("setFileUploadSC", {});
       }
     },
     updateContent(value) {
@@ -108,6 +102,9 @@ export default {
 <style scoped>
 #type-select {
   width: 300px;
+}
+.radio {
+  width: 30px;
 }
 .input-type {
   position: absolute;

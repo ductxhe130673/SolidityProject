@@ -1,28 +1,27 @@
 <template>
   <div class="container">
     <div id="dialog">
-     
-        <h4>{{ this.dialog.title }}</h4>
-      
+      <h4>{{ this.dialog.title }}</h4>
+
       <div id="d-content">
-        <a-upload-dragger
+        <input class="form-control" type="file" @change="previewFiles" multiple />
+        <!-- <a-upload-dragger
           name="file"
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           @change="handleChange"
+          @beforeUpload="convertFileToText"
         >
           <p class="ant-upload-drag-icon">
             <a-icon type="inbox" />
           </p>
           <p class="ant-upload-text">Click or drag file to upload</p>
-        </a-upload-dragger>
+        </a-upload-dragger> -->
       </div>
       <div id="btn-group">
         <button class="btn btn-outline-primary btn-sm" @click="confirm">
           {{ this.dialog.confirmbtn }}
         </button>
-        <button class="btn btn-outline-primary btn-sm" @click="cancel">
-          Cancel
-        </button>
+        <button class="btn btn-outline-primary btn-sm" @click="cancel">Cancel</button>
       </div>
     </div>
   </div>
@@ -30,11 +29,33 @@
 <script>
 export default {
   props: ["dialog"],
+  data() {
+    return {
+      fileUpload: null,
+      content: null,
+    };
+  },
   methods: {
+    handleChange(e) {
+      this.fileUpload = e.file;
+    },
+    previewFiles(event) {
+      this.fileUpload = event.target.files[0];
+    },
+    convertFileToText() {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.$store.commit("setContentFile", e.target.result);
+      };
+      this.content = this.$store.state.data.contentFile;
+      reader.readAsText(this.fileUpload);
+      this.$store.commit("setFileUpload", this.fileUpload);
+    },
     cancel() {
       this.$emit("cancel");
     },
     confirm() {
+      this.convertFileToText();
       this.$emit("confirm");
     },
   },
@@ -44,21 +65,24 @@ export default {
 #dialog {
   width: 500px;
   height: 300px;
- 
+
   margin: auto;
   background-color: white;
   border-radius: 5px;
   padding: 15px;
 }
-h3 { 
+#d-content {
+  margin-top: 50px;
+}
+h3 {
   text-align: center;
   padding: 10px;
 }
 #btn-group {
-  width: 50%;
+  width: 24%;
   float: right;
   display: flex;
   justify-content: space-evenly;
-  margin: 30px auto;
+  margin: 70px auto;
 }
 </style>

@@ -39,9 +39,9 @@
           <i class="material-icons">view_list</i>
         </div>
         <div id="dropdown-content">
-          <p @click="goURL('list-sc','ListSc')"><a>Smart Contracts</a></p>
-          <p @click="goURL('list-context','ListContext')"><a>Contexts</a></p>
-          <p @click="goURL('list-vul','ListVul')"><a>LTL</a></p>
+          <p @click="goURL('list-sc', 'ListSc')"><a>Smart Contracts</a></p>
+          <p @click="goURL('list-context', 'ListContext')"><a>Contexts</a></p>
+          <p @click="goURL('list-vul', 'ListVul')"><a>LTL</a></p>
         </div>
       </div>
       <div class="icon" @click="goRoadMap()" title="RoadMap">
@@ -84,7 +84,7 @@ export default {
     // },
     goRoadMap() {
       this.$store.commit("setIndex", 0);
-      this.goURL("/roadmap");
+      this.$router.push({ name: "RoadMap" });
     },
     goLogin() {
       this.$store.commit("setIndex", 0);
@@ -92,8 +92,8 @@ export default {
     },
     goURL(url, name) {
       if (this.$route.path != url) {
-      this.$store.commit("setIndex", 0);
-        this.$router.push({name: name});
+        this.$store.commit("setIndex", 0);
+        this.$router.push({ name: name });
       }
     },
     onChangeIndex(pageNum) {

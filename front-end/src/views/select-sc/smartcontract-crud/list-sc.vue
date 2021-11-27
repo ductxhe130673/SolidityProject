@@ -105,7 +105,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="editSC(item.sid)"
+                  @click="editSC(item.sid, item.name, item.content, item.description, item.type)"
                 >
                   Edit
                 </button>
@@ -361,13 +361,15 @@ export default {
       this.isShowConfirmAccept = false;
       this.isShowConfirmRefuse = false;
     },
-    editSC(sc_id, sc_name, sc_code) {
+    editSC(sc_id, sc_name, sc_code, sc_description, sc_type) {
       this.$router.push({
         name: "EditSc",
         params: {
           sc_id: sc_id,
           name: sc_name,
           code: sc_code,
+          description: sc_description,
+          type: sc_type,
           parent_path: "/list-sc",
         },
       });

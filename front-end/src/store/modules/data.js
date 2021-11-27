@@ -4,9 +4,13 @@ const state = {
     version: 2,
     index: 0,
     date_modified: 0,
+    isEditFormula: false,
+    contentFile: '',
+    fileUpload: null,
     data: {
+        uploadSCFile: {},
         selectedSc: [],
-        selectedSCInfor: { name: "hello" },
+        selectedSCInfor: {},
         selectedContext: {},
         selectedTemplate: {},
         nameCSP: '',
@@ -63,11 +67,23 @@ const getters = {
     getIndex: state => {
         return state.index;
     },
+    getIsEditFormula: state => {
+        return state.isEditFormula;
+    },
     getNameCSP: state =>{
         return state.nameCSP;
     },
     getLtlProperty: state => {
         return state.data.ltlProperty;
+    },
+    getFileUploadSC: state => {
+        return state.data.uploadSCFile;
+    },
+    getContentFile: state =>{
+        return state.contentFile;
+    },
+    getFileUpload: state=>{
+        return state.fileUpload;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -130,11 +146,23 @@ const mutations = {
     setIndex(state, data) {
         state.index = data;
     },
+    setIsEditFormula(state, data) {
+        state.isEditFormula = data;
+    },
     setNameCSP(state, data) {
         state.nameCSP = data;
     },
     setLtlProperty(state, data){
         state.data.ltlProperty= data;
+    },
+    setFileUploadSC(state, data){
+        state.data.uploadSCFile= data;
+    },
+    setContentFile(state, data){
+        state.contentFile = data;
+    },
+    setFileUpload(state, data){
+        state.fileUpload = data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility
