@@ -12,7 +12,6 @@ export default class CheckService extends BaseService {
             description: descriptionCt,
             ctid: ctidCt
         }
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('', paraData)
             return new ResponseWrapper(response, response.data)
@@ -27,7 +26,6 @@ export default class CheckService extends BaseService {
             toolname: tName,
             xml: tXml
         };
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)
@@ -43,7 +41,6 @@ export default class CheckService extends BaseService {
             "context_PATH.xml": tcontext_PATH_xml,
             "ltl_PATH.json": tltl_PATH_json
         };
-        // console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)
@@ -58,7 +55,6 @@ export default class CheckService extends BaseService {
             toolname: tName
             
         };
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)
@@ -72,7 +68,6 @@ export default class CheckService extends BaseService {
         const paraData = {
             name: tName
         };
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)

@@ -74,15 +74,21 @@ export default {
     previewFiles(event) {
       this.fileUpload = event.target.files[0];
     },
-    convertFileToText() {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.$store.commit("setContentFile", e.target.result);
-      };
-      this.content = this.$store.state.data.contentFile;
-      reader.readAsText(this.fileUpload);
-      this.$store.commit("setFileUpload", this.fileUpload);
+    updateContext(data) {
+      UpdateContext(
+        this.cid,
+        this.name,
+        this.dateFormat,
+        this.options,
+        this.description,
+        data
+      ).then(() => {
+        this.$router.push({
+          name: "ListContext",
+        });
+      });
     },
+
     async initData() {
       const data = await GetContextById(this.cid);
       this.initModelContext(data);
@@ -93,21 +99,19 @@ export default {
 
     async clickHandler(action) {
       if (action == "save") {
-        this.convertFileToText();
-        await UpdateContext(
-          this.cid,
-          this.name,
-          this.dateFormat,
-          this.options,
-          this.description,
-          this.content
-        );
-
-        this.$router.push(this.$route.params.parent_path);
+        if (this.fileUpload === "") {
+          alert("You have to select file to update!!!");
+        }
+        const reader = new FileReader();
+        reader.readAsText(this.fileUpload);
+        reader.onload = (e) => {
+          this.$store.commit("setContentFile", e.target.result);
+          this.updateContext(e.target.result);
+        };
       } else if (action == "cancel") {
-        // if (!this.$route.params.parent_path) this.$router.push("/");
-        // else this.$router.push(this.$route.params.parent_path);
-        this.$router.push(this.$route.params.parent_path);
+        this.$router.push({
+          name: "ListContext",
+        });
       }
     },
     initModelContext(modelContext) {

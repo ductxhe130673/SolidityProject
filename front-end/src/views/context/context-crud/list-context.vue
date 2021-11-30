@@ -161,9 +161,9 @@ export default {
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    async DeleteContext(cid) {
-      await DeleteContext(cid);
-    },
+    // async DeleteContext(cid) {
+    //   return await DeleteContext(cid);
+    // },
     moment,
     async initData() {
       this.list_context = await GetAllContext();
@@ -199,8 +199,15 @@ export default {
       if (
         confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
-        this.DeleteContext(cid);
-        this.$router.go(0);
+        DeleteContext(cid).then((data) => {
+          this.initData();
+          console.log("-----------------", data);
+        });
+        // this.DeleteContext(cid).then((data) => {
+        //   this.initData();
+        //   console.log("-----------------", data);
+        // });
+        // this.$router.go(0);
       }
     },
   },

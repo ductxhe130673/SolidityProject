@@ -18,14 +18,6 @@ const state = {
         configVul: {},
         ltlProperty : [],
         initialMarkingInfor: {
-            NumberOfUser: null,
-            Balance: {
-                type: "fixed",
-                fixed: null,
-                random: { from: null, to: null },
-                map: null
-            },
-            Funtion_params: {}
         },
     },
     views: {
