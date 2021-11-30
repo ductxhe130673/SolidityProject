@@ -11,7 +11,7 @@
           <ul class="nav nav-tabs">
             <li
               class="nav-item d-inline-block text-truncate"
-              v-for="item in list_smart"
+              v-for="item in list_smart_contract"
               :key="item.id"
             >
               <a
@@ -129,52 +129,14 @@
   </div>
 </template>
 <script>
+import { GetGloLocArgOfSmartContract } from "../../../services/data";
 export default {
-  methods: {
-    routing(param) {
-      if (param == "next") {
-        this.$router.push({ name: "Initial" });
-      }
-      if (param == "back") {
-        this.$router.push({ name: "GenaralVulSetting" });
-      }
-    },
-  },
   data() {
     return {
       // function_cell_selected: "function"
-      list_smart: [
-        { name: "Smart Contract 1", id: 1 },
-        { name: "Smart Contract 2", id: 2 },
-        { name: "Smart Contract 3", id: 3 },
-      ],
-      list_function: [
-        { name: "Function 1", id: 1 },
-        { name: "Function 2", id: 2 },
-      ],
-      smart_infor: {
-        1: {
-          name: "Smart Contract 1",
-          SmartContract: [
-            {
-              fid: 1,
-              name: "GV1",
-            },
-            {
-              fid: 2,
-              name: "GV2",
-            },
-            {
-              fid: 3,
-              name: "GV3",
-            },
-            {
-              fid: 4,
-              name: "GV4",
-            },
-          ],
-        },
-      },
+      list_smart_contract: [],
+      list_function: [],
+      smart_infor: [],
       function_infor: {
         1: {
           name: "Function 1",
@@ -201,6 +163,29 @@ export default {
       selected_func: 1,
       selected_smart: 1,
     };
+  },
+  mounted() {
+    this.setSCInfor();
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
+  },
+  methods: {
+    routing(param) {
+      if (param == "next") {
+        this.$router.push({ name: "Initial" });
+      }
+      if (param == "back") {
+        this.$router.push({ name: "GenaralVulSetting" });
+      }
+    },
+    getData(sid) {
+      return GetGloLocArgOfSmartContract(sid);
+    },
+    async setSCInfor() {
+      for (let i = 0; i < this.list_smart_contract.length; i++) {
+        this.smart_infor[i] = await this.getData(this.list_smart_contract[i].sid);
+      }
+      console.log("this.smart_infor", this.smart_infor);
+    },
   },
   computed: {
     getSelectedFunc() {

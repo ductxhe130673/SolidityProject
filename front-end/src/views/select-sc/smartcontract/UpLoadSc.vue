@@ -75,28 +75,31 @@ export default {
   },
   components: { AceEditor },
   mounted() {
-    this.getDate();
+    this.getData();
+    console.log("this.$store.state.data.contentFile", this.$store.state.data.contentFile);
   },
   methods: {
     updateContent(value) {
-      // this.demoEditSC = value;
-      console.log("value", value);
-      console.log("demoEditSC", this.demoEditSC);
+      this.demoEditSC = value;
     },
-    getDate() {
+    getData() {
       this.dateFormat = moment().format("YYYY-MM-DD");
+      this.demoEditSC = this.$store.state.data.contentFile;
     },
     async clickHandler(action) {
       if (action == "save") {
-        console.log(this.nameSc, this.selectOption, this.demoEditSC, this.dateFormat);
-        await AddNewSmartContracts(
-          this.hashValue(this.nameSc),
-          this.nameSC,
-          this.selectOption,
-          this.demoEditSC,
-          this.dateFormat
-        );
-        this.$router.push({ name: "SelectSmartContract" });
+        if (this.nameSc === "" || this.demoEditSC === "" || this.selectOption === "") {
+          window.alert("Please input all field");
+        } else {
+          await AddNewSmartContracts(
+            this.hashValue(this.nameSc),
+            this.nameSC,
+            this.selectOption,
+            this.demoEditSC,
+            this.dateFormat
+          );
+          this.$router.push({ name: "SelectSmartContract" });
+        }
       } else if (action == "cancel") {
         this.$router.push({ name: "SelectSmartContract" });
       }

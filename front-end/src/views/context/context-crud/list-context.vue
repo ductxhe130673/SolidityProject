@@ -10,8 +10,7 @@
       <div class="col-2">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Context</a>
-          > <a>List</a></span
+          <a href="" class="link-primary text-decoration-underline">Context</a></span
         >
       </div>
       <div class="col-8 text-center"><h1>Context List</h1></div>
@@ -183,14 +182,6 @@ export default {
         params: { id: cid, parent_path: "/list-context" },
       });
     },
-    // deleteC() {
-    //   this.alertDialog = {
-    //     title: "Alert",
-    //     message: "Do you want to delete the Context out of the system?",
-    //     confirmbtn: "Yes",
-    //   };
-    //   this.showConfirmation = true;
-    // },
 
     closeConfirm() {
       this.showConfirmation = false;
@@ -203,11 +194,6 @@ export default {
           this.initData();
           console.log("-----------------", data);
         });
-        // this.DeleteContext(cid).then((data) => {
-        //   this.initData();
-        //   console.log("-----------------", data);
-        // });
-        // this.$router.go(0);
       }
     },
   },

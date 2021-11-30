@@ -172,33 +172,7 @@ export default {
       selected_sc: null, //sc selected
       selected_function: null, //function selected
       selectedSCIndex: 0,
-      init_marking: {
-        NumberOfUser: null,
-        Balance: {
-          type: "fixed",
-          fixed: null,
-          random: { from: null, to: null },
-          map: null,
-        },
-        smart_contracts: [
-          {
-            sid: null,
-            name: null,
-            functions: [
-              {
-                fid: null,
-                name: null,
-                sender_value: { from: null, to: null },
-                arguments: {
-                  name: null,
-                  from: null,
-                  to: null,
-                },
-              },
-            ],
-          },
-        ],
-      },
+      init_marking: {},
     };
   },
   beforeMount() {
@@ -212,6 +186,7 @@ export default {
   },
   mounted() {
     this.setSCInfor();
+    this.init_marking = this.$store.state.data.data.initialMarkingInfor;
   },
   watch: {
     init_marking: {

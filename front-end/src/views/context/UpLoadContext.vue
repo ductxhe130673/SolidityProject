@@ -28,7 +28,13 @@
         <p>Content</p>
       </div>
       <div class="col-7">
-        <input class="form-control" type="text" v-model="fileContent" />
+        <textarea
+          class="form-control"
+          cols="50"
+          rows="5"
+          type="text"
+          v-model="fileContent"
+        />
       </div>
     </div>
 
