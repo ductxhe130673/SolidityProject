@@ -169,6 +169,8 @@ export class SmartContractsService extends BaseService {
         }
     }
     /*---------Get GlobalVariable,Argument,Localvariable--------- */
+
+    // addnewimargument
     static async getArguLocalGlobalVar(id) {
         try {
             

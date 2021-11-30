@@ -5,17 +5,6 @@
 
       <div id="d-content">
         <input class="form-control" type="file" @change="previewFiles" multiple />
-        <!-- <a-upload-dragger
-          name="file"
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          @change="handleChange"
-          @beforeUpload="convertFileToText"
-        >
-          <p class="ant-upload-drag-icon">
-            <a-icon type="inbox" />
-          </p>
-          <p class="ant-upload-text">Click or drag file to upload</p>
-        </a-upload-dragger> -->
       </div>
       <div id="btn-group">
         <button class="btn btn-outline-primary btn-sm" @click="confirm">

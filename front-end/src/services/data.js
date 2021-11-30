@@ -151,7 +151,7 @@ export function RefusePendingSmartContracts(sc_id, name_sc, code) {
 /* --------------Get GlobalVariable,LocalVariable,Argument of SmartContract by ID-------------- */
 export async function GetGloLocArgOfSmartContract(id) {
     const res = await SmartContractsService.getArguLocalGlobalVar(id);
-    return res
+    return res.data
 }
 
 /* ------Context------- */
@@ -168,17 +168,17 @@ export async function GetContextById(id_context) {
 
 /*---------CreateAndModiftyContext--------- */
 export async function CreateContext(name, dateFormat, option, description, content) {
-    console.log('name, dateFormat, option, description, content',name, dateFormat, option, description, content);
     return await ContextService.CreateContext(name,dateFormat, option, description, content)
 }
 
 /*---------DeleteContext-------- */
 export async function DeleteContext(id_context) {
-    ContextService.DeleteContext(id_context)
+    return await ContextService.DeleteContext(id_context)
 }
 
 /*---------Update Context-------- */
 export async function UpdateContext(id_context, ct_name, dateFormat, option, description, content) {
+    console.log('id_context, ct_name, dateFormat, option, description, content',id_context, ct_name, dateFormat, option, description, content);
     return await ContextService.UpdateContext(id_context, ct_name,dateFormat, option, description, content)
 }
 /* ------LTL------- */

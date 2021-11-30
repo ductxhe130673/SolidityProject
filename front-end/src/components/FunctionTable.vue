@@ -44,11 +44,6 @@ export default {
   mounted() {
     this.list_smartcontract = this.$store.getters["data/GetSelectedSC"];
     this.smarcontract_infor = this.$store.getters["data/GetSCSelectedInfor"];
-    console.log(
-      "this.list_smartcontract",
-      this.list_smartcontract,
-      this.smarcontract_infor
-    );
     this.initSelectedSc();
   },
   computed: {

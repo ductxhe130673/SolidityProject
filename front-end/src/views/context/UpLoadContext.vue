@@ -17,10 +17,8 @@
       </div>
       <div class="col-7">
         <select class="form-select" name="" v-model="type">
-          <option value="">DCR</option>
-          <option value="">Free-cont</option>
-          <option value="">type 3</option>
-          <option value="">type 4</option>
+          <option value="DCR">DCR</option>
+          <option value="PCN">PCN</option>
         </select>
       </div>
     </div>
@@ -30,7 +28,7 @@
         <p>Content</p>
       </div>
       <div class="col-7">
-        <input class="form-control" type="text" v-model="file" />
+        <input class="form-control" type="text" v-model="fileContent" />
       </div>
     </div>
 
@@ -62,6 +60,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { CreateContext } from "../../services/data";
 export default {
   data() {
@@ -69,17 +68,27 @@ export default {
       name: "",
       description: "",
       type: "",
-      file: "",
+      fileContent: "",
+      dateFormat: "",
     };
   },
   mounted() {
-    this.file = this.$store.state.data.data.uploadSCFile.name;
+    this.getDate();
+    this.fileContent = this.$store.state.data.contentFile;
   },
   methods: {
     async saveContextFile() {
-      await CreateContext(this.name, this.file, this.description, this.type);
+      await CreateContext(
+        this.name,
+        this.dateFormat,
+        this.type,
+        this.description,
+        this.fileContent
+      );
     },
-
+    getDate() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+    },
     routing(param) {
       if (param == "OK") {
         this.saveContextFile();
