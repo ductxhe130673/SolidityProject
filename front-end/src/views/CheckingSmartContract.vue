@@ -461,6 +461,7 @@ export default {
   margin: 40px;
   text-align: center;
   margin-top: -90px;
+  margin-left: 15%;
 }
 #download {
   text-align: right;
