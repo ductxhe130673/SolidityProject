@@ -1,7 +1,7 @@
 <template>
   <div id="main" class="container">
     <div id="header">
-      <h1>Select Smart Contracts </h1>
+      <h1>Select Smart Contracts</h1>
     </div>
 
     <div class="row type">
@@ -31,15 +31,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in filterlist"
-            v-bind:key="index"
-          >
+          <tr v-for="(item, index) in filterlist" v-bind:key="index">
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ item.name }}</td>
             <td>{{ item.type }}</td>
             <td>
-              <input type="checkbox" id="one" name="ch" v-model="checkedNames" :value="item"/>
+              <input
+                type="checkbox"
+                id="one"
+                name="ch"
+                v-model="checkedNames"
+                :value="item"
+              />
             </td>
           </tr>
         </tbody>
@@ -47,25 +50,37 @@
     </div>
     <div id="action">
       <div id="btn" @click="funtionNext()">Next</div>
-      <div id="btn" v-on:click="load">Upload Smart Contract</div>
+      <div id="btn" @click="upLoad">Upload Smart Contract</div>
       <div id="btn" @click="routing('back')">Back</div>
     </div>
 
-    <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" />
+    <!-- <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" /> -->
+    <div id="showConfirmation" v-if="showConfirmation">
+      <div id="removeSC-holder">
+        <confirm
+          @cancel="closeConfirm"
+          @confirm="routing('uploadfile')"
+          :dialog="upLoadDialog"
+        />
+      </div>
+    </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
-import Popup from "./Popup.vue";
+// import Popup from "./Popup.vue";
 import { mapActions, mapGetters } from "vuex";
+import UpLoadFile from "../../../components/UpLoadFile.vue";
 export default {
   data() {
     return {
-      selected: '0',
+      selected: "0",
       isOpen: false,
       info: null,
-      checkedNames: []
+      checkedNames: [],
+      //show dialog
+      showConfirmation: false,
+      upLoadDialog: {},
     };
   },
   mounted() {
@@ -84,13 +99,13 @@ export default {
     },
     routing(param) {
       if (param == "add") {
-        this.$store.commit("SetSelectedSC", this.checkedNames)
+        this.$store.commit("SetSelectedSC", this.checkedNames);
         this.$router.push({ name: "ContextOfSmartContract" });
-        this.$store.commit("setIndex", 3); 
+        this.$store.commit("setIndex", 3);
       }
       if (param == "back") {
         this.$router.push({ name: "ListOfCheckedTransactions" });
-        this.$store.commit("setIndex", 1);      
+        this.$store.commit("setIndex", 1);
       }
       if (param == "uploadfile") {
         this.$router.push({ name: "UpLoadSc" });
@@ -125,17 +140,17 @@ export default {
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-    filterlist(){
+    filterlist() {
       const { selected } = this;
-      if (selected === "0") return this.getlistSmartContract; 
-      var items = []; 
+      if (selected === "0") return this.getlistSmartContract;
+      var items = [];
       this.getlistSmartContract.forEach(function (item) {
-        if (item.type === selected ){
+        if (item.type === selected) {
           items.push(item);
         }
-      })
-      return items;  
-    }
+      });
+      return items;
+    },
     // return k;
   },
   components: {
