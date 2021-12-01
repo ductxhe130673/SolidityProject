@@ -20,18 +20,15 @@
               <th>
                 Contract Name
                 <span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('asName')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('asName')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('deName')"
                 /></span>
               </th>
             </tr>
-            <tr v-for="(item , index) in filterSC" :key="index">
-              <td>{{ index+1 }}</td>
+            <tr v-for="(item, index) in filterSC" :key="index">
+              <td>{{ index + 1 }}</td>
               <td>{{ item }}</td>
             </tr>
           </table>
@@ -45,7 +42,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          :value= "this.context.name"
+          v-model="this.context"
         />
       </div>
     </div>
@@ -56,7 +53,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          value="Integer Overflow"
+          v-model="selected_vuls.name"
         />
       </div>
     </div>
@@ -120,35 +117,26 @@
       >
         Generate
       </button>
-      <button
-        v-if="step == 'check'"
-        class="btn btn-primary-outline"
-        @click="check"
-      >
+      <button v-if="step == 'check'" class="btn btn-primary-outline" @click="check">
         Check
       </button>
-      <button v-if="step == 'finish'" class="btn btn-primary-outline">
-        Next
-      </button>
-      <button class="btn btn-primary-outline" @click="navigate('back')">
-        Back
-      </button>
+      <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
+      <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
     </div>
   </div>
 </template>
 
 <script>
 import CheckService from "../services/check.service";
-import  { GetLtl }  from "../services/data";
-
+import { GetLtl } from "../services/data";
 
 export default {
   data() {
     return {
       step: "initial",
       list_selected_sc: [],
-      list_selected_vuls: [],
-      context: [],
+      selected_vuls: this.$store.state.data.data.selectedTemplate,
+      context: this.$store.state.data.data.selectedContext.name,
       user: { user_name: "Billy Tran" },
       error: true,
       view: "",
@@ -160,7 +148,7 @@ export default {
       currentSC: null,
     };
   },
-  beforeMount(){
+  beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.fetchLTLProp();
   },
@@ -183,7 +171,7 @@ export default {
     },
     async fetchLTLProp() {
       this.ltlProperty = await GetLtl();
-      console.log('hihi', this.ltlProperty);
+      console.log("hihi", this.ltlProperty);
     },
     navigate(param) {
       if (param == "config") {
@@ -343,19 +331,16 @@ export default {
     },
   },
   mounted() {
-    this.context = this.$store.state.data.data.selectedContext;
-    // console.log('--hihiltl',ltlProperty);
-    this.list_selected_vuls =
-      this.$store.getters["data/GetSelectedVulnerbility"];
+    this.selected_vuls = this.$store.state.data.data.selectedTemplate;
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {
-    filterSC(){
-      var listSC = []; 
+    filterSC() {
+      var listSC = [];
       this.list_selected_sc.forEach(function (item) {
-          listSC.push(item.name);
-      })
-      return listSC;  
+        listSC.push(item.name);
+      });
+      return listSC;
     },
     done_result() {
       return this.$store.getters.Getrs;
@@ -377,10 +362,9 @@ export default {
 </script>
 
 <style scoped>
-#main{
+#main {
   height: 100%;
   width: 100%;
-  
 }
 #header {
   text-align: center;
@@ -419,8 +403,7 @@ export default {
   margin: 0 10%;
 }
 #locate-1 {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border: 1px solid #d9edf7;
   border-radius: 10px;
 }
@@ -540,8 +523,7 @@ export default {
   width: 60%;
   margin: 0 auto;
   padding: 3% 2%;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border: 1px solid #d9edf7;
   border-radius: 10px;
   display: flex;

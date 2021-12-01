@@ -11,7 +11,7 @@
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Type</label>
           <select class="form-select" id="inputGroupSelect01" v-model="selected">
-            <option value="common" >Common</option>
+            <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
             <option value="0">All</option>
@@ -68,11 +68,21 @@ export default {
       checkedNames: []
     };
   },
-  mounted(){
+  mounted() {
     this.checkedNames = this.$store.state.data.data.selectedSc;
   },
   methods: {
-   routing(param) {
+    upLoad() {
+      this.upLoadDialog = {
+        title: "Choose a new Smart Contract file",
+        confirmbtn: "OK",
+      };
+      this.showConfirmation = true;
+    },
+    closeConfirm() {
+      this.showConfirmation = false;
+    },
+    routing(param) {
       if (param == "add") {
         this.$store.commit("SetSelectedSC", this.checkedNames)
         this.$router.push({ name: "ContextOfSmartContract" });
@@ -129,7 +139,8 @@ export default {
     // return k;
   },
   components: {
-    Popup,
+    // Popup,
+    confirm: UpLoadFile,
   },
 };
 </script>
@@ -155,8 +166,7 @@ h1 {
 }
 
 .atable {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: 40px;
   padding-bottom: 5%;
   border: 1px solid #d9edf7;
@@ -195,5 +205,20 @@ div#main {
 
 .type {
   margin-top: 50px;
+}
+/*---- showConfirmation */
+#showConfirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+}
+#removeSC-holder {
+  margin-top: 200px;
 }
 </style>

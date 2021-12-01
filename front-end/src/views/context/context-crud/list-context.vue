@@ -3,11 +3,7 @@
     <!-- btn delete -->
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
-        <confirm
-          @cancel="closeConfirm"
-          @confirm="deleteC()"
-          :dialog="alertDialog"
-        />
+        <confirm @cancel="closeConfirm" @confirm="deleteC()" :dialog="alertDialog" />
       </div>
     </div>
     <div class="row align-items-md-center">
@@ -90,7 +86,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.context_type }}</td>
-            <td>{{ data.date }}</td>
+            <td>{{ data.createdDate }}</td>
             <td class="align-items">
               {{ data.description }}
               <span class="col" id="btn">
@@ -160,17 +156,18 @@ export default {
       return items;
     },
   },
- 
+
   methods: {
-    getDate(){
+    getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    async DeleteContext(cid) {
-      await DeleteContext(cid);
-    },
+    // async DeleteContext(cid) {
+    //   return await DeleteContext(cid);
+    // },
     moment,
     async initData() {
       this.list_context = await GetAllContext();
+      console.log(this.list_context);
     },
     goAdd() {
       this.$router.push({
@@ -185,7 +182,6 @@ export default {
         name: "EditContext",
         params: { id: cid, parent_path: "/list-context" },
       });
-
     },
     // deleteC() {
     //   this.alertDialog = {
@@ -201,12 +197,17 @@ export default {
     },
     deleteContext(cid) {
       if (
-        confirm(
-          "Do you want to delete the Smart Contract out of the system?"
-        ) === true
+        confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
-        this.DeleteContext(cid);
-        this.$router.go(0);
+        DeleteContext(cid).then((data) => {
+          this.initData();
+          console.log("-----------------", data);
+        });
+        // this.DeleteContext(cid).then((data) => {
+        //   this.initData();
+        //   console.log("-----------------", data);
+        // });
+        // this.$router.go(0);
       }
     },
   },

@@ -1,8 +1,7 @@
 <template>
   <div id="editor">
     <div class="body">
-      <div class="title">
-      </div>
+      <div class="title"></div>
       <div class="btn">
         <button class="clear" @click="clear()">Clear</button>
       </div>
@@ -17,7 +16,9 @@
             contenteditable=""
             @keyup="getCode"
           >
-          <span v-for="ltl in codearr" :key="ltl" :class="{opr: ltl[0]=='opr'}">{{getSubString(ltl[1], ltl[2])}}</span>
+            <span v-for="ltl in codearr" :key="ltl" :class="{ opr: ltl[0] == 'opr' }">{{
+              getSubString(ltl[1], ltl[2])
+            }}</span>
           </div>
         </section>
       </div>
@@ -26,7 +27,6 @@
 </template>
 
 <script>
-
 export default {
   props: ["ltlcode", "codearr"],
   name: "editor",
@@ -36,24 +36,24 @@ export default {
     };
   },
   methods: {
-    getSubString(from, to){
-      return this.ltlcode.substring(from, to)
+    getSubString(from, to) {
+      return this.ltlcode.substring(from, to);
     },
     clear() {
-       this.code = "";
-       this.isSaved = false;
+      this.code = "";
+      this.isSaved = false;
     },
-    getCode(){
+    getCode() {
       var el = document.getElementById("textarea-input");
-      var ltl = ""
-      if(el.children.length > 0){
-        el.children.forEach(el => {ltl = ltl.concat(el.innerHTML)})
-      }else ltl = el.innerHTML
-      this.code = ltl
-      this.$emit('update', this.code)
-      console.log(this.codearr)
-      console.log(this.ltlcode)
-    }
+      var ltl = "";
+      if (el.children.length > 0) {
+        el.children.forEach((el) => {
+          ltl = ltl.concat(el.innerHTML);
+        });
+      } else ltl = el.innerHTML;
+      this.code = ltl;
+      this.$emit("update", this.code);
+    },
   },
 };
 </script>
@@ -69,8 +69,7 @@ export default {
   position: absolute;
   right: 30px;
   top: 85px;
-  box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px,
-    rgb(27 31 35 / 15%) 0px 0px 0px 1px;
+  box-shadow: rgb(0 0 0 / 2%) 0px 1px 3px 0px, rgb(27 31 35 / 15%) 0px 0px 0px 1px;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -148,7 +147,7 @@ export default {
   padding-left: 15px;
   box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 12%) 0px 1px 2px;
 }
-.opr{
+.opr {
   color: red;
   background-color: white;
 }
