@@ -1,6 +1,20 @@
 <template>
   <div id="main">
-    <div id="header">Update the Context</div>
+    <div class="row align-items-md-center" style="padding-top: 4%; padding-bottom: 2%">
+      <div class="col-2">
+        <span>
+          <a href="/" class="link-primary text-decoration-underline">Home</a> >
+          <a
+            href="http://192.168.1.2:8080/list-context"
+            class="link-primary text-decoration-underline"
+            >Context</a
+          >
+          >
+          <a href="" class="link-primary text-decoration-underline">Edit Context</a></span
+        >
+      </div>
+      <div class="col-8 text-center"><h1>Update the Context</h1></div>
+    </div>
     <div class="body">
       <div class="row" id="name-section">
         <div class="title col-2">Name</div>

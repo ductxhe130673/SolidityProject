@@ -105,7 +105,9 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="editSC(item.sid, item.name, item.content, item.description, item.type)"
+                  @click="
+                    editSC(item.sid, item.name, item.content, item.description, item.type)
+                  "
                 >
                   Edit
                 </button>
@@ -149,35 +151,6 @@
       </div>
     </div>
   </div>
-  <!-- 
-    <div id="amsb-footer">
-      <div id="itb-entries">Show {{ numOfRecod }}/{{ numOfItems }} entries</div>
-      <div id="itb-cnpage">
-        <i class="material-icons" id="itb-first-page-icon" @click="goPage(1)"
-          >first_page</i
-        >
-        <i
-          class="material-icons"
-          id="itb-pre-page-icon"
-          @click="goPage(pageNum > 1 ? pageNum - 1 : 1)"
-          >chevron_left</i
-        >
-        <div id="itb-cnpage-count">{{ countPageNum }}</div>
-        <i
-          class="material-icons"
-          id="itb-next-page-icon"
-          @click="goPage(pageNum < numOfPage ? pageNum + 1 : numOfPage)"
-          >chevron_right</i
-        >
-        <i
-          class="material-icons"
-          id="itb-last-page-icon"
-          @click="goPage(numOfPage)"
-          >last_page</i
-        >
-      </div>
-    </div>
-   -->
 </template>
 
 <script>
@@ -216,7 +189,7 @@ export default {
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.getlistSmartContract;
-      console.log('this.getlistSmartContract',this.getlistSmartContract);
+      console.log("this.getlistSmartContract", this.getlistSmartContract);
       var items = [];
       this.getlistSmartContract.forEach(function (item) {
         if (item.type === selected) {
@@ -321,12 +294,6 @@ export default {
     },
 
     deleteSC(sc_id) {
-      // this.showConfirmation = true;
-      // this.alertDialog = {
-      //   title: "Alert",
-      //   message: "",
-      //   confirmbtn: "Yes",
-      // };
       if (
         confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
