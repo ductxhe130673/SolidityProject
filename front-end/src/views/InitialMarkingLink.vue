@@ -136,10 +136,10 @@
 
 <script>
 import { GetGloLocArgOfSmartContract } from "../services/data";
-import FunctionTable from "./initmarking/FunctionTable.vue";
+import FunctionTableResult from "./initmarking/FunctionTableResult.vue";
 export default {
   components: {
-    "function-table": FunctionTable,
+    "function-table": FunctionTableResult,
   },
   data() {
     return {
@@ -257,7 +257,7 @@ export default {
         console.log("this.smart_contract_infors", this.smart_contract_infors);
       }
       if (param == "back") {
-        this.$router.push({ name: "LTLCheckOption" });
+        this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", 4);
       }
     },

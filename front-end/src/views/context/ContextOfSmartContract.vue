@@ -13,7 +13,7 @@
           v-model="selectedContext"
         >
           <option>--- Select Context ---</option>
-          <option v-for="c in contexts" :key="c" :value="c">
+          <option v-for="c in contexts" :key="c.cid" :value="c">
             {{ c.name }}
           </option>
         </select>
@@ -35,7 +35,7 @@
       <div class="col-10">
         <span>There are several options:</span>
         <ul>
-          <li v-for="c in contexts" :key="c">{{ c.description }}</li>
+          <li v-for="(c, index) in contexts" :key="index">{{ c.description }}</li>
         </ul>
       </div>
     </div>

@@ -11,7 +11,7 @@
       <div class="col-2">Template</div>
       <div class="col-10">
         <select name="" class="form-select" v-model="template">
-          <option v-for="item in listTemplates" :key="item" :value="item">
+          <option v-for="item in listTemplates" :key="item.lid" :value="item">
             {{ item.name }}
           </option>
         </select>
