@@ -1,7 +1,7 @@
 <template>
   <div id="main" class="container">
     <div id="header">
-      <h1>Select Smart Contracts</h1>
+      <h1>Select Smart Contracts </h1>
     </div>
 
     <div class="row type">
@@ -10,12 +10,8 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Type</label>
-          <select
-            class="form-select"
-            id="inputGroupSelect01"
-            v-model="selected"
-          >
-            <option value="common">Common</option>
+          <select class="form-select" id="inputGroupSelect01" v-model="selected">
+            <option value="common" >Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
             <option value="0">All</option>
@@ -35,87 +31,56 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in filterlist" v-bind:key="index">
+          <tr
+            v-for="(item, index) in filterlist"
+            v-bind:key="index"
+          >
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ item.name }}</td>
             <td>{{ item.type }}</td>
             <td>
-              <input
-                type="checkbox"
-                id="one"
-                name="ch"
-                v-model="checkedNames"
-                :value="item"
-              />
+              <input type="checkbox" id="one" name="ch" v-model="checkedNames" :value="item"/>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <!-- <div id="action">
+    <div id="action">
       <div id="btn" @click="funtionNext()">Next</div>
-      <div id="btn" @click="upLoad">Upload Smart Contract</div>
+      <div id="btn" v-on:click="load">Upload Smart Contract</div>
       <div id="btn" @click="routing('back')">Back</div>
-    </div> -->
-    <div id="processing-btn">
-      <div class="pr-button" @click="funtionNext()">Next</div>
-      <div class="pr-button" @click="upload">Upload Smart Contract</div>
-      <div class="pr-button" @click="routing('back')">Back</div>
     </div>
 
-    <!-- <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" /> -->
-    <div id="showConfirmation" v-if="showConfirmation">
-      <div id="removeSC-holder">
-        <confirm
-          @cancel="closeConfirm"
-          @confirm="routing('uploadfile')"
-          :dialog="upLoadDialog"
-        />
-      </div>
-    </div>
+    <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" />
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
-// import Popup from "./Popup.vue";
+import Popup from "./Popup.vue";
 import { mapActions, mapGetters } from "vuex";
-import UpLoadFile from "../../../components/UpLoadFile.vue";
 export default {
   data() {
     return {
-      selected: "0",
+      selected: '0',
       isOpen: false,
       info: null,
-      checkedNames: [],
-      //show dialog
-      showConfirmation: false,
-      upLoadDialog: {},
+      checkedNames: []
     };
   },
   mounted(){
     this.checkedNames = this.$store.state.data.data.selectedSc;
   },
   methods: {
-    upLoad() {
-      this.upLoadDialog = {
-        title: "Choose a new Smart Contract file",
-        confirmbtn: "OK",
-      };
-      this.showConfirmation = true;
-      
-    },
-    closeConfirm() {
-      this.showConfirmation = false;
-    },
-    routing(param) {
+   routing(param) {
       if (param == "add") {
-        this.$store.commit("SetSelectedSC", this.checkedNames);
+        this.$store.commit("SetSelectedSC", this.checkedNames)
         this.$router.push({ name: "ContextOfSmartContract" });
-        this.$store.commit("setIndex", 3);
+        this.$store.commit("setIndex", 3); 
       }
       if (param == "back") {
         this.$router.push({ name: "ListOfCheckedTransactions" });
-        this.$store.commit("setIndex", 1);
+        this.$store.commit("setIndex", 1);      
       }
       if (param == "uploadfile") {
         this.$router.push({ name: "UpLoadSc" });
@@ -132,9 +97,7 @@ export default {
       }
 
       if (!kt) {
-        alert(
-          "Please select a smart contract at least to go to the next step!"
-        );
+        alert("Please select a smart contract at least to go to the next step!");
       } else {
         this.routing("add");
       }
@@ -152,22 +115,21 @@ export default {
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-    filterlist() {
+    filterlist(){
       const { selected } = this;
-      if (selected === "0") return this.getlistSmartContract;
-      var items = [];
+      if (selected === "0") return this.getlistSmartContract; 
+      var items = []; 
       this.getlistSmartContract.forEach(function (item) {
-        if (item.type === selected) {
+        if (item.type === selected ){
           items.push(item);
         }
-      });
-      return items;
-    },
+      })
+      return items;  
+    }
     // return k;
   },
   components: {
-    // Popup,
-   confirm: UpLoadFile 
+    Popup,
   },
 };
 </script>
@@ -200,7 +162,7 @@ h1 {
   border: 1px solid #d9edf7;
   border-radius: 10px;
 }
-/* #btn {
+#btn {
   cursor: pointer;
   width: 18%;
   height: 2%;
@@ -225,35 +187,6 @@ h1 {
   display: flex;
   justify-content: space-between;
   width: 70%;
-} */
-/* button */
-#processing-btn{
-  width: 60%;
-  height: 120px;
-  margin-left: 20%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#processing-btn .pr-button {
-  cursor: pointer;
-  width: 20%;
-  height: 30px;
-  border: 1px solid #2196f3;
-  text-align: center;
-  color: #2196f3;
-  font-size: 13px;
-  line-height: 22px;
-  font-weight: 600;
-  padding-top: 4px;
-  border-radius: 4px;
-}
-#processing-btn .pr-button:hover {
-  background-color: #1079cf;
-  color: white;
-}
-.btn{
-  margin: 0 3%;
 }
 
 div#main {
@@ -262,20 +195,5 @@ div#main {
 
 .type {
   margin-top: 50px;
-}
-/*---- showConfirmation */
-#showConfirmation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  align-items: center;
-  justify-content: center;
-}
-#removeSC-holder {
-  margin-top: 200px;
 }
 </style>

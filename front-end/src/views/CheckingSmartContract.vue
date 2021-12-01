@@ -403,7 +403,6 @@ export default {
 #processing-btn button {
   cursor: pointer;
   width: 15%;
-  height: 2%;
   border: 1px solid #2196f3;
   text-align: center;
   color: #2196f3;
@@ -414,6 +413,7 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 4%;
+  margin-left: 10%;
 }
 .btn {
   margin: 0 10%;
