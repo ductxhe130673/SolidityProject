@@ -87,14 +87,18 @@ export default {
     },
     async clickHandler(action) {
       if (action == "save") {
-        await AddNewSmartContracts(
-          this.hashValue(this.nameSc),
-          this.nameSc,
-          this.options,
-          this.demoEditSC,
-          this.dateFormat
-        );
-        this.$router.push(this.$route.params.parent_path);
+        if (this.nameSc === "" || this.options === "") {
+          window.alert("Please input all field");
+        } else {
+          await AddNewSmartContracts(
+            this.hashValue(this.nameSc),
+            this.nameSc,
+            this.options,
+            this.demoEditSC,
+            this.dateFormat
+          );
+          this.$router.push(this.$route.params.parent_path);
+        }
       } else if (action == "cancel") {
         this.$router.push(this.$route.params.parent_path);
       }

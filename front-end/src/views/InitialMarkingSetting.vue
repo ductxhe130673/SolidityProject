@@ -211,8 +211,6 @@ export default {
   methods: {
     setArgument(arg) {
       this.selected_function.argument = arg;
-      console.log("arg", arg);
-      console.log("init_marking", this.init_marking);
     },
     changeSelected(value) {
       this.function_cell_selected = value;
@@ -244,10 +242,35 @@ export default {
     // },
     routing(param) {
       if (param == "save") {
-        this.$store.commit("SetInitialMarking", this.init_marking);
-        console.log("initMarkingstore", this.$store.state.data.data.initialMarkingInfor);
-        this.$router.push({ name: "CheckSmartContract" });
-        this.$store.commit("setIndex", 5);
+        if (!this.init_marking.NumberOfUser || !this.init_marking.Balance.type) {
+          alert("You must to input all field!!!");
+        } else if (
+          this.init_marking.Balance.type === "fixed" &&
+          !this.init_marking.Balance.fixed
+        ) {
+          alert("You must to input balance fixed!!!");
+        } else if (
+          (this.init_marking.Balance.type === "random" &&
+            !this.init_marking.Balance.random.from) ||
+          (this.init_marking.Balance.type === "random" &&
+            !this.init_marking.Balance.random.to)
+        ) {
+          alert("You must to input balance random!!!");
+        } else if (
+          this.init_marking.Balance.type === "map" &&
+          !this.init_marking.Balance.map
+        ) {
+          alert("You must to input balance map!!!");
+        } else if (
+          this.init_marking.Balance.type === "random" &&
+          this.init_marking.Balance.random.from >= this.init_marking.Balance.random.to
+        ) {
+          alert("From must be smaller than To");
+        } else {
+          this.$store.commit("SetInitialMarking", this.init_marking);
+          this.$router.push({ name: "CheckSmartContract" });
+          this.$store.commit("setIndex", 5);
+        }
       }
       if (param == "back") {
         this.$router.push({ name: "LTLCheckOption" });

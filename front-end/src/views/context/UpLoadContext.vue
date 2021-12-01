@@ -97,6 +97,8 @@ export default {
     },
     routing(param) {
       if (param == "OK") {
+        if (this.name === "" || this.type === "" || this.fileContent === "")
+          alert("Please input all field!!!");
         this.saveContextFile();
         this.$router.push({ name: "ContextOfSmartContract" });
       } else if (param == "cancel") {

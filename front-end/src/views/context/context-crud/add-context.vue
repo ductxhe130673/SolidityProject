@@ -104,7 +104,9 @@ export default {
         if (this.fileUpload === "") {
           alert("You have to select file to update!!!");
         }
-
+        if (this.name === "" || this.options === "") {
+          alert("Name and Type are must not empty!!!");
+        }
         const reader = new FileReader();
         reader.readAsText(this.fileUpload);
         reader.onload = (e) => {
