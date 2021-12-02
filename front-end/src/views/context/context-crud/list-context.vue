@@ -10,8 +10,7 @@
       <div class="col-2">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Context</a>
-          > <a>List</a></span
+          <a href="" class="link-primary text-decoration-underline">Context</a></span
         >
       </div>
       <div class="col-8 text-center"><h1>Context List</h1></div>
@@ -161,9 +160,9 @@ export default {
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    async DeleteContext(cid) {
-      await DeleteContext(cid);
-    },
+    // async DeleteContext(cid) {
+    //   return await DeleteContext(cid);
+    // },
     moment,
     async initData() {
       this.list_context = await GetAllContext();
@@ -183,14 +182,6 @@ export default {
         params: { id: cid, parent_path: "/list-context" },
       });
     },
-    // deleteC() {
-    //   this.alertDialog = {
-    //     title: "Alert",
-    //     message: "Do you want to delete the Context out of the system?",
-    //     confirmbtn: "Yes",
-    //   };
-    //   this.showConfirmation = true;
-    // },
 
     closeConfirm() {
       this.showConfirmation = false;
@@ -199,8 +190,10 @@ export default {
       if (
         confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
-        this.DeleteContext(cid);
-        this.$router.go(0);
+        DeleteContext(cid).then((data) => {
+          this.initData();
+          console.log("-----------------", data);
+        });
       }
     },
   },

@@ -4,7 +4,7 @@
     <div class="main">
       <div class="content">
         <p v-for="(item, index) in getListCheck" v-bind:key="index">
-            {{item[0]}}
+          {{ item[0] }}
         </p>
       </div>
     </div>
@@ -13,12 +13,22 @@
       <div class="container">
         <div class="row up">
           <div class="col-5">
-            <button type="button" class="btn btn-outline-primary" @click="routing('start')">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="routing('start')"
+            >
               Start a new checking session
             </button>
           </div>
           <div class="col-5 right">
-            <button type="button" class="btn btn-outline-primary" @click="routing('back')">Back</button>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="routing('back')"
+            >
+              Back
+            </button>
           </div>
         </div>
       </div>
@@ -29,12 +39,12 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  methods:{
-    routing(param){
-      if(param=='back'){
-        this.$router.push({name:"ListOfCheckedTransactions"})
+  methods: {
+    routing(param) {
+      if (param == "back") {
+        this.$router.push({ name: "ListOfCheckedTransactions" });
       }
-      if(param=='start'){
+      if (param == "start") {
         this.$router.push({ name: "SelectSmartContract" });
       }
     },

@@ -19,13 +19,30 @@ const state = {
         ltlProperty : [],
         initialMarkingInfor: {
             NumberOfUser: null,
-            Balance: {
-                type: "fixed",
-                fixed: null,
-                random: { from: null, to: null },
-                map: null
-            },
-            Funtion_params: {}
+        Balance: {
+          type: "fixed",
+          fixed: null,
+          random: { from: null, to: null },
+          map: null,
+        },
+        smart_contracts: [
+          {
+            sid: null,
+            name: null,
+            functions: [
+              {
+                fid: null,
+                name: null,
+                sender_value: { from: null, to: null },
+                arguments: {
+                  name: null,
+                  from: null,
+                  to: null,
+                },
+              },
+            ],
+          },
+        ],
         },
     },
     views: {

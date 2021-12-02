@@ -45,7 +45,6 @@ export class AuthService {
     try {
       const response = await axios.post(`${API_URL}/auth/register`,
         { username, email, password }, { useCredentails: true })
-      console.log(response)
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       throw new ErrorWrapper(error)
@@ -161,8 +160,6 @@ function _resetAuthData() {
 }
 
 function _setAuthData({ accessToken, exp } = {}) {
-  console.log(accessToken)
-  console.log(exp)
   AuthService.setRefreshToken('true')
   AuthService.setBearer(accessToken)
   $store.commit('auth/SET_ATOKEN_EXP_DATE', exp)

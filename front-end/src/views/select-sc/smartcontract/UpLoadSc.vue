@@ -6,7 +6,7 @@
     <div class="body">
       <div class="name-area area">
         <h2 class="label">Name</h2>
-        <input class="input-name input-type" type="text" v-model="nameSc" />
+        <input class="input-name input-type" type="text" v-model="nameSC" />
       </div>
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
@@ -17,7 +17,7 @@
               v-model="selectOption"
               class="radio"
               name="group1"
-              value="Common"
+              value="common"
               :disabled="!isSuperior"
             />Common
             <input
@@ -25,14 +25,14 @@
               v-model="selectOption"
               class="radio"
               name="group1"
-              value="Pending"
+              value="pending"
             />Pending
             <input
               type="radio"
               v-model="selectOption"
               class="radio"
               name="group1"
-              value="Private"
+              value="private"
             />Private
           </fieldset>
         </div>
@@ -48,8 +48,10 @@
       </div>
       <div class="button-area area">
         <div class="button-add-cancell">
-          <button id="button-add" type="button" @click="routing('save')">Save</button>
-          <button id="button-cancel" type="button" @click="routing('cancel')">
+          <button id="button-add" type="button" @click="clickHandler('save')">
+            Save
+          </button>
+          <button id="button-cancel" type="button" @click="clickHandler('cancel')">
             Cancel
           </button>
         </div>
@@ -59,38 +61,51 @@
 </template>
 
 <script>
+import moment from "moment";
+import { AddNewSmartContracts } from "../../../services/data";
 import AceEditor from "../../../components/AceEditor.vue";
 export default {
   data() {
     return {
       selectOption: "",
-      demoEditSC: this.$store.state.data.uploadSCFile.name,
+      demoEditSC: this.$store.state.data.contentFile,
+      dateFormat: "",
+      nameSC: "",
     };
   },
   components: { AceEditor },
+  mounted() {
+    this.getData();
+    console.log("this.$store.state.data.contentFile", this.$store.state.data.contentFile);
+  },
   methods: {
-    routing(param) {
-      if (param == "save") {
-        this.$router.push({ name: "SelectSmartContract" });
-        this.$store.commit("setFileUploadSC", {});
-      }
-      if (param == "cancel") {
-        this.$router.push({ name: "SelectSmartContract" });
-        this.$store.commit("setFileUploadSC", {});
-      }
-    },
     updateContent(value) {
       this.demoEditSC = value;
     },
+    getData() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+      this.demoEditSC = this.$store.state.data.contentFile;
+    },
+    async clickHandler(action) {
+      if (action == "save") {
+        if (this.nameSc === "" || this.demoEditSC === "" || this.selectOption === "") {
+          window.alert("Please input all field");
+        } else {
+          await AddNewSmartContracts(
+            this.hashValue(this.nameSc),
+            this.nameSC,
+            this.selectOption,
+            this.demoEditSC,
+            this.dateFormat
+          );
+          this.$router.push({ name: "SelectSmartContract" });
+        }
+      } else if (action == "cancel") {
+        this.$router.push({ name: "SelectSmartContract" });
+      }
+    },
+
     computed: {
-      selectOption: {
-        get: function () {
-          return this.options;
-        },
-        set: function (value) {
-          this.options = value;
-        },
-      },
       isSuperior() {
         return this.$store.state.user.currentUser.role == "admin";
       },

@@ -94,12 +94,12 @@
             <ul class="nav nav-tabs">
               <li
                 class="nav-item d-inline-block text-truncate"
-                v-for="item in list_smart_contract"
-                :key="item.id"
+                v-for="(item, index) in list_smart_contract"
+                :key="item.sid"
               >
                 <a
                   class="nav-link"
-                  v-on:click="selectSC(item.sid)"
+                  v-on:click="selectSC(item.sid, index)"
                   v-bind:class="{ active: item.sid == selected_sc }"
                   >{{ item.name }}</a
                 >
@@ -123,7 +123,8 @@
 
                 <div
                   class="table-row"
-                  v-for="(func, index) in func"
+                  v-for="(func, index) in init_marking.smart_contracts[selectedSCIndex]
+                    .functions"
                   v-bind:key="index"
                   :class="{ even_row: index % 2 == 0 }"
                 >
@@ -138,7 +139,11 @@
               </div>
             </div>
             <div v-if="function_cell_selection == 'params'">
-              <function-table :list_argument="getFunctionArgument" />
+              <function-table
+                :list_argument="getFunctionArgument"
+                @changeSelected="changeSelected"
+                @setArgument="setArgument"
+              />
             </div>
           </div>
         </div>
@@ -163,26 +168,25 @@ export default {
       radio_seleted: "fixed",
       function_cell_selected: "function",
       list_smart_contract: [],
-      smart_contract_infors: {},
-      selected_sc: null,
-      selected_function: null,
+      smart_contract_infors: this.$store.state.data.data.selectedSCInfor,
+      selected_sc: null, //sc selected
+      selected_function: null, //function selected
+      selectedSCIndex: 0,
       init_marking: {},
-      functionSC: [],
-      func: {},
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc;
-    this.getFuntionSC(2);
-    // let smi = this.$store.state.data.data.selectedSCInfor;
-    // for (let i = 0; i < smi.length; i++) {
-    //   this.smart_contract_infors[smi[i].sid] = smi[i].functions;
-    // }
-    this.initInitialMarkingHolder();
+    this.getFuntionSC(this.list_smart_contract[0].sid);
+    // this.initInitialMarkingHolder();
 
     if (this.list_smart_contract.length > 0) {
       this.selected_sc = this.list_smart_contract[0].sid;
     }
+  },
+  mounted() {
+    this.setSCInfor();
+    this.init_marking = this.$store.state.data.data.initialMarkingInfor;
   },
   watch: {
     init_marking: {
@@ -196,87 +200,77 @@ export default {
     getSelectedRadio() {
       return this.init_marking.Balance.type;
     },
-    getSelectedScFunc() {
-      if (this.selected_sc in this.smart_contract_infors) {
-        return this.smart_contract_infors[this.selected_sc];
-      } else {
-        return [];
-      }
-    },
+
     function_cell_selection() {
       return this.function_cell_selected;
     },
     getFunctionArgument() {
-      console.log("this.selected_function", this.selected_function);
       return this.selected_function;
     },
   },
   methods: {
-    async getFuntionSC(sid) {
-      const fun = await GetGloLocArgOfSmartContract(sid);
-      this.func = fun.data.functions;
-      console.log("this.func", this.func);
+    setArgument(arg) {
+      this.selected_function.argument = arg;
     },
-    selectSC(sid) {
+    changeSelected(value) {
+      this.function_cell_selected = value;
+    },
+
+    getFuntionSC(sid) {
+      return GetGloLocArgOfSmartContract(sid);
+      // console.log("fun.functions", fun);
+    },
+    selectSC(sid, index) {
       if (this.selected_sc != sid) {
         this.selected_sc = sid;
-        this.getFuntionSC(sid);
-        console.log("init_marking", this.init_marking);
+        this.selectedSCIndex = index;
       }
-      console.log("this.func", this.func);
     },
-    updateInitMarking(val) {
-      this.function_cell_selected = "function";
-      this.selected_function = null;
-      this.init_marking.Funtion_params[this.selected_sc].functions[
-        this.selected_function
-      ] = val;
-    },
-    initInitialMarkingHolder() {
-      this.init_marking = this.$store.state.data.data.initialMarkingInfor;
+    async setSCInfor() {
       for (let i = 0; i < this.list_smart_contract.length; i++) {
-        let sm = this.list_smart_contract[i]; //get tung smart contract
-
-        if (!(sm.sid in this.init_marking.Funtion_params)) {
-          this.init_marking.Funtion_params[sm.sid] = { name: sm.name, functions: {} };
-        }
-
-        if (sm.sid in this.smart_contract_infors) {
-          let sm_func_infor = this.smart_contract_infors[sm.sid];
-          for (let j = 0; j < sm_func_infor.length; j++) {
-            let sm_func = sm_func_infor[j];
-            if (!(sm_func.fid in this.init_marking.Funtion_params[sm.sid].functions)) {
-              this.init_marking.Funtion_params[sm.sid].functions[sm_func.fid] = {
-                name: sm_func.name,
-                sender_value: { from: null, to: null },
-                arguments: {},
-              };
-            }
-            let sm_func_args = sm_func.argument;
-            for (let m = 0; m < sm_func_args.length; m++) {
-              let arg = sm_func_args[m];
-              if (
-                !(
-                  arg.fid in
-                  this.init_marking.Funtion_params[sm.sid].functions[sm_func.fid]
-                    .arguments
-                )
-              ) {
-                this.init_marking.Funtion_params[sm.sid].functions[sm_func.fid].arguments[
-                  arg.aid
-                ] = { name: arg.name, from: null, to: null };
-              }
-            }
-          }
-        }
+        this.init_marking.smart_contracts[i] = await this.getFuntionSC(
+          this.list_smart_contract[i].sid
+        );
       }
     },
+    // updateInitMarking(val) {
+    //   this.function_cell_selected = "function";
+    //   this.selected_function = null;
+    //   this.init_marking.Funtion_params[this.selected_sc].functions[
+    //     this.selected_function
+    //   ] = val;
+    // },
     routing(param) {
       if (param == "save") {
-        this.$store.commit("SetInitialMarking", this.init_marking);
-        this.$router.push({ name: "CheckSmartContract" });
-        this.$store.commit("setIndex", 5);
-        console.log("this.smart_contract_infors", this.smart_contract_infors);
+        if (!this.init_marking.NumberOfUser || !this.init_marking.Balance.type) {
+          alert("You must to input all field!!!");
+        } else if (
+          this.init_marking.Balance.type === "fixed" &&
+          !this.init_marking.Balance.fixed
+        ) {
+          alert("You must to input balance fixed!!!");
+        } else if (
+          (this.init_marking.Balance.type === "random" &&
+            !this.init_marking.Balance.random.from) ||
+          (this.init_marking.Balance.type === "random" &&
+            !this.init_marking.Balance.random.to)
+        ) {
+          alert("You must to input balance random!!!");
+        } else if (
+          this.init_marking.Balance.type === "map" &&
+          !this.init_marking.Balance.map
+        ) {
+          alert("You must to input balance map!!!");
+        } else if (
+          this.init_marking.Balance.type === "random" &&
+          this.init_marking.Balance.random.from >= this.init_marking.Balance.random.to
+        ) {
+          alert("From must be smaller than To");
+        } else {
+          this.$store.commit("SetInitialMarking", this.init_marking);
+          this.$router.push({ name: "CheckSmartContract" });
+          this.$store.commit("setIndex", 5);
+        }
       }
       if (param == "back") {
         this.$router.push({ name: "LTLCheckOption" });
@@ -285,9 +279,11 @@ export default {
     },
     setFunctionParam(funct) {
       this.function_cell_selected = "params";
-      for (let i = 0; i < this.func.length; i++) {
-        if (this.func[i].fid === funct) this.selected_function = this.func[i];
-      }
+      this.selected_function = this.init_marking.smart_contracts[
+        this.selectedSCIndex
+      ].functions.find((item) => {
+        return item.fid === funct;
+      });
     },
   },
 };

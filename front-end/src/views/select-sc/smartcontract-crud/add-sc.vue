@@ -1,10 +1,11 @@
 <template>
   <div id="addsc">
     <div class="link">
-        <span>
-          <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
-          <a>List</a></span>
+      <span>
+        <a href="/" class="link-primary text-decoration-underline">Home</a> >
+        <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+        <a>List</a></span
+      >
     </div>
     <div class="header">
       <div class="title"><h1>Create a new Smart Contract code</h1></div>
@@ -16,78 +17,38 @@
       </div>
       <div class="type-area area">
         <div class="label">Smart Contract Type</div>
-        
+
         <!-- <div class="option input-type" v-if="author === 'admin'"> -->
-          <div class="option input-type" v-if="isAdmin">
+        <div class="option input-type" v-if="isAdmin">
           <select class="form-select" id="inputGroupSelect01" v-model="options">
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
         </div>
-
-<!-- 
-        <div class="option input-type" v-if="!isAdmin">
-          <div class="common-option" v-if="isSuperior">
-            <label for="common">Common</label>
-            <input
-              class="radio"
-              id="common"
-              value="common"
-              type="radio"
-              v-model="options"
-            />
-          </div>
-          <div class="common-option">
-            <label for="common">Pending</label>
-            <input
-              class="radio"
-              id="common"
-              value="pending"
-              type="radio"
-              v-model="options"
-            />
-          </div>
-          <div class="private-option">
-            <label for="private">Private</label>
-            <input
-              class="radio"
-              id="private"
-              value="private"
-              type="radio"
-              v-model="options"
-            />
-          </div>
-        </div>
-         -->
-        
       </div>
       <div class="editor-area area" v-if="isAdmin">
-        <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)"/>
+        <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)" />
       </div>
-      
+
       <div v-if="!isAdmin">
-        <div class="editor-area area" >   
+        <div class="editor-area area">
           <div class="label">Content</div>
           <div class="AceEditor">
-            <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)"/>
+            <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)" />
           </div>
         </div>
         <div class="description">
           <div class="label">Description</div>
-            <textarea name="" id="" cols="30" rows="5"></textarea>
-          </div>
+          <textarea name="" id="" cols="30" rows="5"></textarea>
+        </div>
       </div>
       <div class="button-area area">
         <div class="button-add-cancell">
           <button id="button-add" type="button" @click="clickHandler('save')">
             Save
           </button>
-          <button
-            id="button-cancel"
-            type="button"
-            @click="clickHandler('cancel')"
-          >
+          <button id="button-cancel" type="button" @click="clickHandler('cancel')">
             Cancel
           </button>
         </div>
@@ -100,61 +61,58 @@
 import { AddNewSmartContracts } from "../../../services/data";
 // import {AceEditor} from "../../components/AceEditor.vue";
 import moment from "moment";
-import AceEditor from '../../../components/AceEditor.vue';
+import AceEditor from "../../../components/AceEditor.vue";
 export default {
-  components: {AceEditor},
+  components: { AceEditor },
   name: "AddSc",
   data() {
     return {
-      dateFormat:"",
+      dateFormat: "",
       nameSc: "",
-      options: '',
+      options: "",
       code: "",
       demoEditSC: "test add sc",
       isAdmin: true,
     };
   },
-  mounted(){
+  mounted() {
     this.getDate();
   },
   methods: {
-     getDate(){
-      this.dateFormat = moment().format('YYYY-MM-DD');
+    getDate() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    updateContent(value){
+    updateContent(value) {
       this.demoEditSC = value;
     },
     async clickHandler(action) {
       if (action == "save") {
-        // chưa chạy được res.status nên comment lại
-
-        // const res = await AddNewSmartContracts(
-        //   this.hashValue(this.nameSc),
-        //   this.nameSc,
-        //   this.options,
-        //   this.code
-        // );
-        // if (res.status && res.status === 200) {
-        //   this.$router.push(this.$route.params.parent_path);
-        // }
-        console.log(' this.dateFormat', this.dateFormat);
-        await AddNewSmartContracts(this.hashValue(this.nameSc), this.nameSc, this.options, this.demoEditSC, this.dateFormat);
-        this.$router.push(this.$route.params.parent_path);
-
+        if (this.nameSc === "" || this.options === "") {
+          window.alert("Please input all field");
+        } else {
+          await AddNewSmartContracts(
+            this.hashValue(this.nameSc),
+            this.nameSc,
+            this.options,
+            this.demoEditSC,
+            this.dateFormat
+          );
+          this.$router.push(this.$route.params.parent_path);
+        }
       } else if (action == "cancel") {
         this.$router.push(this.$route.params.parent_path);
       }
     },
   },
   computed: {
-    selectOption: {
-      get: function () {
-        return this.options;
-      },
-      set: function (value) {
-        this.options = value;
-      },
-    },
+    // selectOption: {
+    //   get: function () {
+    //     return this.options;
+    //   },
+    //   set: function (value) {
+    //     this.options = value;
+    //   },
+    // },
     isSuperior() {
       return this.$store.state.user.currentUser.role == "admin";
     },
@@ -204,7 +162,7 @@ a.router-link-active {
   flex-direction: column;
   align-items: center;
 }
-.link{
+.link {
   margin-right: 85%;
   font-size: 15px;
   margin-top: 20px;
@@ -222,7 +180,7 @@ a.router-link-active {
 .type-area {
   width: 500px;
 }
-.description{
+.description {
   display: flex;
   overflow: hidden;
   position: relative;
@@ -249,12 +207,12 @@ a.router-link-active {
   /* left: 40px; */
   display: flex;
 }
-.AceEditor{
+.AceEditor {
   height: 350px;
   margin-left: 185px;
 }
 /* textarea */
-textarea{
+textarea {
   width: 600px;
   height: 250px;
   margin-left: 160px;
@@ -303,5 +261,4 @@ label:hover {
 .private-option:hover {
   background-color: #bcc6d4;
 }
-
 </style>

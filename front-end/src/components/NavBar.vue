@@ -118,11 +118,11 @@ export default {
         this.$store.commit("setIndex", pageNum);
       }
       if (pageNum === 6) {
-        this.$router.push({ name: "ListOfCheckedTransactions" });
+        this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", pageNum);
       }
       if (pageNum === 7) {
-        this.$router.push({ name: "ListOfCheckedTransactions" });
+        this.$router.push({ name: "checkingresult31" });
         this.$store.commit("setIndex", pageNum);
       }
     },

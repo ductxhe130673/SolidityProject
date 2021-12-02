@@ -10,11 +10,7 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Type</label>
-          <select
-            class="form-select"
-            id="inputGroupSelect01"
-            v-model="selected"
-          >
+          <select class="form-select" id="inputGroupSelect01" v-model="selected">
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
@@ -87,7 +83,7 @@ export default {
       upLoadDialog: {},
     };
   },
-  mounted(){
+  mounted() {
     this.checkedNames = this.$store.state.data.data.selectedSc;
   },
   methods: {
@@ -97,7 +93,6 @@ export default {
         confirmbtn: "OK",
       };
       this.showConfirmation = true;
-      
     },
     closeConfirm() {
       this.showConfirmation = false;
@@ -127,9 +122,7 @@ export default {
       }
 
       if (!kt) {
-        alert(
-          "Please select a smart contract at least to go to the next step!"
-        );
+        alert("Please select a smart contract at least to go to the next step!");
       } else {
         this.routing("add");
       }
@@ -162,7 +155,7 @@ export default {
   },
   components: {
     // Popup,
-   confirm: UpLoadFile 
+    confirm: UpLoadFile,
   },
 };
 </script>
@@ -188,8 +181,7 @@ h1 {
 }
 
 .atable {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: 40px;
   padding-bottom: 5%;
   border: 1px solid #d9edf7;

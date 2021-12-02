@@ -11,8 +11,7 @@
       <div class="col-2">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">LTL</a>
-          > <a>List</a></span
+          <a href="" class="link-primary text-decoration-underline">LTL</a></span
         >
       </div>
       <div class="col-8 text-center"><h1>LTL Property Template List</h1></div>
