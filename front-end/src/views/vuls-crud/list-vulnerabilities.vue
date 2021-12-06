@@ -3,139 +3,134 @@
     <!-- btn delete -->
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
-        <confirm
-          @cancel="closeConfirm"
-          @confirm="deleteVul"
-          :dialog="alertDialog"
-        />
+        <confirm @cancel="closeConfirm" @confirm="deleteVul" :dialog="alertDialog" />
       </div>
     </div>
-    
+
     <div class="row align-items-md-center">
-      <div class="col-2 ">
+      <div class="col-2">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">LTL</a>
-          > <a>List</a></span
+          <a href="" class="link-primary text-decoration-underline">LTL</a></span
         >
       </div>
       <div class="col-8 text-center"><h1>LTL Property Template List</h1></div>
     </div>
     <div class="container">
-    <div class="row">
-      <div class="col " >
-        <p>Date</p>
-        <a-date-picker
-          :default-value="moment('01/01/2021', dateFormat)"
-          :format="dateFormat"
-        />
-      </div>
-      <div class="col"></div>
-      <div class="col"></div>
-      <div class="col"></div>
+      <div class="row">
+        <div class="col">
+          <p>Date</p>
+          <a-date-picker
+            :default-value="moment('01/01/2021', dateFormat)"
+            :format="dateFormat"
+          />
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
 
-      <div class="col">
-        <p>Type</p>
-        <div class="input-group mb-3">
-          <select class="form-select" id="inputGroup" v-model="selected">
-            <option value="type0">CSP</option>
-            <option value="type1">Vulnerability</option>
-          </select>
+        <div class="col">
+          <p>Type</p>
+          <div class="input-group mb-3">
+            <select class="form-select" id="inputGroup" v-model="selected">
+              <option value="type0">CSP</option>
+              <option value="type1">Vulnerability</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <table class="table table-sm">
-        <thead>
-          <tr>
-            <th>
-              #
-              <span
-                ><a-icon id="icon" type="caret-up" />
-                <a-icon id="icon" type="caret-down" />
-              </span>
-            </th>
+      <div class="row">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>
+                #
+                <span
+                  ><a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </th>
 
-            <th>
-              Name<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
-            <th>
-              Type<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
-            <th>
-              Date<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
-            <th style="width: 50%">
-              Description<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
-             <th>
-              <span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
+              <th>
+                Name<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th>
+                Type<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th>
+                Date<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th style="width: 50%">
+                Description<span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+              <th>
+                <span
+                  ><a-icon id="icon" type="caret-up" /><a-icon
+                    id="icon"
+                    type="caret-down"
+                /></span>
+              </th>
+            </tr>
+          </thead>
+          <tr v-for="(data, index) in filterlist" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.template_type }}</td>
+            <td>{{ data.createdDate }}</td>
+            <td>{{ data.description }}</td>
+            <td class="align-items">
+              <span class="col" id="btn">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="editVul(data.lteid)"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  @click="deleteVul(data.lteid)"
+                >
+                  Delete
+                </button>
+              </span>
+            </td>
           </tr>
-        </thead>
-        <tr v-for="(data, index) in filterlist" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.template_type }}</td>
-          <td>{{ data.createdDate }}</td>
-          <td>{{ data.description }}</td>
-          <td class="align-items">
-            <span class="col" id="btn">
-              <button
-                type="button"
-                class="btn btn-outline-primary"
-                @click="editVul(data.lteid)"
-              >
-                Edit
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-primary"
-                @click="deleteVul(data.lteid)"
-              >
-                Delete
-              </button>
-            </span>
-          </td>
-        </tr>
-      </table>
+        </table>
+      </div>
+      <div class="row">
+        <button
+          style="width: 50px"
+          type="button"
+          class="btn btn-outline-primary"
+          @click="goAdd()"
+        >
+          Add
+        </button>
+      </div>
     </div>
-    <div class="row">
-      <button
-        style="width: 50px"
-        type="button"
-        class="btn btn-outline-primary"
-        @click="goAdd()"
-      >
-        Add
-      </button>
-    </div>
-  </div>
   </div>
 </template>
 
 <script>
-import { GetAllltltemplates,DeleteLtlTemplate } from "../../services/data";
+import { GetAllltltemplates, DeleteLtlTemplate } from "../../services/data";
 import ConfirmationDialog from "../../components/ConfirmationDialog.vue";
 import moment from "moment";
 export default {
@@ -146,13 +141,13 @@ export default {
       selected: "0",
       showConfirmation: false,
       alertDialog: {},
-      list_vuls: []
+      list_vuls: [],
     };
   },
   mounted() {
     this.initData();
   },
-  computed:{
+  computed: {
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.list_vuls;
@@ -170,7 +165,7 @@ export default {
     async initData() {
       this.list_vuls = await GetAllltltemplates();
     },
-        async deleteLtlTemplate(id) {
+    async deleteLtlTemplate(id) {
       await DeleteLtlTemplate(id);
     },
     goAdd() {
@@ -178,19 +173,17 @@ export default {
         name: "AddVul",
         params: { parent_path: "/list-vul" },
       });
-    console.log('list_vuls',this.list_vuls);
-
+      console.log("list_vuls", this.list_vuls);
     },
     editVul(id) {
       this.$router.push({
         name: "EditVul",
         params: { vul_id: id, parent_path: "/list-vul" },
       });
+      this.$store.commit("setIsEditFormula", true);
     },
     deleteVul(id) {
-            if (
-        confirm("Do you want to delete the LTLTemplate out of the system?") === true
-      ) {
+      if (confirm("Do you want to delete the LTLTemplate out of the system?") === true) {
         this.deleteLtlTemplate(id);
         this.$router.go(0);
       }
@@ -221,7 +214,6 @@ export default {
 </script>
 
 <style scoped>
-
 h1 {
   font-size: 50px;
 }

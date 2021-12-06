@@ -3,19 +3,14 @@
     <!-- btn delete -->
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
-        <confirm
-          @cancel="closeConfirm"
-          @confirm="deleteC()"
-          :dialog="alertDialog"
-        />
+        <confirm @cancel="closeConfirm" @confirm="deleteC()" :dialog="alertDialog" />
       </div>
     </div>
     <div class="row align-items-md-center">
       <div class="col-2">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Context</a>
-          > <a>List</a></span
+          <a href="" class="link-primary text-decoration-underline">Context</a></span
         >
       </div>
       <div class="col-8 text-center"><h1>Context List</h1></div>
@@ -90,7 +85,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.context_type }}</td>
-            <td>{{ data.date }}</td>
+            <td>{{ data.createdDate }}</td>
             <td class="align-items">
               {{ data.description }}
               <span class="col" id="btn">
@@ -160,17 +155,18 @@ export default {
       return items;
     },
   },
- 
+
   methods: {
-    getDate(){
+    getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
-    async DeleteContext(cid) {
-      await DeleteContext(cid);
-    },
+    // async DeleteContext(cid) {
+    //   return await DeleteContext(cid);
+    // },
     moment,
     async initData() {
       this.list_context = await GetAllContext();
+      console.log(this.list_context);
     },
     goAdd() {
       this.$router.push({
@@ -185,28 +181,19 @@ export default {
         name: "EditContext",
         params: { id: cid, parent_path: "/list-context" },
       });
-
     },
-    // deleteC() {
-    //   this.alertDialog = {
-    //     title: "Alert",
-    //     message: "Do you want to delete the Context out of the system?",
-    //     confirmbtn: "Yes",
-    //   };
-    //   this.showConfirmation = true;
-    // },
 
     closeConfirm() {
       this.showConfirmation = false;
     },
     deleteContext(cid) {
       if (
-        confirm(
-          "Do you want to delete the Smart Contract out of the system?"
-        ) === true
+        confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
-        this.DeleteContext(cid);
-        this.$router.go(0);
+        DeleteContext(cid).then((data) => {
+          this.initData();
+          console.log("-----------------", data);
+        });
       }
     },
   },

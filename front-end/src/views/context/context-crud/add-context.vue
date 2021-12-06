@@ -1,13 +1,20 @@
 <template>
   <div id="main">
-     <div class="link">
-      <span>
-        <a href="/" class="link-primary text-decoration-underline">Home</a> >
-        <a href="http://192.168.0.100:8080/list-context" class="link-primary text-decoration-underline">Context </a> >
-        <a>Edit</a></span
-      >
+    <div class="row align-items-md-center" style="padding-top: 4%; padding-bottom: 2%">
+      <div class="col-2">
+        <span>
+          <a href="/" class="link-primary text-decoration-underline">Home</a> >
+          <a
+            href="http://192.168.1.2:8080/list-context"
+            class="link-primary text-decoration-underline"
+            >Context</a
+          >
+          >
+          <a href="" class="link-primary text-decoration-underline">Add Context</a></span
+        >
+      </div>
+      <div class="col-8 text-center"><h1>Create a new Context</h1></div>
     </div>
-    <div id="header">Create a new Context</div>
     <div class="body">
       <div class="row" id="name-section">
         <div class="title col-2">Name</div>
@@ -21,7 +28,7 @@
         <div class="col-10">
           <select class="form-select" v-model="options">
             <option value="type1">DCR</option>
-            <option value="type2">BPMN</option>
+            <option value="type2">CPN</option>
           </select>
         </div>
       </div>
@@ -29,11 +36,7 @@
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
-          <textarea
-            class="form-control"
-            type="text"
-            v-model="description"
-          ></textarea>
+          <textarea class="form-control" type="text" v-model="description"></textarea>
         </div>
       </div>
       <!-- <div class="editor-area">
@@ -43,18 +46,12 @@
       <div class="row">
         <div class="title col-2">Content</div>
         <div class="col-10">
-          <input class="form-control" type="text" v-model="content" />
+          <input class="form-control" type="file" @change="previewFiles" multiple />
         </div>
       </div>
       <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">
-          Save
-        </button>
-        <button
-          id="button-cancel"
-          type="button"
-          @click="clickHandler('cancel')"
-        >
+        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
+        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
           Cancel
         </button>
       </div>
@@ -65,40 +62,57 @@
 <script>
 // import EditorSc from "../../../components/TextEditor.vue";
 import { CreateContext } from "../../../services/data";
+import moment from "moment";
+
 export default {
   data() {
     return {
       options: "",
       name: "",
       description: "",
-      content: "",
+      content: null,
+      fileUpload: null,
+      dateFormat: "",
     };
+  },
+  mounted() {
+    this.getDate();
   },
   // components: { EditorSc },
   methods: {
-    //   async CreateContext(cid) {
-    //   await CreateContext(cid);
-    // },
-    // checkValidateContext() {
-    //   if (this.code !== "" && this.name !== "" && this.description !== "") {
-    //     return true;
-    //   }
-    //   return false;
-    // },
-    async clickHandler(action) {
+    getDate() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+    },
+    previewFiles(event) {
+      this.fileUpload = event.target.files[0];
+    },
+    createContext(data) {
+      CreateContext(
+        this.name,
+        this.dateFormat,
+        this.options,
+        this.description,
+        data
+      ).then(() => {
+        this.$router.push({
+          name: "ListContext",
+        });
+      });
+    },
+    clickHandler(action) {
       if (action == "save") {
-        //check validation of field context
-        // if (!this.checkValidateContext()) {
-        //   alert('You must enter data to field!!!')
-        //   return;
-        // }
-        await CreateContext(
-          this.name,
-          this.content,
-          this.description,
-          this.options
-        );
-        this.$router.push(this.$route.params.parent_path);
+        if (this.fileUpload === "") {
+          alert("You have to select file to update!!!");
+        }
+        if (this.name === "" || this.options === "") {
+          alert("Name and Type are must not empty!!!");
+        }
+        const reader = new FileReader();
+        reader.readAsText(this.fileUpload);
+        reader.onload = (e) => {
+          this.$store.commit("setContentFile", e.target.result);
+          this.createContext(e.target.result);
+        };
       } else if (action == "cancel") {
         this.$router.push(this.$route.params.parent_path);
       }

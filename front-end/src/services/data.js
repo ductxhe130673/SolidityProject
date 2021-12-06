@@ -62,63 +62,6 @@ export async function GetPendingSmartContracts() {
     return await (await SmartContractsService.GetPendingSmartContracts()).data;
 }
 
-export function GetSmartContractFunctionInfor(list_smart_contract) {
-    const data_example = {
-        1: {
-            name: "Mathematics for Engineering",
-            list_gvs: [{ name: "GV1" }, { name: "GV2" }],
-            list_functions: [{ name: "Function 1", list_lvs: [{ name: "LV1" }, { name: "LV2" }, { name: "LV3" }, { name: "LV4" }], },
-                { name: "Function 2", list_lvs: [{ name: "AK1" }, { name: "AK2" }, { name: "AK3" }] },
-                { name: "Function 3", list_lvs: [{ name: "MV1" }, { name: "MV2" }] },
-                { name: "Function 4", list_lvs: [{ name: "TH1" }, { name: "TH2" }, { name: "TH3" }, { name: "TH4" }, { name: "TH5" }] }
-            ]
-        },
-        2: {
-            name: "Property 2: Fairness",
-            list_gvs: [{ name: "GV1" }, { name: "GV2" }, { name: "GV3" }],
-            list_functions: [{ name: "Function 1", list_lvs: [{ name: "LV1" }, { name: "LV2" }, { name: "LV3" }, { name: "LV4" }], },
-                { name: "Function 2", list_lvs: [{ name: "AK1" }, { name: "AK2" }, { name: "AK3" }] },
-                { name: "Function 3", list_lvs: [{ name: "MV1" }, { name: "MV2" }] },
-                { name: "Function 4", list_lvs: [{ name: "TH1" }, { name: "TH2" }, { name: "TH3" }, { name: "TH4" }, { name: "TH5" }] }
-            ]
-        },
-        3: {
-            name: "Course competencies",
-            list_gvs: [{ name: "GV1" }, { name: "GV2" }, { name: "GV6" }],
-            list_functions: [{ name: "Function 1", list_lvs: [{ name: "LV1" }, { name: "LV2" }, { name: "LV3" }, { name: "LV4" }], },
-                { name: "Function 2", list_lvs: [{ name: "AK1" }, { name: "AK2" }, { name: "AK3" }] },
-                { name: "Function 3", list_lvs: [{ name: "MV1" }, { name: "MV2" }] },
-                { name: "Function 4", list_lvs: [{ name: "TH1" }, { name: "TH2" }, { name: "TH3" }, { name: "TH4" }, { name: "TH5" }] }
-            ]
-        },
-        4: {
-            name: "Build Web Apps with Vue JS 3 & Firebase",
-            list_gvs: [{ name: "GV1" }, { name: "GV2" }, { name: "GV5" }],
-            list_functions: [{ name: "Function 1", list_lvs: [{ name: "LV1" }, { name: "LV2" }, { name: "LV3" }, { name: "LV4" }], },
-                { name: "Function 2", list_lvs: [{ name: "AK1" }, { name: "AK2" }, { name: "AK3" }] },
-                { name: "Function 3", list_lvs: [{ name: "MV1" }, { name: "MV2" }] },
-                { name: "Function 4", list_lvs: [{ name: "TH1" }, { name: "TH2" }, { name: "TH3" }, { name: "TH4" }, { name: "TH5" }] }
-            ]
-        },
-        5: {
-            name: "Advanced Techniques for Modeling and Verification",
-            list_gvs: [{ name: "GV1" }, { name: "GV2" }, { name: "GV8" }],
-            list_functions: [{ name: "Function 1", list_lvs: [{ name: "LV1" }, { name: "LV2" }, { name: "LV3" }, { name: "LV4" }], },
-                { name: "Function 2", list_lvs: [{ name: "AK1" }, { name: "AK2" }, { name: "AK3" }] },
-                { name: "Function 3", list_lvs: [{ name: "MV1" }, { name: "MV2" }] },
-                { name: "Function 4", list_lvs: [{ name: "TH1" }, { name: "TH2" }, { name: "TH3" }, { name: "TH4" }, { name: "TH5" }] }
-            ]
-        }
-    }
-    var response = {}
-    for (let i = 0; i < list_smart_contract.length; i++) {
-        if (list_smart_contract[i].id in data_example) {
-            response[list_smart_contract[i].id] = data_example[list_smart_contract[i].id]
-        }
-    }
-    return response
-}
-
 var SmartContractCode = {
     1: "1st smart contract code",
     2: "2nd smart contract code",
@@ -149,26 +92,7 @@ export function GetSmartContractCode(id) {
     }
 }
 
-// export function AddNewSmartContractsInfor(sc_id, sc_name, options) {
-//   if (options == "private") {
-//     listPrivateSmartContracts.push({ id: sc_id, name: sc_name, type: "private" })
-//   }
-//   if (options == "common") {
-//     listCommonSmartContracts.push({ id: sc_id, name: sc_name, type: "common" })
-//   }
-//   if (options == "pending") {
-//     listPendingSmartContracts.push({ id: sc_id, name: sc_name, type: "pending" })
-//   }
-// }
 export async function AddNewSmartContracts(sc_id, sc_name, options, content, createdDate) {
-    // AddNewSmartContractsInfor(sc_id,sc_name,options)
-    // SmartContractCode[sc_id] = code
-    // var d = new Date,
-    //   dformat = [d.getFullYear(),
-    //   d.getMonth() + 1, d.getDate()].join('-') + ' ' +
-    //     [d.getHours(),
-    //     d.getMinutes(),
-    //     d.getSeconds()].join(':');
     await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content, createdDate)
 }
 export async function GetSmartContractById(sc_id) {
@@ -227,7 +151,7 @@ export function RefusePendingSmartContracts(sc_id, name_sc, code) {
 /* --------------Get GlobalVariable,LocalVariable,Argument of SmartContract by ID-------------- */
 export async function GetGloLocArgOfSmartContract(id) {
     const res = await SmartContractsService.getArguLocalGlobalVar(id);
-    return res
+    return res.data
 }
 
 /* ------Context------- */
@@ -243,18 +167,19 @@ export async function GetContextById(id_context) {
 
 
 /*---------CreateAndModiftyContext--------- */
-export async function CreateContext(ct_name, content, description, option) {
-    return await ContextService.CreateContext(ct_name, content, description, option)
+export async function CreateContext(name, dateFormat, option, description, content) {
+    return await ContextService.CreateContext(name,dateFormat, option, description, content)
 }
 
 /*---------DeleteContext-------- */
 export async function DeleteContext(id_context) {
-    ContextService.DeleteContext(id_context)
+    return await ContextService.DeleteContext(id_context)
 }
 
 /*---------Update Context-------- */
-export async function UpdateContext(id_context, ct_name, option, description, content) {
-    return await ContextService.UpdateContext(id_context, ct_name, option, description, content)
+export async function UpdateContext(id_context, ct_name, dateFormat, option, description, content) {
+    console.log('id_context, ct_name, dateFormat, option, description, content',id_context, ct_name, dateFormat, option, description, content);
+    return await ContextService.UpdateContext(id_context, ct_name,dateFormat, option, description, content)
 }
 /* ------LTL------- */
 
@@ -269,8 +194,9 @@ export async function GetLtltemplteById(id_Ltl) {
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLTLTemplate(name, description, fomular,date) {
-    return await ltltemplateService.CreateLTLTemplate(name, description, fomular,date);
+export async function CreateLTLTemplate(name,fomular, description,date) {
+    console.log('fomular',fomular);
+    return await ltltemplateService.CreateLTLTemplate(name,fomular, description ,date);
 }
 
 /*---------DeleteLtl-------- */

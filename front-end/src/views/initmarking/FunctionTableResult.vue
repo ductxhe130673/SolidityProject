@@ -9,9 +9,9 @@
     <div id="params-setting-input">
       <div id="sender-value-section">
         <span>Sender value</span>
-        <input type="text" placeholder="0" v-model="own_list_argument.sender_from" />
-        <span>To</span>
-        <input type="text" placeholder="10" v-model="own_list_argument.sender_to" />
+        <input type="text" placeholder="0" v-model="own_list_argument.sender" />
+        <!-- <span>To</span>
+        <input type="text" placeholder="10" v-model="own_list_argument.sender_to" /> -->
       </div>
       <div id="table-params">
         <div class="table-params-row" id="header-params-row">
@@ -38,9 +38,7 @@
           <div class="table-params-cell first-params-cell">{{ param.id }}</div>
           <div class="table-params-cell second-params-cell">{{ param.name }}</div>
           <div class="table-params-cell third-params-cell">
-            <input type="text" v-model="param.from" />
-            <span>To</span>
-            <input type="text" v-model="param.to" />
+            <input type="text" v-model="param.value" />
           </div>
         </div>
       </div>

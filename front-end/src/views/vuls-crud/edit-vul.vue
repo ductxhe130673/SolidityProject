@@ -1,14 +1,18 @@
 <template>
   <div id="main">
-     <div class="link">
-      <span>
-        <a href="/" class="link-primary text-decoration-underline">Home</a> >
-        <a href="http://192.168.0.100:8080/list-vul" class="link-primary text-decoration-underline">Context </a> >
-        <a>Edit</a></span
-      >
-    </div>
-    <div id="header">
-      Update the LTL Property Template
+    <div class="row align-items-md-center" style="padding-top: 4%; padding-bottom: 2%">
+      <div class="col-2">
+        <span>
+          <a href="/" class="link-primary text-decoration-underline">Home</a> >
+          <a
+            href="http://192.168.1.2:8080/list-vul"
+            class="link-primary text-decoration-underline"
+            >LTL</a
+          >
+          > <a href="" class="link-primary text-decoration-underline">Edit LTL</a>
+        </span>
+      </div>
+      <div class="col-8 text-center"><h1>Update the LTL Property Template</h1></div>
     </div>
     <div class="body">
       <div class="row" id="name-section">
@@ -22,11 +26,11 @@
         <span class="title">Formular</span>
         <LTLEditor :code.sync="codeModel" @change="changedLTL($event)" />
       </div> -->
-      
+
       <div class="row">
         <div class="title col-2">Formula</div>
         <div class="col-10">
-          <formular-editor/>
+          <FormularEditor :ltlcode="codeModel" @input="updateMessage" />
         </div>
       </div>
 
@@ -42,16 +46,10 @@
           ></textarea>
         </div>
       </div>
-    
+
       <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">
-          Save
-        </button>
-        <button
-          id="button-cancel"
-          type="button"
-          @click="clickHandler('cancel')"
-        >
+        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
+        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
           Cancel
         </button>
       </div>
@@ -65,7 +63,7 @@ import { GetLtltemplteById, UpdateLtlTemplate } from "../../services/data";
 import FormularEditor from "../../components/FormularEditor.vue";
 export default {
   components: {
-    FormularEditor
+    FormularEditor,
   },
   data() {
     return {
@@ -74,41 +72,49 @@ export default {
       name: "",
       description: "",
       ltl: { name: String, fomular: String, description: String },
-      dateFormat : ""
+      dateFormat: "",
     };
   },
   watch: {
-    codeModel: function(newVal) {
-      console.log(newVal);
+    codeModel: function (newVal) {
+      console.log("newVal", newVal);
     },
   },
   mounted() {
-    // this.initData();
+    this.initData();
   },
-  async created() {
-    //get vulnerability by id from db: name, description
-    await this.initData();
-  },
+  // async created() {
+  //   //get vulnerability by id from db: name, description
+  //   await this.initData();
+  // },
   // components: { LTLEditor },
   methods: {
+    updateMessage(mes) {
+      this.codeModel = mes;
+    },
     async initData() {
       const data = await GetLtltemplteById(this.id);
       this.initModelLTL(data);
-      this.codeModel = data.fomular;
+      this.codeModel = data.formula;
       this.name = data.name;
       this.description = data.description;
       this.dateFormat = data.createdDate;
     },
 
-    Save() {
-      return UpdateLtlTemplate(this.id, this.name, this.description, "hardcode",this.dateFormat);
-    },
-
     async clickHandler(action) {
       if (action == "save") {
-        await this.Save();
+        console.log("this.codeModel2", this.codeModel);
+        await UpdateLtlTemplate(
+          this.id,
+          this.name,
+          this.description,
+          this.codeModel,
+          this.dateFormat
+        );
         this.$router.push(this.$route.params.parent_path);
+        this.$store.commit("setIsEditFormula", false);
       } else if (action == "cancel") {
+        this.$store.commit("setIsEditFormula", false);
         if (!this.$route.params.parent_path) this.$router.push("/");
         else this.$router.push(this.$route.params.parent_path);
       }
@@ -159,7 +165,7 @@ export default {
 #name-section {
   margin-bottom: 30px;
 }
-textarea{
+textarea {
   height: 250px;
 }
 /* editor area */
