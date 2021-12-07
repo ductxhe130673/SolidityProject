@@ -154,6 +154,7 @@ export async function GetGloLocArgOfSmartContract(id) {
     return res.data
 }
 
+
 /* ------Context------- */
 export async function GetAllContext() {
     const response = await ContextService.GetAllContext()
@@ -168,7 +169,7 @@ export async function GetContextById(id_context) {
 
 /*---------CreateAndModiftyContext--------- */
 export async function CreateContext(name, dateFormat, option, description, content) {
-    return await ContextService.CreateContext(name,dateFormat, option, description, content)
+    return await ContextService.CreateContext(name, dateFormat, option, description, content)
 }
 
 /*---------DeleteContext-------- */
@@ -178,8 +179,8 @@ export async function DeleteContext(id_context) {
 
 /*---------Update Context-------- */
 export async function UpdateContext(id_context, ct_name, dateFormat, option, description, content) {
-    console.log('id_context, ct_name, dateFormat, option, description, content',id_context, ct_name, dateFormat, option, description, content);
-    return await ContextService.UpdateContext(id_context, ct_name,dateFormat, option, description, content)
+    console.log('id_context, ct_name, dateFormat, option, description, content', id_context, ct_name, dateFormat, option, description, content);
+    return await ContextService.UpdateContext(id_context, ct_name, dateFormat, option, description, content)
 }
 /* ------LTL------- */
 
@@ -194,9 +195,9 @@ export async function GetLtltemplteById(id_Ltl) {
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLTLTemplate(name,fomular, description,date) {
-    console.log('fomular',fomular);
-    return await ltltemplateService.CreateLTLTemplate(name,fomular, description ,date);
+export async function CreateLTLTemplate(name, fomular, description, date) {
+    console.log('fomular', fomular);
+    return await ltltemplateService.CreateLTLTemplate(name, fomular, description, date);
 }
 
 /*---------DeleteLtl-------- */
@@ -205,8 +206,8 @@ export async function DeleteLtlTemplate(id_Ltl) {
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date) {
-    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()

@@ -4,53 +4,71 @@
       <h1 class="text-center">Select functions of the smart contracts</h1>
     </div>
     <div class="row">
-      <div id="list-smart-contract">
-        <ul class="nav nav-tabs">
-          <li
-            class="nav-item d-inline-block text-truncate"
-            v-for="(item, index) in list_smart_contract"
-            :key="item.id"
-          >
-            <a
-              class="nav-link"
-              v-on:click="selectSC(item.sid, index)"
-              v-bind:class="{ active: item.sid == selected_smart }"
-              >{{ item.name }}</a
+      <div class="function-cell">
+        <div id="list-smart-contract">
+          <ul class="nav nav-tabs">
+            <li
+              class="nav-item d-inline-block text-truncate"
+               v-for="(item, index) in list_smart_contract"
+              :key="item.id"
             >
-          </li>
-        </ul>
-      </div>
-      <div id="sm-information-table">
-        <table class="table table-sm">
-          <tr>
-            <th>
-              #
-              <span
-                ><a-icon id="icon" type="caret-up" />
-                <a-icon id="icon" type="caret-down" />
-              </span>
-            </th>
+              <a
+                class="nav-link"
+                v-on:click="selectSC(item.sid, index)"
+                v-bind:class="{ active: item.sid == selected_smart }"
+                >{{ item.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div id="sm-information-table">
+          <!-- <div v-if="function_cell_selection == 'function'"> -->
+            <div>
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>
+                    #
+                    <span
+                      ><a-icon id="icon" type="caret-up" />
+                      <a-icon id="icon" type="caret-down" />
+                    </span>
+                  </th>
 
-            <th>
-              Functions<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
-            <th>Select</th>
-          </tr>
-          <tr
-            v-for="(func, index) in smart_infor[selectedSCIndex].functions"
-            v-bind:key="func.fid"
-          >
-            <td>{{ index + 1 }}</td>
-            <td>{{ func.name }}</td>
-            <td>
-              <input class="form-check-input" type="radio" value="func.name" />
-            </td>
-          </tr>
-        </table>
+                  <th>
+                    Functions<span
+                      ><a-icon id="icon" type="caret-up" /><a-icon
+                        id="icon"
+                        type="caret-down"
+                    /></span>
+                  </th>
+                  <th>
+                    Select<span
+                      ><a-icon id="icon" type="caret-up" /><a-icon
+                        id="icon"
+                        type="caret-down"
+                    /></span>
+                  </th>
+                </tr>
+              </thead>
+              <tr
+                v-for="(func, index) in smart_infor[selectedSCIndex].functions"
+                v-bind:key="func.fid"
+              >
+                <td>{{ index + 1 }}</td>
+                <td>{{ func.name }}</td>
+                <td>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    value="func.name"
+
+                  />
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     <div id="action">
@@ -60,6 +78,14 @@
         @click="routing('next')"
       >
         Next
+      </div>
+      <div
+        type="button"
+        class="btn btn-outline-primary"
+        @click="routing('select')"
+        v-if="list_smart_contract.length > 1"
+      >
+        Select another smart contract
       </div>
       <div
         type="button"
@@ -87,22 +113,23 @@ export default {
     this.setSCInfor();
   },
   computed: {
-    getSelectedFunc() {
+     getSelectedFunc() {
       return this.function_infor;
     },
     getSelectedSmart() {
       if (this.selected_smart in this.smart_infor) {
         return this.smart_infor[this.selected_smart].SmartContract;
+   
       } else {
         return [];
-      }
+      }  
     },
   },
   methods: {
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
-        this.selectedSCIndex = index;
+        this.selectedSCIndex = index;  
       }
     },
     async setSCInfor() {
@@ -113,14 +140,22 @@ export default {
       }
     },
     routing(param) {
-      if (param == "next") {
-        this.$router.push({ name: "SelectVarReentrancyOp1" });
+      if (param == "select") {
+        this.$router.push({ name: "SelectSContractSD2" });
+        this.$store.commit("setIndex", 4);
       }
       if (param == "back") {
         this.$router.push({ name: "GenaralVulSetting" });
+        this.$store.commit("setIndex", 4);
+      }
+      if (param == "next") {
+        this.$router.push({ name: "Initial" });
+        this.$store.commit("setIndex", 4);
       }
     },
   },
+
+  
 };
 </script>
 

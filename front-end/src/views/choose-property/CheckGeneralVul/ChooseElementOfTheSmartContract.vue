@@ -175,11 +175,11 @@ export default {
         this.$router.push({ name: "GenaralVulSetting" });
       }
     },
-    getFuntionSC(sid) {
-      const listFunc = GetGloLocArgOfSmartContract(sid);
-      console.log("listFunc", listFunc);
-      return listFunc.functions;
-    },
+    // getFuntionSC(sid) {
+    //   const listFunc = GetGloLocArgOfSmartContract(sid);
+    //   console.log("listFunc", listFunc);
+    //   return listFunc.functions;
+    // },
     async setSCInfor() {
       for (let i = 0; i < this.list_smart_contract.length; i++) {
         this.smart_infor.push(
