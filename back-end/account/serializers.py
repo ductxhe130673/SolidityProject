@@ -7,7 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['username', 'password', 'role']
+        fields = ['username', 'password', 'role', 'aid']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -29,29 +29,29 @@ class LoginSerializer(serializers.ModelSerializer):
     tokens = serializers.SerializerMethodField()
 
     def get_tokens(self, obj):
-        user = Account.objects.get(username=obj['username'])
-
-        return {
+        user = Account.objects.get(username=obj['username']) 
+        return {           
             'refresh': user.tokens()['refresh'],
             'access': user.tokens()['access']
         }
 
     class Meta:
         model = Account
-        fields = ['username', 'password',  'tokens']
+        fields = ['username', 'password', 'role', 'tokens', 'aid']
 
     def validate(self, attrs):
         username = attrs.get('username', '')
         password = attrs.get('password', '')
-        filtered_user_by_username = Account.objects.filter(username=username)
+        # filtered_user_by_username = Account.objects.filter(username=username)
         user = auth.authenticate(username=username, password=password)
-
         if not user:
             raise AuthenticationFailed('Invalid credentials, try again')
         return {
             'username': user.username,
             'password': user.password,
-            'tokens': user.tokens
+            'tokens': user.tokens,
+            'role': user.role,
+            'aid' : user.aid
         }
 
         return super().validate(attrs)

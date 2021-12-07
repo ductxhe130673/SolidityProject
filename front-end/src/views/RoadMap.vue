@@ -98,7 +98,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 110px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .description-selectSC {
@@ -107,7 +107,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 210px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .description-select-context {
@@ -116,7 +116,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 310px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .description-choosevul {
@@ -125,7 +125,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 410px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .description-generate {
@@ -134,7 +134,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 510px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .description-checkSC {
@@ -143,7 +143,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 610px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .description-finish {
@@ -152,7 +152,7 @@ export default {
   height: 100px;
   border: 2px solid gray;
   top: 710px;
-  left: 25%;
+  left: 20%;
   border-radius: 5px;
 }
 .mid {

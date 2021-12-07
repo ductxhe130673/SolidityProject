@@ -71,11 +71,7 @@
       <div type="button" class="btn btn-outline-primary" @click="routing('next')">
         Next
       </div>
-      <div
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('back')"
-      >
+      <div type="button" class="btn btn-outline-primary" @click="routing('back')">
         Back
       </div>
     </div>
@@ -86,12 +82,7 @@ export default {
   data() {
     return {
       function_cell_selected: "function",
-      list_smart_contract: [
-        { name: "Smart I", id: 1 },
-        { name: "Smart II", id: 2 },
-        { name: "Smart III", id: 3 },
-        { name: "Smart IV", id: 4 },
-      ],
+      list_smart_contract: [],
       smart_contract_infors: {
         1: {
           name: "smart I",
@@ -248,8 +239,10 @@ export default {
       },
       selected_sc: 1,
       selected_function: null,
-     
     };
+  },
+  beforeMount() {
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
   },
   methods: {
     setFunctionParam(func) {
@@ -267,7 +260,7 @@ export default {
       }
     },
   },
-  
+
   computed: {
     getSelectedSc() {
       if (this.selected_sc in this.smart_contract_infors) {

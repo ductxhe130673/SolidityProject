@@ -35,7 +35,19 @@
           <FormularEditor @input="updateMessage" />
         </div>
       </div>
-
+      <div class="row">
+        <div class="title col-2">Formula Text</div>
+        <div class="col-10">
+          <textarea
+            style="height: 175px"
+            spellcheck="false"
+            rows="3"
+            class="form-control"
+            type="text"
+            v-model="formulaText"
+          ></textarea>
+        </div>
+      </div>
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
@@ -75,6 +87,7 @@ export default {
       code: "",
       name: "",
       description: "",
+      formulaText: "",
     };
   },
   mounted() {
@@ -85,6 +98,15 @@ export default {
   // components: { LTLEditor },
   methods: {
     updateMessage(mes) {
+      var mapObj = {
+        G: "After an occurrence of",
+        F: "there will be at least one occurrence of",
+      };
+      const step1 = mes.replace("=>", "");
+      this.formulaText = step1.replace(/G|F/gi, function (matched) {
+        return mapObj[matched];
+      });
+      console.log("this.formulaText", this.formulaText);
       this.code = mes;
     },
     getDate() {

@@ -85,8 +85,9 @@ export default {
   },
 
   mounted() {
-    this.initData();
     this.selectedContext = this.$store.state.data.data.selectedContext;
+    console.log("this.selectedContext", this.selectedContext);
+    this.initData();
   },
   methods: {
     upLoad() {

@@ -48,7 +48,6 @@ export class SmartContractsService extends BaseService {
 
     /*---------Create New Smartcontract--------- */
     static async CreateSmartContracts(id, sc_name, option, content, createdDate) {
-        console.log('createdDate',createdDate);
         try {
             const paraData = {
                 "id": id,
@@ -72,7 +71,6 @@ export class SmartContractsService extends BaseService {
     /*---------get smart contract by Id--------- */
     static async GetSmartContractById(id) {
         const smartContractById = await this.request({ auth: true }).get(`${this.getUnity()}/scbyid?id=${id}`)
-        console.log('smartContractById',smartContractById);
         try {
             return new ResponseWrapper(smartContractById)
         } catch (error) {
@@ -83,7 +81,6 @@ export class SmartContractsService extends BaseService {
 
     /*---------Update Smartcontract--------- */
     static async UpdateSmartContracts(id, sc_name, code, description, option) {
-        console.log('description',description);
         // const smartContractById = await this.request({ auth: true }).get(`${this.getUnity()}/scbyid?id=${id}`)
         try {
             const paraData = {
