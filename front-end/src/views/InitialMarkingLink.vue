@@ -58,13 +58,13 @@
 
             <div
               class="table-row"
-              v-for="(func, index) in getSelectedSc"
+              v-for="(func, index) in dataUserTable"
               v-bind:key="func.fid"
               :class="{ even_row: index % 2 == 0 }"
             >
               <div class="table-cell first-cell">{{ index + 1 }}</div>
               <div class="table-cell second-cell">{{ func.name }}</div>
-              <div class="table-cell third-cell">1</div>
+              <div class="table-cell third-cell">{{ func.balance }}</div>
             </div>
           </div>
         </div>
@@ -143,6 +143,7 @@ export default {
   },
   data() {
     return {
+      userParam: [],
       radio_seleted: "fixed",
       function_cell_selected: "function",
       list_smart_contract: [],
@@ -152,12 +153,14 @@ export default {
       functionSC: [],
       func: {},
       init_marking: {},
+      dataUserTable: [],
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc;
     this.getFuntionSC(this.list_smart_contract[0].sid);
-    this.initInitialMarkingHolder();
+    this.init_marking = this.$store.state.data.data.initialMarkingInfor;
+    this.setUserParam();
     if (this.list_smart_contract.length > 0) {
       this.selected_sc = this.list_smart_contract[0].sid;
     }
@@ -165,7 +168,6 @@ export default {
   watch: {
     init_marking: {
       handler(val) {
-        console.log("val", val);
         this.$store.commit("SetInitialMarking", val);
       },
       deep: true,
@@ -190,6 +192,37 @@ export default {
     },
   },
   methods: {
+    getDataTable() {
+      if (this.init_marking.Balance.type === "fixed")
+        return this.init_marking.Balance.fixed;
+      else if (this.init_marking.Balance.type === "random")
+        return (
+          Math.floor(
+            Math.random() *
+              (parseInt(this.init_marking.Balance.random.to) -
+                parseInt(this.init_marking.Balance.random.from) +
+                1)
+          ) + parseInt(this.init_marking.Balance.random.from)
+        );
+      // else if (this.init_marking.Balance.type === "map") {
+
+      // };
+    },
+    setUserParam() {
+      for (let i = 1; i <= this.init_marking.NumberOfUser; i++) {
+        if (!this.init_marking.Balance.map) {
+          this.dataUserTable.push({
+            name: "User" + i,
+            balance: this.getDataTable(),
+          });
+        } else {
+          this.dataUserTable.push({
+            name: "User" + i,
+            balance: this.init_marking.Balance.map.split(",")[i],
+          });
+        }
+      }
+    },
     changeSelected(value) {
       this.function_cell_selected = value;
     },
@@ -209,45 +242,6 @@ export default {
       this.init_marking.Funtion_params[this.selected_sc].functions[
         this.selected_function
       ] = val;
-    },
-    initInitialMarkingHolder() {
-      this.init_marking = this.$store.state.data.data.initialMarkingInfor;
-      for (let i = 0; i < this.list_smart_contract.length; i++) {
-        let sm = this.list_smart_contract[i]; //get tung smart contract
-
-        if (!(sm.sid in this.init_marking.Funtion_params)) {
-          this.init_marking.Funtion_params[sm.sid] = { name: sm.name, functions: {} };
-        }
-
-        if (sm.sid in this.smart_contract_infors) {
-          let sm_func_infor = this.smart_contract_infors[sm.sid];
-          for (let j = 0; j < sm_func_infor.length; j++) {
-            let sm_func = sm_func_infor[j];
-            if (!(sm_func.fid in this.init_marking.Funtion_params[sm.sid].functions)) {
-              this.init_marking.Funtion_params[sm.sid].functions[sm_func.fid] = {
-                name: sm_func.name,
-                sender_value: { from: null, to: null },
-                arguments: {},
-              };
-            }
-            let sm_func_args = sm_func.argument;
-            for (let m = 0; m < sm_func_args.length; m++) {
-              let arg = sm_func_args[m];
-              if (
-                !(
-                  arg.fid in
-                  this.init_marking.Funtion_params[sm.sid].functions[sm_func.fid]
-                    .arguments
-                )
-              ) {
-                this.init_marking.Funtion_params[sm.sid].functions[sm_func.fid].arguments[
-                  arg.aid
-                ] = { name: arg.name, from: null, to: null };
-              }
-            }
-          }
-        }
-      }
     },
     routing(param) {
       if (param == "save") {

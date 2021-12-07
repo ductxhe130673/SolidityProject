@@ -8,6 +8,7 @@
 #include<memory>
 #include<iostream>
 #include <cctype>
+#include <random>
 #include "../../include/LNAAnalyser.hpp"
 #include "../../include/nlohmann/json.hpp"
 #include "../../include/Utils.hpp"
@@ -18,20 +19,26 @@ using namespace HELENA;
 
 class Unfolder {
     public:
-        Unfolder(const StructuredNetNodePtr& _context, std::stringstream& _sol_lna_stream, const nlohmann::json& lna_json,const nlohmann::json& ltl_json);
+        Unfolder(const StructuredNetNodePtr& _context, std::stringstream& _sol_lna_stream, const nlohmann::json& lna_json, const nlohmann::json& ltl_json, const nlohmann::json& im_json);
 
         std::vector<std::string> FindUnfoldedFunction();
 
-        void analyseLnaFile(std::stringstream& _sol_lna_stream);
+        void initialMarkingSetting();
+
+        static StructuredNetNodePtr analyseLnaFile(std::stringstream& _sol_lna_stream);
         
         StructuredNetNodePtr unfoldModelWithDCRContext();
-        std::map<std::string,std::string> UnfoldModel();
+        StructuredNetNodePtr unfoldModelWithFreeContext();
+
+        std::map<std::string,std::string> UnfoldModel(const std::string& _context);
 
         std::string get_model_name_from_comment(const CommentNodePtr& _comment);
         
     private:
         nlohmann::json sol_information;
         nlohmann::json ltl_information;
+        nlohmann::json im_information;
+
         std::vector<std::string> unfolded_func;
         StructuredNetNodePtr cpn_model;
         StructuredNetNodePtr cpn_context;

@@ -22,7 +22,7 @@
       <div class="col-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a href="" class="link-primary text-decoration-underline">Smart Contract</a>
         </span>
       </div>
       <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
@@ -34,6 +34,7 @@
           <a-date-picker
             :default-value="moment('01/01/2021', dateFormat)"
             :format="dateFormat"
+            @change="onChangeDate"
           />
         </div>
         <div class="col"></div>
@@ -164,12 +165,13 @@ import {
 } from "../../../services/data";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
+import dateFormat from "dateformat";
 export default {
   // components: { confirm: ConfirmationDialog },
   data() {
     return {
       choose_SC: "",
-      dateFormat: "DD/MM/YYYY",
+      formatDate: "yyyy-mm-dd",
       selected: "0",
       num_of_record: 7,
       num_of_page: 0,
@@ -178,6 +180,7 @@ export default {
       alertDialog: {},
       scDelete: null,
       isAdmin: true,
+      filterDate: null,
     };
   },
   mounted() {
@@ -185,11 +188,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.getlistSmartContract;
-      console.log("this.getlistSmartContract", this.getlistSmartContract);
       var items = [];
       this.getlistSmartContract.forEach(function (item) {
         if (item.type === selected) {
@@ -240,6 +241,10 @@ export default {
     this.setListSmartContract();
   },
   methods: {
+    onChangeDate(value) {
+      const date = dateFormat(value._d, this.formatDate);
+      this.filterDate = date;
+    },
     async deleteSmartContract(sid) {
       await DeleteSmartContracts(sid);
     },
@@ -312,7 +317,6 @@ export default {
       }
     },
     refuseSC(sc_id) {
-      console.log("sc", this.choose_SC);
       if (
         confirm(
           "Do you want to change the Smart Contract type from Common to Private?"

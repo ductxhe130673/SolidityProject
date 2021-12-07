@@ -8,7 +8,7 @@
       </div>
       <div class="smart-cell">
         <div id="list-smart">
-          <ul class="nav nav-tabs">
+          <ul class="nav nav-tabs" style="flex-wrap: nowrap">
             <li
               class="nav-item d-inline-block text-truncate"
               v-for="(item, index) in list_smart_contract"
@@ -148,15 +148,17 @@ export default {
     };
   },
   beforeMount() {
-    this.list_smart_contract = this.$store.state.data.data.selectedSc;
+    this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
     // this.getFuntionSC(this.list_smart_contract[0].sid);
     this.setSCInfor();
+    console.log("--------------", this.list_smart_contract);
   },
   methods: {
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
         this.selectedSCIndex = index;
+        console.log("this.selected_smart", this.selected_smart, this.selectedSCIndex);
         this.functionBySC = this.list_function[index];
       }
     },
@@ -177,7 +179,6 @@ export default {
     },
     getFuntionSC(sid) {
       const listFunc = GetGloLocArgOfSmartContract(sid);
-      console.log("listFunc", listFunc);
       return listFunc.functions;
     },
     async setSCInfor() {
@@ -185,6 +186,7 @@ export default {
         this.smart_infor.push(
           await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
         );
+        console.log("this.smart_infor", this.smart_infor);
       }
       this.list_function = this.smart_infor.map((item) => item.functions);
     },

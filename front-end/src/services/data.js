@@ -212,3 +212,8 @@ export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()
     return response.data
 }
+export async function SetDataForCallingTool(context,ltl) {
+    const response = await cpncontextService.setDataForCallingTool(context,ltl)
+    console.log('response1');
+    return response.data
+}

@@ -66,26 +66,26 @@ export const routes = [{
         path: "/",
         name: "Index",
         component: Index,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | home` },
     },
     {
         path: "/roadmap",
         name: "RoadMap",
         component: RoadMap,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
-        props: true
+        props: false
       },
     {
         path: "/login",
         name: "Login",
         component: Login,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | login` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | login` },
     },
     {
         path: "/register",
         name: "Register",
         component: Register,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | register` },
     },
     {
         path: "/select-sc/",
@@ -111,7 +111,8 @@ export const routes = [{
             {
                 path: 'select-smart-contract',
                 name: 'SelectSmartContract',
-                component: SelectSmartContract
+                component: SelectSmartContract,
+                meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` }
             },
             {
                 path: 'uploadsc',
@@ -250,7 +251,7 @@ export const routes = [{
         path: "/list-context",
         name: "ListContext",
         component: ListContext,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
+        meta: { requiresAuth: true, isAdmin: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
         props: true
     },
     {
@@ -292,7 +293,7 @@ export const routes = [{
         path: "/list-vul",
         name: "ListVul",
         component: ListVul,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
+        meta: { requiresAuth: true, isAdmin: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
         props: true
     },
     {

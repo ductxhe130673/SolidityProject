@@ -4,7 +4,7 @@ import axios from 'axios'
 import { ResponseWrapper, ErrorWrapper } from './base.js'
 import $store from '../store'
 import $router from '../router'
-
+import { setCookie } from './helper.js'
 import { API_URL } from '../.env'
 
 let BEARER = ''
@@ -18,24 +18,39 @@ export class AuthService {
   
   static async makeLogin ({ username, password }) {
     try {
-      const response = await axios.post(`${API_URL}/login`,{username, password}, {useCredentails: true})
+      const response = await axios.post(`${API_URL}/auth/login`,{username, password}, {useCredentails: true})
       _setAuthData({
-        accessToken: response.data.accessToken,
-        exp: _parseTokenData(response.data.accessToken).exp
+        accessToken: response.data.tokens.access,
+        exp: _parseTokenData(response.data.tokens.access).exp
       })
+      setCookie("admin", response.data.tokens.access, 10)
+      // this.$store.commit("setIsAuthen", true)
+      localStorage.setItem('user', JSON.stringify({id: response.data.aid, username: response.data.username, role: response.data.role}));
       return new ResponseWrapper(response, response.data)
     } catch (error) {
       throw new ErrorWrapper(error)
     }
   }
 
+  // static async loginToken ({accessToken}) {
+  //   try {
+  //     const response = await axios.post(`${API_URL}/auth/login`,{username, password}, {useCredentails: true})
+  //     _setAuthData({
+  //       accessToken: response.data.tokens.access,
+  //       exp: _parseTokenData(response.data.tokens.access).exp
+  //     })
+  //     return new ResponseWrapper(response, response.data)
+  //   } catch (error) {
+  //     throw new ErrorWrapper(error)
+  //   }
+  // }
+
   static async makeLogout() {
     try {
-      /* const response = await new Http({ auth: true }).post('auth/logout', {}, { useCredentails: true }) */
-      // _resetAuthData()
-
+      _resetAuthData()
+      // return new ResponseWrapper(response, response.data) 
+      localStorage.removeItem("user");
       $router.push({ name: 'Login' }).catch(() => { })
-      /* return new ResponseWrapper(response, response.data) */
     } catch (error) {
       throw new ErrorWrapper(error)
     }
@@ -152,8 +167,8 @@ function _resetAuthData() {
   $store.commit('auth/SET_ATOKEN_EXP_DATE', null)
 
   // reset pageData
-  $store.commit('data/resetAll')
-  $store.commit('views/resetAll')
+  // $store.commit('data/resetAll')
+  // $store.commit('views/resetAll')
   // reset tokens
   AuthService.setRefreshToken('')
   AuthService.setBearer('')
