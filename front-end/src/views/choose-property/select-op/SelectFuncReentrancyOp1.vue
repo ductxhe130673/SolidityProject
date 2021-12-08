@@ -15,7 +15,7 @@
           >
             <a
               class="nav-link"
-              v-on:click="selected_sc = item.id"
+              v-on:click="selectSC(item.sid, index)"
               v-bind:class="{ active: item.id == selected_sc }"
               >{{ item.name }}</a
             >
@@ -33,7 +33,7 @@
               </span>
             </div>
             <div class="table-cell header-cell second-cell">
-              Local variable
+              Local variables
               <span
                 ><a-icon id="icon" type="caret-up" />
                 <a-icon id="icon" type="caret-down" />
@@ -69,46 +69,35 @@
   </div>
 </template>
 <script>
+import { GetGloLocArgOfSmartContract } from "../../../services/data";
 export default {
   data() {
     return {
-      list_smart_contract: [{ name: "Smart Contract ", id: 1 }],
-      smart_contract_infor: {
-        1: {
-          name: "Smart Contract ",
-          functions: [
-            {
-              fid: 1,
-              name: "Function 1",
-            },
-            {
-              fid: 2,
-              name: "Function 2",
-            },
-            {
-              fid: 3,
-              name: "Function 3",
-            },
-            {
-              fid: 4,
-              name: "Function 4",
-            },
-          ],
-        },
-      },
-      selected_sc: 1,
+      list_smart_contract: [],
+      smart_infor: [],
+      selected_smart: 0,
+      selectedSCIndex: 1,
     };
   },
-  computed: {
-    getSelected_sc() {
-      if (this.selected_sc in this.smart_contract_infor) {
-        return this.smart_contract_infor[this.selected_sc].functions;
-      } else {
-        return [];
+  beforeMount() {
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
+    this.setSCInfor();
+  },
+  computed: {},
+  methods: {
+    selectSC(sid, index) {
+      if (this.selected_smart != sid) {
+        this.selected_smart = sid;
+        this.selectedSCIndex = index;
       }
     },
-  },
-  methods: {
+    async setSCInfor() {
+      for (let i = 0; i < this.list_smart_contract.length; i++) {
+        this.smart_infor.push(
+          await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
+        );
+      }
+    },
     routing(param) {
       if (param == "next") {
         this.$router.push({ name: "SelectVarReentrancyOp1" });

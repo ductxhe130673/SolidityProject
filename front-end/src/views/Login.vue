@@ -28,7 +28,7 @@
 
 <script>
 //import { makeLogin } from "../services/auth";
-import {AuthService} from '../services/auth'
+import { AuthService } from "../services/auth";
 export default {
   name: "login",
   data() {
@@ -58,16 +58,19 @@ export default {
     //     });
     // },
     login() {
-      const response  = AuthService.makeLogin({username:this.username,password:this.password})
-      response.then((res)=>{
-        console.log(res)
-        if(res.status===200&&res.data.success===true){
+      const response = AuthService.makeLogin({
+        username: this.username,
+        password: this.password,
+      });
+      console.log("response---------", response);
+      response.then((res) => {
+        console.log("res----------------", res);
+        if (res.status === 200) {
           this.$router.push({
-            name:"Index"
-          })
+            name: "Index",
+          });
         }
-      })
-      
+      });
     },
   },
 };

@@ -71,14 +71,15 @@
       <div type="button" class="btn btn-outline-primary" @click="routing('next')">
         Next
       </div>
-      <div type="button" class="btn btn-outline-primary" @click="routing('select')"  v-if="list_smart_contract.length > 1">
-        Select another smart contract
-      </div>
       <div
         type="button"
         class="btn btn-outline-primary"
-        @click="routing('back')"
+        @click="routing('select')"
+        v-if="list_smart_contract.length > 1"
       >
+        Select another smart contract
+      </div>
+      <div type="button" class="btn btn-outline-primary" @click="routing('back')">
         Back
       </div>
     </div>
@@ -251,7 +252,6 @@ export default {
       },
       selected_sc: 1,
       selected_function: null,
-     
     };
   },
   methods: {
@@ -274,7 +274,7 @@ export default {
       }
     },
   },
-  
+
   computed: {
     getSelectedSc() {
       if (this.selected_sc in this.smart_contract_infors) {

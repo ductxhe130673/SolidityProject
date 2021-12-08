@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     register() {
-      console.log(this.username, this.password)
+      console.log(this.username, this.password);
       axios
         .post("http://127.0.0.1:8000/auth/register/", {
           username: this.username,
@@ -57,6 +57,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      this.$router.push({ name: "Login" });
     },
   },
 };

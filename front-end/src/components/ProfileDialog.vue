@@ -2,7 +2,7 @@
   <div id="pro-dia">
     <div class="top side">
       <div class="info">
-        <h2 class="info-name">{{name}}</h2>
+        <h2 class="info-name">{{ name }}</h2>
         <p><a href="">View my Profile</a></p>
       </div>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { AuthService } from '../services/auth'
+import { AuthService } from "../services/auth";
 
 export default {
   name: "profiledialog",
@@ -27,13 +27,12 @@ export default {
     async logout() {
       await AuthService.makeLogout();
     },
-    
   },
   computed: {
-    name(){
-      return this.$store.state.user.currentUser.name
-    }
-  }
+    name() {
+      return this.$store.state.user.currentUser.name;
+    },
+  },
 };
 </script>
 
@@ -107,8 +106,7 @@ export default {
 .op:hover,
 .top:hover {
   cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   background-color: #fafcfe9f;
 }
 </style>

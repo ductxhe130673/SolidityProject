@@ -71,7 +71,7 @@ class LTLTranslator{
         void handleVariable(const nlohmann::json& lna_json);
         std::map<std::string,std::string>  translate(); 
 
-        std::map<std::string, std::string> createUnderOverFlowVul(std::vector<std::string> _param);
+        std::map<std::string, std::string> createUnderOverFlowVul(const std::string& min_threshold, const std::string& max_threshold, const std::string& variable);
         std::map<std::string, std::string> createVulFileFromFormula(std::string _formula);
 
         void handleConstDefinition();
@@ -79,8 +79,8 @@ class LTLTranslator{
         
         void handlePropertyDefinition();
 
-        std::vector<std::string> infixToPostfixExpression(const std::string& _exp);
-        std::vector<std::string> splitExpression(const std::string& _exp);
+        static std::vector<std::string> infixToPostfixExpression(const std::string& _exp);
+        static std::vector<std::string> splitExpression(const std::string& _exp);
         
         std::string handleNoNamePropositionDefinition(const std::string& _def);
 
@@ -93,6 +93,8 @@ class LTLTranslator{
 
         bool is_local_variable(const std::string& _name);
         std::string get_local_variable_placetype(const std::string& _name);
+
+        static std::vector<std::string> getListVariableFromFormula(const std::string& _formula);
 
         void createMap();
     private:
