@@ -95,6 +95,7 @@ export default {
       }  
     },
   },
+ 
   methods: {
      selectSC(sid, index) {
       if (this.selected_smart != sid) {

@@ -61,11 +61,7 @@
       >
         Next
       </div>
-      <div
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('back')"
-      >
+      <div type="button" class="btn btn-outline-primary" @click="routing('back')">
         Back
       </div>
     </div>

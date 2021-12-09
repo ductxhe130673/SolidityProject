@@ -1,14 +1,15 @@
-import $store from '../store'
 import { AuthService } from '@/services/auth.js'
-import cookie from 'vue-cookies'
+// import cookie from 'vue-cookies'
 
 export async function initCurrentUserStateMiddleware (to, from, next) {
-  const currentUserId = $store.state.user.currentUser.id
+  const currentUserId = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user")).id
+  : null
   
   if (AuthService.hasRefreshToken() && !currentUserId) {
     try {
-      await AuthService.debounceRefreshTokens()
-      await $store.dispatch('user/getCurrent')
+     /*  await AuthService.debounceRefreshTokens()
+      await $store.dispatch('user/getCurrent') */
       next()
     } catch (e) {
       console.log(e)
@@ -19,25 +20,29 @@ export async function initCurrentUserStateMiddleware (to, from, next) {
 }
 
 export function checkAccessMiddleware (to, from, next) {
-  const currentUserId = $store.state.user.currentUser.id
+  const currentUserId = localStorage.getItem("user")
+  // console.log("record => record.meta.role)",to.matched);
   const isAuthRoute = to.matched.some(record => record.meta.requiresAuth)
+  const isAdminRoutes = to.matched.some(record => record.meta.isAdmin)
+  const userRole = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user")).role
+  : null
 
   if (isAuthRoute){
         if (currentUserId) {
-          if((!$store.state.data.used) && cookie.isKey("_dt"+currentUserId))
-          {
-            var data = cookie.get("_dt"+currentUserId)
-            if($store.state.data.version == data.version)
-            {
-              $store.commit('data/SetAllData',data)
-              $store.commit('data/SetUsedState',true)
-            }
+          if(userRole !== "admin" && isAdminRoutes){
+            alert("Access Denied")
+              return next(to.matched[1].path); 
           }
-          return next();
+          else {
+            return next();
+          }
         }
-        return next("/login");
-  }
+        else{
+          return next("/login");
+        }
 
+  }
   const isGuestRoute = to.matched.some(record => record.meta.guest)
   if(isGuestRoute)
   {

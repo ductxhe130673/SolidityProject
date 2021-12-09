@@ -6,10 +6,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 # Create your models here.
 
 class Account(AbstractBaseUser):
+    aid = models.AutoField(primary_key=True)
     username = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True, unique=True)
     password = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
     role = models.CharField(max_length=200, db_collation='utf8_general_ci', blank=True, null=True)
-
+    
     class Meta:
         managed = False
         db_table = 'Account'

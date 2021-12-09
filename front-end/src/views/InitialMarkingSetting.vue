@@ -1,6 +1,6 @@
 <template>
   <div id="initial-marking">
-    <div id="initial-marking-header">Confguration</div>
+    <div id="initial-marking-header">Configuration</div>
     <div id="initial-marking-input">
       <div id="header-section">
         <div class="number-cell">Number of users</div>
@@ -123,7 +123,7 @@
 
                 <div
                   class="table-row"
-                  v-for="(func, index) in init_marking.smart_contracts[selectedSCIndex]
+                  v-for="(func, index) in init_marking.Smart_contracts[selectedSCIndex]
                     .functions"
                   v-bind:key="index"
                   :class="{ even_row: index % 2 == 0 }"
@@ -228,7 +228,7 @@ export default {
     },
     async setSCInfor() {
       for (let i = 0; i < this.list_smart_contract.length; i++) {
-        this.init_marking.smart_contracts[i] = await this.getFuntionSC(
+        this.init_marking.Smart_contracts[i] = await this.getFuntionSC(
           this.list_smart_contract[i].sid
         );
       }
@@ -279,7 +279,7 @@ export default {
     },
     setFunctionParam(funct) {
       this.function_cell_selected = "params";
-      this.selected_function = this.init_marking.smart_contracts[
+      this.selected_function = this.init_marking.Smart_contracts[
         this.selectedSCIndex
       ].functions.find((item) => {
         return item.fid === funct;
