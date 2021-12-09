@@ -37,8 +37,8 @@ import EditContext from "../views/context/context-crud/edit-context.vue"
 import ListSc from "../views/select-sc/smartcontract-crud/list-sc.vue"
 import EditSc from "../views/select-sc/smartcontract-crud/edit-sc.vue"
 import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
-import SelectSContractSD2 from "../views/select-sc/select/SelectSContractSD2.vue"
-import SelectFuncSD from "../views/select-sc/select/SelectFuncSD.vue"
+import SelectSContractSD2 from "../views/choose-property/select-op/SelectSContractSD2.vue"
+import SelectFuncSD from "../views/choose-property/select-op/SelectFuncSD.vue"
 
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
@@ -73,8 +73,8 @@ export const routes = [{
         name: "RoadMap",
         component: RoadMap,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
-        props: false
-      },
+        props: true
+    },
     {
         path: "/login",
         name: "Login",
