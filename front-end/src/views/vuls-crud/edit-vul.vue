@@ -33,7 +33,19 @@
           <FormularEditor :ltlcode="codeModel" @input="updateMessage" />
         </div>
       </div>
-
+      <div class="row">
+        <div class="title col-2">Formula Text</div>
+        <div class="col-10">
+          <textarea
+            style="height: 175px"
+            spellcheck="false"
+            rows="3"
+            class="form-control"
+            type="text"
+            v-model="formulaText"
+          ></textarea>
+        </div>
+      </div>
       <div class="row">
         <div class="title col-2">Description</div>
         <div class="col-10">
@@ -73,6 +85,7 @@ export default {
       description: "",
       ltl: { name: String, fomular: String, description: String },
       dateFormat: "",
+      formulaText: "",
     };
   },
   watch: {
@@ -90,6 +103,16 @@ export default {
   // components: { LTLEditor },
   methods: {
     updateMessage(mes) {
+      var mapObj = {
+        G: "After an occurrence of",
+        F: "at least one occurrence of",
+        g: "g",
+        f: "f",
+      };
+      const step1 = mes.replace("=>", "there will be");
+      this.formulaText = step1.replace(/G|F/gi, function (matched) {
+        return mapObj[matched];
+      });
       this.codeModel = mes;
     },
     async initData() {
@@ -103,7 +126,6 @@ export default {
 
     async clickHandler(action) {
       if (action == "save") {
-        console.log("this.codeModel2", this.codeModel);
         await UpdateLtlTemplate(
           this.id,
           this.name,

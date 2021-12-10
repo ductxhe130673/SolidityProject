@@ -44,11 +44,19 @@
         <div class="col">
           <p>Type</p>
           <div class="input-group mb-3">
-            <select class="form-select" id="inputGroup" v-model="selected">
+            <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
               <option value="0">All</option>
-              <option value="common" v-if="isAdmin">Common</option>
+              <option value="common">Common</option>
               <option value="private">Private</option>
               <option value="pending">Pending</option>
+            </select>
+            <select
+              v-if="!isAdmin"
+              class="form-select"
+              id="inputGroup"
+              v-model="selected"
+            >
+              <option value="private">Private</option>
             </select>
           </div>
         </div>
@@ -185,6 +193,9 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
+    this.checkIsUser();
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
@@ -241,6 +252,11 @@ export default {
     this.setListSmartContract();
   },
   methods: {
+    checkIsUser() {
+      if (!this.isAdmin) {
+        this.selected = "private";
+      }
+    },
     onChangeDate(value) {
       const date = dateFormat(value._d, this.formatDate);
       this.filterDate = date;

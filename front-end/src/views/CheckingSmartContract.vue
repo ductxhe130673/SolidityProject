@@ -144,7 +144,6 @@ export default {
         },
       },
       context: this.$store.state.data.data.selectedContext.name,
-      user: { user_name: "Billy Tran" },
       error: true,
       view: "",
       ltlProperty: [],
@@ -198,10 +197,14 @@ export default {
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
       const tltl_PATH_json = JSON.stringify(this.selected_vuls_format);
+      const initialMarkingInfor = JSON.stringify(
+        this.$store.state.data.data.initialMarkingInfor
+      );
       const res = await CheckService.callUnfoldingTools(
         tName,
         tcontext_PATH_xml,
-        tltl_PATH_json
+        tltl_PATH_json,
+        initialMarkingInfor
       );
       console.log("here");
       console.log(res);
@@ -217,7 +220,6 @@ export default {
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {
-        console.log("Start mutation");
         this.$store.commit("Setrs", "11");
         this.results.push("Can't run HELENA tools");
       }

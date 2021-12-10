@@ -100,13 +100,14 @@ export default {
     updateMessage(mes) {
       var mapObj = {
         G: "After an occurrence of",
-        F: "there will be at least one occurrence of",
+        F: "at least one occurrence of",
+        g: "g",
+        f: "f",
       };
-      const step1 = mes.replace("=>", "");
+      const step1 = mes.replace("=>", "there will be");
       this.formulaText = step1.replace(/G|F/gi, function (matched) {
         return mapObj[matched];
       });
-      console.log("this.formulaText", this.formulaText);
       this.code = mes;
     },
     getDate() {

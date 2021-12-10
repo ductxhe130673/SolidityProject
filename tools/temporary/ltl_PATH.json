@@ -1,1 +1,1 @@
-{"type":"type2","params":{"name":"self_destruction","inputs":["template SelfDestruction();"]}}
+{"type":"type1","params":{"name":"reetrancy","inputs":["template Reentrancy()"]}}
