@@ -3,7 +3,7 @@
     <div class="link">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="http://192.168.1.6:8080/list-sc" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a href="http://192.168.0.100:8080/list-sc" class="link-primary text-decoration-underline">Smart Contract</a> >
           <a>Edit</a></span>
     </div>
     <div class="header">
