@@ -47,7 +47,12 @@
             <td>{{ index + 1 }}</td>
             <td>{{ func.name }}</td>
             <td>
-              <input class="form-check-input" type="radio" value="func.name" />
+              <input
+                type="radio"
+                id="one"
+                name="ch"
+                :value="func.name"
+              />
             </td>
           </tr>
         </table>
