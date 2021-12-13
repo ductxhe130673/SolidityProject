@@ -62,9 +62,7 @@ export default {
         username: this.username,
         password: this.password,
       });
-      console.log("response---------", response);
       response.then((res) => {
-        console.log("res----------------", res);
         if (res.status === 200) {
           this.$router.push({
             name: "Index",
