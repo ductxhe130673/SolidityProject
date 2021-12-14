@@ -12,7 +12,7 @@ import Header from "./components/Header.vue";
 
 // @ is an alias to /src
 export default {
-  components: { NavBar,Header },
+  components: { NavBar,Header},
   data() {
     return {
       sngPage: {
@@ -44,6 +44,7 @@ export default {
         AddVul : true,
         EditVul : true,
         ListVul : true,
+
       },
     };
   },
