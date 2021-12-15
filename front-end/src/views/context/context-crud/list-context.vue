@@ -1,34 +1,28 @@
 <template>
   <div class="container-fluid">
-    <!-- btn delete -->
-    <div id="showConfirmation" v-if="showConfirmation">
-      <div id="removeSC-holder">
-        <confirm @cancel="closeConfirm" @confirm="deleteC()" :dialog="alertDialog" />
-      </div>
-    </div>
-    <div class="row align-items-md-center">
-      <div class="col-2">
+    <div class="row">
+      <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Context</a></span
-        >
+        > >
+        <a>List</a>
       </div>
-      <div class="col-8 text-center"><h1>Context List</h1></div>
+      <div class="col-md-7 text-center"><h1>Context List</h1></div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-md">
           <p>Date</p>
           <a-date-picker
-            :default-value="moment('01/01/2021', dateFormat)"
-            :format="dateFormat"
+            :default-value="moment('2021/12/01', dateFormat)"
           />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col-md"></div>
+        <div class="col-md"></div>
+        <div class="col-md"></div>
 
-        <div class="col">
+        <div class="col-md">
           <p>Type</p>
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
@@ -40,43 +34,52 @@
         </div>
       </div>
       <div class="row">
-        <table class="table table-sm">
+        <table class="table table-md">
           <thead>
             <tr>
-              <th>
-                #
-                <span
-                  ><a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </th>
-
-              <th>
+              <th style="width: 5%">#</th>
+              <th style="width: 15%">
                 Name<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upName')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downName')"
                 /></span>
               </th>
-              <th>
+              <th style="width: 15%">
                 Type<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upType')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downType')"
                 /></span>
               </th>
-              <th>
+              <th style="width: 15%">
                 Date<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDate')"
                 /></span>
               </th>
               <th style="width: 50%">
                 Description<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDes')"
                 /></span>
               </th>
             </tr>
@@ -108,9 +111,9 @@
           </tr>
         </table>
       </div>
-      <div class="row">
+      <div class="row-end">
         <button
-          style="width: 50px"
+          style="width: 60px"
           type="button"
           class="btn btn-outline-primary"
           @click="goAdd"
@@ -124,17 +127,12 @@
 
 <script>
 import moment from "moment";
-// import { mapActions, mapGetters } from "vuex";
 import { DeleteContext, GetAllContext } from "../../../services/data";
-import ConfirmationDialog from "../../../components/ConfirmationDialog.vue";
 export default {
-  components: { confirm: ConfirmationDialog },
+
   data() {
-    return {
-      dateFormat: "",
+    return {  
       selected: "0",
-      showConfirmation: false,
-      alertDialog: {},
       list_context: [],
     };
   },
@@ -157,12 +155,51 @@ export default {
   },
 
   methods: {
-    getDate() {
-      this.dateFormat = moment().format("YYYY-MM-DD");
+    sort(param) {
+      switch (param) {
+        case "upName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() < b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() > b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate < b.createdDate ? -1 : 1
+          );
+          break;
+        case "downDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate > b.createdDate ? -1 : 1
+          );
+          break;
+        case "upDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1
+          );
+
+          break;
+        case "downDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() > b.description.toLowerCase() ? -1 : 1
+          );
+          break;
+      }
     },
-    // async DeleteContext(cid) {
-    //   return await DeleteContext(cid);
-    // },
     moment,
     async initData() {
       this.list_context = await GetAllContext();
@@ -201,6 +238,9 @@ export default {
 </script>
 
 <style scoped>
+.container-fluid{
+  color: black;
+}
 h1 {
   font-size: 50px;
 }
@@ -212,17 +252,21 @@ h1 {
   margin-top: 2%;
   padding-right: 10px;
 }
+.row-end {
+  padding-top: 2%;
+  padding-bottom: 5%;
+}
 button {
   margin-right: 5px;
   margin-top: 5px;
 }
 table {
   width: 100%;
-  border-collapse: collapse;
+
 }
 table td,
 table th {
-  border: 1px solid #ddd;
+  padding-left: 5px;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -237,7 +281,7 @@ table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: black;
+  color: #3a7694;
   text-indent: inherit;
 }
 
@@ -252,19 +296,5 @@ table span {
 #btn {
   text-align: right;
 }
-/*---- showConfirmation */
-#showConfirmation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  align-items: center;
-  justify-content: center;
-}
-#removeSC-holder {
-  margin-top: 200px;
-}
+
 </style>
