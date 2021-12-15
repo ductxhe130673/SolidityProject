@@ -41,7 +41,7 @@ class ltltemplateAPIView(APIView):
 				if serializerLTLTemplate.is_valid():
 					serializerLTLTemplate.save()
 					return Response({"message":"Created"},status=status.HTTP_201_CREATED)
-				return Response({"message":"Create fail!!!"},status=status.HTTP_400_BAD_REQUEST)
+				return Response(serializerLTLTemplate.errors,status=status.HTTP_400_BAD_REQUEST)
 		except Exception as e:
 			print("ERROR====", e)
 			return Response({"message":"A"},status=status.HTTP_400_BAD_REQUEST)

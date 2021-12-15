@@ -10,11 +10,14 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Type</label>
-          <select class="form-select" id="inputGroupSelect01" v-model="selected">
+          <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
+            <option value="0">All</option>
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
-            <option value="0">All</option>
+          </select>
+          <select v-if="!isAdmin" class="form-select" id="inputGroup" v-model="selected">
+            <option value="private">Private</option>
           </select>
         </div>
       </div>
@@ -78,15 +81,23 @@ export default {
       isOpen: false,
       info: null,
       checkedNames: [],
-      //show dialog
+      isAdmin: true,
       showConfirmation: false,
       upLoadDialog: {},
     };
   },
   mounted() {
     this.checkedNames = this.$store.state.data.data.selectedSc;
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
+    this.checkIsUser();
   },
   methods: {
+    checkIsUser() {
+      if (!this.isAdmin) {
+        this.selected = "private";
+      }
+    },
     upLoad() {
       this.upLoadDialog = {
         title: "Choose a new Smart Contract file",

@@ -7,6 +7,11 @@
         </div>
       </div>
       <div class="smart-cell">
+        <div class="min-max">
+          Min Threshold <input type="number" v-model="minhold" /> Max Threshold
+          <input type="number" v-model="maxhold" />
+        </div>
+        <br />
         <div id="list-smart">
           <ul class="nav nav-tabs" style="flex-wrap: nowrap">
             <li
@@ -145,6 +150,8 @@ export default {
       function_infor: {},
       selected_func: 1,
       selected_smart: 1,
+      minhold: 0,
+      maxhold: 0,
     };
   },
   beforeMount() {
