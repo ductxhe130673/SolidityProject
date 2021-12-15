@@ -20,6 +20,7 @@ class  ltltemplate(models.Model):
     description= models.CharField(max_length=200, db_column="description")
     createdDate = models.DateField(db_column="createdDate")
     aid = models.ForeignKey(Account, models.DO_NOTHING, db_column='aid')
+    formula_text=models.CharField(max_length=200, db_column="formula_text")
 
     class Meta:
         managed = False

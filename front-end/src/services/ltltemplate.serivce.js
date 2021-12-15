@@ -27,8 +27,7 @@ export class ltltemplateService extends BaseService {
 
     
     /*---------Create New LTLTemplate--------- */
-    static async CreateLTLTemplate(name, formula, description,date) {
-        console.log('name, formula, description,date',name, formula, description,date);
+    static async CreateLTLTemplate(name, formula, description,date,formula_text) {
         try {
             const paraData = {
                 "name": name,
@@ -36,7 +35,7 @@ export class ltltemplateService extends BaseService {
                 "description": description,
                 "template_type": "test",
                 "createdDate": date, // hard code, chua fix trong database,chuyen thanh ham getdate ben js
-                //"createdDate": createdDate,
+                "formula_text" : formula_text,
                 "aid":"1"
             }
             const response = await this.request({ auth: true }).post(`${this.getUnity()}/api`, paraData)
