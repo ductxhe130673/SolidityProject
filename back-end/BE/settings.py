@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'smartconstract',
     'demo_middleware',
     'corsheaders',
-    'LTLpro',
     'cpncontext',
     'ltltemplate',
     'account',

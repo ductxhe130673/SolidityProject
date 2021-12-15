@@ -7,7 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 # for Windows
 # path = r"D:\Demo\SolidityProject\tools"
 # for Ubuntu
-path = r"G:\CapstoneProject\SolidityProject\tools"
+path = r"/home/quypham/SolidityProject/tools"
 
 
 # ---save file to temporary----
@@ -31,9 +31,9 @@ def unfolding():
     # get from temporary
     # context_PATH = './test/test.xml'
     # ltl_PATH = './test/ltl.json'
-    context_PATH = '../temporary/context_PATH.xml'
-    ltl_PATH = '../temporary/ltl_PATH.json'
-    initialMarking_PATH  = '../temporary/initialMarking_PATH.json'
+    context_PATH = './temporary/context_PATH.xml'
+    ltl_PATH = './temporary/ltl_PATH.json'
+    initialMarking_PATH  = './temporary/initialMarkingInfor.json'
 
     # wait tools
     lna_PATH = './test/EtherGame.lna'
@@ -44,7 +44,7 @@ def unfolding():
     output_PATH = './output/'
     output_NAME = 'test'
 
-    commandUnf = "./main --lna " + lna_PATH + " --context " + context_PATH +"--initialMarking "+ initialMarking_PATH + " --ltl "+ltl_PATH+" --sol-ast " + \
+    commandUnf = "./tools/tools/unfolding --lna " + lna_PATH + " --context " + context_PATH +"--initialMarking "+ initialMarking_PATH + " --ltl "+ltl_PATH+" --sol-ast " + \
         sol_ast_PATH+" --lna-json "+lna_json_PATH+" --output_path " + \
         output_PATH+" --output_name "+output_NAME
     # print (commandUnf)
