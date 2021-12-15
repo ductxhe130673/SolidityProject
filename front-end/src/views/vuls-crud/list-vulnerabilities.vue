@@ -4,21 +4,23 @@
       <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">LTL</a></span
-        > >
-        
-          <a>List</a>
+          <a href="" class="link-primary text-decoration-underline"
+            >LTL</a
+          ></span
+        >
+        >
 
+        <a>List</a>
       </div>
-      <div class="col-md-7 text-center"><h1>LTL Property Template List</h1></div>
+      <div class="col-md-7 text-center">
+        <h1>LTL Property Template List</h1>
+      </div>
     </div>
     <div class="container">
       <div class="row">
         <div class="col-md">
           <p>Date</p>
-          <a-date-picker
-            :default-value="moment('2021/12/01', dateFormat)"
-          />
+          <a-date-picker :default-value="moment('2021/12/01', dateFormat)" />
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -27,7 +29,7 @@
           <p>Type</p>
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
-               <option value="0">All</option>
+              <option value="0">All</option>
               <option value="type0">CSP</option>
               <option value="type1">Vulnerability</option>
             </select>
@@ -40,38 +42,41 @@
             <tr>
               <th style="width: 5%">
                 #
-                <span
-                  ><a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
+                
               </th>
 
               <th style="width: 15%">
                 Name<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon id="icon" type="caret-up"  @click="sort('upName')"/><a-icon
                     id="icon"
                     type="caret-down"
+                     @click="sort('downName')"
                 /></span>
               </th>
               <th style="width: 15%">
                 Type<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon id="icon" type="caret-up"   @click="sort('upType')"/><a-icon
                     id="icon"
-                    type="caret-down"
+                    type="caret-down"  @click="sort('downType')"
                 /></span>
               </th>
               <th style="width: 15%">
                 Date<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon id="icon" type="caret-up"  @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
+                     @click="sort('downDate')"
                 /></span>
               </th>
-             <th style="width: 50%">
+              <th style="width: 50%">
                 Description<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDes')"
                 /></span>
               </th>
             </tr>
@@ -98,7 +103,6 @@
                 >
                   Delete
                 </button>
-                
               </span>
             </td>
           </tr>
@@ -145,6 +149,51 @@ export default {
     },
   },
   methods: {
+    sort(param) {
+      switch (param) {
+        case "upName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() < b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() > b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate < b.createdDate ? -1 : 1
+          );
+          break;
+        case "downDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate > b.createdDate ? -1 : 1
+          );
+          break;
+        case "upDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1
+          );
+
+          break;
+        case "downDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() > b.description.toLowerCase() ? -1 : 1
+          );
+          break;
+      }
+    },
     moment,
     async initData() {
       this.list_vuls = await GetAllltltemplates();
@@ -167,7 +216,10 @@ export default {
       this.$store.commit("setIsEditFormula", true);
     },
     deleteVul(id) {
-      if (confirm("Do you want to delete the LTLTemplate out of the system?") === true) {
+      if (
+        confirm("Do you want to delete the LTLTemplate out of the system?") ===
+        true
+      ) {
         this.deleteLtlTemplate(id);
         this.$router.go(0);
       }
@@ -177,7 +229,7 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid{
+.container-fluid {
   color: black;
 }
 h1 {
@@ -226,7 +278,6 @@ table th {
 table span {
   float: right;
   display: block;
-  
 }
 #icon {
   display: block;
@@ -234,7 +285,5 @@ table span {
 }
 #btn {
   text-align: right;
-
 }
-
 </style>

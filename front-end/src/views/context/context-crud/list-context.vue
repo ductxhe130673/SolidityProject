@@ -37,39 +37,49 @@
         <table class="table table-md">
           <thead>
             <tr>
-              <th style="width: 5%">
-                #
-                <span
-                  ><a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </th>
+              <th style="width: 5%">#</th>
               <th style="width: 15%">
                 Name<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upName')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downName')"
                 /></span>
               </th>
               <th style="width: 15%">
                 Type<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upType')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downType')"
                 /></span>
               </th>
               <th style="width: 15%">
                 Date<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDate')"
                 /></span>
               </th>
               <th style="width: 50%">
                 Description<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDes')"
                 /></span>
               </th>
             </tr>
@@ -145,6 +155,51 @@ export default {
   },
 
   methods: {
+    sort(param) {
+      switch (param) {
+        case "upName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() < b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() > b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate < b.createdDate ? -1 : 1
+          );
+          break;
+        case "downDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate > b.createdDate ? -1 : 1
+          );
+          break;
+        case "upDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1
+          );
+
+          break;
+        case "downDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() > b.description.toLowerCase() ? -1 : 1
+          );
+          break;
+      }
+    },
     moment,
     async initData() {
       this.list_context = await GetAllContext();
