@@ -4,6 +4,7 @@
       <h1 class="text-center">Select smart contracts</h1>
     </div>
     <div class="row">
+     
       <table class="table table-sm">
         <thead>
           <tr>
@@ -26,75 +27,79 @@
           </tr>
         </thead>
 
-        <tr v-for="data in datatable" :key="data.id">
-          <td>{{ data.id }}</td>
-          <td>{{ data.name }}</td>
+        <tr v-for="(item, index) in filterlist" :key="item.id">
+          <td>{{ index + 1 }}</td>
+          <td>{{ item.name }}</td>
           <td>
-           
-              <input
-                class=" form-check-input"
-                type="checkbox"
-                value=""
-                id="flexCheckDefault"
-              />
-           
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="checkedNames"
+              :value="item"
+            />
           </td>
         </tr>
       </table>
+  
     </div>
     <div id="action">
-      <div type="button" class="btn btn-outline-primary" @click="routing('next')">Next</div>
-      <div type="button" class="btn btn-outline-primary" @click="routing('back')">Back</div>
+      <div
+        type="button"
+        class="btn btn-outline-primary"
+        @click="routing('next')"
+      >
+        Next
+      </div>
+      <div
+        type="button"
+        class="btn btn-outline-primary"
+        @click="routing('back')"
+      >
+        Back
+      </div>
     </div>
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      datatable: [
-        {
-          id: "1",
-          name: "EtherGame",
-          type: "pending",
-          date: "20/11/2021",
-          description: "This is a smart contract about auction ",
-        },
-        {
-          id: "2",
-          name: "AtherGame",
-          type: "pending",
-          date: "5/11/2021",
-          description: "This is a smart contract about auction",
-        },
-        {
-          id: "3",
-          name: "CtherGame",
-          type: "pending",
-          date: "2/11/2021",
-          description: "This is a smart contract about auction",
-        },
-      ],
+      checkedNames: [],
     };
   },
-  methods:{
-     routing(param) {
+  mounted() {
+    this.checkedNames = this.$store.state.data.data.selectedSc;
+  },
+
+  methods: {
+    routing(param) {
       if (param == "back") {
         this.$router.push({ name: "GenaralVulSetting" });
         this.$store.commit("setIndex", 4);
       }
       if (param == "next") {
+        this.$store.commit("SetSelectedSC", this.checkedNames);
         this.$router.push({ name: "Initial" });
         this.$store.commit("setIndex", 4);
       }
     },
-  }
+    ...mapActions(["setListSmartContract"]),
+  },
+  created() {
+    this.setListSmartContract();
+  },
+  computed: {
+    ...mapGetters(["getlistSmartContract"]),
+    filterlist() {
+      return this.getlistSmartContract;
+    },
+  },
 };
 </script>
 <style scoped>
-
-.row{
-   margin-top: 2%;
+.row {
+  margin-top: 2%;
   padding-right: 10px;
 }
 /* button */
@@ -109,11 +114,13 @@ export default {
 table {
   width: 70%;
   border-collapse: collapse;
-margin: 0 auto;
+  margin: 0 auto;
 }
+
 table td,
 table th {
   border: 1px solid #ddd;
+  padding: 5px;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -141,7 +148,7 @@ table span {
   height: 8px;
 }
 /* checkbox */
-input{
-    margin: 7px;
+input {
+  margin: 7px;
 }
 </style>

@@ -27,17 +27,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="data in datatable" :key="data.id">
-            <td>{{ data.id }}</td>
-            <td>{{ data.GlobalVariable }}</td>
+          <tr  v-for="(func, index) in smart_infor[selectedSCIndex].globalVar"
+              v-bind:key="func.fid">
+            <td>{{ index + 1  }}</td>
+            <td>{{ func.name }}</td>
             <td>
-              <!-- <input type="radio" name="radios" id="radio1" /> -->
               <input
                 type="radio"
                 id="one"
                 name="ch"
-                v-model="checkedNames"
-                :value="data"
+                :value="func.name"
               />
             </td>
           </tr>
@@ -49,13 +48,13 @@
         <ul class="nav nav-tabs">
           <li
             class="nav-item d-inline-block text-truncate"
-            v-for="item in list_function"
-            :key="item.id"
+           v-for="(item, index) in smart_infor[selectedSCIndex].functions"
+                  :key="item.id"
           >
             <a
               class="nav-link"
-              v-on:click="selected_func = item.id"
-              v-bind:class="{ active: item.id == selected_func }"
+               v-on:click="selectFunction(item.fid, index)"
+                    v-bind:class="{ active: item.sid == selected_smart }"
               >{{ item.name }}</a
             >
           </li>
@@ -82,8 +81,8 @@
           </div>
           <div
             class="table-row"
-            v-for="(func, index) in getSelectedFunc"
-            v-bind:key="func.fid"
+          v-for="(func, index) in getSelectedFunc"
+                  v-bind:key="func.fid"
             :class="{ even_row: index % 2 == 0 }"
           >
             <div class="table-cell first-cell">{{ index + 1 }}</div>
@@ -93,7 +92,7 @@
                 type="radio"
                 id="one"
                 name="ch"
-                v-model="checkedNames"
+                v-model="checkedLocalVar"
                 :value="data"
               />
             </div>
@@ -108,62 +107,64 @@
   </div>
 </template>
 <script>
+import { GetGloLocArgOfSmartContract } from "../../../services/data";
 export default {
   data() {
     return {
-      function_cell_selected: "function",
-      list_function: [{ name: "Function 1", id: 1 }],
-      function_infor: {
-        1: {
-          name: "Function 1",
-          functions: [
-            {
-              fid: 1,
-              name: "Local Variable 1",
-            },
-            {
-              fid: 2,
-              name: "Local Variable 2",
-            },
-          ],
-        },
-      },
+       list_smart_contract: [],
+      list_function: [],
+      functionBySC: [],
+      smart_infor: [],
+      checkedGlobalVar: "",
+      checkedLocalVar: "",
+      selectedSCIndex: 0,
+      selectedFunctionIndex: 0,
+      function_infor: {},
       selected_func: 1,
-      datatable: [
-        {
-          id: "1",
-          GlobalVariable: "Global Variable 1",
-        },
-        {
-          id: "2",
-          GlobalVariable: "Global Variable 2",
-        },
-        {
-          id: "3",
-          GlobalVariable: "Global Variable 3",
-        },
-        {
-          id: "4",
-          GlobalVariable: "Global Variable 4",
-        },
-        {
-          id: "5",
-          GlobalVariable: "Global Variable 5",
-        },
-      ],
+      selected_smart: 1,
     };
   },
 
+   beforeMount() {
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
+    this.setSCInfor();
+  },
   computed: {
-    getSelectedFunc() {
-      if (this.selected_func in this.function_infor) {
-        return this.function_infor[this.selected_func].functions;
+     getSelectedFunc() {
+      return this.function_infor;
+    },
+    getSelectedSmart() {
+      if (this.selected_smart in this.smart_infor) {
+        return this.smart_infor[this.selected_smart].SmartContract;
+   
       } else {
         return [];
-      }
+      }  
     },
   },
   methods: {
+    selectFunction(fid, index) {
+      if (this.selected_func != fid) {
+        this.selected_func = fid;
+        this.selectedFunctionIndex = index;
+        this.function_infor = this.functionBySC[index].localVar;
+      }
+    },
+    selectSC(sid, index) {
+      if (this.selected_smart != sid) {
+        this.selected_smart = sid;
+        this.selectedSCIndex = index;  
+         this.functionBySC = this.list_function[index];
+      }
+    },
+    async setSCInfor() {
+      for (let i = 0; i < this.list_smart_contract.length; i++) {
+        this.smart_infor.push(
+          await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
+        );
+        this.list_function = this.smart_infor.map((item) => item.functions);
+      }
+    },
     routing(param) {
       if (param == "next") {
         this.$router.push({ name: "Initial" });

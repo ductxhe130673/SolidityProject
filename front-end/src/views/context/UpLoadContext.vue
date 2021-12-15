@@ -8,7 +8,7 @@
         <p>Name</p>
       </div>
       <div class="col-7">
-        <input class="form-control" type="text" v-model="fileupload_name" />
+        <input class="form-control" type="text" v-model="name" />
       </div>
     </div>
     <div class="row">
@@ -16,11 +16,9 @@
         <p>Type</p>
       </div>
       <div class="col-7">
-        <select class="form-select" name="">
-          <option value="">DCR</option>
-          <option value="">Free-cont</option>
-          <option value="">type 3</option>
-          <option value="">type 4</option>
+        <select class="form-select" name="" v-model="type">
+          <option value="DCR">DCR</option>
+          <option value="PCN">PCN</option>
         </select>
       </div>
     </div>
@@ -30,7 +28,13 @@
         <p>Content</p>
       </div>
       <div class="col-7">
-        <input class="form-control" type="text" />
+        <textarea
+          class="form-control"
+          cols="50"
+          rows="5"
+          type="text"
+          v-model="fileContent"
+        />
       </div>
     </div>
 
@@ -45,6 +49,7 @@
           id=""
           cols="50"
           rows="5"
+          v-model="description"
         ></textarea>
       </div>
     </div>
@@ -53,22 +58,48 @@
       <button type="button" class="btn btn-outline-primary" @click="routing('OK')">
         OK
       </button>
-      <button type="button" class="btn btn-outline-primary" @click="routing('cancel')">Cancel</button>
+      <button type="button" class="btn btn-outline-primary" @click="routing('cancel')">
+        Cancel
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+import { CreateContext } from "../../services/data";
 export default {
   data() {
     return {
-      fileupload_name: "",
-      items: [],
+      name: "",
+      description: "",
+      type: "",
+      fileContent: "",
+      dateFormat: "",
     };
   },
+  mounted() {
+    this.getDate();
+    this.fileContent = this.$store.state.data.contentFile;
+  },
   methods: {
+    async saveContextFile() {
+      await CreateContext(
+        this.name,
+        this.dateFormat,
+        this.type,
+        this.description,
+        this.fileContent
+      );
+    },
+    getDate() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+    },
     routing(param) {
       if (param == "OK") {
+        if (this.name === "" || this.type === "" || this.fileContent === "")
+          alert("Please input all field!!!");
+        this.saveContextFile();
         this.$router.push({ name: "ContextOfSmartContract" });
       } else if (param == "cancel") {
         this.$router.push({ name: "ContextOfSmartContract" });

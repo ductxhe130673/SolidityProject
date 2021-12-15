@@ -111,17 +111,20 @@ std::map<std::string,std::string> LTLTranslator::translate(){
     if(ltl_type == "general"){
         std::string ltl_name = ltl_param.at("name");
         if(ltl_name == "under_over_flow"){
-            return createUnderOverFlowVul(ltl_param.at("inputs"));
+            auto inputs = ltl_param.at("inputs");
+            std::string min_threshold = inputs.at("min_threshold");
+            std::string max_threshold = inputs.at("max_threshold");
+            std::string variable = inputs.at("selected_variable");
+            return createUnderOverFlowVul(min_threshold,max_threshold,variable);
         }
     }else if(ltl_type == "specific"){
         return createVulFileFromFormula(ltl_param.at("formula"));
     }
 }
 
-std::map<std::string, std::string> LTLTranslator::createUnderOverFlowVul(std::vector<std::string> _param){
-    std::string variable = _param[0];
+std::map<std::string, std::string> LTLTranslator::createUnderOverFlowVul(const std::string& min_threshold, const std::string& max_threshold,  const std::string& variable){
     std::stringstream _vul;
-    _vul << "const minThreshold = 0;" << "\n" << "const maxThreshold = 10000" << "\n";
+    _vul << "const minThreshold = " + min_threshold + ";" << "\n" << "const maxThreshold = " + max_threshold + "" << "\n";
     _vul << "proposition oFut: ('" + variable + "' < minThreshold) | ('" + variable + "' > maxThreshold);" << "\n";
     _vul << "property outOfRange: G ( ! oFut );";
     return createVulFileFromFormula(_vul.str());
@@ -165,10 +168,49 @@ std::map<std::string, std::string> LTLTranslator::createVulFileFromFormula(std::
     result["property"] = property_string;
     return result;
 }
+
+std::vector<std::string> LTLTranslator::getListVariableFromFormula(const std::string& _formula){
+    std::vector<std::string> lines = split(_formula,"\n");
+    std::list<std::string> temp_ltl_lines;
+
+    for(size_t i = 0; i < lines.size(); i++){
+        std::string line = lines[i];
+        if (!line.empty()) {
+            std::string temp = std::string(line);
+            trim_ex(temp);
+            if(temp.length() > 0)
+                temp_ltl_lines.emplace_back(line);
+        }
+    }
+    std::list<std::string>::iterator temp_ptr_ltl_line = temp_ltl_lines.begin();
+
+    std::vector<std::string> ret;
+    while (temp_ptr_ltl_line != temp_ltl_lines.end()){
+        std::string keyword = retrieve_string_element(*temp_ptr_ltl_line,0," ");
+        if(std::find(TokensDefine.begin(), TokensDefine.end(), keyword) != TokensDefine.end()){
+            if(keyword == PROPOSITION_STRING || keyword == PROPERTY_STRING){
+                std::string prop_def = retrieve_string_element(*temp_ptr_ltl_line,1,":");
+                std::vector<std::string> expression = splitExpression(prop_def);
+                for(auto it = expression.begin(); it != expression.end(); ++it){
+                    std::string op = *it;
+                    if(op.find("'") != std::string::npos){
+                        std::string variable = substr_by_edge(op,"'","'");
+                        ret.push_back(variable);
+                    }
+                }
+            }
+        }
+        ++temp_ptr_ltl_line;
+    }
+    return ret;
+}
+
 /** Analyse const definition
  */
 void LTLTranslator::handleConstDefinition(){
-    std::string definition = split_ex(*ptr_ltl_line," ",2)[1];
+    std::string temp = *ptr_ltl_line;
+    trim_ex(temp);
+    std::string definition = split_ex(temp," ",2)[1];
     
     std::string variable = removeNoneAlnum(retrieve_string_element(definition,0,"="));
     std::string value = removeNoneAlnum(retrieve_string_element(definition,1,"="));
@@ -179,7 +221,9 @@ void LTLTranslator::handleConstDefinition(){
 /** Analyse proposition definition
  */
 void LTLTranslator::handlePropositionDefinition(){
-    std::string definition = split_ex(*ptr_ltl_line," ",2)[1];
+    std::string temp = *ptr_ltl_line;
+    trim_ex(temp);
+    std::string definition = split_ex(temp," ",2)[1];
 
     std::string prop_name = removeNoneAlnum(retrieve_string_element(definition,0,":"));
     std::string prop_def = retrieve_string_element(definition,1,":");
@@ -309,7 +353,9 @@ std::string LTLTranslator::analysePropositionExpression(const std::string& _exp)
 /** Analyse property definition
  */
 void LTLTranslator::handlePropertyDefinition(){
-    std::string definition = split_ex(*ptr_ltl_line," ",2)[1];
+    std::string temp = *ptr_ltl_line;
+    trim_ex(temp);
+    std::string definition = split_ex(temp," ",2)[1];
 
     std::string property_name = removeNoneAlnum(split_ex(definition,":",2)[0]);
     std::string property_def = split_ex(definition,":",2)[1];

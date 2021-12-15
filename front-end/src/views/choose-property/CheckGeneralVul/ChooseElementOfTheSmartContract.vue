@@ -8,16 +8,16 @@
       </div>
       <div class="smart-cell">
         <div id="list-smart">
-          <ul class="nav nav-tabs">
+          <ul class="nav nav-tabs" style="flex-wrap: nowrap">
             <li
               class="nav-item d-inline-block text-truncate"
-              v-for="item in list_smart"
+              v-for="(item, index) in list_smart_contract"
               :key="item.id"
             >
               <a
                 class="nav-link"
-                v-on:click="selected_smart = item.id"
-                v-bind:class="{ active: item.id == selected_smart }"
+                v-on:click="selectSC(item.sid, index)"
+                v-bind:class="{ active: item.sid == selected_smart }"
                 >{{ item.name }}</a
               >
             </li>
@@ -44,7 +44,7 @@
             </div>
             <div
               class="table-row"
-              v-for="(func, index) in getSelectedSmart"
+              v-for="(func, index) in smart_infor[selectedSCIndex].globalVar"
               v-bind:key="func.fid"
               :class="{ even_row: index % 2 == 0 }"
             >
@@ -55,25 +55,25 @@
                   type="radio"
                   id="one"
                   name="ch"
-                  v-model="checkedNames"
-                  :value="data"
+                  v-model="checkedGlobalVar"
+                  :value="func.name"
                 />
               </div>
             </div>
           </div>
 
           <div class="function">
-            <div id="list-function">
+            <div id="list-smart">
               <ul class="nav nav-tabs">
                 <li
                   class="nav-item d-inline-block text-truncate"
-                  v-for="item in list_function"
+                  v-for="(item, index) in functionBySC"
                   :key="item.id"
                 >
                   <a
                     class="nav-link"
-                    v-on:click="selected_func = item.id"
-                    v-bind:class="{ active: item.id == selected_func }"
+                    v-on:click="selectFunction(item.fid, index)"
+                    v-bind:class="{ active: item.sid == selected_smart }"
                     >{{ item.name }}</a
                   >
                 </li>
@@ -129,8 +129,46 @@
   </div>
 </template>
 <script>
+import { GetGloLocArgOfSmartContract } from "../../../services/data";
 export default {
+  data() {
+    return {
+      // function_cell_selected: "function"
+      list_smart_contract: [],
+      list_function: [],
+      functionBySC: [],
+      smart_infor: [],
+      checkedGlobalVar: "",
+      checkedLocalVar: "",
+      selectedSCIndex: 0,
+      selectedFunctionIndex: 0,
+      function_infor: {},
+      selected_func: 1,
+      selected_smart: 1,
+    };
+  },
+  beforeMount() {
+    this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
+    // this.getFuntionSC(this.list_smart_contract[0].sid);
+    this.setSCInfor();
+    console.log("--------------", this.list_smart_contract);
+  },
   methods: {
+    selectSC(sid, index) {
+      if (this.selected_smart != sid) {
+        this.selected_smart = sid;
+        this.selectedSCIndex = index;
+        console.log("this.selected_smart", this.selected_smart, this.selectedSCIndex);
+        this.functionBySC = this.list_function[index];
+      }
+    },
+    selectFunction(fid, index) {
+      if (this.selected_func != fid) {
+        this.selected_func = fid;
+        this.selectedFunctionIndex = index;
+        this.function_infor = this.functionBySC[index].localVar;
+      }
+    },
     routing(param) {
       if (param == "next") {
         this.$router.push({ name: "Initial" });
@@ -139,76 +177,23 @@ export default {
         this.$router.push({ name: "GenaralVulSetting" });
       }
     },
-  },
-  data() {
-    return {
-      // function_cell_selected: "function"
-      list_smart: [
-        { name: "Smart Contract 1", id: 1 },
-        { name: "Smart Contract 2", id: 2 },
-        { name: "Smart Contract 3", id: 3 },
-      ],
-      list_function: [
-        { name: "Function 1", id: 1 },
-        { name: "Function 2", id: 2 },
-      ],
-      smart_infor: {
-        1: {
-          name: "Smart Contract 1",
-          SmartContract: [
-            {
-              fid: 1,
-              name: "GV1",
-            },
-            {
-              fid: 2,
-              name: "GV2",
-            },
-            {
-              fid: 3,
-              name: "GV3",
-            },
-            {
-              fid: 4,
-              name: "GV4",
-            },
-          ],
-        },
-      },
-      function_infor: {
-        1: {
-          name: "Function 1",
-          functions: [
-            {
-              fid: 1,
-              name: "LV1",
-            },
-            {
-              fid: 2,
-              name: "LV2",
-            },
-            {
-              fid: 3,
-              name: "LV3",
-            },
-            {
-              fid: 4,
-              name: "LV4",
-            },
-          ],
-        },
-      },
-      selected_func: 1,
-      selected_smart: 1,
-    };
+    getFuntionSC(sid) {
+      const listFunc = GetGloLocArgOfSmartContract(sid);
+      return listFunc.functions;
+    },
+    async setSCInfor() {
+      for (let i = 0; i < this.list_smart_contract.length; i++) {
+        this.smart_infor.push(
+          await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
+        );
+        console.log("this.smart_infor", this.smart_infor);
+      }
+      this.list_function = this.smart_infor.map((item) => item.functions);
+    },
   },
   computed: {
     getSelectedFunc() {
-      if (this.selected_func in this.function_infor) {
-        return this.function_infor[this.selected_func].functions;
-      } else {
-        return [];
-      }
+      return this.function_infor;
     },
     getSelectedSmart() {
       if (this.selected_smart in this.smart_infor) {
@@ -250,7 +235,7 @@ table span {
   border-bottom: none;
 }
 .nav-item {
-  width: 20%;
+  width: 25%;
   margin-right: 3px;
   cursor: pointer;
 }

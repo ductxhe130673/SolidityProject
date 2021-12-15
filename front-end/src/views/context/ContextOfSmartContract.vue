@@ -13,7 +13,7 @@
           v-model="selectedContext"
         >
           <option>--- Select Context ---</option>
-          <option v-for="c in contexts" :key="c" :value="c">
+          <option v-for="c in contexts" :key="c.cid" :value="c">
             {{ c.name }}
           </option>
         </select>
@@ -24,11 +24,7 @@
         <p>Type</p>
       </div>
       <div class="col-10">
-        <input
-          class="form-control"
-          type="text"
-          :value="selectedContext.context_type"
-        />
+        <input class="form-control" type="text" :value="selectedContext.context_type" />
       </div>
     </div>
 
@@ -39,36 +35,15 @@
       <div class="col-10">
         <span>There are several options:</span>
         <ul>
-          <li v-for="c in contexts" :key="c">{{ c.description }}</li>
+          <li v-for="(c, index) in contexts" :key="index">{{ c.description }}</li>
         </ul>
       </div>
     </div>
     <div id="btns">
-      <button
-      
-        @click="routing('add')"
-      >
-        Next
-      </button>
-      <button
-        
-        @click="upLoad()"
-      >
-        Upload a Context File
-      </button>
-      <button
-       
-        @click="routing('ship')"
-      >
-        Skip
-      </button>
-      <button
-
-        
-        @click="routing('back')"
-      >
-        Back
-      </button>
+      <button @click="routing('add')">Next</button>
+      <button @click="upLoad()">Upload a Context File</button>
+      <button @click="routing('ship')">Skip</button>
+      <button @click="routing('back')">Back</button>
     </div>
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
@@ -79,25 +54,14 @@
         />
       </div>
     </div>
-    <!-- <div id="showComponents" v-if="getShowComponents">
-      <div id="components-holder">
-        <UploadContext
-          @closeComponents="cComponents"
-          v-if="getSelectComponents == 'uploadctx'"
-        />
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
-// import UploadContext from "./UpLoadContext.vue";
 import { GetAllcpncontext } from "../../services/data";
 import UpLoadFile from "../../components/UpLoadFile.vue";
-// console.log('--------',document.getElementById("context").value);
 export default {
   components: {
-    // UploadContext,
     confirm: UpLoadFile,
   },
   data() {
@@ -105,10 +69,8 @@ export default {
       contexts: [],
       selectedContext: {},
       contextSC: [],
-      // showComponents: false,
       selectComponents: "",
       selected: "0",
-      //show dialog
       showConfirmation: false,
       upLoadDialog: {},
     };
@@ -123,9 +85,9 @@ export default {
   },
 
   mounted() {
+    this.selectedContext = this.$store.state.data.data.selectedContext;
+    console.log("this.selectedContext", this.selectedContext);
     this.initData();
-    this.selectedContext =  this.$store.state.data.data.selectedContext;
-   
   },
   methods: {
     upLoad() {
@@ -266,12 +228,11 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
-  z-index:1 ;
+  z-index: 1;
   align-items: center;
   justify-content: center;
 }
 #removeSC-holder {
   margin-top: 180px;
 }
-
 </style>

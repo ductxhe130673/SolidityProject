@@ -3,7 +3,7 @@
     <div class="link">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="http://192.168.1.6:8080/list-sc" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a href="http://192.168.0.100:8080/list-sc" class="link-primary text-decoration-underline">Smart Contract</a> >
           <a>Edit</a></span>
     </div>
     <div class="header">
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import {UpdateSmartContractCode,GetSmartContractCode,GetSmartContractById} from "../../../services/data"
+import {UpdateSmartContractCode,GetSmartContractById} from "../../../services/data"
 import AceEditor from '../../../components/AceEditor.vue';
 export default {
   components: {AceEditor },
@@ -90,20 +90,17 @@ export default {
     return {
       sc_id : this.$route.params.sc_id,
       nameSc: this.$route.params.name,
-      code: GetSmartContractCode(this.$route.params.sc_code),
+      code: this.$route.params.code,
       dataCurrent : {},
       demoEditSC: "test edit sc",
       isAdmin: true,
-      descriptionSC: '',
-      selectOption : '',
+      descriptionSC: this.$route.params.description,
+      selectOption : this.$route.params.type,
     };
   },
   mounted(){
       this.demoEditSC = this.code
-      // this.dataCurrent = this.getDataCurrent(sc_id);
-      // console.log('this.dataCurrent',this.code);
   },
-
   methods:{
      async getDataCurrent(sc_id){
        await GetSmartContractById(sc_id);
@@ -114,8 +111,6 @@ export default {
     },
     async clickHandler(param){
       if(param == "save"){
-        // UpdateSmartContractCode(this.$route.params.sc_id, this.code)
-        // this.$router.push(this.$route.params.parent_path);
         await UpdateSmartContractCode(this.sc_id, this.nameSc,this.demoEditSC, this.descriptionSC, this.selectOption)
         this.$router.push({
           name:"ListSc"

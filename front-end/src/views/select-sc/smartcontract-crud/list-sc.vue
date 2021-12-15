@@ -23,6 +23,7 @@
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a>List</a>
         </span>
       </div>
       <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
@@ -34,6 +35,7 @@
           <a-date-picker
             :default-value="moment('01/01/2021', dateFormat)"
             :format="dateFormat"
+            @change="onChangeDate"
           />
         </div>
         <div class="col"></div>
@@ -43,11 +45,19 @@
         <div class="col">
           <p>Type</p>
           <div class="input-group mb-3">
-            <select class="form-select" id="inputGroup" v-model="selected">
+            <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
               <option value="0">All</option>
-              <option value="common" v-if="isAdmin">Common</option>
+              <option value="common">Common</option>
               <option value="private">Private</option>
               <option value="pending">Pending</option>
+            </select>
+            <select
+              v-if="!isAdmin"
+              class="form-select"
+              id="inputGroup"
+              v-model="selected"
+            >
+              <option value="private">Private</option>
             </select>
           </div>
         </div>
@@ -105,7 +115,9 @@
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="editSC(item.sid)"
+                  @click="
+                    editSC(item.sid, item.name, item.content, item.description, item.type)
+                  "
                 >
                   Edit
                 </button>
@@ -149,35 +161,6 @@
       </div>
     </div>
   </div>
-  <!-- 
-    <div id="amsb-footer">
-      <div id="itb-entries">Show {{ numOfRecod }}/{{ numOfItems }} entries</div>
-      <div id="itb-cnpage">
-        <i class="material-icons" id="itb-first-page-icon" @click="goPage(1)"
-          >first_page</i
-        >
-        <i
-          class="material-icons"
-          id="itb-pre-page-icon"
-          @click="goPage(pageNum > 1 ? pageNum - 1 : 1)"
-          >chevron_left</i
-        >
-        <div id="itb-cnpage-count">{{ countPageNum }}</div>
-        <i
-          class="material-icons"
-          id="itb-next-page-icon"
-          @click="goPage(pageNum < numOfPage ? pageNum + 1 : numOfPage)"
-          >chevron_right</i
-        >
-        <i
-          class="material-icons"
-          id="itb-last-page-icon"
-          @click="goPage(numOfPage)"
-          >last_page</i
-        >
-      </div>
-    </div>
-   -->
 </template>
 
 <script>
@@ -191,12 +174,13 @@ import {
 } from "../../../services/data";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
+import dateFormat from "dateformat";
 export default {
   // components: { confirm: ConfirmationDialog },
   data() {
     return {
       choose_SC: "",
-      dateFormat: "DD/MM/YYYY",
+      formatDate: "yyyy-mm-dd",
       selected: "0",
       num_of_record: 7,
       num_of_page: 0,
@@ -205,18 +189,20 @@ export default {
       alertDialog: {},
       scDelete: null,
       isAdmin: true,
+      filterDate: null,
     };
   },
   mounted() {
     this.fetchData();
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
+    this.checkIsUser();
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.getlistSmartContract;
-      console.log('this.getlistSmartContract',this.getlistSmartContract);
       var items = [];
       this.getlistSmartContract.forEach(function (item) {
         if (item.type === selected) {
@@ -267,6 +253,15 @@ export default {
     this.setListSmartContract();
   },
   methods: {
+    checkIsUser() {
+      if (!this.isAdmin) {
+        this.selected = "private";
+      }
+    },
+    onChangeDate(value) {
+      const date = dateFormat(value._d, this.formatDate);
+      this.filterDate = date;
+    },
     async deleteSmartContract(sid) {
       await DeleteSmartContracts(sid);
     },
@@ -321,12 +316,6 @@ export default {
     },
 
     deleteSC(sc_id) {
-      // this.showConfirmation = true;
-      // this.alertDialog = {
-      //   title: "Alert",
-      //   message: "",
-      //   confirmbtn: "Yes",
-      // };
       if (
         confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
@@ -345,7 +334,6 @@ export default {
       }
     },
     refuseSC(sc_id) {
-      console.log("sc", this.choose_SC);
       if (
         confirm(
           "Do you want to change the Smart Contract type from Common to Private?"
@@ -361,13 +349,15 @@ export default {
       this.isShowConfirmAccept = false;
       this.isShowConfirmRefuse = false;
     },
-    editSC(sc_id, sc_name, sc_code) {
+    editSC(sc_id, sc_name, sc_code, sc_description, sc_type) {
       this.$router.push({
         name: "EditSc",
         params: {
           sc_id: sc_id,
           name: sc_name,
           code: sc_code,
+          description: sc_description,
+          type: sc_type,
           parent_path: "/list-sc",
         },
       });

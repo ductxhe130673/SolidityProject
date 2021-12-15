@@ -11,7 +11,7 @@
       <div class="col-2">Template</div>
       <div class="col-10">
         <select name="" class="form-select" v-model="template">
-          <option v-for="item in listTemplates" :key="item" :value="item">
+          <option v-for="item in listTemplates" :key="item.lid" :value="item">
             {{ item.name }}
           </option>
         </select>
@@ -20,25 +20,30 @@
     <div class="row">
       <div class="col-2">Formula</div>
       <div class="col-10">
-        <formular-editor />
+        <formular-editor :ltlcode="getFormula" />
       </div>
     </div>
     <div class="row">
       <div class="col-2">Description</div>
       <div class="col-10">
-        <textarea name="" id="description-area" cols="30" rows="5" class="form-control" v-model="template.description">
-          </textarea
+        <textarea
+          name=""
+          id="description-area"
+          cols="30"
+          rows="5"
+          class="form-control"
+          v-model="template.description"
         >
+        </textarea>
       </div>
     </div>
     <div id="btn-group">
-      <button class="btn btn-primary-outline btn-sm" @click="routing('add')">
-        Next
-      </button>
+      <button class="btn btn-primary-outline btn-sm" @click="routing('add')">Next</button>
       <button
         class="btn btn-outline-secondary btn-sm"
         type="button"
-        @click="routing('back')">
+        @click="routing('back')"
+      >
         Back
       </button>
     </div>
@@ -47,17 +52,17 @@
 
 <script>
 import FormularEditor from "../../../../components/FormularEditor.vue";
-import { GetGloLocArgOfSmartContract, GetAllltltemplates } from "../../../../services/data";
+import { GetAllltltemplates } from "../../../../services/data";
 export default {
   data: function () {
     return {
-      name: '',
-      listTemplates:[],
+      name: "",
+      listTemplates: [],
       template: {},
     };
   },
   mounted() {
-    this.fetchData();
+    // this.fetchData();
     this.fetchTemplate();
     this.template = this.$store.state.data.data.selectedTemplate;
     this.name = this.$store.state.data.nameCSP;
@@ -66,22 +71,25 @@ export default {
     FormularEditor,
   },
   computed: {
+    getFormula() {
+      return this.template.formula;
+    },
   },
   methods: {
     // onChangTemplate(){
     //   this.$store.commit("SetSelectedTemplate", this.template);
     // },
-    async fetchData() {
-      const res = await GetGloLocArgOfSmartContract(1);
-      console.log('getglo-----',res);
-    },
-   async fetchTemplate() {
+    // async fetchData() {
+    //   const res = await GetGloLocArgOfSmartContract(1);
+    //   console.log('getglo-----',res);
+    // },
+    async fetchTemplate() {
       this.listTemplates = await GetAllltltemplates();
     },
     routing(param) {
       if (param == "add") {
         this.$store.commit("SetSelectedTemplate", this.template);
-        this.$store.commit("setNameCSP", this.name)
+        this.$store.commit("setNameCSP", this.name);
         this.$router.push({ name: "Initial" });
       }
       if (param == "back") {
