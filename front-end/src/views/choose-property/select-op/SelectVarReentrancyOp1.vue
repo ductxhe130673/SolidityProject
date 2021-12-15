@@ -36,7 +36,8 @@
                 type="radio"
                 id="one"
                 name="ch"
-                :value="func.name"
+                v-model="checkedGlobalVar"
+                :value="data"
               />
             </td>
           </tr>
