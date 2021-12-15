@@ -79,6 +79,8 @@ export default {
       } else {
         this.select_variable_type = "var";
       }
+      console.log("------", id, value, type);
+      this.$store.commit("setTypeFormula", this.select_variable_type);
       this.selectVariable = true;
     },
     removeSelectVarEventListener() {

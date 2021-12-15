@@ -118,13 +118,13 @@ export default {
     },
     async clickHandler(action) {
       if (action == "save") {
-        if (this.code === "" || this.name === "")
-          alert("Please input all field!!!");
+        if (this.code === "" || this.name === "") alert("Please input all field!!!");
         await CreateLTLTemplate(
           this.name,
           this.code,
           this.description,
-          this.dateFormat
+          this.dateFormat,
+          this.formulaText
         );
         this.$router.push(this.$route.params.parent_path);
       } else if (action == "cancel") {

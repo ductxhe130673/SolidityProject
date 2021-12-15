@@ -124,6 +124,8 @@ export default {
   },
   mounted() {
     this.demoEditSC = this.code;
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
   },
   methods: {
     async getDataCurrent(sc_id) {

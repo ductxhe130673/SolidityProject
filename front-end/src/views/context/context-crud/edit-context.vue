@@ -92,6 +92,7 @@ export default {
       content: null,
       options: "0",
       dateFormat: "",
+      fileUpload: "",
     };
   },
   methods: {
@@ -126,15 +127,17 @@ export default {
 
     async clickHandler(action) {
       if (action == "save") {
-        if (this.fileUpload === "") {
-          alert("You have to select file to update!!!");
+        if (this.fileUpload !== "") {
+          const reader = new FileReader();
+          reader.readAsText(this.fileUpload);
+          reader.onload = (e) => {
+            this.$store.commit("setContentFile", e.target.result);
+            this.updateContext(e.target.result);
+          };
+        } else {
+          console.log("this.content", this.content);
+          this.updateContext(this.content);
         }
-        const reader = new FileReader();
-        reader.readAsText(this.fileUpload);
-        reader.onload = (e) => {
-          this.$store.commit("setContentFile", e.target.result);
-          this.updateContext(e.target.result);
-        };
       } else if (action == "cancel") {
         this.$router.push({
           name: "ListContext",

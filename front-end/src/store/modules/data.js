@@ -18,6 +18,7 @@ const state = {
         configVul: {},
         ltlProperty : [],
         isAuthen : false,
+        typeFormula: '',
         initialMarkingInfor: {
             NumberOfUser: null,
         Balance: {
@@ -184,6 +185,9 @@ const mutations = {
     },
     setIsAuthen(state, data){
         state.isAuthen = data;
+    },
+    setTypeFormula(state, data){
+        state.data.typeFormula = data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility
