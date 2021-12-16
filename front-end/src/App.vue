@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <NavBar v-if="!showNavigationBar" />
-    <Header v-if="showNavigationBar" />
+    <NavBar v-if="showNavigationBar === 'nav'" />
+    <Header v-if="showNavigationBar === 'header'" />
+    <HeaderLogin v-if="showNavigationBar === 'headerLogin'" />
     <router-view />
   </div>
 </template>
@@ -9,10 +10,11 @@
 <script>
 import NavBar from "./components/NavBar.vue";
 import Header from "./components/Header.vue";
+import HeaderLogin from "./components/HeaderLogin.vue";
 
 // @ is an alias to /src
 export default {
-  components: { NavBar,Header },
+  components: { NavBar, Header, HeaderLogin },
   data() {
     return {
       sngPage: {
@@ -21,42 +23,43 @@ export default {
         ListOfCheckedTransactions: true,
         CheckRentrancy: true,
         SelectSmartContract: true,
-        Initial:true,
+        Initial: true,
         UpLoadSc: true,
         ContextOfSmartContract: true,
         LoadContext: true,
         UnFolding: true,
         UpLoadContext: true,
         LTLCheckOption: true,
-        CSPSettingType:true,
-        CSPNonTemplateSetting:true,
-        CSPTemplateSetting:true,
-        ContractSpecificProperty:true,
-        ContractSpecificPropertyNonTemplate:true,
-        GenaralVulSetting:true,
-        CheckSmartContract:true,
-        ListSc : true,
-        EditSc : true,
-        AddSc : true,
-        AddContext : true,
-        EditContext : true,
-        ListContext : true,
-        AddVul : true,
-        EditVul : true,
-        ListVul : true,
+        CSPSettingType: true,
+        CSPNonTemplateSetting: true,
+        CSPTemplateSetting: true,
+        ContractSpecificProperty: true,
+        ContractSpecificPropertyNonTemplate: true,
+        GenaralVulSetting: true,
+        CheckSmartContract: true,
+        ListSc: true,
+        EditSc: true,
+        AddSc: true,
+        AddContext: true,
+        EditContext: true,
+        ListContext: true,
+        AddVul: true,
+        EditVul: true,
+        ListVul: true,
       },
     };
   },
   computed: {
-      showNavigationBar() {
-        if (this.$route.name in this.sngPage && this.$store.state.data.index === 0) {
-          return true;
-        }
-        return false;
-      },
+    showNavigationBar() {
+      if (this.$route.name in this.sngPage && this.$store.state.data.index === 0) {
+        return "header";
+      } else if (this.$route.name === "Login") {
+        return "headerLogin";
+      }
+      return "nav";
+    },
   },
 };
-
 </script>
 
 <style>
