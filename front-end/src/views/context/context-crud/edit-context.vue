@@ -122,7 +122,6 @@ export default {
             this.updateContext(e.target.result);
           };
         } else {
-          console.log("this.content", this.content);
           this.updateContext(this.content);
         }
       } else if (action == "cancel") {
