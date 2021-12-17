@@ -1,67 +1,81 @@
 <template>
-  <div id="main">
-    <div class="row align-items-md-center" style="padding-top: 4%; padding-bottom: 2%">
-      <div class="col-2">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a
-            href="http://192.168.1.2:8080/list-context"
+            href="javascript:history.back()"
             class="link-primary text-decoration-underline"
             >Context</a
           >
           >
-          <a href="" class="link-primary text-decoration-underline">Edit Context</a></span
+          <a>Edit Context</a></span
         >
       </div>
-      <div class="col-8 text-center"><h1>Update the Context</h1></div>
+      <div class="col-md-7 text-center"><h1>Update the Context</h1></div>
     </div>
-    <div class="body">
-      <div class="row" id="name-section">
-        <div class="title col-2">Name</div>
-        <div class="col-10">
-          <input class="form-control" type="text" v-model="name" />
-        </div>
-      </div>
 
-      <div class="row" id="type-section">
-        <div class="title col-2">Type</div>
-        <div class="col-10">
-          <select class="form-select" v-model="options">
-            <option value="type1">DCR</option>
-            <option value="type2">CPN</option>
-          </select>
-        </div>
+    <div class="row">
+      <div class="col-md-3">Name</div>
+      <div class="col-md-7">
+        <input class="form-control" type="text" v-model="name" />
       </div>
+    </div>
 
-      <div class="row">
-        <div class="title col-2">Description</div>
-        <div class="col-10">
-          <textarea class="form-control" type="text" v-model="description"></textarea>
-        </div>
+    <div class="row">
+      <div class="col-md-3">Type</div>
+      <div class="col-md-7">
+        <select class="form-select" v-model="options">
+          <option value="type1">DCR</option>
+          <option value="type2">CPN</option>
+        </select>
       </div>
-      <!-- <div class="editor-area">
-        <span class="title">Formular</span>
-        <EditorSc :code.sync="code" />
-      </div> -->
-      <div class="row">
-        <div class="title col-2">Content</div>
-        <div class="col-10">
-          <input class="form-control" type="file" @change="previewFiles" multiple />
-        </div>
-      </div>
+    </div>
 
-      <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
-        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
-          Cancel
-        </button>
+    <div class="row">
+      <div class="col-md-3">Description</div>
+      <div class="col-md-7">
+        <textarea
+          class="form-control"
+          type="text"
+          v-model="description"
+        ></textarea>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">Content</div>
+      <div class="col-md-7">
+        <input
+          class="form-control"
+          type="file"
+          @change="previewFiles"
+          multiple
+        />
+      </div>
+    </div>
+
+    <div class="buttonGroup">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="clickHandler('save')"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="clickHandler('cancel')"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-// import EditorSc from "../../../components/TextEditor.vue";
 import { GetContextById, UpdateContext } from "../../../services/data";
 import moment from "moment";
 export default {
@@ -81,7 +95,6 @@ export default {
       fileUpload: "",
     };
   },
-  // components: { EditorSc },
   methods: {
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
@@ -148,66 +161,41 @@ export default {
 };
 </script>
 <style scoped>
-#main {
-  background-color: rgb(241, 240, 240);
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+.container-fluid{
+  color: black;
 }
-#header {
-  text-align: center;
-  font-size: 35px;
-  font-weight: bold;
-  padding-top: 20px;
-  margin-bottom: 20px;
+.row {
+  margin-top: 2%;
+  padding-right: 10px;
 }
-.body {
+
+#group {
   display: flex;
-  flex-direction: column;
-  width: 700px;
-  margin: auto;
+  justify-content: space-between;
+  width: 70%;
 }
-.title {
-  font-size: 18px;
+label {
+  padding-left: 15px;
 }
-#name-section {
-  margin-bottom: 30px;
+
+.row>.col-md-3:not(.row:first-of-type >.col-md-3){
+  padding-left: 10%;
 }
-#type-section {
-  margin-bottom: 20px;
+
+.buttonGroup {
+  padding-top: 2%;
+  display: flex;
+  width: 60%;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding-bottom: 5%;
 }
+/* textarea */
 textarea {
+  width: 100%;
   height: 250px;
 }
-/* editor area */
-.editor-area {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  /* left: 40px; */
-}
-/* button style */
-#group-btn {
-  width: 100%;
-  align-items: center;
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 25px;
-  margin-left: 20px;
-}
-#group-btn button {
-  width: 170px;
-  height: 30px;
-  color: #0d6efd;
-  border: 1px solid;
-  border-radius: 4px;
-}
-#group-btn button:hover {
-  opacity: 0.9;
-  background-color: #0d6efd;
-  color: white;
-}
-#group-btn button:active {
-  cursor: wait;
+textarea {
+  border: 1px solid #ced4da;
 }
 </style>

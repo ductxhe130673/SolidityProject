@@ -1,76 +1,82 @@
 <template>
-  <div id="main">
-    <div class="row align-items-md-center" style="padding-top: 4%; padding-bottom: 2%">
-      <div class="col-2">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a
-            href="http://192.168.1.2:8080/list-vul"
+            href="javascript:history.back()"
             class="link-primary text-decoration-underline"
             >LTL</a
           >
-          > <a href="" class="link-primary text-decoration-underline">Edit LTL</a>
+          >
+          <a>Edit LTL</a>
         </span>
       </div>
-      <div class="col-8 text-center"><h1>Update the LTL Property Template</h1></div>
+      <div class="col-md-7 text-center">
+        <h1>Update the LTL Property Template</h1>
+      </div>
     </div>
-    <div class="body">
-      <div class="row" id="name-section">
-        <div class="title col-2">Name</div>
-        <div class="col-10">
-          <input class="form-control" type="text" v-model="name" />
-        </div>
-      </div>
 
-      <!-- <div class="editor-area">
-        <span class="title">Formular</span>
-        <LTLEditor :code.sync="codeModel" @change="changedLTL($event)" />
-      </div> -->
+    <div class="row">
+      <div class="col-md-3">Name</div>
+      <div class="col-md-7">
+        <input class="form-control" type="text" v-model="name" />
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="title col-2">Formula</div>
-        <div class="col-10">
-          <FormularEditor :ltlcode="codeModel" @input="updateMessage" />
-        </div>
+    <div class="row">
+      <div class="col-md-3">Formula</div>
+      <div class="col-md-7">
+        <FormularEditor :ltlcode="codeModel" @input="updateMessage" />
       </div>
-      <div class="row">
-        <div class="title col-2">Formula Text</div>
-        <div class="col-10">
-          <textarea
-            style="height: 175px"
-            spellcheck="false"
-            rows="3"
-            class="form-control"
-            type="text"
-            v-model="formulaText"
-          ></textarea>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Formula Text</div>
+      <div class="col-md-7">
+        <textarea
+          style="height: 175px"
+          spellcheck="false"
+          rows="3"
+          class="form-control"
+          type="text"
+          v-model="formulaText"
+        ></textarea>
       </div>
-      <div class="row">
-        <div class="title col-2">Description</div>
-        <div class="col-10">
-          <textarea
-            spellcheck="false"
-            rows="5"
-            class="form-control"
-            type="text"
-            v-model="description"
-          ></textarea>
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Description</div>
+      <div class="col-md-7">
+        <textarea
+          spellcheck="false"
+          rows="5"
+          class="form-control"
+          type="text"
+          v-model="description"
+        ></textarea>
       </div>
+    </div>
 
-      <div id="group-btn">
-        <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
-        <button id="button-cancel" type="button" @click="clickHandler('cancel')">
-          Cancel
-        </button>
-      </div>
+    <div class="buttonGroup">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="clickHandler('save')"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="clickHandler('cancel')"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-// import LTLEditor from "../../components/LTLEditor.vue";
 import { GetLtltemplteById, UpdateLtlTemplate } from "../../services/data";
 import FormularEditor from "../../components/FormularEditor.vue";
 export default {
@@ -96,11 +102,6 @@ export default {
   mounted() {
     this.initData();
   },
-  // async created() {
-  //   //get vulnerability by id from db: name, description
-  //   await this.initData();
-  // },
-  // components: { LTLEditor },
   methods: {
     updateMessage(mes) {
       var mapObj = {
@@ -162,63 +163,28 @@ export default {
 };
 </script>
 <style scoped>
-#main {
-  background-color: rgb(241, 240, 240);
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+.container-fluid{
+  color: black;
 }
-#header {
-  text-align: center;
-  font-size: 35px;
-  font-weight: bold;
-  padding-top: 20px;
-  margin-bottom: 20px;
+.row {
+  margin-top: 2%;
+  padding-right: 10px;
 }
-.body {
+.row > .col-md-3:not(.row:first-of-type > .col-md-3) {
+  padding-left: 15%;
+}
+
+.buttonGroup {
+  padding-top: 2%;
   display: flex;
-  flex-direction: column;
-  width: 700px;
-  margin: auto;
+  width: 60%;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding-bottom: 5%;
 }
-.title {
-  font-size: 18px;
-}
-#name-section {
-  margin-bottom: 30px;
-}
+
 textarea {
+  width: 100%;
   height: 250px;
-}
-/* editor area */
-.editor-area {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  /* left: 40px; */
-}
-/* button style */
-#group-btn {
-  width: 100%;
-  align-items: center;
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 30px;
-  margin-left: 25px;
-}
-#group-btn button {
-  width: 170px;
-  height: 30px;
-  color: #0d6efd;
-  border: 1px solid;
-  border-radius: 4px;
-}
-#group-btn button:hover {
-  opacity: 0.9;
-  background-color: #0d6efd;
-  color: white;
-}
-#group-btn button:active {
-  cursor: wait;
 }
 </style>
