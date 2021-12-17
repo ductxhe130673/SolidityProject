@@ -9,9 +9,9 @@
     <div id="params-setting-input">
       <div id="sender-value-section">
         <span>Sender value</span>
-        <input type="text" placeholder="0" v-model="own_list_argument.sender_from" />
+        <input type="text" placeholder="0" v-model="sender_value.from" />
         <span>To</span>
-        <input type="text" placeholder="10" v-model="own_list_argument.sender_to" />
+        <input type="text" placeholder="10" v-model="sender_value.to" />
       </div>
       <div id="table-params">
         <div class="table-params-row" id="header-params-row">
@@ -55,10 +55,12 @@ export default {
     return {
       function_cell_selected: "function",
       own_list_argument: {},
+      sender_value: {},
     };
   },
   beforeMount() {
     this.own_list_argument = this.list_argument;
+    console.log("this.own_list_argument", this.own_list_argument);
   },
   methods: {
     setArgument() {
@@ -66,6 +68,7 @@ export default {
     },
     existParamTable() {
       this.$emit("changeInitMarking", this.own_list_argument);
+      this.$emit("senderValue", this.sender_value);
       this.setArgument();
       this.$emit("changeSelected", "function");
     },
