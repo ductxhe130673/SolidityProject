@@ -33,7 +33,7 @@ def unfolding():
     # ltl_PATH = './test/ltl.json'
     context_PATH = '../temporary/context_PATH.xml'
     ltl_PATH = '../temporary/ltl_PATH.json'
-    initialMarking_PATH  = '../temporary/initialMarking_PATH.json'
+    initialMarking_PATH  = '../temporary/initialMarkingInfor.json'
 
     # wait tools
     lna_PATH = './test/EtherGame.lna'

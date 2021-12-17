@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-2">Formula</div>
+      <div class="col-2">Formula Text</div>
       <div class="col-10">
-        <formular-editor :ltlcode="getFormula" />
+        <LtlEditor :ltlcode="getFormula" />
       </div>
     </div>
     <div class="row">
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import FormularEditor from "../../../../components/FormularEditor.vue";
+import LtlEditor from "../../../../components/LtlEditor.vue";
 import { GetAllltltemplates } from "../../../../services/data";
 export default {
   data: function () {
@@ -59,6 +59,7 @@ export default {
       name: "",
       listTemplates: [],
       template: {},
+      type: this.$store.state.data.data.typeFormula,
     };
   },
   mounted() {
@@ -68,11 +69,11 @@ export default {
     this.name = this.$store.state.data.nameCSP;
   },
   components: {
-    FormularEditor,
+    LtlEditor,
   },
   computed: {
     getFormula() {
-      return this.template.formula;
+      return this.template.formula_text;
     },
   },
   methods: {

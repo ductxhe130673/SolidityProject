@@ -1,1 +1,1 @@
-{"params":{"inputs":[null]}}
+{"type":"type1","params":{"name":"reetrancy","inputs":["template Reentrancy()"]}}

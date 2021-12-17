@@ -9,7 +9,7 @@
           <ul class="nav nav-tabs">
             <li
               class="nav-item d-inline-block text-truncate"
-              v-for="(item, index) in list_smart_contract"
+               v-for="(item, index) in list_smart_contract"
               :key="item.id"
             >
               <a
@@ -23,7 +23,7 @@
         </div>
         <div id="sm-information-table">
           <!-- <div v-if="function_cell_selection == 'function'"> -->
-          <div>
+            <div>
             <table class="table table-sm">
               <thead>
                 <tr>
@@ -59,11 +59,11 @@
                 <td>{{ func.name }}</td>
                 <td>
                   <input
-                type="radio"
-                id="one"
-                name="ch"
-                :value="func.name"
-              />
+                    class="form-check-input"
+                    type="radio"
+                    value="func.name"
+
+                  />
                 </td>
               </tr>
             </table>
@@ -113,22 +113,23 @@ export default {
     this.setSCInfor();
   },
   computed: {
-    getSelectedFunc() {
+     getSelectedFunc() {
       return this.function_infor;
     },
     getSelectedSmart() {
       if (this.selected_smart in this.smart_infor) {
         return this.smart_infor[this.selected_smart].SmartContract;
+   
       } else {
         return [];
-      }
+      }  
     },
   },
   methods: {
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
-        this.selectedSCIndex = index;
+        this.selectedSCIndex = index;  
       }
     },
     async setSCInfor() {
@@ -153,6 +154,8 @@ export default {
       }
     },
   },
+
+  
 };
 </script>
 
