@@ -25,7 +25,7 @@
                 name="radio"
                 class="radio-buttons"
                 value="fixed"
-                v-model="init_marking.Balance.type"
+                v-model="init_marking.balance.type"
               />
               <span>Fixed</span>
             </div>
@@ -35,7 +35,7 @@
                 name="radio"
                 class="radio-buttons"
                 value="random"
-                v-model="init_marking.Balance.type"
+                v-model="init_marking.balance.type"
               />
               <span>Random</span>
             </div>
@@ -45,7 +45,7 @@
                 name="radio"
                 class="radio-buttons"
                 value="map"
-                v-model="init_marking.Balance.type"
+                v-model="init_marking.balance.type"
               />
               <span>Map</span>
             </div>
@@ -54,7 +54,7 @@
             <input
               type="text"
               class="input-text-form"
-              v-model="init_marking.Balance.fixed"
+              v-model="init_marking.balance.fixed"
               id="fixed-input-form"
               placeholder="0"
               v-if="getSelectedRadio == 'fixed'"
@@ -65,7 +65,7 @@
                 <input
                   type="text"
                   placeholder="0"
-                  v-model="init_marking.Balance.random.from"
+                  v-model="init_marking.balance.random.from"
                   class="input-text-form"
                 />
               </div>
@@ -74,14 +74,14 @@
                 <input
                   type="text"
                   placeholder="10"
-                  v-model="init_marking.Balance.random.to"
+                  v-model="init_marking.balance.random.to"
                   class="input-text-form"
                 />
               </div>
             </div>
             <input
               type="text"
-              v-model="init_marking.Balance.map"
+              v-model="init_marking.balance.map"
               class="input-text-form"
               id="map-input-form"
               placeholder="0,1,2"
@@ -99,7 +99,7 @@
               >
                 <a
                   class="nav-link"
-                  v-on:click="selectSC(item.sid, index)"
+                  v-on:click="selectSC(item.name, item.sid, index)"
                   v-bind:class="{ active: item.sid == selected_sc }"
                   >{{ item.name }}</a
                 >
@@ -123,7 +123,7 @@
 
                 <div
                   class="table-row"
-                  v-for="(func, index) in init_marking.Smart_contracts[selectedSCIndex]
+                  v-for="(func, index) in init_marking.smart_contract[selectedSCIndex]
                     .functions"
                   v-bind:key="index"
                   :class="{ even_row: index % 2 == 0 }"
@@ -141,8 +141,10 @@
             <div v-if="function_cell_selection == 'params'">
               <function-table
                 :list_argument="getFunctionArgument"
+                @changeInitMarking="setSenderValue"
                 @changeSelected="changeSelected"
                 @setArgument="setArgument"
+                @senderValue="senderValue"
               />
             </div>
           </div>
@@ -170,24 +172,22 @@ export default {
       list_smart_contract: [],
       smart_contract_infors: this.$store.state.data.data.selectedSCInfor,
       selected_sc: null, //sc selected
+      selected_sc_name: null,
       selected_function: null, //function selected
       selectedSCIndex: 0,
       init_marking: {},
+      init_marking_holder: {},
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc;
-    this.getFuntionSC(this.list_smart_contract[0].sid);
-    // this.initInitialMarkingHolder();
-
-    if (this.list_smart_contract.length > 0) {
-      this.selected_sc = this.list_smart_contract[0].sid;
-    }
-  },
-  mounted() {
-    this.setSCInfor();
+    this.selected_sc_name = this.list_smart_contract[0].name;
+    this.selected_sc = this.list_smart_contract[0].sid;
     this.init_marking = this.$store.state.data.data.initialMarkingInfor;
+    this.getFuntionSC(this.list_smart_contract[0].sid);
+    this.converDataInitMarking();
   },
+
   watch: {
     init_marking: {
       handler(val) {
@@ -198,7 +198,7 @@ export default {
   },
   computed: {
     getSelectedRadio() {
-      return this.init_marking.Balance.type;
+      return this.init_marking.balance.type;
     },
 
     function_cell_selection() {
@@ -209,26 +209,67 @@ export default {
     },
   },
   methods: {
+    setSenderValue(sender) {
+      const indexSC = this.init_marking.smart_contract.findIndex((item) => {
+        return item.name === this.selected_sc_name;
+      });
+      const func = this.init_marking.smart_contract[indexSC].functions.map((item) => {
+        let newObj = item;
+        if (item.fid === sender.fid) {
+          newObj = sender;
+        }
+        return newObj;
+      });
+      this.init_marking.smart_contract[indexSC] = {
+        ...this.init_marking.smart_contract[indexSC],
+        functions: func,
+      };
+    },
     setArgument(arg) {
       this.selected_function.argument = arg;
+    },
+    senderValue(sender) {
+      this.selected_function.sender_value = sender;
     },
     changeSelected(value) {
       this.function_cell_selected = value;
     },
-
-    getFuntionSC(sid) {
-      return GetGloLocArgOfSmartContract(sid);
-      // console.log("fun.functions", fun);
+    async converDataInitMarking() {
+      await this.setSCInfor();
+      // console.log("this.init_marking.smart_contract", this.init_marking.smart_contract);
+      let i = 0;
+      const newData = this.init_marking.smart_contract.map((element) => {
+        const newObj = element.map((items) => {
+          const newVar = { ...items, sender_value: { from: "1", to: "10" } };
+          delete newVar.localVar;
+          return newVar;
+        });
+        const newObject = {
+          name: this.list_smart_contract[i].name,
+          functions: newObj,
+        };
+        i = i + 1;
+        return newObject;
+      });
+      this.init_marking.smart_contract = newData;
+      console.log("newData", newData);
     },
-    selectSC(sid, index) {
+    async getFuntionSC(sid) {
+      const func = await GetGloLocArgOfSmartContract(sid).then(
+        (func) => (func = func.functions)
+      );
+      return func;
+    },
+    selectSC(name, sid, index) {
       if (this.selected_sc != sid) {
         this.selected_sc = sid;
+        this.selected_sc_name = name;
         this.selectedSCIndex = index;
       }
     },
     async setSCInfor() {
       for (let i = 0; i < this.list_smart_contract.length; i++) {
-        this.init_marking.Smart_contracts[i] = await this.getFuntionSC(
+        this.init_marking.smart_contract[i] = await this.getFuntionSC(
           this.list_smart_contract[i].sid
         );
       }
@@ -242,28 +283,28 @@ export default {
     // },
     routing(param) {
       if (param == "save") {
-        if (!this.init_marking.NumberOfUser || !this.init_marking.Balance.type) {
+        if (!this.init_marking.NumberOfUser || !this.init_marking.balance.type) {
           alert("You must to input all field!!!");
         } else if (
-          this.init_marking.Balance.type === "fixed" &&
-          !this.init_marking.Balance.fixed
+          this.init_marking.balance.type === "fixed" &&
+          !this.init_marking.balance.fixed
         ) {
           alert("You must to input balance fixed!!!");
         } else if (
-          (this.init_marking.Balance.type === "random" &&
-            !this.init_marking.Balance.random.from) ||
-          (this.init_marking.Balance.type === "random" &&
-            !this.init_marking.Balance.random.to)
+          (this.init_marking.balance.type === "random" &&
+            !this.init_marking.balance.random.from) ||
+          (this.init_marking.balance.type === "random" &&
+            !this.init_marking.balance.random.to)
         ) {
           alert("You must to input balance random!!!");
         } else if (
-          this.init_marking.Balance.type === "map" &&
-          !this.init_marking.Balance.map
+          this.init_marking.balance.type === "map" &&
+          !this.init_marking.balance.map
         ) {
           alert("You must to input balance map!!!");
         } else if (
-          this.init_marking.Balance.type === "random" &&
-          this.init_marking.Balance.random.from >= this.init_marking.Balance.random.to
+          this.init_marking.balance.type === "random" &&
+          this.init_marking.balance.random.from >= this.init_marking.balance.random.to
         ) {
           alert("From must be smaller than To");
         } else {
@@ -279,7 +320,7 @@ export default {
     },
     setFunctionParam(funct) {
       this.function_cell_selected = "params";
-      this.selected_function = this.init_marking.Smart_contracts[
+      this.selected_function = this.init_marking.smart_contract[
         this.selectedSCIndex
       ].functions.find((item) => {
         return item.fid === funct;

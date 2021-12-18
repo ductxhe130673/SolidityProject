@@ -1,137 +1,288 @@
 <template>
- <div id ="main">
-   <div id ="header">
-     <h2>Select element of the smart contract</h2>
-   </div>
-    <div class="text">
-          <span>Variable</span>
-      </div>
-   <div id = "component">
-          <div class="table table-striped table-hover">
-          <table class="table" border="1">
-            <tr>
-              <th>#</th>
-              <th>Variable</th>
-              <th>Select</th>
-            </tr>
-            <tr v-for="data in datatable" :key="data.id">
-              <td>{{ data.id }}</td>
-              <td>{{ data.var }}</td>
-              <td><input type="checkbox" :value="data.var" v-model="selected_variable" @click= "check_one"/></td>
-            </tr>
-          </table>
+  <div>
+    <div class="container">
+      <div class="header">
+        <div class="title">
+          <h1>Select Variables Of Smart Contract</h1>
         </div>
       </div>
-      <div id="action">
-        <div id="sc-save" @click="save">Save</div>
-        <div id="sc-cancel" @click="cancel">Cancel</div>
+      <div class="smart-cell">
+        <div id="list-smart">
+          <ul class="nav nav-tabs" style="flex-wrap: nowrap">
+            <li
+              class="nav-item d-inline-block text-truncate"
+              v-for="(item, index) in list_smart_contract"
+              :key="item.id"
+            >
+              <a
+                class="nav-link"
+                v-on:click="selectSC(item.sid, index)"
+                v-bind:class="{ active: item.sid == selected_smart }"
+                >{{ item.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div id="Information-table">
+          <div id="table-list">
+            <div class="table-row" id="header-row">
+              <div class="table-cell header-cell first-cell">
+                #
+                <span>
+                  <a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </div>
+              <div class="table-cell header-cell second-cell">
+                Global variables
+                <span>
+                  <a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </div>
+              <div class="table-cell header-cell third-cell">Selected</div>
+            </div>
+            <div
+              class="table-row"
+              v-for="(func, index) in smart_infor[selectedSCIndex].globalVar"
+              v-bind:key="func.fid"
+              :class="{ even_row: index % 2 == 0 }"
+            >
+              <div class="table-cell first-cell">{{ index + 1 }}</div>
+              <div class="table-cell second-cell">{{ func.name }}</div>
+              <div class="table-cell third-cell">
+                <input
+                  type="radio"
+                  id="one"
+                  name="ch"
+                  v-model="ltlConfig.params.inputs.selected_variable"
+                  :value="func.name"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-   </div>
+      <div id="processing-btn">
+        <div class="pr-button" @click="routing('next')">Next</div>
+        <div class="pr-button" @click="routing('back')">Back</div>
+      </div>
+    </div>
+  </div>
 </template>
-
 <script>
+import { GetGloLocArgOfSmartContract } from "../services/data";
 export default {
-  props: ["current_value"],
-  data () {
+  data() {
     return {
-      selected_variable: [],
-      datatable: [
-        { id: '1', var: 'Var1' },
-        { id: '2', var: 'Var2' },
-        { id: '3', var: 'Var3' },
-        { id: '4', var: 'Var4' }
-      ]
-    }
+      // function_cell_selected: "function"
+      list_smart_contract: [],
+      list_function: [],
+      functionBySC: [],
+      smart_infor: [],
+      checkedGlobalVar: "",
+      checkedLocalVar: "",
+      selectedSCIndex: 0,
+      selectedFunctionIndex: 0,
+      ltlConfig: {
+        type: "specific",
+        params: {
+          id: "",
+          name: "",
+          formula: "",
+          description: "",
+          inputs: {
+            selected_variable: "",
+            selected_function: "",
+          },
+        },
+      },
+      function_infor: {},
+      selected_func: 1,
+      selected_smart: 1,
+      minhold: 0,
+      maxhold: 0,
+    };
   },
-  mounted(){
-    this.selected_variable.push(this.current_value)
+  beforeMount() {
+    this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
+    // this.getFuntionSC(this.list_smart_contract[0].sid);
+    this.setSCInfor();
+    this.ltlConfig = this.$store.state.data.data.ltlConfig;
   },
   methods: {
-    check_one(){
-      this.selected_variable = []
+    selectSC(sid, index) {
+      if (this.selected_smart != sid) {
+        this.selected_smart = sid;
+        this.selectedSCIndex = index;
+        console.log("this.selected_smart", this.selected_smart, this.selectedSCIndex);
+        this.functionBySC = this.list_function[index];
+      }
     },
-    save(){
-      this.$emit('updateCurrentSelectVariable',"'"+this.selected_variable[0]+"'")
+    selectFunction(fid, index) {
+      if (this.selected_func != fid) {
+        this.selected_func = fid;
+        this.selectedFunctionIndex = index;
+        this.function_infor = this.functionBySC[index].localVar;
+      }
     },
-    cancel(){
-      this.$emit('updateCurrentSelectVariable',"")
-    }
-  }
-}
+    routing(param) {
+      if (param == "next") {
+        this.$store.commit("SetLtlConfig", this.ltlConfig);
+        this.$router.push({ name: "CSPTemplateSetting" });
+      }
+      if (param == "back") {
+        this.$router.push({ name: "GenaralVulSetting" });
+      }
+    },
+    getFuntionSC(sid) {
+      const listFunc = GetGloLocArgOfSmartContract(sid);
+      return listFunc.functions;
+    },
+    async setSCInfor() {
+      for (let i = 0; i < this.list_smart_contract.length; i++) {
+        this.smart_infor.push(
+          await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
+        );
+      }
+      this.list_function = this.smart_infor.map((item) => item.functions);
+    },
+  },
+  computed: {
+    getSelectedFunc() {
+      return this.function_infor;
+    },
+    getSelectedSmart() {
+      if (this.selected_smart in this.smart_infor) {
+        return this.smart_infor[this.selected_smart].SmartContract;
+      } else {
+        return [];
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-#header {
+.title {
   text-align: center;
-  margin-top: 8%;
-  margin-bottom: 3%
+  margin-top: 5%;
+}
+.title h1 {
+  font-size: 35px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
+.nav-item .active {
+  color: white;
+  background-color: #383838;
+  border: grey;
+}
+.nav-link {
+  color: #383838;
+  border: grey solid;
+  border-bottom: none;
+}
+.nav-item {
+  width: 25%;
+  margin-right: 3px;
+  cursor: pointer;
 }
 
-.text {
-  position: relative;
-  left: 15%;
-  top:15px;
-  z-index: 1;
-  height: 30px;
-  width: 6%;
-  background: white;
-  text-align: center;
+#Information-table {
+  border: 1px black solid;
+  padding: 3% 2% 3% 2%;
 }
-#component{
-  margin: 0 auto;
-  border: 2px solid #332529;
-  width: 80%;
-  padding-top: 4%;
-  padding-bottom: 3%;
+#Func-table {
+  border: 1px black solid;
+  padding: 5% 4% 5% 4%;
 }
-.table{
-  width:80%;
-  margin: 0 auto
+.smart-cell {
+  margin-top: 50px;
 }
-.table tr:first-child{
-    background-color:#483125;
-    color: white;
+.function {
+  margin-top: 50px;
 }
-#sc-save{
-   cursor: pointer;
-   width: 15%;
-    height: 2%;
-    background-color: #2196f3;
-    text-align: center;
-    color: white;
-    font-size: 13px;
-    line-height: 22px;
-    font-weight: 600;
-    padding: 4px 3px;
-    border-radius: 4px;
-    cursor: pointer;
-    border-width: 0px;
-}
-#sc-cancel{
-   cursor: pointer;
-   width: 15%;
-    height: 2%;
-    background-color: white;
-    text-align: center;
-    color: black;
-    font-size: 13px;
-    line-height: 22px;
-    font-weight: 600;
-    padding: 4px 3px;
-    border: 1px solid;
-    border-radius: 4px;
-    cursor: pointer;
+#table-list {
+  width: 100%;
+  margin: auto;
+  font-size: 0.9em;
+  height: 300px;
+  overflow-y: auto;
+  border-radius: 4px;
+  border: 1px solid black;
+  background: rgb(241, 240, 240);
 }
 
-#sc-save:hover {
-    background-color: #1079cf;
+.table-row {
+  display: flex;
+  height: 50px;
+  border: 1px solid #ddd;
 }
-#action{
-  margin : 0 auto;
-  margin-top: 4%;
-   display: flex;
+#header-row {
+  background-color: rgb(196, 194, 194);
+  font-weight: bold;
+}
+
+#table-list span {
+  float: right;
+  margin: 0 20% 0 0;
+  padding: 0;
+  font-size: 100%;
+}
+.even_row {
+  background-color: rgb(226, 224, 224);
+}
+.table-cell {
+  padding-top: 10px;
+  font-size: 15px;
+}
+.first-cell {
+  flex-basis: 10%;
+  padding-left: 5px;
+}
+.second-cell {
+  flex-basis: 60%;
+}
+.third-cell {
+  flex-basis: 30%;
+}
+
+/* button */
+#processing-btn {
+  width: 45%;
+  height: 120px;
+  margin-left: 25%;
+  display: flex;
   justify-content: space-between;
-  width: 60%;
+  align-items: center;
 }
-
+#processing-btn .pr-button {
+  cursor: pointer;
+  width: 20%;
+  height: 30px;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 600;
+  padding-top: 4px;
+  border-radius: 4px;
+}
+#processing-btn .pr-button:hover {
+  background-color: #1079cf;
+  color: white;
+}
+.btn {
+  margin: 0 3%;
+}
 </style>

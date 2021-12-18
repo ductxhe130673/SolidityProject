@@ -1,1 +1,204 @@
+<<<<<<< HEAD
 {"NumberOfUser":"1","Balance":{"type":"fixed","fixed":"10","random":{"from":null,"to":null},"map":null},"Smart_contracts":[{"functions":[{"fid":1,"name":"play() public payable","argument":[],"localVar":[{"id":1,"name":"currentBalance","vartype":"public","type":" uint","value":"this.balance + msg.value"}]},{"fid":2,"name":"claimReward() public","argument":[],"localVar":[]}],"globalVar":[{"name":"payoutMileStone1","vartype":"uint","type":"public","value":"3 ether"},{"name":"mileStone1Reward","vartype":"uint","type":"public","value":"2 ether"},{"name":"payoutMileStone2","vartype":"uint","type":"public","value":"5 ether"},{"name":"mileStone2Reward","vartype":"uint","type":"public","value":"3 ether"},{"name":"finalMileStone","vartype":"uint","type":"public","value":"10 ether"},{"name":"finalReward","vartype":"uint","type":"public","value":"5 ether"}]}]}
+=======
+{
+  "smart_contract": [
+    {
+      "name": "OpenAddressLottery",
+      "functions": [
+        {
+          "fid": 9,
+          "name": "OpenAddressLottery()",
+          "argument": [],
+          "sender_value": {
+            "from": "2",
+            "to": "3"
+          }
+        },
+        {
+          "fid": 10,
+          "name": "participate() payable",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 11,
+          "name": "luckyNumberOfAddress(address addr) constant returns(uint n)",
+          "argument": [
+            {
+              "id": 10,
+              "name": "addr",
+              "vartype": "local",
+              "type": "address",
+              "value": 8,
+              "fid": 11
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 12,
+          "name": " reseed(SeedComponents components) internal ",
+          "argument": [
+            {
+              "id": 11,
+              "name": "components",
+              "vartype": "local",
+              "type": "SeedComponents",
+              "value": 10,
+              "fid": 12
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 13,
+          "name": "kill()",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 14,
+          "name": " forceReseed()",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 15,
+          "name": "() payable ",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "EtherLotto",
+      "functions": [
+        {
+          "fid": 16,
+          "name": "EtherLotto()",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 17,
+          "name": " play() payable",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        }
+      ]
+    },
+    {
+      "name": "SimpleDice",
+      "functions": [
+        {
+          "fid": 18,
+          "name": "SimpleDice()",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 19,
+          "name": "enter() ",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 20,
+          "name": "setOwner(address new_owner) onlyowner ",
+          "argument": [
+            {
+              "id": 12,
+              "name": "new_owner",
+              "vartype": "state",
+              "type": "address",
+              "value": 12,
+              "fid": 20
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 21,
+          "name": "setMinDeposit(uint new_mindeposit) onlyowner ",
+          "argument": [
+            {
+              "id": 13,
+              "name": "new_mindeposit",
+              "vartype": "local",
+              "type": "uint",
+              "value": 14,
+              "fid": 21
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 22,
+          "name": "setFeeRate(uint new_feerate) onlyowner",
+          "argument": [
+            {
+              "id": 14,
+              "name": "new_feerate",
+              "vartype": "local",
+              "type": "uint",
+              "value": 16,
+              "fid": 22
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        }
+      ]
+    }
+  ],
+  "balance": {
+    "type": "fixed",
+    "fixed": "10",
+    "map": "",
+    "random": {
+      "from": "",
+      "to": ""
+    }
+  },
+  "NumberOfUser": "5"
+}
+>>>>>>> bccc187f5c01dbd891d40abc86d985e6f52514f8
