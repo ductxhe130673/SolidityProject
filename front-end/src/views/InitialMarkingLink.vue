@@ -16,7 +16,7 @@
                 name="radio"
                 class="radio-buttons"
                 value="fixed"
-                v-model="init_marking.Balance.type"
+                v-model="init_marking.balance.type"
               />
               <span>Fixed</span>
             </div>
@@ -26,7 +26,7 @@
                 name="radio"
                 class="radio-buttons"
                 value="random"
-                v-model="init_marking.Balance.type"
+                v-model="init_marking.balance.type"
               />
               <span>Random</span>
             </div>
@@ -36,7 +36,7 @@
                 name="radio"
                 class="radio-buttons"
                 value="map"
-                v-model="init_marking.Balance.type"
+                v-model="init_marking.balance.type"
               />
               <span>Map</span>
             </div>
@@ -193,16 +193,16 @@ export default {
   },
   methods: {
     getDataTable() {
-      if (this.init_marking.Balance.type === "fixed")
-        return this.init_marking.Balance.fixed;
-      else if (this.init_marking.Balance.type === "random")
+      if (this.init_marking.balance.type === "fixed")
+        return this.init_marking.balance.fixed;
+      else if (this.init_marking.balance.type === "random")
         return (
           Math.floor(
             Math.random() *
-              (parseInt(this.init_marking.Balance.random.to) -
-                parseInt(this.init_marking.Balance.random.from) +
+              (parseInt(this.init_marking.balance.random.to) -
+                parseInt(this.init_marking.balance.random.from) +
                 1)
-          ) + parseInt(this.init_marking.Balance.random.from)
+          ) + parseInt(this.init_marking.balance.random.from)
         );
       // else if (this.init_marking.Balance.type === "map") {
 
@@ -210,7 +210,7 @@ export default {
     },
     setUserParam() {
       for (let i = 1; i <= this.init_marking.NumberOfUser; i++) {
-        if (!this.init_marking.Balance.map) {
+        if (!this.init_marking.balance.map) {
           this.dataUserTable.push({
             name: "User" + i,
             balance: this.getDataTable(),
@@ -218,7 +218,7 @@ export default {
         } else {
           this.dataUserTable.push({
             name: "User" + i,
-            balance: this.init_marking.Balance.map.split(",")[i],
+            balance: this.init_marking.balance.map.split(",")[i],
           });
         }
       }
@@ -236,13 +236,13 @@ export default {
         this.getFuntionSC(sid);
       }
     },
-    updateInitMarking(val) {
-      this.function_cell_selected = "function";
-      this.selected_function = null;
-      this.init_marking.Funtion_params[this.selected_sc].functions[
-        this.selected_function
-      ] = val;
-    },
+    // updateInitMarking(val) {
+    //   this.function_cell_selected = "function";
+    //   this.selected_function = null;
+    //   this.init_marking.Funtion_params[this.selected_sc].functions[
+    //     this.selected_function
+    //   ] = val;
+    // },
     routing(param) {
       if (param == "save") {
         this.$store.commit("SetInitialMarking", this.init_marking);

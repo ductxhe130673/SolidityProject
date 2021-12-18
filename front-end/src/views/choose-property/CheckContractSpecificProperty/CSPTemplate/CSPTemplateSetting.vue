@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-2">Formula Text</div>
+      <div class="col-2">Formula</div>
       <div class="col-10">
         <LtlEditor :ltlcode="getFormula" />
       </div>
@@ -60,6 +60,7 @@ export default {
       listTemplates: [],
       template: {},
       type: this.$store.state.data.data.typeFormula,
+      ltlConfig: {},
     };
   },
   mounted() {
@@ -87,8 +88,19 @@ export default {
     async fetchTemplate() {
       this.listTemplates = await GetAllltltemplates();
     },
+    setLtlConfig() {
+      this.ltlConfig = {
+        type: "specific",
+        params: {
+          name: this.template.name,
+          formula: this.template.formula,
+        },
+      };
+    },
     routing(param) {
       if (param == "add") {
+        this.setLtlConfig();
+        this.$store.commit("SetLtlConfig", this.ltlConfig);
         this.$store.commit("SetSelectedTemplate", this.template);
         this.$store.commit("setNameCSP", this.name);
         this.$router.push({ name: "Initial" });

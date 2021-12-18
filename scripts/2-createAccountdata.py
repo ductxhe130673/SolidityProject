@@ -15,12 +15,11 @@ pass6= hash("123@123a")
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO Account (username,password,role) VALUES (%s,%s,%s)"
 multi = [
-    ("leducanh123",pass1,"admin"),
-    ("leanhson",pass2,"admin"),
-    ("minhhanh123",pass3,"user"),
-    ("minhduc",pass4,"user"),
-    ("thanhha",pass5,"user"),
-    ("vancuong",pass6,"user"),
+    ("xuanduc",pass1,"admin"),
+    ("anhtu",pass2,"admin"),
+    ("honghanh",pass3,"user"),
+    ("quangvinh",pass4,"user"),
+    ("quypham",pass5,"user"),
 ]
 mycursor.executemany(sqlFomular,multi)
 db.commit()

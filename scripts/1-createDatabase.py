@@ -112,6 +112,7 @@ CREATE TABLE LTLTemplate (
 lteid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 formula text,
+formula_text text,
 template_type nvarchar(200),
 createdDate date,
 description text,
