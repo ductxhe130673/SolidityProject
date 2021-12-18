@@ -1,268 +1,198 @@
 <template>
-  <div id="editsc">
-    <div class="link">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="http://192.168.1.6:8080/list-sc" class="link-primary text-decoration-underline">Smart Contract</a> >
-          <a>Edit</a></span>
-    </div>
-    <div class="header">
-      <div class="title"><h1>Edit the Smart Contract code</h1></div>
-    </div>
-    <div class="body">
-      <div class="name-area area">
-        <h2 class="label">Name</h2>
-        <input class="input-name input-type" type="text" v-model="nameSc" />
+          <a href="javascript:history.back()" class="link-primary text-decoration-underline"
+            >Smart Contract</a
+          >
+          >
+          <a>Edit SC</a>
+        </span>
       </div>
-      <div class="type-area area">
-        <div class="label">Smart Contract Type</div>
-        <div class="option input-type" v-if="isAdmin">
-          <select class="form-select" id="inputGroupSelect01" v-model="selectOption">
+      <div class="col-md-7 text-center">
+        <h1>Edit the Smart Contract code</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">Name</div>
+      <div class="col-md-7">
+        <input class="form-control" type="text" v-model="nameSc" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">Smart Contract Type</div>
+      <div class="col-md-7">
+        <div v-if="isAdmin">
+          <select
+            class="form-select"
+            id="inputGroupSelect01"
+            v-model="selectOption"
+          >
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
         </div>
-<!-- 
-        <div class="option input-type" v-if="!isAdmin">
-          <div class="common-option" v-if="isSuperior">
-            <input
-              class="radio"
-              id="common"
-              value="common"
-              type="radio"
-              v-model="selectOption"
-            />
-            <label for="common">Common</label>
+        <div v-if="!isAdmin">
+          <div id="group">
+            <div>
+              <input
+                type="radio"
+                id="pending"
+                value="pending"
+                name="group1"
+                 v-model="selectOption"
+              />
+              <label for="pending">Pending</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="private"
+                value="private"
+                name="group1"
+                v-model="selectOption"
+              />
+              <label for="private">Private</label>
+            </div>
           </div>
-          <div class="common-option" v-else>
-            <input
-              class="radio"
-              id="common"
-              value="pending"
-              type="radio"
-              v-model="selectOption"
-            />
-            <label for="common">Pending</label>
-          </div>
-          <div class="private-option">
-            <input
-              class="radio"
-              id="private"
-              value="private"
-              type="radio"
-              v-model="selectOption"
-            />
-            <label for="private">Private</label>
-          </div>
-        </div> -->
-
-
-      </div>
-      <div class="editor-area area">
-        <div class="label">Content</div>
-        <div class="AceEditor">
-        <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)"/>
         </div>
       </div>
-      <div class="description">
-        <div class="label">Description</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">Content</div>
+      <div class="col-md-7">
+        <ace-editor
+          v-bind:codeSC="demoEditSC"
+          @changeSC="updateContent($event)"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">Description</div>
+      <div class="col-md-7">
         <textarea cols="30" rows="5" v-model="descriptionSC"></textarea>
       </div>
-      <div class="button-area area">
-        <div class="button-add-cancell">
-          <button id="button-add" type="button" @click="clickHandler('save')">Save</button>
-          <button id="button-cancel" type="button" @click="clickHandler('back')">Cancel</button>
-        </div>
-      </div>
+    </div>
+
+    <div class="buttonGroup">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="clickHandler('save')"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="clickHandler('back')"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import {UpdateSmartContractCode,GetSmartContractCode,GetSmartContractById} from "../../../services/data"
-import AceEditor from '../../../components/AceEditor.vue';
+import {
+  UpdateSmartContractCode,
+  GetSmartContractById,
+} from "../../../services/data";
+import AceEditor from "../../../components/AceEditor.vue";
 export default {
-  components: {AceEditor },
+  components: { AceEditor },
   name: "EditSc",
 
   data() {
     return {
-      sc_id : this.$route.params.sc_id,
+      sc_id: this.$route.params.sc_id,
       nameSc: this.$route.params.name,
-      code: GetSmartContractCode(this.$route.params.sc_code),
-      dataCurrent : {},
+      code: this.$route.params.code,
+      dataCurrent: {},
       demoEditSC: "test edit sc",
       isAdmin: true,
-      descriptionSC: '',
-      selectOption : '',
+      descriptionSC: this.$route.params.description,
+      selectOption: this.$route.params.type,
     };
   },
-  mounted(){
-      this.demoEditSC = this.code
-      // this.dataCurrent = this.getDataCurrent(sc_id);
-      // console.log('this.dataCurrent',this.code);
+  mounted() {
+    this.demoEditSC = this.code;
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
   },
-
-  methods:{
-     async getDataCurrent(sc_id){
-       await GetSmartContractById(sc_id);
+  methods: {
+    async getDataCurrent(sc_id) {
+      await GetSmartContractById(sc_id);
     },
-    updateContent(value){
-      //console.log(value)
+    updateContent(value) {
       this.demoEditSC = value;
     },
-    async clickHandler(param){
-      if(param == "save"){
-        // UpdateSmartContractCode(this.$route.params.sc_id, this.code)
-        // this.$router.push(this.$route.params.parent_path);
-        await UpdateSmartContractCode(this.sc_id, this.nameSc,this.demoEditSC, this.descriptionSC, this.selectOption)
+    async clickHandler(param) {
+      if (param == "save") {
+        await UpdateSmartContractCode(
+          this.sc_id,
+          this.nameSc,
+          this.demoEditSC,
+          this.descriptionSC,
+          this.selectOption
+        );
         this.$router.push({
-          name:"ListSc"
-          })
+          name: "ListSc",
+        });
       }
-      if(param == "back"){
+      if (param == "back") {
         this.$router.push(this.$route.params.parent_path);
       }
     },
-  }
+  },
 };
 </script>
 
 
 <style scoped>
-#editsc {
-  background-color: rgb(241, 240, 240);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 115vh;
+.container-fluid{
+  color: black;
 }
-#type-select {
-  width: 300px;
+.row {
+  margin-top: 2%;
+  padding-right: 10px;
 }
-.title{
-  padding-top: 8%;
-  margin-bottom: 5%;
-}
-.title h1{
-  font-size: 50px;
-}
-.input-type {
-  position: absolute;
-  top: 0;
-  left: 50%;
-}
-.area {
-  margin-bottom: 30px;
-  position: relative;
-}
-.option {
-  width: 350px;
+
+#group {
   display: flex;
   justify-content: space-between;
-}
-.link{
-  margin-right: 85%;
-  font-size: 15px;
-  margin-top: 20px;
-}
-/* router style */
-a.router-link-active {
-  color: white;
-  text-decoration: none;
-}
-.body {
-  display: flex;
-  flex-direction: column;
-  /* align-items: center;
-  width: 1000px; */
-}
-/* header style */
-/* name area */
-.name-area,
-.type-area {
-  width: 500px;
-}
-.description{
-  display: flex;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 50px;
-}
-.label {
-  font-style: normal;
-  font-size: 20px;
-  font-weight: 100;
-  position: relative;
-  left: 0;
-}
-.input-name {
-  width: 350px;
-  border: 1px solid;
-  border-radius: 2px;
-  overflow: hidden;
-}
-/* editor area */
-.editor-area {
-  /* width: 600px; */
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  /* left: 40px; */
-}
-.AceEditor{
-  height: 350px;
-  margin-left: 185px;
-}
-/* textarea */
-textarea{
-  width: 600px;
-  height: 250px;
-  margin-left: 160px;
-}
-/* button style */
-.button-add-cancell button {
-  width: 170px;
-  height: 30px;
-  color: #0d6efd;
-  border: 1px solid;
-  border-radius: 4px;
-}
-.button-add-cancell button:hover {
-  opacity: 0.9;
-  background-color: #0d6efd;
-  color: white;
-  cursor: pointer;
-}
-.button-add-cancell button:active {
-  cursor: wait;
-}
-#button-add {
-  margin-right: 20px;
-}
-.button-add-cancell {
-  position: relative;
-  /* left: 40px; */
-  margin-left: 35%;
-}
-input[type="radio"] {
-  transform: scale(1.6);
+  width: 70%;
 }
 label {
-  margin-left: 10px;
+  padding-left: 15px;
 }
-label:hover {
-  cursor: pointer;
+
+.row>.col-md-3:not(.row:first-of-type >.col-md-3){
+  padding-left: 10%;
 }
-.common-option,
-.private-option {
-  border: 1px solid rgb(241, 240, 240);
-  border-radius: 15px;
-  width: 100px;
+
+.buttonGroup {
+  padding-top: 2%;
+  display: flex;
+  width: 60%;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding-bottom: 5%;
 }
-.common-option:hover,
-.private-option:hover {
-  background-color: #bcc6d4;
+
+/* textarea */
+textarea {
+  width: 100%;
+  height: 250px;
+}
+textarea {
+  border: 1px solid #ced4da;
 }
 </style>

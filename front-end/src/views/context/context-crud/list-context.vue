@@ -1,109 +1,108 @@
 <template>
   <div class="container-fluid">
-    <!-- btn delete -->
-    <div id="showConfirmation" v-if="showConfirmation">
-      <div id="removeSC-holder">
-        <confirm
-          @cancel="closeConfirm"
-          @confirm="deleteC()"
-          :dialog="alertDialog"
-        />
-      </div>
-    </div>
-    <div class="row align-items-md-center">
-      <div class="col-2">
+    <div class="row">
+      <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Context</a>
-          > <a>List</a></span
-        >
+          <a href="" class="link-primary text-decoration-underline">Context</a></span
+        > >
+        <a>List</a>
       </div>
-      <div class="col-8 text-center"><h1>Context List</h1></div>
+      <div class="col-md-7 text-center"><h1>Context List</h1></div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-md">
           <p>Date</p>
           <a-date-picker
-            :default-value="moment('01/01/2021', dateFormat)"
-            :format="dateFormat"
+            :default-value="moment('2021/12/01', dateFormat)"
           />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col-md"></div>
+        <div class="col-md"></div>
+        <div class="col-md"></div>
 
-        <div class="col">
+        <div class="col-md">
           <p>Type</p>
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
-              <option value="dcr">DCR</option>
-              <option value="cpn">CPN</option>
+              <option value="0">All</option>
+              <option value="type1">DCR</option>
+              <option value="type2">CPN</option>
             </select>
           </div>
         </div>
       </div>
       <div class="row">
-        <table class="table table-sm">
+        <table class="table table-md">
           <thead>
             <tr>
-              <th>
-                #
-                <span
-                  ><a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </th>
-
-              <th>
+              <th style="width: 5%">#</th>
+              <th style="width: 15%">
                 Name<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upName')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downName')"
                 /></span>
               </th>
-              <th>
+              <th style="width: 15%">
                 Type<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upType')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downType')"
                 /></span>
               </th>
-              <th>
+              <th style="width: 15%">
                 Date<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDate')"
                 /></span>
               </th>
               <th style="width: 50%">
                 Description<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDes')"
                 /></span>
               </th>
             </tr>
           </thead>
-          <tr v-for="data in datatable" :key="data.id">
-            <td>{{ data.id }}</td>
+          <tr v-for="(data, index) in filterlist" :key="index">
+            <td>{{ index + 1 }}</td>
             <td>{{ data.name }}</td>
-            <td>{{ data.type }}</td>
-            <td>{{ data.date }}</td>
+            <td>{{ data.context_type }}</td>
+            <td>{{ data.createdDate }}</td>
             <td class="align-items">
               {{ data.description }}
               <span class="col" id="btn">
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="editContext"
+                  @click="editContext(data.cid)"
                 >
                   Edit
                 </button>
                 <button
                   type="button"
                   class="btn btn-outline-primary"
-                  @click="deleteC"
+                  @click="deleteContext(data.cid)"
                 >
                   Delete
                 </button>
@@ -112,9 +111,9 @@
           </tr>
         </table>
       </div>
-      <div class="row">
+      <div class="row-end">
         <button
-          style="width: 50px"
+          style="width: 60px"
           type="button"
           class="btn btn-outline-primary"
           @click="goAdd"
@@ -128,89 +127,120 @@
 
 <script>
 import moment from "moment";
-// import { GetContext, DeleteContext } from "../../../services/data";
-import ConfirmationDialog from "../../../components/ConfirmationDialog.vue";
+import { DeleteContext, GetAllContext } from "../../../services/data";
 export default {
-  components: { confirm: ConfirmationDialog },
-  data() {
-    return {
-      datatable: [
-        {
-          id: "1",
-          name: "EtherGame",
-          type: "pending",
-          date: "20/11/2021",
-          description: "This is a smart contract about auction ",
-        },
-        {
-          id: "2",
-          name: "AtherGame",
-          type: "pending",
-          date: "5/11/2021",
-          description: "This is a smart contract about auction",
-        },
-        {
-          id: "3",
-          name: "CtherGame",
-          type: "pending",
-          date: "2/11/2021",
-          description: "This is a smart contract about auction",
-        },
-      ],
-      dateFormat: "DD/MM/YYYY",
-      selected: "dcr",
-      showConfirmation: false,
-      alertDialog: {},
 
-      // list_context: [],
+  data() {
+    return {  
+      selected: "0",
+      list_context: [],
     };
   },
   mounted() {
     this.initData();
+    this.getDate();
   },
+  computed: {
+    filterlist() {
+      const { selected } = this;
+      if (selected === "0") return this.list_context;
+      var items = [];
+      this.list_context.forEach(function (item) {
+        if (item.context_type === selected) {
+          items.push(item);
+        }
+      });
+      return items;
+    },
+  },
+
   methods: {
+    sort(param) {
+      switch (param) {
+        case "upName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() < b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() > b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate < b.createdDate ? -1 : 1
+          );
+          break;
+        case "downDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate > b.createdDate ? -1 : 1
+          );
+          break;
+        case "upDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1
+          );
+
+          break;
+        case "downDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() > b.description.toLowerCase() ? -1 : 1
+          );
+          break;
+      }
+    },
     moment,
+    async initData() {
+      this.list_context = await GetAllContext();
+      console.log(this.list_context);
+    },
     goAdd() {
       this.$router.push({
         name: "AddContext",
         params: { parent_path: "/list-context" },
       });
+
+      console.log(this.list_context);
     },
-    editContext(id) {
+    editContext(cid) {
       this.$router.push({
         name: "EditContext",
-        params: { context_id: id, parent_path: "/list-context" },
+        params: { id: cid, parent_path: "/list-context" },
       });
     },
-    deleteC() {
-      this.alertDialog = {
-        title: "Alert",
-        message: "Do you want to delete the Context out of the system?",
-        confirmbtn: "Yes",
-      };
-      this.showConfirmation = true;
-    },
+
     closeConfirm() {
       this.showConfirmation = false;
     },
-    // async deleteContext(id,ct_name) {
-    //   if(!confirm(`Do you want to delete context ${ct_name}`)){
-    //     return
-    //   }
-    //   const response = await DeleteContext(id);
-    //   if (response.status === 200) {
-    //       await this.initData()
-    //   }
-    // },
-    // async initData() {
-    //   this.list_context = await GetContext();
-    // },
+    deleteContext(cid) {
+      if (
+        confirm("Do you want to delete the Smart Contract out of the system?") === true
+      ) {
+        DeleteContext(cid).then((data) => {
+          this.initData();
+          console.log("-----------------", data);
+        });
+      }
+    },
   },
-  created() {},
 };
 </script>
 
 <style scoped>
+.container-fluid{
+  color: black;
+}
 h1 {
   font-size: 50px;
 }
@@ -222,17 +252,21 @@ h1 {
   margin-top: 2%;
   padding-right: 10px;
 }
+.row-end {
+  padding-top: 2%;
+  padding-bottom: 5%;
+}
 button {
   margin-right: 5px;
   margin-top: 5px;
 }
 table {
   width: 100%;
-  border-collapse: collapse;
+
 }
 table td,
 table th {
-  border: 1px solid #ddd;
+  padding-left: 5px;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -247,7 +281,7 @@ table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: black;
+  color: #3a7694;
   text-indent: inherit;
 }
 
@@ -262,19 +296,5 @@ table span {
 #btn {
   text-align: right;
 }
-/*---- showConfirmation */
-#showConfirmation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  align-items: center;
-  justify-content: center;
-}
-#removeSC-holder {
-  margin-top: 200px;
-}
+
 </style>

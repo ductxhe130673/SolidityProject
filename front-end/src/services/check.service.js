@@ -12,7 +12,6 @@ export default class CheckService extends BaseService {
             description: descriptionCt,
             ctid: ctidCt
         }
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('', paraData)
             return new ResponseWrapper(response, response.data)
@@ -27,7 +26,6 @@ export default class CheckService extends BaseService {
             toolname: tName,
             xml: tXml
         };
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)
@@ -37,13 +35,13 @@ export default class CheckService extends BaseService {
         }
     }
 
-    static async callUnfoldingTools(tName, tcontext_PATH_xml, tltl_PATH_json) {
+    static async callUnfoldingTools(tName, tcontext_PATH_xml, tltl_PATH_json,initialMarkingInfor) {
         const paraData = {
             name: tName,
             "context_PATH.xml": tcontext_PATH_xml,
-            "ltl_PATH.json": tltl_PATH_json
+            "ltl_PATH.json": tltl_PATH_json,
+            "initialMarkingInfor.json": initialMarkingInfor
         };
-        // console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)
@@ -58,7 +56,6 @@ export default class CheckService extends BaseService {
             toolname: tName
             
         };
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)
@@ -72,7 +69,6 @@ export default class CheckService extends BaseService {
         const paraData = {
             name: tName
         };
-        console.log(paraData)
         try {
             const response = await this.request({ auth: true }).post('/tools/', paraData)
             return new ResponseWrapper(response, response.data)

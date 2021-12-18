@@ -20,18 +20,15 @@
               <th>
                 Contract Name
                 <span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('asName')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('asName')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('deName')"
                 /></span>
               </th>
             </tr>
-            <tr v-for="(item , index) in filterSC" :key="index">
-              <td>{{ index+1 }}</td>
+            <tr v-for="(item, index) in filterSC" :key="index">
+              <td>{{ index + 1 }}</td>
               <td>{{ item }}</td>
             </tr>
           </table>
@@ -45,7 +42,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          :value= "this.context.name"
+          v-model="this.context"
         />
       </div>
     </div>
@@ -56,7 +53,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          value="Integer Overflow"
+          v-model="selected_vuls.name"
         />
       </div>
     </div>
@@ -120,36 +117,33 @@
       >
         Generate
       </button>
-      <button
-        v-if="step == 'check'"
-        class="btn btn-primary-outline"
-        @click="check"
-      >
+      <button v-if="step == 'check'" class="btn btn-primary-outline" @click="check">
         Check
       </button>
-      <button v-if="step == 'finish'" class="btn btn-primary-outline">
-        Next
-      </button>
-      <button class="btn btn-primary-outline" @click="navigate('back')">
-        Back
-      </button>
+      <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
+      <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
     </div>
   </div>
 </template>
 
 <script>
 import CheckService from "../services/check.service";
-import  { GetLtl }  from "../services/data";
-
+import { GetLtl } from "../services/data";
 
 export default {
   data() {
     return {
       step: "initial",
       list_selected_sc: [],
-      list_selected_vuls: [],
-      context: [],
-      user: { user_name: "Billy Tran" },
+      selected_vuls: this.$store.state.data.data.selectedTemplate,
+      selected_vuls_format: {
+        type: null,
+        params: {
+          name: null,
+          inputs: [null],
+        },
+      },
+      context: this.$store.state.data.data.selectedContext.name,
       error: true,
       view: "",
       ltlProperty: [],
@@ -160,11 +154,17 @@ export default {
       currentSC: null,
     };
   },
-  beforeMount(){
+  beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.fetchLTLProp();
+    this.getDataLtl();
   },
   methods: {
+    getDataLtl() {
+      this.selected_vuls_format.type = this.selected_vuls.template_type;
+      this.selected_vuls_format.params.name = this.selected_vuls.name;
+      this.selected_vuls_format.params.inputs = [this.selected_vuls.formula];
+    },
     sort(mess) {
       switch (mess) {
         case "asId":
@@ -183,7 +183,6 @@ export default {
     },
     async fetchLTLProp() {
       this.ltlProperty = await GetLtl();
-      console.log('hihi', this.ltlProperty);
     },
     navigate(param) {
       if (param == "config") {
@@ -196,14 +195,16 @@ export default {
     },
     async callUnfoldingTool() {
       const tName = "unfolding";
-      const tcontext_PATH_xml =
-        "<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>";
-      const tltl_PATH_json =
-        '{\n    "type": "general",\n    "params": {\n        "name": "under_over_flow",\n        "inputs": ["currentBalance"]\n    }\n}';
+      const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
+      const tltl_PATH_json = JSON.stringify(this.selected_vuls_format);
+      const initialMarkingInfor = JSON.stringify(
+        this.$store.state.data.data.initialMarkingInfor
+      );
       const res = await CheckService.callUnfoldingTools(
         tName,
         tcontext_PATH_xml,
-        tltl_PATH_json
+        tltl_PATH_json,
+        initialMarkingInfor
       );
       console.log("here");
       console.log(res);
@@ -219,7 +220,6 @@ export default {
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {
-        console.log("Start mutation");
         this.$store.commit("Setrs", "11");
         this.results.push("Can't run HELENA tools");
       }
@@ -259,6 +259,8 @@ export default {
       return await new Promise((resolve) => setTimeout(resolve, ms));
     },
     async generate() {
+      console.log("--generating--");
+      // await SetDataForCallingTool(this.context, this.selected_vuls);
       this.step = "generating";
       this.move("progress-bar-gen");
       await this.delay(2000);
@@ -343,19 +345,16 @@ export default {
     },
   },
   mounted() {
-    this.context = this.$store.state.data.data.selectedContext;
-    // console.log('--hihiltl',ltlProperty);
-    this.list_selected_vuls =
-      this.$store.getters["data/GetSelectedVulnerbility"];
+    this.selected_vuls = this.$store.state.data.data.selectedTemplate;
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {
-    filterSC(){
-      var listSC = []; 
+    filterSC() {
+      var listSC = [];
       this.list_selected_sc.forEach(function (item) {
-          listSC.push(item.name);
-      })
-      return listSC;  
+        listSC.push(item.name);
+      });
+      return listSC;
     },
     done_result() {
       return this.$store.getters.Getrs;
@@ -377,10 +376,9 @@ export default {
 </script>
 
 <style scoped>
-#main{
+#main {
   height: 100%;
   width: 100%;
-  
 }
 #header {
   text-align: center;
@@ -419,8 +417,7 @@ export default {
   margin: 0 10%;
 }
 #locate-1 {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border: 1px solid #d9edf7;
   border-radius: 10px;
 }
@@ -540,8 +537,7 @@ export default {
   width: 60%;
   margin: 0 auto;
   padding: 3% 2%;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border: 1px solid #d9edf7;
   border-radius: 10px;
   display: flex;

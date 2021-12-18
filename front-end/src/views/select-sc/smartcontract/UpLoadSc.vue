@@ -1,102 +1,111 @@
 <template>
   <div id="addsc">
-      <div class="header">
-        <div class="title"><h1>Upload a new Smart Contract code</h1></div>
+    <div class="header">
+      <div class="title"><h1>Upload a new Smart Contract code</h1></div>
+    </div>
+    <div class="body">
+      <div class="name-area area">
+        <h2 class="label">Name</h2>
+        <input class="input-name input-type" type="text" v-model="nameSC" />
       </div>
-      <div class="body">
-        <div class="name-area area">
-          <h2 class="label">Name</h2>
-          <input class="input-name input-type" type="text" v-model="nameSc" />
+      <div class="type-area area">
+        <div class="label">Smart Contract Type</div>
+        <div class="option input-type">
+          <fieldset id="group1">
+            <input
+              type="radio"
+              v-model="selectOption"
+              class="radio"
+              name="group1"
+              value="common"
+              :disabled="!isSuperior"
+            />Common
+            <input
+              type="radio"
+              v-model="selectOption"
+              class="radio"
+              name="group1"
+              value="pending"
+            />Pending
+            <input
+              type="radio"
+              v-model="selectOption"
+              class="radio"
+              name="group1"
+              value="private"
+            />Private
+          </fieldset>
         </div>
-        <div class="type-area area">
-          <div class="label">Smart Contract Type</div>
-          <div class="option input-type">
-            <div class="common-option" v-if="isSuperior">
-              <label for="common">Common</label>
-              <input
-                class="radio"
-                id="common"
-                value="common"
-                type="radio"
-                v-model="selectOption"
-              />
-            </div>
-            <div class="common-option" v-else>
-              <label for="common">Pending</label>
-              <input
-                class="radio"
-                id="common"
-                value="pending"
-                type="radio"
-                v-model="selectOption"
-              />
-            </div>
-            <div class="private-option">
-              <label for="private">Private</label>
-              <input
-                class="radio"
-                id="private"
-                value="private"
-                type="radio"
-                v-model="selectOption"
-              />
-            </div>
-          </div>
-          <div class="option input-type" v-if="author === 'admin'">
-            <select name="" id="type-select">
-              <option value="">Private</option>
-              <option value="">Common</option>
-            </select>
-          </div>
+        <div class="option input-type" v-if="author === 'admin'">
+          <select name="" id="type-select">
+            <option value="">Private</option>
+            <option value="">Common</option>
+          </select>
         </div>
-        <div class="editor-area area">
-          <ace-editor
-            v-bind:codeSC="demoEditSC"
-            @changeSC="updateContent($event)"
-          />
-        </div>
-        <div class="button-area area">
-          <div class="button-add-cancell">
-            <button id="button-add" type="button" @click="routing('save')">
-              Save
-            </button>
-            <button id="button-cancel" type="button" @click="routing('cancel')">
-              Cancel
-            </button>
-          </div>
+      </div>
+      <div class="editor-area area">
+        <ace-editor v-bind:codeSC="demoEditSC" @changeSC="updateContent($event)" />
+      </div>
+      <div class="button-area area">
+        <div class="button-add-cancell">
+          <button id="button-add" type="button" @click="clickHandler('save')">
+            Save
+          </button>
+          <button id="button-cancel" type="button" @click="clickHandler('cancel')">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
+import moment from "moment";
+import { AddNewSmartContracts } from "../../../services/data";
 import AceEditor from "../../../components/AceEditor.vue";
 export default {
   data() {
-    return {};
+    return {
+      selectOption: "",
+      demoEditSC: this.$store.state.data.contentFile,
+      dateFormat: "",
+      nameSC: "",
+    };
   },
   components: { AceEditor },
+  mounted() {
+    this.getData();
+    console.log("this.$store.state.data.contentFile", this.$store.state.data.contentFile);
+  },
   methods: {
-    routing(param) {
-      if (param == "save") {
-        this.$router.push({ name: "SelectSmartContract" });
-      }
-      if (param == "cancel") {
-        this.$router.push({ name: "SelectSmartContract" });
-      }
-    },
     updateContent(value) {
       this.demoEditSC = value;
     },
+    getData() {
+      this.dateFormat = moment().format("YYYY-MM-DD");
+      this.demoEditSC = this.$store.state.data.contentFile;
+    },
+    async clickHandler(action) {
+      if (action == "save") {
+        if (this.nameSc === "" || this.demoEditSC === "" || this.selectOption === "") {
+          window.alert("Please input all field");
+        } else {
+          await AddNewSmartContracts(
+            this.hashValue(this.nameSc),
+            this.nameSC,
+            this.selectOption,
+            this.demoEditSC,
+            this.dateFormat
+          );
+          this.$router.push({ name: "SelectSmartContract" });
+        }
+      } else if (action == "cancel") {
+        this.$router.push({ name: "SelectSmartContract" });
+      }
+    },
+
     computed: {
-      selectOption: {
-        get: function () {
-          return this.options;
-        },
-        set: function (value) {
-          this.options = value;
-        },
-      },
       isSuperior() {
         return this.$store.state.user.currentUser.role == "admin";
       },
@@ -108,6 +117,9 @@ export default {
 <style scoped>
 #type-select {
   width: 300px;
+}
+.radio {
+  width: 30px;
 }
 .input-type {
   position: absolute;
@@ -161,7 +173,7 @@ a.router-link-active {
 }
 .label {
   font-style: normal;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 100;
   position: relative;
   left: 0;

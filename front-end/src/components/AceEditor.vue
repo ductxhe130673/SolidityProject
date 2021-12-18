@@ -8,7 +8,7 @@
       lang="solidity"
       theme="chrome"
       width="100%"
-      height="90%"
+      height="100%"
     ></editor>
   </div>
 </template>
@@ -17,20 +17,20 @@
 export default {
   data() {
     return {
-      contentSC:"//add your code here"
+      contentSC: this.$store.state.data.contentFile,
     };
   },
-  watch:{
-    codeSC:function(newVal, oldVal){
-      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`)
-      this.contentSC = this.codeSC
+  watch: {
+    codeSC: function (newVal, oldVal) {
+      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`);
+      this.contentSC = this.codeSC;
     },
-    contentSC:function(newVal, oldVal){
-      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`)
-      this.$emit('changeSC',newVal)
+    contentSC: function (newVal, oldVal) {
+      console.log(`propchange oldVal:${oldVal}, newVal:${newVal}`);
+      this.$emit("changeSC", newVal);
     },
   },
-  props:["codeSC"],
+  props: ["codeSC"],
   components: {
     editor: require("vue2-ace-editor"),
   },
@@ -38,6 +38,7 @@ export default {
     editorInit: function () {
       require("brace/ext/language_tools"); //language extension prerequsite...
       require("brace/mode/solidity"); //language
+      require("brace/theme/chrome");
     },
     change() {
       console.log("Alo");
@@ -46,27 +47,12 @@ export default {
 };
 </script>
 
-<style scoped>
-#ace-editor {
-  width: 600px;
-  height: 400px;
-}
-/* .tool-bar {
-  height: 30px;
-  width: 100%;
-  background-color: rgb(49, 98, 170);
-  border-radius: 4px 4px 0 0;
-} */
-</style>
 <style>
-.ace_content {
-  background-color: aliceblue;
+#ace-editor {
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ced4da;
 }
-.ace-tm {
-  background-color: #ffffff;
-  color: black;
-  border: 1px solid #d0d0d0;
-  border-top-width: 1.5px;
-  border-radius: 0 0 4px 4px;
-}
+
+
 </style>

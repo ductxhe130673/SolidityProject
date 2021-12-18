@@ -1,7 +1,7 @@
 <template>
   <div id="main" class="container">
     <div id="header">
-      <h1>Select Smart Contracts </h1>
+      <h1>Select Smart Contracts</h1>
     </div>
 
     <div class="row type">
@@ -10,11 +10,14 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Type</label>
-          <select class="form-select" id="inputGroupSelect01" v-model="selected">
-            <option value="common" >Common</option>
+          <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
+            <option value="0">All</option>
+            <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
-            <option value="0">All</option>
+          </select>
+          <select v-if="!isAdmin" class="form-select" id="inputGroup" v-model="selected">
+            <option value="private">Private</option>
           </select>
         </div>
       </div>
@@ -31,15 +34,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in filterlist"
-            v-bind:key="index"
-          >
+          <tr v-for="(item, index) in filterlist" v-bind:key="index">
             <th scope="row">{{ index + 1 }}</th>
             <td>{{ item.name }}</td>
             <td>{{ item.type }}</td>
             <td>
-              <input type="checkbox" id="one" name="ch" v-model="checkedNames" :value="item"/>
+              <input
+                type="checkbox"
+                id="one"
+                name="ch"
+                v-model="checkedNames"
+                :value="item"
+              />
             </td>
           </tr>
         </tbody>
@@ -47,40 +53,70 @@
     </div>
     <div id="action">
       <div id="btn" @click="funtionNext()">Next</div>
-      <div id="btn" v-on:click="load">Upload Smart Contract</div>
+      <div id="btn" @click="upLoad">Upload Smart Contract</div>
       <div id="btn" @click="routing('back')">Back</div>
     </div>
 
-    <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" />
+    <!-- <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" /> -->
+    <div id="showConfirmation" v-if="showConfirmation">
+      <div id="removeSC-holder">
+        <confirm
+          @cancel="closeConfirm"
+          @confirm="routing('uploadfile')"
+          :dialog="upLoadDialog"
+        />
+      </div>
+    </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
-import Popup from "./Popup.vue";
+// import Popup from "./Popup.vue";
 import { mapActions, mapGetters } from "vuex";
+import UpLoadFile from "../../../components/UpLoadFile.vue";
 export default {
   data() {
     return {
-      selected: '0',
+      selected: "0",
       isOpen: false,
       info: null,
-      checkedNames: []
+      checkedNames: [],
+      isAdmin: true,
+      showConfirmation: false,
+      upLoadDialog: {},
     };
   },
-  mounted(){
+  mounted() {
     this.checkedNames = this.$store.state.data.data.selectedSc;
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
+    this.checkIsUser();
   },
   methods: {
-   routing(param) {
+    checkIsUser() {
+      if (!this.isAdmin) {
+        this.selected = "private";
+      }
+    },
+    upLoad() {
+      this.upLoadDialog = {
+        title: "Choose a new Smart Contract file",
+        confirmbtn: "OK",
+      };
+      this.showConfirmation = true;
+    },
+    closeConfirm() {
+      this.showConfirmation = false;
+    },
+    routing(param) {
       if (param == "add") {
-        this.$store.commit("SetSelectedSC", this.checkedNames)
+        this.$store.commit("SetSelectedSC", this.checkedNames);
         this.$router.push({ name: "ContextOfSmartContract" });
-        this.$store.commit("setIndex", 3); 
+        this.$store.commit("setIndex", 3);
       }
       if (param == "back") {
         this.$router.push({ name: "ListOfCheckedTransactions" });
-        this.$store.commit("setIndex", 1);      
+        this.$store.commit("setIndex", 1);
       }
       if (param == "uploadfile") {
         this.$router.push({ name: "UpLoadSc" });
@@ -115,21 +151,22 @@ export default {
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-    filterlist(){
+    filterlist() {
       const { selected } = this;
-      if (selected === "0") return this.getlistSmartContract; 
-      var items = []; 
+      if (selected === "0") return this.getlistSmartContract;
+      var items = [];
       this.getlistSmartContract.forEach(function (item) {
-        if (item.type === selected ){
+        if (item.type === selected) {
           items.push(item);
         }
-      })
-      return items;  
-    }
+      });
+      return items;
+    },
     // return k;
   },
   components: {
-    Popup,
+    // Popup,
+    confirm: UpLoadFile,
   },
 };
 </script>
@@ -155,8 +192,7 @@ h1 {
 }
 
 .atable {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: 40px;
   padding-bottom: 5%;
   border: 1px solid #d9edf7;
@@ -195,5 +231,20 @@ div#main {
 
 .type {
   margin-top: 50px;
+}
+/*---- showConfirmation */
+#showConfirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+}
+#removeSC-holder {
+  margin-top: 200px;
 }
 </style>

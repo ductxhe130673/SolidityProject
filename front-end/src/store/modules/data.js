@@ -4,24 +4,47 @@ const state = {
     version: 2,
     index: 0,
     date_modified: 0,
+    isEditFormula: false,
+    contentFile: '',
+    fileUpload: null,
     data: {
+        uploadSCFile: {},
         selectedSc: [],
-        selectedSCInfor: { name: "hello" },
+        selectedSCInfor: {},
         selectedContext: {},
         selectedTemplate: {},
         nameCSP: '',
         selectedVulnerbility: [],
         configVul: {},
         ltlProperty : [],
+        isAuthen : false,
+        typeFormula: '',
         initialMarkingInfor: {
             NumberOfUser: null,
-            Balance: {
-                type: "fixed",
-                fixed: null,
-                random: { from: null, to: null },
-                map: null
-            },
-            Funtion_params: {}
+        Balance: {
+          type: "fixed",
+          fixed: null,
+          random: { from: null, to: null },
+          map: null,
+        },
+        Smart_contracts: [
+          {
+            sid: null,
+            name: null,
+            functions: [
+              {
+                fid: null,
+                name: null,
+                sender_value: { from: null, to: null },
+                arguments: {
+                  name: null,
+                  from: null,
+                  to: null,
+                },
+              },
+            ],
+          },
+        ],
         },
     },
     views: {
@@ -63,11 +86,23 @@ const getters = {
     getIndex: state => {
         return state.index;
     },
+    getIsEditFormula: state => {
+        return state.isEditFormula;
+    },
     getNameCSP: state =>{
         return state.nameCSP;
     },
     getLtlProperty: state => {
         return state.data.ltlProperty;
+    },
+    getFileUploadSC: state => {
+        return state.data.uploadSCFile;
+    },
+    getContentFile: state =>{
+        return state.contentFile;
+    },
+    getFileUpload: state=>{
+        return state.fileUpload;
     },
     /* -- view -- */
     GetProcessView: (state) => state.views.process,
@@ -130,11 +165,29 @@ const mutations = {
     setIndex(state, data) {
         state.index = data;
     },
+    setIsEditFormula(state, data) {
+        state.isEditFormula = data;
+    },
     setNameCSP(state, data) {
         state.nameCSP = data;
     },
     setLtlProperty(state, data){
         state.data.ltlProperty= data;
+    },
+    setFileUploadSC(state, data){
+        state.data.uploadSCFile= data;
+    },
+    setContentFile(state, data){
+        state.contentFile = data;
+    },
+    setFileUpload(state, data){
+        state.fileUpload = data;
+    },
+    setIsAuthen(state, data){
+        state.isAuthen = data;
+    },
+    setTypeFormula(state, data){
+        state.data.typeFormula = data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility

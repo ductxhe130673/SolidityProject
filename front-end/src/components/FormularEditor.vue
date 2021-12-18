@@ -1,35 +1,43 @@
 <template>
   <div
-          class="language-ltl"
-          id="highlighting-content"
-          spellcheck="false"
-          contenteditable=""
-          @input="updateInput"
-          @keydown.enter.prevent="keyEnter"
-          @keydown.tab.prevent="keyTab"
-        ></div>
+    class="language-ltl"
+    id="highlighting-content"
+    spellcheck="false"
+    contenteditable=""
+    @input="updateInput"
+    @keydown.enter.prevent="keyEnter"
+    @keydown.tab.prevent="keyTab"
+  ></div>
 </template>
 
 <script>
-import { analyseLTLCode } from "../mixins/text-parser.js"
+import { analyseLTLCode } from "../mixins/text-parser.js";
 export default {
-data: function () {
+  props: ["ltlcode"],
+  data: function () {
     return {
       selectVariable: false,
       select_variable_value: "",
       select_variable_id: "",
       select_variable_type: "",
       selected_template: "",
-      ltlcode:"¬outOf Range(currentBalance)",
       ltltemplate: [],
       description: "",
+      data: this.ltlcode,
     };
+  },
+  watch: {
+    ltlcode(new_var) {
+      if (this.getNodeValue() != new_var) {
+        this.updateContent(new_var.length, new_var);
+      }
+    },
   },
   mounted() {
     this.ltlcode = this.$store.state.data.data.selectedTemplate.formula;
     this.updateContent(1, this.ltlcode);
   },
-   computed: {
+  computed: {
     isSelectVariable() {
       return this.selectVariable;
     },
@@ -42,11 +50,14 @@ data: function () {
   },
 
   methods: {
+    sendMessage(data) {
+      this.$emit("input", data);
+    },
     changeid(value) {
       const data = this.ltltemplate.find((i) => {
         return i.lteid == value;
       });
-      this.ltlcode= data.formula;
+      this.ltlcode = data.formula;
       this.description = data.description;
     },
     updateSelection(new_value) {
@@ -58,6 +69,7 @@ data: function () {
       this.select_variable_value = "";
       this.select_variable_type = "";
       this.selectVariable = false;
+      this.sendMessage(this.getNodeValue());
     },
     openSelectTable(id, value, type) {
       this.select_variable_value = value.substring(1, value.length - 1);
@@ -67,6 +79,8 @@ data: function () {
       } else {
         this.select_variable_type = "var";
       }
+      console.log("------", id, value, type);
+      this.$store.commit("setTypeFormula", this.select_variable_type);
       this.selectVariable = true;
     },
     removeSelectVarEventListener() {
@@ -106,6 +120,7 @@ data: function () {
       result_element.innerHTML = analyseLTLCode(value);
       this.setCursor(pos);
       this.addSelectVarEventListener();
+      this.sendMessage(value);
     },
     getNodeValue() {
       let result_element = document.getElementById("highlighting-content");
@@ -139,23 +154,19 @@ data: function () {
     keyEnter() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value =
-        value.substring(0, pos) + "\n " + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\n " + value.substring(pos, value.length);
       this.updateContent(pos + 1, value);
     },
     keyTab() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value =
-        value.substring(0, pos) + "\t" + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\t" + value.substring(pos, value.length);
       this.updateContent(pos + 1, value);
     },
     getCursorPos() {
       let selection = window.getSelection();
       let range = selection.getRangeAt(0);
-      range.setStartBefore(
-        document.getElementById("highlighting-content").parentNode
-      );
+      range.setStartBefore(document.getElementById("highlighting-content").parentNode);
       let pos = range.toString().split("").length;
       range.collapse(false);
       return pos;
@@ -168,7 +179,7 @@ data: function () {
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>

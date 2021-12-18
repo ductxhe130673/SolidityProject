@@ -49,7 +49,7 @@
     </div>
     <div class="nav__right" v-if="!checkUser">
       <button @click="goLogin()" id="login-btn">Login</button>
-      <button id="register-btn">Register</button>
+      <button @click="goRegister()" id="register-btn">Register</button>
     </div>
   </nav>
 </template>
@@ -66,10 +66,16 @@ export default {
   },
   computed: {
     checkUser() {
-      return this.$store.state.user.currentUser.id;
+      const userId = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")).id
+        : null;
+      return userId;
     },
     getUserName() {
-      return this.$store.state.user.currentUser.name;
+      const username = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")).username
+        : null;
+      return username;
     },
   },
   methods: {
@@ -90,9 +96,13 @@ export default {
       this.$store.commit("setIndex", 0);
       this.goURL("/login");
     },
+    goRegister() {
+      this.$store.commit("setIndex", 0);
+      this.$router.push({ name: "Register" });
+    },
     goURL(url) {
       if (this.$route.path != url) {
-      this.$store.commit("setIndex", 0);
+        this.$store.commit("setIndex", 0);
         this.$router.push(url);
       }
     },

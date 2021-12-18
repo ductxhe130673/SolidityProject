@@ -8,39 +8,18 @@
         <p>Please choose your way to check the Smart Contracts:</p>
         <ul>
           <li>
-            Contract-Specific Property: You will choose the functions and using
-            template or non-template to design your LTL formula.
+            Contract-Specific Property: You will choose the functions and using template
+            or non-template to design your LTL formula.
           </li>
           <li>
-            General Vulnerability: You will select the common vulnerability from
-            the list
+            General Vulnerability: You will select the common vulnerability from the list
           </li>
         </ul>
       </div>
       <div id="pcb-button">
-        <a
-          class="link-button"
-          @click="goCSP"
-          :class="{ choosen_button: getCurrentChoose == 'csps-choosetypes' }"
-          >Check a Contract-Specifc Property
-        </a>
-        <a
-          class="link-button"
-          @click="goGV"
-          :class="{ choosen_button: getCurrentChoose == 'check-general-vul' }"
-          >Check a General Vulnerability
-        </a>
-        <a
-          class="link-button"
-          @click="goBack"
-          :class="{ choosen_button: getCurrentChoose == 'check-general-vul' }"
-          >Back
-        </a>
-      </div>
-      <div id="showConfirmation" v-if="showDialog">
-        <div id="components-holder">
-          <confirm @cancel="closeDialog" @confirm="cfChange" :dialog="dialog" />
-        </div>
+        <a class="link-button" @click="goCSP">Check a Contract-Specifc Property </a>
+        <a class="link-button" @click="goGV">Check a General Vulnerability </a>
+        <a class="link-button" @click="goBack">Back </a>
       </div>
     </div>
   </div>

@@ -1,7 +1,1 @@
-{
-    "type": "general",
-    "params": {
-        "name": "under_over_flow",
-        "inputs": ["currentBalance"]
-    }
-}
+{"type":"type0","params":{"name":"interger_overflow_underflow","inputs":["const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('variable' < minThreshold) | ('variable' > maxThreshold);\nproperty prop: !outOfRange;"]}}

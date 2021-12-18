@@ -9,7 +9,6 @@ import ChooseProperty from "../views/ChooseProperty"
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 import CheckingResult from "../views/select-sc/transactions/CheckingResult.vue"
-// import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
 
 import SelectSmartContract from "../views/select-sc/smartcontract/SelectSmartContract.vue"
 import UpLoadSc from "../views/select-sc/smartcontract/UpLoadSc.vue"
@@ -29,6 +28,7 @@ import ContractSpecificPropertyNonTemplate from "../views/choose-property/CheckC
 import ChooseEleOfSC from "../views/choose-property/CheckGeneralVul/ChooseElementOfTheSmartContract.vue"
 import GenaralVulSetting from "../views/choose-property/CheckGeneralVul/GenaralVulSetting.vue"
 import VulnerabilitySummary from "../views/choose-property/CheckGeneralVul/VulnerabilitySummary.vue"
+import SelectFuncTimeStampSkipEmpty from "../views/choose-property/select-op/SelectFuncTimeStampSkipEmpty.vue"
 
 import ListContext from "../views/context/context-crud/list-context.vue"
 import AddContext from "../views/context/context-crud/add-context.vue"
@@ -37,6 +37,8 @@ import EditContext from "../views/context/context-crud/edit-context.vue"
 import ListSc from "../views/select-sc/smartcontract-crud/list-sc.vue"
 import EditSc from "../views/select-sc/smartcontract-crud/edit-sc.vue"
 import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
+import SelectSContractSD2 from "../views/choose-property/select-op/SelectSContractSD2.vue"
+import SelectFuncSD from "../views/choose-property/select-op/SelectFuncSD.vue"
 
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
@@ -46,32 +48,44 @@ import SelectFunction from "../views/add-sagemented/SelectFunction.vue"
 import SelectGlobalVariable from "../views/add-sagemented/SelectGlobalVariable.vue"
 import SelectLocalVariable from "../views/add-sagemented/SelectLocalVariable.vue"
 import SelectContract from "../views/add-sagemented/SelectSmartContract.vue"
+import RoadMap from "../views/RoadMap.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 
 
 
-//import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
-import InitialMarkingLink from "../views/InitialMarkingLink.vue"
 
+import InitialMarkingLink from "../views/InitialMarkingLink.vue"
+import SelectVarReentrancyOp1 from "../views/choose-property/select-op/SelectVarReentrancyOp1.vue"
+import SelectFuncReentrancyOp1 from "../views/choose-property/select-op/SelectFuncReentrancyOp1.vue"
+import SelectFuncReentrancyOp2 from "../views/choose-property/select-op/SelectFuncReentrancyOp2.vue"
+import SelectSCRentrancyOp2 from "../views/choose-property/select-op/SelectSCRentrancyOp2.vue"
+import SelectVarReentrancyOp2 from "../views/choose-property/select-op/SelectVarReentrancyOp2.vue"
 
 export const routes = [{
         path: "/",
         name: "Index",
         component: Index,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | home` },
+    },
+    {
+        path: "/roadmap",
+        name: "RoadMap",
+        component: RoadMap,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
+        props: true
     },
     {
         path: "/login",
         name: "Login",
         component: Login,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | login` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | login` },
     },
     {
         path: "/register",
         name: "Register",
         component: Register,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | register` },
     },
     {
         path: "/select-sc/",
@@ -97,13 +111,25 @@ export const routes = [{
             {
                 path: 'select-smart-contract',
                 name: 'SelectSmartContract',
-                component: SelectSmartContract
+                component: SelectSmartContract,
+                meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` }
             },
             {
                 path: 'uploadsc',
                 name: 'UpLoadSc',
                 component: UpLoadSc
             },
+            {
+                path: 'selectscsd2',
+                name: 'SelectSContractSD2',
+                component: SelectSContractSD2
+            },
+            {
+                path: 'SelectFuncSD',
+                name: 'SelectFuncSD',
+                component: SelectFuncSD
+            }
+
         ],
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` },
     },
@@ -168,7 +194,7 @@ export const routes = [{
                 name: "VulSummary",
                 component: VulnerabilitySummary
             },
-                {
+            {
                 path: "select-function",
                 name: "SelectFuntion",
                 component: SelectFunction
@@ -187,6 +213,11 @@ export const routes = [{
                 path: "select-smart-contract",
                 name: "SelectContract",
                 component: SelectContract
+            },
+            {
+                path: "SelectFTSSkip",
+                name: "SelectFuncTimeStampSkipEmpty",
+                component: SelectFuncTimeStampSkipEmpty
             },
 
         ],
@@ -220,7 +251,7 @@ export const routes = [{
         path: "/list-context",
         name: "ListContext",
         component: ListContext,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
+        meta: { requiresAuth: true, isAdmin: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
         props: true
     },
     {
@@ -262,7 +293,7 @@ export const routes = [{
         path: "/list-vul",
         name: "ListVul",
         component: ListVul,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
+        meta: { requiresAuth: true, isAdmin: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
         props: true
     },
     {
@@ -279,6 +310,36 @@ export const routes = [{
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
         props: true
     },
+    {
+        path: "/SelectVarReentrancyOp1",
+        name: "SelectVarReentrancyOp1",
+        component: SelectVarReentrancyOp1,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op1` },
+    },
+    {
+        path: "/SelectFuncReentrancyOp1",
+        name: "SelectFuncReentrancyOp1",
+        component: SelectFuncReentrancyOp1,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op1` },
+    },
+    {
+        path: "/SelectFuncReentrancyOp2",
+        name: "SelectFuncReentrancyOp2",
+        component: SelectFuncReentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Func Reentrancy Op2` },
+    },
+    {
+        path: "/SelectSCRentrancyOp2",
+        name: "SelectSCRentrancyOp2",
+        component: SelectSCRentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select SC Reentrancy Op2` },
+    },
+    {
+        path: "/SelectVarReentrancyOp2",
+        nam: "SelectVarReentrancyOp2",
+        component: SelectVarReentrancyOp2,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op2` },
+    }
 
 ]
 
@@ -316,13 +377,7 @@ export const routes = [{
     meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create contract-specific property` },
     props: true
   },
-  {
-    path: "/roadmap",
-    name: "RoadMap",
-    component: RoadMap,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
-    props: true
-  },
+  
   {
     path: "/add-context",
     name: "AddContext",

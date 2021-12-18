@@ -8,25 +8,12 @@
           name="lteid"
           class="form-select"
           @change="changeid($event.target.value)"
+          v-model="select"
         >
-          <option v-for="c in ltltemplate" :key="c.lteid" :value="c.lteid">
-            {{ c.name }}
+          <option v-for="item in listTemplates" :key="item" :value="item.lteid">
+            {{ item.name }}
           </option>
         </select>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">Formular</div>
-      <div class="col-9">
-        <div
-          class="language-ltl"
-          id="highlighting-content"
-          spellcheck="false"
-          contenteditable=""
-          @input="updateInput"
-          @keydown.enter.prevent="keyEnter"
-          @keydown.tab.prevent="keyTab"
-        ></div>
       </div>
     </div>
     <div class="row">
@@ -44,9 +31,7 @@
       </div>
     </div>
     <div id="btn-group">
-      <button class="btn btn-primary-outline btn-sm" @click="routing('add')">
-        Next
-      </button>
+      <button class="btn btn-primary-outline btn-sm" @click="routing('add')">Next</button>
       <button
         class="btn btn-primary-outline btn-sm"
         type="button"
@@ -78,6 +63,7 @@
 </template>
 
 <script>
+import { GetAllltltemplates } from "../../../services/data";
 import { analyseLTLCode } from "../../../mixins/text-parser.js";
 import ArgumentSelection from "../../../components/ArgumentTable.vue";
 import VariableSelection from "../../../components/VarialbleTable.vue";
@@ -91,16 +77,9 @@ export default {
       select_variable_type: "",
       selected_template: "",
       ltlcode: "abc",
-      ltltemplate: [
-        { lteid: 1, name: "Integer Overflow/Underflow" },
-        { lteid: 2, name: "Reentrancy" },
-        { lteid: 3, name: "Self-Destruction" },
-        { lteid: 4, name: "Timestamp Dependence" },
-        { lteid: 5, name: "Ship EmptyString Literal" },
-        { lteid: 6, name: "Uninitialized Storage Variable" },
-        { lteid: 7  , name: "Others" },
-      ],
+      listTemplates: [],
       description: "",
+      select: 1,
     };
   },
   components: { ArgumentSelection, VariableSelection, FunctionSelection },
@@ -133,11 +112,12 @@ export default {
   },
   methods: {
     async initData() {
-      this.ltlcode = this.ltltemplate[0].formula;
-      this.description = this.ltltemplate[0].description;
+      this.listTemplates = await GetAllltltemplates();
+      this.ltlcode = this.listTemplates[0].formula;
+      this.description = this.listTemplates[0].description;
     },
     changeid(value) {
-      const data = this.ltltemplate.find((i) => {
+      const data = this.listTemplates.find((i) => {
         return i.lteid == value;
       });
       this.ltlcode = data.formula;
@@ -146,7 +126,15 @@ export default {
     routing(param) {
       /* let ltl_content = this.getNodeValue() ltl content se duoc gui ve phia backend*/
       if (param == "add") {
-        this.$router.push({ name: "ChooseElementOfSmartContract" });
+        if (this.select == 1) {
+          this.$router.push({ name: "ChooseElementOfSmartContract" });
+        } else if (this.select == 2) {
+          this.$router.push({ name: "SelectFuncReentrancyOp1" });
+        } else if (this.select == 3) {
+          this.$router.push({ name: "SelectFuncSD" });
+        } else if (this.select == 4) {
+          this.$router.push({ name: "SelectFuncTimeStampSkipEmpty" });
+        }
       }
       if (param == "back") {
         this.$router.push({ name: "CSPSettingType" });
@@ -242,23 +230,19 @@ export default {
     keyEnter() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value =
-        value.substring(0, pos) + "\n " + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\n " + value.substring(pos, value.length);
       this.updateContent(pos + 1, value);
     },
     keyTab() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value =
-        value.substring(0, pos) + "\t" + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\t" + value.substring(pos, value.length);
       this.updateContent(pos + 1, value);
     },
     getCursorPos() {
       let selection = window.getSelection();
       let range = selection.getRangeAt(0);
-      range.setStartBefore(
-        document.getElementById("highlighting-content").parentNode
-      );
+      range.setStartBefore(document.getElementById("highlighting-content").parentNode);
       let pos = range.toString().split("").length;
       range.collapse(false);
       return pos;
@@ -290,6 +274,7 @@ export default {
 }
 .row {
   margin-top: 20px;
+  margin-bottom: 5%;
 }
 .col-2 {
   font-size: 20px;

@@ -5,9 +5,9 @@ from subprocess import Popen, PIPE, STDOUT
 
 
 # for Windows
-path = r"D:\Document\CapStone\CapstoneProject\SolidityProject\tools"
+# path = r"D:\Demo\SolidityProject\tools"
 # for Ubuntu
-# path = r"G:\CapstoneProject\SolidityProject\tools"
+path = r"/home/quypham/SolidityProject/tools"
 
 
 # ---save file to temporary----
@@ -19,20 +19,22 @@ def savetotemporary(data):
         with open(f'{path}/temporary/{k}', 'w') as f:
             f.write(data[k])
 
-data = {
-    "name": "getdata",
-    "context_PATH.xml":"<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>",
-    "ltl_PATH.json": "{\n    \"type\": \"general\",\n    \"params\": {\n        \"name\": \"under_over_flow\",\n        \"inputs\": [\"currentBalance\"]\n    }\n}"
-}
-savetotemporary(data=data)
+# data = {
+#     "name": "getdata",
+#     "context_PATH.xml":"<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>",
+#     "ltl_PATH.json": "{\n    \"type\": \"general\",\n    \"params\": {\n        \"name\": \"under_over_flow\",\n        \"inputs\": [\"currentBalance\"]\n    }\n}"
+# }
+# savetotemporary(data=data)
 
 
 def unfolding():
     # get from temporary
     # context_PATH = './test/test.xml'
-    # ltl_PATH = './test/ltl.json'
-    context_PATH = '../temporary/context_PATH.xml'
-    ltl_PATH = '../temporary/ltl_PATH.json'
+    ltl_PATH = './test/ltl.json'
+    initialMarking_PATH  = './test/test.im.json'
+    context_PATH = path + '/temporary/context_PATH.xml'
+    # ltl_PATH = path + '/temporary/ltl_PATH.json'
+    # initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
 
     # wait tools
     lna_PATH = './test/EtherGame.lna'
@@ -43,9 +45,10 @@ def unfolding():
     output_PATH = './output/'
     output_NAME = 'test'
 
-    commandUnf = "./main --lna " + lna_PATH + " --context " + context_PATH + " --ltl "+ltl_PATH+" --sol-ast " + \
-        sol_ast_PATH+" --lna-json "+lna_json_PATH+" --output_path " + \
-        output_PATH+" --output_name "+output_NAME
+    commandUnf = "./unfolding --lna " + lna_PATH + " --context " + \
+        context_PATH + " --context-type " + "DCR" + " --ltl "+ltl_PATH+" --sol-ast " + \
+        sol_ast_PATH+" --lna-json "+lna_json_PATH+ " --im-json " +initialMarking_PATH + \
+         " --output_path " + output_PATH+" --output_name "+output_NAME
     # print (commandUnf)
     pathUnf = path + r"/unfolding"
     unfolding = subprocess.run(
@@ -72,4 +75,4 @@ def runHelena():
     f.close()
     return report
 
-runHelena()
+#runHelena()
