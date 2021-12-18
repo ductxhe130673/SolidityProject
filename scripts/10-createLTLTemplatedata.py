@@ -7,7 +7,7 @@ db = mysql.connector.connect(
     database="soliditycpn"
 )
 mycursor = db.cursor()
-sqlFomular = "INSERT INTO LTLTemplate (name,createdDate,formula,formula_text,template_type,description,aid) VALUES (%s,%s,%s,%s,%s,%s)"
+sqlFomular = "INSERT INTO LTLTemplate (name,createdDate,formula,formula_text,template_type,description,aid) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 multi = [ 
     ("interger_overflow_underflow",datetime.datetime.now(), "const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('variable' < minThreshold) | ('variable' > maxThreshold);\nproperty prop: !outOfRange;","the case where 'variable' is greater than 2147483647 or less than 0 will never happen","type0","outOfRange(x) is a proposition defining the conditions for overflow and underflow for the variable x w.r.t the range of its type which we delimit by defining lower and higher thresholds (minThreshold and maxThreshold respectively).","1"),
     ("reetrancy", datetime.datetime.now(), "template Reentrancy()","template Reentrancy()","type1","This vulnerability is related to functions that contain instructions responsible for Ether transfer.","1"),

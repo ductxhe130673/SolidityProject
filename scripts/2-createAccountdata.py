@@ -13,13 +13,13 @@ pass4= hash("asdcxz123")
 pass5= hash("qwertgfdaxz")
 pass6= hash("123@123a")
 mycursor = db.cursor()
-sqlFomular = "INSERT INTO Account (username,password,role) VALUES (%s,%s,%s)"
+sqlFomular = "INSERT INTO Account (username,password,role,last_login) VALUES (%s,%s,%s,%s)"
 multi = [
-    ("xuanduc",pass1,"admin"),
-    ("anhtu",pass2,"admin"),
-    ("honghanh",pass3,"user"),
-    ("quangvinh",pass4,"user"),
-    ("quypham",pass5,"user"),
+    ("xuanduc",pass1,"admin",""),
+    ("anhtu",pass2,"admin",""),
+    ("honghanh",pass3,"admin",""),
+    ("quangvinh",pass4,"admin",""),
+    ("quypham",pass5,"admin",""),
 ]
 mycursor.executemany(sqlFomular,multi)
 db.commit()
