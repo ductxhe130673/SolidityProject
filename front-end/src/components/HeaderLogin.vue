@@ -30,7 +30,6 @@
       </div>
     </div>
     <div class="nav__right">
-      <button @click="goLogin()" id="login-btn">Login</button>
       <button @click="goRegister()" id="register-btn">Register</button>
     </div>
   </nav>

@@ -47,7 +47,7 @@ export class SmartContractsService extends BaseService {
     }
 
     /*---------Create New Smartcontract--------- */
-    static async CreateSmartContracts(id, sc_name, option, content, createdDate) {
+    static async CreateSmartContracts(id, sc_name, option, content, createdDate, description) {
             console.log('createdDate', createdDate);
             try {
                 const paraData = {
@@ -56,6 +56,7 @@ export class SmartContractsService extends BaseService {
                     "createdDate": createdDate,
                     "type": option,
                     "content": content,
+                    "description": description,
                     "aid": "1"
                 }
                 const response = await this.request({ auth: true }).post(`${this.getUnity()}/select-smart-contract`, paraData)
