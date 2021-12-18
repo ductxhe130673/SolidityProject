@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{"type":"type0","params":{"name":"interger_overflow_underflow","inputs":["const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('variable' < minThreshold) | ('variable' > maxThreshold);\nproperty prop: !outOfRange;"]}}
-=======
 {
   "type": "specific",
   "params": {
@@ -8,4 +5,3 @@
     "formula": "const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('variable' < minThreshold) | ('variable' > maxThreshold);\nproperty prop: !outOfRange;"
   }
 }
->>>>>>> bccc187f5c01dbd891d40abc86d985e6f52514f8

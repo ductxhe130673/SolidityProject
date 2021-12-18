@@ -7,11 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 # for Windows
 # path = r"D:\Demo\SolidityProject\tools"
 # for Ubuntu
-<<<<<<< HEAD
 path = r"/home/quypham/SolidityProject/tools"
-=======
-path = r"G:\CapstoneProject\SolidityProject\tools"
->>>>>>> bccc187f5c01dbd891d40abc86d985e6f52514f8
 
 
 # ---save file to temporary----
@@ -34,10 +30,11 @@ def savetotemporary(data):
 def unfolding():
     # get from temporary
     # context_PATH = './test/test.xml'
-    # ltl_PATH = './test/ltl.json'
+    ltl_PATH = './test/ltl.json'
+    initialMarking_PATH  = './test/test.im.json'
     context_PATH = path + '/temporary/context_PATH.xml'
-    ltl_PATH = path + '/temporary/ltl_PATH.json'
-    initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
+    # ltl_PATH = path + '/temporary/ltl_PATH.json'
+    # initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
 
     # wait tools
     lna_PATH = './test/EtherGame.lna'
@@ -78,4 +75,4 @@ def runHelena():
     f.close()
     return report
 
-runHelena()
+#runHelena()

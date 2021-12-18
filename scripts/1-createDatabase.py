@@ -10,7 +10,8 @@ mycursor.execute("""CREATE TABLE Account (
 aid int primary key AUTO_INCREMENT,
 username nvarchar(200),
 password nvarchar(200),
-role nvarchar(200)
+role nvarchar(200),
+last_login datetime
 )
 
 """)
@@ -112,6 +113,7 @@ CREATE TABLE LTLTemplate (
 lteid int primary key AUTO_INCREMENT,
 name nvarchar(200),
 formula text,
+formula_text text,
 template_type nvarchar(200),
 createdDate date,
 description text,
