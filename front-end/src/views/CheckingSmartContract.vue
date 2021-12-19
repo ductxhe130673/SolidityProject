@@ -128,14 +128,14 @@
 
 <script>
 import CheckService from "../services/check.service";
-import { GetLtl } from "../services/data";
+// import { GetLtl } from "../services/data";
 
 export default {
   data() {
     return {
       step: "initial",
       list_selected_sc: [],
-      selected_vuls: this.$store.state.data.data.selectedTemplate,
+      selected_vuls: "",
       context: this.$store.state.data.data.selectedContext.name,
       error: true,
       view: "",
@@ -145,11 +145,12 @@ export default {
       dialog: {},
       confirmation: "",
       currentSC: null,
+      newLtl: this.$store.state.data.data.ltlConfig,
     };
   },
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
-    this.fetchLTLProp();
+    this.selected_vuls = this.$store.state.data.data.selectedTemplate;
   },
   methods: {
     sort(mess) {
@@ -168,9 +169,9 @@ export default {
           break;
       }
     },
-    async fetchLTLProp() {
-      this.ltlProperty = await GetLtl();
-    },
+    // async fetchLTLProp() {
+    //   this.ltlProperty = await GetLtl();
+    // },
     navigate(param) {
       if (param == "config") {
         this.$router.push({ name: "InitialMarkingLink" });
@@ -181,9 +182,16 @@ export default {
       }
     },
     async callUnfoldingTool() {
+      const newVar = this.$store.state.data.data.isVarSelected;
+      console.log("newLtlO", newVar);
+      this.newLtl.params.formula = this.newLtl.params?.formula.replaceAll(
+        "variable",
+        newVar
+      );
+      console.log("newLtl", this.newLtl);
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
-      const tltl_PATH_json = JSON.stringify(this.$store.state.data.data.ltlConfig, 0, 2);
+      const tltl_PATH_json = JSON.stringify(this.newLtl, 0, 2);
       const initialMarkingInfor = JSON.stringify(
         this.$store.state.data.data.initialMarkingInfor,
         0,
@@ -334,7 +342,6 @@ export default {
     },
   },
   mounted() {
-    this.selected_vuls = this.$store.state.data.data.selectedTemplate;
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {

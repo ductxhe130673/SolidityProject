@@ -5,7 +5,8 @@
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Context</a></span
-        > >
+        >
+        >
         <a>List</a>
       </div>
       <div class="col-md-7 text-center"><h1>Context List</h1></div>
@@ -14,9 +15,7 @@
       <div class="row">
         <div class="col-md">
           <p>Date</p>
-          <a-date-picker
-            :default-value="moment('2021/12/01', dateFormat)"
-          />
+          <a-date-picker :default-value="moment('2021/12/01', dateFormat)" />
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -40,10 +39,7 @@
               <th style="width: 5%">#</th>
               <th style="width: 15%">
                 Name<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upName')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upName')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downName')"
@@ -51,10 +47,7 @@
               </th>
               <th style="width: 15%">
                 Type<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upType')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upType')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downType')"
@@ -62,10 +55,7 @@
               </th>
               <th style="width: 15%">
                 Date<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDate')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downDate')"
@@ -73,10 +63,7 @@
               </th>
               <th style="width: 50%">
                 Description<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDes')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downDes')"
@@ -129,9 +116,8 @@
 import moment from "moment";
 import { DeleteContext, GetAllContext } from "../../../services/data";
 export default {
-
   data() {
-    return {  
+    return {
       selected: "0",
       list_context: [],
     };
@@ -178,14 +164,10 @@ export default {
           );
           break;
         case "upDate":
-          this.filterlist.sort((a, b) =>
-            a.createdDate < b.createdDate ? -1 : 1
-          );
+          this.filterlist.sort((a, b) => (a.createdDate < b.createdDate ? -1 : 1));
           break;
         case "downDate":
-          this.filterlist.sort((a, b) =>
-            a.createdDate > b.createdDate ? -1 : 1
-          );
+          this.filterlist.sort((a, b) => (a.createdDate > b.createdDate ? -1 : 1));
           break;
         case "upDes":
           this.filterlist.sort((a, b) =>
@@ -238,7 +220,7 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid{
+.container-fluid {
   color: black;
 }
 h1 {
@@ -262,7 +244,6 @@ button {
 }
 table {
   width: 100%;
-
 }
 table td,
 table th {
@@ -296,5 +277,4 @@ table span {
 #btn {
   text-align: right;
 }
-
 </style>

@@ -55,7 +55,7 @@
                 id="one"
                 name="ch"
                 :value="func.name"
-                v-model="ltlConfig.params.inputs.selected_function"
+                v-model="selected_variable"
               />
             </div>
           </div>
@@ -77,25 +77,12 @@ export default {
       smart_infor: [],
       selectedSCIndex: 0,
       selected_smart: 1,
-      ltlConfig: {
-        type: "specific",
-        params: {
-          id: "",
-          name: "",
-          formula: "",
-          description: "",
-          inputs: {
-            selected_variable: "",
-            selected_function: "",
-          },
-        },
-      },
+      selected_variable: "",
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc;
     this.setSCInfor();
-    this.ltlConfig = this.$store.state.data.data.ltlConfig;
   },
   computed: {
     getSelectedFunc() {
@@ -126,11 +113,11 @@ export default {
     },
     routing(param) {
       if (param == "next") {
-        this.$store.commit("SetLtlConfig", this.ltlConfig);
-        this.$router.push({ name: "CSPTemplateSetting" });
+        this.$store.commit("setVarSelected", this.selected_variable);
+        document.getElementById("selection-table").style.display = "none";
       }
       if (param == "back") {
-        this.$router.push({ name: "GenaralVulSetting" });
+        document.getElementById("selection-table").style.display = "none";
       }
     },
   },

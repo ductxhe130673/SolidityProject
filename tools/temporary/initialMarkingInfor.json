@@ -8,8 +8,8 @@
           "name": "OpenAddressLottery()",
           "argument": [],
           "sender_value": {
-            "from": "2",
-            "to": "3"
+            "from": "1",
+            "to": "10"
           }
         },
         {
@@ -79,106 +79,6 @@
           "fid": 15,
           "name": "() payable ",
           "argument": [],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        }
-      ]
-    },
-    {
-      "name": "EtherLotto",
-      "functions": [
-        {
-          "fid": 16,
-          "name": "EtherLotto()",
-          "argument": [],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        },
-        {
-          "fid": 17,
-          "name": " play() payable",
-          "argument": [],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        }
-      ]
-    },
-    {
-      "name": "SimpleDice",
-      "functions": [
-        {
-          "fid": 18,
-          "name": "SimpleDice()",
-          "argument": [],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        },
-        {
-          "fid": 19,
-          "name": "enter() ",
-          "argument": [],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        },
-        {
-          "fid": 20,
-          "name": "setOwner(address new_owner) onlyowner ",
-          "argument": [
-            {
-              "id": 12,
-              "name": "new_owner",
-              "vartype": "state",
-              "type": "address",
-              "value": 12,
-              "fid": 20
-            }
-          ],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        },
-        {
-          "fid": 21,
-          "name": "setMinDeposit(uint new_mindeposit) onlyowner ",
-          "argument": [
-            {
-              "id": 13,
-              "name": "new_mindeposit",
-              "vartype": "local",
-              "type": "uint",
-              "value": 14,
-              "fid": 21
-            }
-          ],
-          "sender_value": {
-            "from": "1",
-            "to": "10"
-          }
-        },
-        {
-          "fid": 22,
-          "name": "setFeeRate(uint new_feerate) onlyowner",
-          "argument": [
-            {
-              "id": 14,
-              "name": "new_feerate",
-              "vartype": "local",
-              "type": "uint",
-              "value": 16,
-              "fid": 22
-            }
-          ],
           "sender_value": {
             "from": "1",
             "to": "10"

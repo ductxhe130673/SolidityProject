@@ -60,7 +60,6 @@ export default {
   },
   beforeMount() {
     this.own_list_argument = this.list_argument;
-    console.log("this.own_list_argument", this.own_list_argument);
   },
   methods: {
     setArgument() {

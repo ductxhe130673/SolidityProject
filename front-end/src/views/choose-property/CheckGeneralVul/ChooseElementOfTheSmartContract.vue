@@ -158,7 +158,6 @@ export default {
     this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
     // this.getFuntionSC(this.list_smart_contract[0].sid);
     this.setSCInfor();
-    console.log("--------------", this.list_smart_contract);
   },
   methods: {
     selectSC(sid, index) {
@@ -240,9 +239,11 @@ table span {
   color: #383838;
   border: grey solid;
   border-bottom: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .nav-item {
-  width: 25%;
+  width: 24%;
   margin-right: 3px;
   cursor: pointer;
 }
