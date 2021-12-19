@@ -27,8 +27,8 @@
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
               <option value="0">All</option>
-              <option value="type1">DCR</option>
-              <option value="type2">CPN</option>
+              <option value="DCR">DCR</option>
+              <option value="CPN">CPN</option>
             </select>
           </div>
         </div>
