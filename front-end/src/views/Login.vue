@@ -59,7 +59,12 @@
       <input type="text" required v-model="username" placeholder="User Name" />
 
       <label>Password:</label>
-      <input type="password" required v-model="password" placeholder="Password" />
+      <input
+        type="password"
+        required
+        v-model="password"
+        placeholder="Password"
+      />
       <div v-if="error" class="error">{{ error }}</div>
 
       <div class="terms">
@@ -117,17 +122,21 @@ export default {
     //     });
     // },
     login() {
-      const response = AuthService.makeLogin({
-        username: this.username,
-        password: this.password,
-      });
-      response.then((res) => {
-        if (res.status === 200) {
-          this.$router.push({
-            name: "Index",
-          });
-        }
-      });
+      if (this.username === "" || this.password === "") {
+        alert("You have to fill all");
+      } else {
+        const response = AuthService.makeLogin({
+          username: this.username,
+          password: this.password,
+        });
+        response.then((res) => {
+          if (res.status === 200) {
+            this.$router.push({
+              name: "Index",
+            });
+          }
+        });
+      }
     },
   },
 };

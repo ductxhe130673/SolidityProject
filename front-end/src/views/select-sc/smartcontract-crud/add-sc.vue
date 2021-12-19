@@ -82,7 +82,7 @@
     </div>
     <div v-if="!isAdmin">
       <div class="row">
-        <div class="col-md-3">Description</div>
+        <div class="col-md-3" id="padding-left">Description</div>
         <div class="col-md-7">
           <textarea
             name=""
@@ -188,10 +188,12 @@ label {
   padding-left: 15px;
 }
 
-.row>.col-md-3:not(.row:first-of-type >.col-md-3){
+.row >.col-md-3:not(.row:first-of-type >.col-md-3){
   padding-left: 10%;
 }
-
+#padding-left{
+  padding-left: 10%;
+}
 .buttonGroup {
   padding-top: 2%;
   display: flex;
