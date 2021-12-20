@@ -53,7 +53,7 @@
       </div>
       <div class="row">
         <table class="table table-md">
-          <thead>
+          <thead id="border-top">
             <tr>
               <th style="width: 5%">#</th>
               <th style="width: 15%">
@@ -180,7 +180,6 @@ import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
 import dateFormat from "dateformat";
 
-
 export default {
   data() {
     return {
@@ -209,8 +208,6 @@ export default {
         }
       });
       return items;
-
-    
     },
 
     isSuperior() {
@@ -235,7 +232,7 @@ export default {
           break;
         case "upType":
           this.filterlist.sort((a, b) =>
-            a.type.toLowerCase() < b.type.toLowerCase() ?-1 : 1
+            a.type.toLowerCase() < b.type.toLowerCase() ? -1 : 1
           );
           break;
         case "downType":
@@ -254,16 +251,16 @@ export default {
           );
           break;
         case "upDes":
-          this.filterlist.sort((a, b) =>         
-            a.description.toLowerCase() < b.description.toLowerCase()  ? -1 : 1 
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() < b.description.toLowerCase() ? -1 : 1
           );
-     
+
           break;
         case "downDes":
           this.filterlist.sort((a, b) =>
             a.description.toLowerCase() > b.description.toLowerCase() ? -1 : 1
           );
-          
+
           break;
       }
     },
@@ -399,10 +396,15 @@ button {
 }
 table {
   width: 100%;
+
 }
+
 table td,
 table th {
   padding-left: 5px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;

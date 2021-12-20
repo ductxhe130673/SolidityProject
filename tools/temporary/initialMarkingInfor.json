@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "NumberOfUser": "1",
     "Balance": {
         "type": "fixed",
@@ -296,4 +297,167 @@
             ]
         }
     ]
+=======
+  "smart_contract": [
+    {
+      "name": "indAuctionbl",
+      "functions": [
+        {
+          "fid": 3,
+          "name": "BlindAuction(uint _biddingTime, uint _revealTime, address _beneficiary)",
+          "argument": [
+            {
+              "id": 1,
+              "name": "biddingTime",
+              "vartype": "state",
+              "type": "uint",
+              "value": 1,
+              "fid": 3,
+              "from": "1",
+              "to": "10"
+            },
+            {
+              "id": 2,
+              "name": "revealTime",
+              "vartype": "local",
+              "type": "uint",
+              "value": 3,
+              "fid": 3,
+              "from": "1",
+              "to": "10"
+            },
+            {
+              "id": 3,
+              "name": "beneficiary",
+              "vartype": "state",
+              "type": "address",
+              "value": 5,
+              "fid": 3,
+              "from": "1",
+              "to": "10"
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 4,
+          "name": "bid(bytes32 _blindedBid) payable onlyBefore(biddingEnd)",
+          "argument": [
+            {
+              "id": 4,
+              "name": "blindedBid",
+              "vartype": "local",
+              "type": "bytes32",
+              "value": 7,
+              "fid": 4,
+              "from": "1",
+              "to": "10"
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 5,
+          "name": "reveal(uint[] _values, bool[] _fake, bytes32[] _secret) onlyAfter(biddingEnd) onlyBefore(revealEnd)",
+          "argument": [
+            {
+              "id": 5,
+              "name": "value",
+              "vartype": "state",
+              "type": "uint[]",
+              "value": 9,
+              "fid": 5,
+              "from": "1",
+              "to": "10"
+            },
+            {
+              "id": 6,
+              "name": "secret",
+              "vartype": "local",
+              "type": "bytes32[]",
+              "value": 0,
+              "fid": 5,
+              "from": "1",
+              "to": "10"
+            },
+            {
+              "id": 7,
+              "name": "fake",
+              "vartype": "state",
+              "type": "bool[]",
+              "value": 2,
+              "fid": 5,
+              "from": "1",
+              "to": "10"
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 6,
+          "name": "placeBid(address bidder, uint value) internal returns (bool success)",
+          "argument": [
+            {
+              "id": 8,
+              "name": "bidder",
+              "vartype": "local",
+              "type": "address",
+              "value": 4,
+              "fid": 6
+            },
+            {
+              "id": 9,
+              "name": "value",
+              "vartype": "state",
+              "type": "uint",
+              "value": 6,
+              "fid": 6
+            }
+          ],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 7,
+          "name": "withdraw() returns (bool)",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        },
+        {
+          "fid": 8,
+          "name": "auctionEnd() onlyAfter(revealEnd)",
+          "argument": [],
+          "sender_value": {
+            "from": "1",
+            "to": "10"
+          }
+        }
+      ]
+    }
+  ],
+  "balance": {
+    "type": "fixed",
+    "fixed": "10",
+    "map": "",
+    "random": {
+      "from": "",
+      "to": ""
+    }
+  },
+  "NumberOfUser": "5"
+>>>>>>> origin/sprint#2
 }

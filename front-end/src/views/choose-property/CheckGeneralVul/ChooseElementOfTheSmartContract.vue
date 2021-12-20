@@ -1,61 +1,53 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="header">
-        <div class="title">
-          <h1>Select Variables Of Smart Contract</h1>
-        </div>
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center">Select Variables of the function</h1>
+    </div>
+    <div class="smart-cell">
+      <div class="min-max">
+        Min Threshold <input  type="number" v-model="minhold" /> Max Threshold
+        <input  type="number" v-model="maxhold" />
       </div>
-      <div class="smart-cell">
-        <div class="min-max">
-          Min Threshold <input type="number" v-model="minhold" /> Max Threshold
-          <input type="number" v-model="maxhold" />
-        </div>
-        <br />
-        <div id="list-smart">
-          <ul class="nav nav-tabs" style="flex-wrap: nowrap">
-            <li
-              class="nav-item d-inline-block text-truncate"
-              v-for="(item, index) in list_smart_contract"
-              :key="item.id"
+      <br />
+      <div id="list-smart">
+        <ul class="nav nav-tabs" style="flex-wrap: nowrap">
+          <li
+            class="nav-item d-inline-block text-truncate"
+            v-for="(item, index) in list_smart_contract"
+            :key="item.id"
+          >
+            <a
+              class="nav-link "
+              v-on:click="selectSC(item.sid, index)"
+              v-bind:class="{ active: item.sid == selected_smart }"
+              >{{ item.name }}</a
             >
-              <a
-                class="nav-link"
-                v-on:click="selectSC(item.sid, index)"
-                v-bind:class="{ active: item.sid == selected_smart }"
-                >{{ item.name }}</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div id="Information-table">
-          <div id="table-list">
-            <div class="table-row" id="header-row">
-              <div class="table-cell header-cell first-cell">
-                #
-                <span>
-                  <a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </div>
-              <div class="table-cell header-cell second-cell">
-                Global variables
-                <span>
-                  <a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </div>
-              <div class="table-cell header-cell third-cell">Selected</div>
-            </div>
-            <div
-              class="table-row"
+          </li>
+        </ul>
+      </div>
+      <div id="Information-table">
+        <div id="table-list">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 10%">#</th>
+                <th>
+                  Global variables
+                  <span>
+                    <a-icon id="icon" type="caret-up" />
+                    <a-icon id="icon" type="caret-down" />
+                  </span>
+                </th>
+                <th style="width: 15%">Selected</th>
+              </tr>
+            </thead>
+            <tr
               v-for="(func, index) in smart_infor[selectedSCIndex].globalVar"
               v-bind:key="func.fid"
-              :class="{ even_row: index % 2 == 0 }"
             >
-              <div class="table-cell first-cell">{{ index + 1 }}</div>
-              <div class="table-cell second-cell">{{ func.name }}</div>
-              <div class="table-cell third-cell">
+              <td>{{ index + 1 }}</td>
+              <td>{{ func.name }}</td>
+              <td>
                 <input
                   type="radio"
                   id="one"
@@ -63,73 +55,68 @@
                   v-model="checkedGlobalVar"
                   :value="func.name"
                 />
-              </div>
-            </div>
-          </div>
+              </td>
+            </tr>
+          </table>
+        </div>
 
-          <div class="function">
-            <div id="list-smart">
-              <ul class="nav nav-tabs">
-                <li
-                  class="nav-item d-inline-block text-truncate"
-                  v-for="(item, index) in functionBySC"
-                  :key="item.id"
+        <div class="function">
+          <div id="list-smart">
+            <ul class="nav nav-tabs">
+              <li
+                class="nav-item d-inline-block text-truncate"
+                v-for="(item, index) in functionBySC"
+                :key="item.id"
+              >
+                <a
+                  class="nav-link "
+                  v-on:click="selectFunction(item.fid, index)"
+                  v-bind:class="{active: item.fid == selected_func}"
+                  >{{ item.name }}</a
                 >
-                  <a
-                    class="nav-link"
-                    v-on:click="selectFunction(item.fid, index)"
-                    v-bind:class="{ active: item.sid == selected_smart }"
-                    >{{ item.name }}</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div id="Func-table">
-              <div id="table-list">
-                <div class="table-row" id="header-row">
-                  <div class="table-cell header-cell first-cell">
-                    #
-                    <span>
-                      <a-icon id="icon" type="caret-up" />
-                      <a-icon id="icon" type="caret-down" />
-                    </span>
-                  </div>
-                  <div class="table-cell header-cell second-cell">
-                    Local variables
-                    <span>
-                      <a-icon id="icon" type="caret-up" />
-                      <a-icon id="icon" type="caret-down" />
-                    </span>
-                  </div>
-                  <div class="table-cell header-cell third-cell">Selected</div>
-                </div>
-                <div
-                  class="table-row"
+              </li>
+            </ul>
+          </div>
+          <div id="Func-table">
+            <div id="table-list">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 10%">#</th>
+                    <th>
+                      Local variables
+                      <span>
+                        <a-icon id="icon" type="caret-up" />
+                        <a-icon id="icon" type="caret-down" />
+                      </span>
+                    </th>
+                    <th>Selected</th>
+                  </tr>
+                </thead>
+                <tr
                   v-for="(func, index) in getSelectedFunc"
                   v-bind:key="func.fid"
-                  :class="{ even_row: index % 2 == 0 }"
                 >
-                  <div class="table-cell first-cell">{{ index + 1 }}</div>
-                  <div class="table-cell second-cell">{{ func.name }}</div>
-                  <div class="table-cell third-cell">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ func.name }}</td>
+                  <td>
                     <input
                       type="radio"
-                      id="one"
-                      name="ch"
-                      v-model="checkedNames"
+                      id="two"
+                      name="localVar"
                       :value="data"
                     />
-                  </div>
-                </div>
-              </div>
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
       </div>
-      <div id="processing-btn">
-        <div class="pr-button" @click="routing('next')">Next</div>
-        <div class="pr-button" @click="routing('back')">Back</div>
-      </div>
+    </div>
+    <div id="processing-btn">
+      <div class="pr-button" @click="routing('next')">Next</div>
+      <div class="pr-button" @click="routing('back')">Back</div>
     </div>
   </div>
 </template>
@@ -165,7 +152,11 @@ export default {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
         this.selectedSCIndex = index;
-        console.log("this.selected_smart", this.selected_smart, this.selectedSCIndex);
+        console.log(
+          "this.selected_smart",
+          this.selected_smart,
+          this.selectedSCIndex
+        );
         this.functionBySC = this.list_function[index];
       }
     },
@@ -214,6 +205,58 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 35px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+input {
+  margin: 7px;
+}
+.min-max input{
+  border: 1px solid gray;
+}
+.min-max{
+  color: black;
+}
+.row {
+  margin-top: 5%;
+  padding-right: 10px;
+}
+table {
+  width: 100%;
+}
+table td,
+table th {
+  padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+table tr:hover {
+  background-color: #ddd;
+}
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
+}
+
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
+
 .title {
   text-align: center;
   margin-top: 5%;
@@ -232,17 +275,17 @@ table span {
   height: 8px;
 }
 .nav-item .active {
-  color: white;
-  background-color: #383838;
-  border: grey;
+  color: black;
+  background-color: #d9edf7;
+  border: 1px;
 }
 .nav-link {
-  color: #383838;
-  border: grey solid;
+  color: black;
+  border: black solid 1px;
   border-bottom: none;
 }
 .nav-item {
-  width: 25%;
+  min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
 }
@@ -255,6 +298,8 @@ table span {
   border: 1px black solid;
   padding: 5% 4% 5% 4%;
 }
+
+
 .smart-cell {
   margin-top: 50px;
 }
@@ -264,46 +309,14 @@ table span {
 #table-list {
   width: 100%;
   margin: auto;
-  font-size: 0.9em;
   height: 300px;
   overflow-y: auto;
-  border-radius: 4px;
-  border: 1px solid black;
-  background: rgb(241, 240, 240);
 }
 
 .table-row {
   display: flex;
   height: 50px;
   border: 1px solid #ddd;
-}
-#header-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
-}
-
-#table-list span {
-  float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 100%;
-}
-.even_row {
-  background-color: rgb(226, 224, 224);
-}
-.table-cell {
-  padding-top: 10px;
-  font-size: 15px;
-}
-.first-cell {
-  flex-basis: 10%;
-  padding-left: 5px;
-}
-.second-cell {
-  flex-basis: 60%;
-}
-.third-cell {
-  flex-basis: 30%;
 }
 
 /* button */

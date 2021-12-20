@@ -19,33 +19,42 @@ const state = {
         ltlProperty : [],
         isAuthen : false,
         typeFormula: '',
+        ltlConfig : 
+        {
+            type: "",
+            params: {
+            }
+        },
+        
         initialMarkingInfor: {
-            NumberOfUser: null,
-        Balance: {
-          type: "fixed",
-          fixed: null,
-          random: { from: null, to: null },
-          map: null,
-        },
-        Smart_contracts: [
-          {
-            sid: null,
-            name: null,
-            functions: [
-              {
-                fid: null,
-                name: null,
-                sender_value: { from: null, to: null },
-                arguments: {
-                  name: null,
-                  from: null,
-                  to: null,
-                },
-              },
+            smart_contract: [
+                {
+                    name: "",
+                    functions: [
+                        {   
+                            fid: "",
+                            name: "",
+                            argument: [],
+                            sender_value: {
+                                from: "0",
+                                to: "10"
+                            }
+                        },
+                    ]
+                }
             ],
-          },
-        ],
+            balance: {
+                type: "fixed",
+                fixed: "10",
+                map: "",
+                random: {
+                    from: "",
+                    to: ""
+                }
+            },
+            NumberOfUser: "5"
         },
+
     },
     views: {
         process: 'sc-selection',
@@ -226,6 +235,9 @@ const mutations = {
     },
     SetConfigVul(state, vul) {
         state.data.configVul = vul
+    },
+    SetLtlConfig(state, data){
+        state.data.ltlConfig = data;
     },
     SetInitialMarking(state, new_initial_data) {
         state.data.initialMarkingInfor = new_initial_data

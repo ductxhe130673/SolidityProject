@@ -188,7 +188,7 @@ label {
   padding-left: 15px;
 }
 
-.row>.col-md-3:not(.row:first-of-type >.col-md-3){
+.row >.col-md-3:not(.row:first-of-type >.col-md-3){
   padding-left: 10%;
 }
 #padding-left{

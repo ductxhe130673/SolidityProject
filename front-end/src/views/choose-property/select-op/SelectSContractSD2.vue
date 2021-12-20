@@ -4,16 +4,11 @@
       <h1 class="text-center">Select smart contracts</h1>
     </div>
     <div class="row">
-     
       <table class="table table-sm">
         <thead>
           <tr>
-            <th>
+            <th style="width :10%">
               #
-              <span
-                ><a-icon id="icon" type="caret-up" />
-                <a-icon id="icon" type="caret-down" />
-              </span>
             </th>
 
             <th>
@@ -23,7 +18,7 @@
                   type="caret-down"
               /></span>
             </th>
-            <th>Select</th>
+            <th style="width :15%">Select</th>
           </tr>
         </thead>
 
@@ -98,6 +93,10 @@ export default {
 };
 </script>
 <style scoped>
+h1{
+  font-size: 35px;
+  font-weight: bold;
+}
 .row {
   margin-top: 2%;
   padding-right: 10px;
@@ -112,15 +111,16 @@ export default {
 }
 /* table  */
 table {
-  width: 70%;
-  border-collapse: collapse;
+  width: 100%;
   margin: 0 auto;
 }
 
 table td,
 table th {
-  border: 1px solid #ddd;
-  padding: 5px;
+  padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -131,11 +131,11 @@ table tr:hover {
 }
 
 table th {
-  background-color: #d9edf7;
+   background-color: #d9edf7;
+  color: #3a7694;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: black;
   text-indent: inherit;
 }
 /* icon */

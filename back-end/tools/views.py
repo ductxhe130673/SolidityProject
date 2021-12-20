@@ -22,6 +22,7 @@ def calltools(request):
 
             #------save-to-temporary--------
             if (name == 'unfolding'):
+                print("AAAAAAAAAAAAAAAAAAAAAAAAA")
                 savetotemporary(data=data)  
                 unfolding() 
                 return Response({"message": "Run Unfolding Successfully"}, status=status.HTTP_200_OK) 

@@ -10,47 +10,54 @@
       <div class="col">
         <div class="input-group mb-3">
           <label class="input-group-text" for="inputGroupSelect01">Type</label>
-          <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
+          <select
+            v-if="isAdmin"
+            class="form-select"
+            id="inputGroup"
+            v-model="selected"
+          >
             <option value="0">All</option>
             <option value="common">Common</option>
             <option value="private">Private</option>
             <option value="pending">Pending</option>
           </select>
-          <select v-if="!isAdmin" class="form-select" id="inputGroup" v-model="selected">
+          <select
+            v-if="!isAdmin"
+            class="form-select"
+            id="inputGroup"
+            v-model="selected"
+          >
             <option value="private">Private</option>
           </select>
         </div>
       </div>
     </div>
-
-    <div class="atable">
-      <table class="table table-striped table-hover table-sm">
-        <thead class="table-inside">
-          <tr>
-            <th style="width: 10%" scope="col">#</th>
-            <th style="width: 40%" scope="col">Name</th>
-            <th style="width: 30%" scope="col">Type</th>
-            <th style="width: 20%" scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in filterlist" v-bind:key="index">
-            <th scope="row">{{ index + 1 }}</th>
-            <td>{{ item.name }}</td>
-            <td>{{ item.type }}</td>
-            <td>
-              <input
-                type="checkbox"
-                id="one"
-                name="ch"
-                v-model="checkedNames"
-                :value="item"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="table table-striped table-hover table-sm">
+      <thead class="table-inside">
+        <tr>
+          <th style="width: 10%" scope="col">#</th>
+          <th style="width: 40%" scope="col">Name</th>
+          <th style="width: 30%" scope="col">Type</th>
+          <th style="width: 20%" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in filterlist" v-bind:key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.type }}</td>
+          <td>
+            <input
+              type="checkbox"
+              id="one"
+              name="ch"
+              v-model="checkedNames"
+              :value="item"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <div id="action">
       <div id="btn" @click="funtionNext()">Next</div>
       <div id="btn" @click="upLoad">Upload Smart Contract</div>
@@ -133,7 +140,9 @@ export default {
       }
 
       if (!kt) {
-        alert("Please select a smart contract at least to go to the next step!");
+        alert(
+          "Please select a smart contract at least to go to the next step!"
+        );
       } else {
         this.routing("add");
       }
@@ -184,7 +193,10 @@ export default {
   background-color: #d9edf7;
   color: #3a7694;
 }
-
+table td,
+table th {
+  padding: 6px;
+}
 h1 {
   text-align: center;
   font-size: 35px;
@@ -192,7 +204,8 @@ h1 {
 }
 
 .atable {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   margin-top: 40px;
   padding-bottom: 5%;
   border: 1px solid #d9edf7;

@@ -5,7 +5,7 @@
     </div>
     <div class="blue">
       <div class="atable">
-        <table class="table table-striped table-hover table-sm">
+        <table class="table table-striped table-hover">
           <thead class="table-inside">
             <tr>
               <th style="width: 10%" scope="col">#</th>
