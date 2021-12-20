@@ -136,13 +136,6 @@ export default {
       step: "initial",
       list_selected_sc: [],
       selected_vuls: this.$store.state.data.data.selectedTemplate,
-      selected_vuls_format: {
-        type: null,
-        params: {
-          name: null,
-          inputs: [null],
-        },
-      },
       context: this.$store.state.data.data.selectedContext.name,
       error: true,
       view: "",
@@ -152,19 +145,17 @@ export default {
       dialog: {},
       confirmation: "",
       currentSC: null,
+      newltlconfig: this.$store.state.data.data.ltlConfig
+
+      //payoutMileStone1
     };
   },
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.fetchLTLProp();
-    this.getDataLtl();
+    console.log("-------------", this.newltlconfig)
   },
   methods: {
-    getDataLtl() {
-      this.selected_vuls_format.type = this.selected_vuls.template_type;
-      this.selected_vuls_format.params.name = this.selected_vuls.name;
-      this.selected_vuls_format.params.inputs = [this.selected_vuls.formula];
-    },
     sort(mess) {
       switch (mess) {
         case "asId":
@@ -194,11 +185,16 @@ export default {
       }
     },
     async callUnfoldingTool() {
+      const newltl = this.$store.state.data.data.ltlConfig;
+      newltl.params.formula = newltl.params.formula.replace("variable", "currentBalance");
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
-      const tltl_PATH_json = JSON.stringify(this.selected_vuls_format);
+      const tltl_PATH_json = JSON.stringify(newltl, 0, 2);
+      //console.log("ltl------------",tltl_PATH_json)
       const initialMarkingInfor = JSON.stringify(
-        this.$store.state.data.data.initialMarkingInfor
+        this.$store.state.data.data.initialMarkingInfor,
+        0,
+        2
       );
       const res = await CheckService.callUnfoldingTools(
         tName,

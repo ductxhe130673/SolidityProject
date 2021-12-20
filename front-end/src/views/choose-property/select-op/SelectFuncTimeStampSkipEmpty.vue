@@ -1,56 +1,59 @@
 <template>
   <div class="container">
-    <div class="row">
+      <div class="row">
       <h1 class="text-center">Select functions of the smart contracts</h1>
     </div>
     <div class="row">
-      <div id="list-smart-contract">
-        <ul class="nav nav-tabs">
-          <li
-            class="nav-item d-inline-block text-truncate"
-            v-for="(item, index) in list_smart_contract"
-            :key="item.id"
-          >
-            <a
-              class="nav-link"
-              v-on:click="selectSC(item.sid, index)"
-              v-bind:class="{ active: item.sid == selected_smart }"
-              >{{ item.name }}</a
+      <div class="function-cell">
+        <div id="list-smart-contract">
+          <ul class="nav nav-tabs">
+            <li
+              class="nav-item d-inline-block text-truncate"
+              v-for="(item, index) in list_smart_contract"
+              :key="item.id"
             >
-          </li>
-        </ul>
-      </div>
-      <div id="sm-information-table">
-        <table class="table table-sm">
-          <tr>
-            <th>
-              #
-              <span
-                ><a-icon id="icon" type="caret-up" />
-                <a-icon id="icon" type="caret-down" />
-              </span>
-            </th>
+              <a
+                class="nav-link"
+                v-on:click="selectSC(item.sid, index)"
+                v-bind:class="{ active: item.sid == selected_smart }"
+                >{{ item.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div id="sm-information-table">
+          <div id="table-list">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th style="width: 10%">
+                    #
+                  </th>
 
-            <th>
-              Functions<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
-            </th>
-            <th>Select</th>
-          </tr>
-          <tr
-            v-for="(func, index) in smart_infor[selectedSCIndex].functions"
-            v-bind:key="func.fid"
-          >
-            <td>{{ index + 1 }}</td>
-            <td>{{ func.name }}</td>
-            <td>
-              <input class="form-check-input" type="radio" value="func.name" />
-            </td>
-          </tr>
-        </table>
+                  <th>
+                    Functions<span
+                      ><a-icon id="icon" type="caret-up" /><a-icon
+                        id="icon"
+                        type="caret-down"
+                    /></span>
+                  </th>
+                  <th style="width: 15%">Select</th>
+                </tr>
+              </thead>
+
+              <tr
+                v-for="(func, index) in smart_infor[selectedSCIndex].functions"
+                v-bind:key="func.fid"
+              >
+                <td>{{ index + 1 }}</td>
+                <td>{{ func.name }}</td>
+                <td>
+                  <input type="radio" id="one" name="ch" :value="func.name" />
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     <div id="action">
@@ -61,7 +64,11 @@
       >
         Next
       </div>
-      <div type="button" class="btn btn-outline-primary" @click="routing('back')">
+      <div
+        type="button"
+        class="btn btn-outline-primary"
+        @click="routing('back')"
+      >
         Back
       </div>
     </div>
@@ -121,6 +128,10 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-size: 35px;
+  font-weight: bold;
+}
 input {
   margin: 7px;
 }
@@ -135,16 +146,23 @@ input {
   display: flex;
   justify-content: space-between;
   width: 70%;
+  padding-bottom: 5%;
 }
 /* table  */
+#table-list {
+  overflow-y: auto;
+  height: 300px;
+}
 table {
   width: 100%;
   border-collapse: collapse;
 }
 table td,
 table th {
-  border: 1px solid #ddd;
   padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -156,10 +174,10 @@ table tr:hover {
 
 table th {
   background-color: #d9edf7;
+  color: #3a7694;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: black;
   text-indent: inherit;
 }
 
@@ -190,7 +208,7 @@ button {
   border-bottom: none;
 }
 .nav-item {
-  width: 10%;
+  min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
 }
