@@ -109,33 +109,38 @@
           <div id="sm-information-table">
             <div v-if="function_cell_selection == 'function'">
               <div id="table-list">
-                <div class="table-row" id="header-row">
-                  <div class="table-cell header-cell first-cell">
-                    #
-                    <span class="material-icons"> swap_vert </span>
-                  </div>
-                  <div class="table-cell header-cell second-cell">
-                    Functions
-                    <span class="material-icons"> swap_vert </span>
-                  </div>
-                  <div class="table-cell header-cell third-cell">Arguments</div>
-                </div>
-
-                <div
-                  class="table-row"
-                  v-for="(func, index) in init_marking.smart_contract[selectedSCIndex]
-                    .functions"
-                  v-bind:key="index"
-                  :class="{ even_row: index % 2 == 0 }"
-                >
-                  <div class="table-cell first-cell">{{ index + 1 }}</div>
-                  <div class="table-cell second-cell">{{ func.name }}</div>
-                  <div class="table-cell third-cell">
-                    <div class="input-param-text" @click="setFunctionParam(func.fid)">
-                      Input Params
-                    </div>
-                  </div>
-                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="width: 10 %">#</th>
+                      <th>
+                        Functions
+                        <span>
+                          <a-icon id="icon" type="caret-up" />
+                          <a-icon id="icon" type="caret-down"/>
+                        </span>
+                      </th>
+                      <th style="width: 25%">Arguments</th>
+                    </tr>
+                  </thead>
+                  <tr
+                    v-for="(func, index) in init_marking.smart_contract[
+                      selectedSCIndex
+                    ].functions"
+                    v-bind:key="index"
+                  >
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ func.name }}</td>
+                    <td>
+                      <div
+                        class="input-param-text"
+                        @click="setFunctionParam(func.fid)"
+                      >
+                        Input Params
+                      </div>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
             <div v-if="function_cell_selection == 'params'">
@@ -281,6 +286,7 @@ export default {
     //     this.selected_function
     //   ] = val;
     // },
+ 
     routing(param) {
       if (param == "save") {
         if (!this.init_marking.NumberOfUser || !this.init_marking.balance.type) {
@@ -330,10 +336,14 @@ export default {
 };
 </script>
 <style scoped>
+input {
+  border: 1px solid gray;
+}
 #initial-marking {
   height: 100%;
   width: 100%;
   min-width: 900px;
+  color: black;
 }
 
 #initial-marking-header {
@@ -346,7 +356,6 @@ export default {
 #initial-marking-input {
   width: 60%;
   margin-left: 20%;
-
   display: flex;
   justify-content: space-between;
 }
@@ -410,28 +419,60 @@ export default {
 }
 
 .nav-item .active {
-  color: white;
-  background-color: #383838;
-  border: grey;
+  color: black;
+  background-color: #d9edf7;
+  border: 1px;
 }
 .nav-link {
-  font-size: 14px;
-  color: #383838;
-  border: grey solid;
+  color: black;
+  border: black solid 1px;
   border-bottom: none;
 }
 .nav-item {
-  width: 20%;
+  min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
 }
 
 #sm-information-table {
-  border: black solid;
+  border: 1px black solid;
   padding: 3% 2% 3% 2%;
 }
 
 /* function */
+table {
+  width: 100%;
+}
+table td,
+table th {
+  padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+table tr:hover {
+  background-color: #ddd;
+}
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
+}
+
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
 
 #table-list {
   width: 100%;
@@ -439,44 +480,8 @@ export default {
   font-size: 0.9em;
   height: 240px;
   overflow-y: auto;
-  border-radius: 4px;
-  border: 2px solid black;
-
-  background: rgb(241, 240, 240);
 }
 
-.table-row {
-  display: flex;
-  height: 40px;
-}
-#header-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
-}
-
-#table-list span {
-  float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 150%;
-}
-.even_row {
-  background-color: rgb(226, 224, 224);
-}
-.table-cell {
-  display: flex;
-  align-items: center;
-}
-.first-cell {
-  flex-basis: 12%;
-  padding-left: 5px;
-}
-.second-cell {
-  flex-basis: 58%;
-}
-.third-cell {
-  flex-basis: 30%;
-}
 .input-param-text {
   color: rgb(42, 42, 214);
   cursor: pointer;
@@ -500,9 +505,9 @@ export default {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;
