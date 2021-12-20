@@ -17,6 +17,8 @@ const state = {
         selectedVulnerbility: [],
         configVul: {},
         ltlProperty : [],
+        isAuthen : false,
+        typeFormula: '',
         initialMarkingInfor: {
             NumberOfUser: null,
         Balance: {
@@ -25,7 +27,7 @@ const state = {
           random: { from: null, to: null },
           map: null,
         },
-        smart_contracts: [
+        Smart_contracts: [
           {
             sid: null,
             name: null,
@@ -180,6 +182,12 @@ const mutations = {
     },
     setFileUpload(state, data){
         state.fileUpload = data;
+    },
+    setIsAuthen(state, data){
+        state.isAuthen = data;
+    },
+    setTypeFormula(state, data){
+        state.data.typeFormula = data;
     },
     NewSCSelectedInfor(state, { sc_id, sc_info }) {
         var vuls = state.data.selectedVulnerbility

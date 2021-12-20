@@ -92,8 +92,8 @@ export function GetSmartContractCode(id) {
     }
 }
 
-export async function AddNewSmartContracts(sc_id, sc_name, options, content, createdDate) {
-    await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content, createdDate)
+export async function AddNewSmartContracts(sc_id, sc_name, options, content, createdDate, description) {
+    await SmartContractsService.CreateSmartContracts(sc_id.words[0], sc_name, options, content, createdDate, description)
 }
 export async function GetSmartContractById(sc_id) {
     await SmartContractsService.GetSmartContractById(sc_id.words[0])
@@ -154,6 +154,7 @@ export async function GetGloLocArgOfSmartContract(id) {
     return res.data
 }
 
+
 /* ------Context------- */
 export async function GetAllContext() {
     const response = await ContextService.GetAllContext()
@@ -168,7 +169,7 @@ export async function GetContextById(id_context) {
 
 /*---------CreateAndModiftyContext--------- */
 export async function CreateContext(name, dateFormat, option, description, content) {
-    return await ContextService.CreateContext(name,dateFormat, option, description, content)
+    return await ContextService.CreateContext(name, dateFormat, option, description, content)
 }
 
 /*---------DeleteContext-------- */
@@ -178,8 +179,8 @@ export async function DeleteContext(id_context) {
 
 /*---------Update Context-------- */
 export async function UpdateContext(id_context, ct_name, dateFormat, option, description, content) {
-    console.log('id_context, ct_name, dateFormat, option, description, content',id_context, ct_name, dateFormat, option, description, content);
-    return await ContextService.UpdateContext(id_context, ct_name,dateFormat, option, description, content)
+    console.log('id_context, ct_name, dateFormat, option, description, content', id_context, ct_name, dateFormat, option, description, content);
+    return await ContextService.UpdateContext(id_context, ct_name, dateFormat, option, description, content)
 }
 /* ------LTL------- */
 
@@ -194,9 +195,9 @@ export async function GetLtltemplteById(id_Ltl) {
 }
 
 /*---------CreateAndModiftyLtl--------- */
-export async function CreateLTLTemplate(name,fomular, description,date) {
-    console.log('fomular',fomular);
-    return await ltltemplateService.CreateLTLTemplate(name,fomular, description ,date);
+export async function CreateLTLTemplate(name, fomular, description, date, formula_text) {
+    console.log('fomular', formula_text);
+    return await ltltemplateService.CreateLTLTemplate(name, fomular, description, date,formula_text);
 }
 
 /*---------DeleteLtl-------- */
@@ -205,10 +206,15 @@ export async function DeleteLtlTemplate(id_Ltl) {
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date) {
-    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular,date)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()
+    return response.data
+}
+export async function SetDataForCallingTool(context, ltl) {
+    const response = await cpncontextService.setDataForCallingTool(context, ltl)
+    console.log('response1');
     return response.data
 }

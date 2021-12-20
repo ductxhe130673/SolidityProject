@@ -136,8 +136,14 @@ export default {
       step: "initial",
       list_selected_sc: [],
       selected_vuls: this.$store.state.data.data.selectedTemplate,
+      selected_vuls_format: {
+        type: null,
+        params: {
+          name: null,
+          inputs: [null],
+        },
+      },
       context: this.$store.state.data.data.selectedContext.name,
-      user: { user_name: "Billy Tran" },
       error: true,
       view: "",
       ltlProperty: [],
@@ -151,8 +157,14 @@ export default {
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.fetchLTLProp();
+    this.getDataLtl();
   },
   methods: {
+    getDataLtl() {
+      this.selected_vuls_format.type = this.selected_vuls.template_type;
+      this.selected_vuls_format.params.name = this.selected_vuls.name;
+      this.selected_vuls_format.params.inputs = [this.selected_vuls.formula];
+    },
     sort(mess) {
       switch (mess) {
         case "asId":
@@ -171,7 +183,6 @@ export default {
     },
     async fetchLTLProp() {
       this.ltlProperty = await GetLtl();
-      console.log("hihi", this.ltlProperty);
     },
     navigate(param) {
       if (param == "config") {
@@ -184,14 +195,16 @@ export default {
     },
     async callUnfoldingTool() {
       const tName = "unfolding";
-      const tcontext_PATH_xml =
-        "<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>";
-      const tltl_PATH_json =
-        '{\n    "type": "general",\n    "params": {\n        "name": "under_over_flow",\n        "inputs": ["currentBalance"]\n    }\n}';
+      const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
+      const tltl_PATH_json = JSON.stringify(this.selected_vuls_format);
+      const initialMarkingInfor = JSON.stringify(
+        this.$store.state.data.data.initialMarkingInfor
+      );
       const res = await CheckService.callUnfoldingTools(
         tName,
         tcontext_PATH_xml,
-        tltl_PATH_json
+        tltl_PATH_json,
+        initialMarkingInfor
       );
       console.log("here");
       console.log(res);
@@ -207,7 +220,6 @@ export default {
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {
-        console.log("Start mutation");
         this.$store.commit("Setrs", "11");
         this.results.push("Can't run HELENA tools");
       }
@@ -247,6 +259,8 @@ export default {
       return await new Promise((resolve) => setTimeout(resolve, ms));
     },
     async generate() {
+      console.log("--generating--");
+      // await SetDataForCallingTool(this.context, this.selected_vuls);
       this.step = "generating";
       this.move("progress-bar-gen");
       await this.delay(2000);

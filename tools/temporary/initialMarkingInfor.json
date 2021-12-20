@@ -1,0 +1,299 @@
+{
+    "NumberOfUser": "1",
+    "Balance": {
+        "type": "fixed",
+        "fixed": "2",
+        "random": {
+            "from": null,
+            "to": null
+        },
+        "map": null
+    },
+    "Smart_contracts": [{
+            "functions": [{
+                    "fid": 18,
+                    "name": "SimpleDice()",
+                    "argument": [],
+                    "localVar": []
+                },
+                {
+                    "fid": 19,
+                    "name": "enter() ",
+                    "argument": [],
+                    "localVar": [{
+                            "id": 9,
+                            "name": "amount",
+                            "vartype": "public",
+                            "type": "uint",
+                            "value": "msg.value"
+                        },
+                        {
+                            "id": 10,
+                            "name": "payout",
+                            "vartype": "public",
+                            "type": "uint",
+                            "value": ""
+                        },
+                        {
+                            "id": 11,
+                            "name": "list_length",
+                            "vartype": "public",
+                            "type": "uint",
+                            "value": "gamblerlist.length"
+                        },
+                        {
+                            "id": 12,
+                            "name": "minimal",
+                            "vartype": "public",
+                            "type": "uint",
+                            "value": " 1990 finney"
+                        },
+                        {
+                            "id": 13,
+                            "name": "Times",
+                            "vartype": "public",
+                            "type": "unit",
+                            "value": "Fees/minimal"
+                        }
+                    ]
+                },
+                {
+                    "fid": 20,
+                    "name": "setOwner(address new_owner) onlyowner ",
+                    "argument": [{
+                        "id": 12,
+                        "name": "new_owner",
+                        "vartype": "state",
+                        "type": "address",
+                        "value": 12,
+                        "fid": 20
+                    }],
+                    "localVar": []
+                },
+                {
+                    "fid": 21,
+                    "name": "setMinDeposit(uint new_mindeposit) onlyowner ",
+                    "argument": [{
+                        "id": 13,
+                        "name": "new_mindeposit",
+                        "vartype": "local",
+                        "type": "uint",
+                        "value": 14,
+                        "fid": 21
+                    }],
+                    "localVar": []
+                },
+                {
+                    "fid": 22,
+                    "name": "setFeeRate(uint new_feerate) onlyowner",
+                    "argument": [{
+                        "id": 14,
+                        "name": "new_feerate",
+                        "vartype": "local",
+                        "type": "uint",
+                        "value": 16,
+                        "fid": 22
+                    }],
+                    "localVar": []
+                }
+            ],
+            "globalVar": [{
+                    "name": "Gamblers_Until_Jackpot",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "0"
+                },
+                {
+                    "name": "Total_Gamblers",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "0"
+                },
+                {
+                    "name": "FeeRate",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "5"
+                },
+                {
+                    "name": "Bankroll",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "0"
+                },
+                {
+                    "name": "Jackpot",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "0"
+                },
+                {
+                    "name": "Total_Deposits",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "0"
+                },
+                {
+                    "name": "Total_Payouts",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "0"
+                },
+                {
+                    "name": "MinDeposit",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": "100 finney"
+                },
+                {
+                    "name": "owner",
+                    "vartype": "address",
+                    "type": "public",
+                    "value": ""
+                },
+                {
+                    "name": "Fees",
+                    "vartype": "uint",
+                    "type": "",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "functions": [{
+                    "fid": 16,
+                    "name": "EtherLotto()",
+                    "argument": [],
+                    "localVar": []
+                },
+                {
+                    "fid": 17,
+                    "name": " play() payable",
+                    "argument": [],
+                    "localVar": [{
+                        "id": 8,
+                        "name": "random",
+                        "vartype": "public",
+                        "type": "var",
+                        "value": "uint(sha3(block.timestamp)) % 2"
+                    }]
+                }
+            ],
+            "globalVar": [{
+                    "name": "TICKET_AMOUNT",
+                    "vartype": "uint",
+                    "type": "constant",
+                    "value": "10"
+                },
+                {
+                    "name": "FEE_AMOUNT",
+                    "vartype": "uint",
+                    "type": "constant",
+                    "value": "1"
+                },
+                {
+                    "name": "bank",
+                    "vartype": "address",
+                    "type": "public",
+                    "value": ""
+                },
+                {
+                    "name": " pot",
+                    "vartype": "uint",
+                    "type": "public",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "functions": [{
+                    "fid": 9,
+                    "name": "OpenAddressLottery()",
+                    "argument": [],
+                    "localVar": []
+                },
+                {
+                    "fid": 10,
+                    "name": "participate() payable",
+                    "argument": [],
+                    "localVar": [{
+                        "id": 7,
+                        "name": "win",
+                        "vartype": "public",
+                        "type": "var",
+                        "value": "msg.value*7"
+                    }]
+                },
+                {
+                    "fid": 11,
+                    "name": "luckyNumberOfAddress(address addr) constant returns(uint n)",
+                    "argument": [{
+                        "id": 10,
+                        "name": "addr",
+                        "vartype": "local",
+                        "type": "address",
+                        "value": 8,
+                        "fid": 11
+                    }],
+                    "localVar": []
+                },
+                {
+                    "fid": 12,
+                    "name": " reseed(SeedComponents components) internal ",
+                    "argument": [{
+                        "id": 11,
+                        "name": "components",
+                        "vartype": "local",
+                        "type": "SeedComponents",
+                        "value": 10,
+                        "fid": 12
+                    }],
+                    "localVar": []
+                },
+                {
+                    "fid": 13,
+                    "name": "kill()",
+                    "argument": [],
+                    "localVar": []
+                },
+                {
+                    "fid": 14,
+                    "name": " forceReseed()",
+                    "argument": [],
+                    "localVar": []
+                },
+                {
+                    "fid": 15,
+                    "name": "() payable ",
+                    "argument": [],
+                    "localVar": []
+                }
+            ],
+            "globalVar": [{
+                    "name": "owner",
+                    "vartype": "address",
+                    "type": "",
+                    "value": ""
+                },
+                {
+                    "name": "secretSeed",
+                    "vartype": "uint",
+                    "type": "private",
+                    "value": ""
+                },
+                {
+                    "name": "lastReseed",
+                    "vartype": "uint",
+                    "type": "private",
+                    "value": ""
+                },
+                {
+                    "name": "LuckyNumbe",
+                    "vartype": "uint",
+                    "type": "",
+                    "value": "7"
+                }
+            ]
+        }
+    ]
+}

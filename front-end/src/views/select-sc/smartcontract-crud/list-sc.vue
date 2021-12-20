@@ -1,95 +1,103 @@
 <template>
   <div class="container-fluid">
-    <!-- btn delete -->
-    <div id="showConfirmation" v-if="showConfirmation">
-      <div id="removeSC-holder">
-        <confirm @cancel="closeConfirm" @confirm="deleteSC()" :dialog="alertDialog" />
-      </div>
-    </div>
-    <!-- btn accept -->
-    <div id="showConfirmation" v-if="showConfirmation">
-      <div id="removeSC-holder">
-        <confirm @cancel="closeConfirm" @confirm="acceptSC()" :dialog="acceptDialog" />
-      </div>
-    </div>
-    <!-- btn refuse  -->
-    <div id="showConfirmation" v-if="showConfirmation">
-      <div id="removeSC-holder">
-        <confirm @cancel="closeConfirm" @confirm="refuseSC()" :dialog="alertDialog" />
-      </div>
-    </div>
-    <div class="row align-items-md-center">
-      <div class="col-3">
+    <div class="row">
+      <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">Smart Contract</a> >
+          <a href="" class="link-primary text-decoration-underline"
+            >Smart Contract</a
+          >
+          >
+          <a>List</a>
         </span>
       </div>
-      <div class="col-7 text-center"><h1>Smart Contracts List</h1></div>
+      <div class="col-md-7 text-center"><h1>Smart Contracts List</h1></div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col-md">
           <p>Date</p>
           <a-date-picker
-            :default-value="moment('01/01/2021', dateFormat)"
-            :format="dateFormat"
+            :default-value="moment('2021/12/01', dateFormat)"
+            @change="onChangeDate"
           />
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col-md"></div>
+        <div class="col-md"></div>
+        <div class="col-md"></div>
 
-        <div class="col">
+        <div class="col-md">
           <p>Type</p>
           <div class="input-group mb-3">
-            <select class="form-select" id="inputGroup" v-model="selected">
+            <select
+              v-if="isAdmin"
+              class="form-select"
+              id="inputGroup"
+              v-model="selected"
+            >
               <option value="0">All</option>
-              <option value="common" v-if="isAdmin">Common</option>
+              <option value="common">Common</option>
               <option value="private">Private</option>
               <option value="pending">Pending</option>
+            </select>
+            <select
+              v-if="!isAdmin"
+              class="form-select"
+              id="inputGroup"
+              v-model="selected"
+            >
+              <option value="private">Private</option>
             </select>
           </div>
         </div>
       </div>
       <div class="row">
-        <table class="table table-sm">
+        <table class="table table-md">
           <thead>
             <tr>
-              <th>
-                #
-                <span
-                  ><a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </th>
-
-              <th>
+              <th style="width: 5%">#</th>
+              <th style="width: 15%">
                 Name<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upName')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downName')"
                 /></span>
               </th>
-              <th>
+              <th style="width: 15%">
                 Type<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upType')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downType')"
                 /></span>
               </th>
-              <th>
+              <th style="width: 15%">
                 Date<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDate')"
                 /></span>
               </th>
               <th style="width: 50%">
                 Description<span
-                  ><a-icon id="icon" type="caret-up" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
+                    @click="sort('downDes')"
                 /></span>
               </th>
             </tr>
@@ -106,7 +114,13 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="
-                    editSC(item.sid, item.name, item.content, item.description, item.type)
+                    editSC(
+                      item.sid,
+                      item.name,
+                      item.content,
+                      item.description,
+                      item.type
+                    )
                   "
                 >
                   Edit
@@ -139,9 +153,9 @@
           </tr>
         </table>
       </div>
-      <div class="row">
+      <div class="row-end">
         <button
-          style="width: 50px"
+          style="width: 60px"
           type="button"
           class="btn btn-outline-primary"
           @click="addSmartContract()"
@@ -164,32 +178,30 @@ import {
 } from "../../../services/data";
 import moment from "moment";
 import { mapActions, mapGetters } from "vuex";
+import dateFormat from "dateformat";
+
+
 export default {
-  // components: { confirm: ConfirmationDialog },
   data() {
     return {
       choose_SC: "",
-      dateFormat: "DD/MM/YYYY",
       selected: "0",
-      num_of_record: 7,
-      num_of_page: 0,
-      pageNum: 1,
-      showConfirmation: false,
-      alertDialog: {},
-      scDelete: null,
       isAdmin: true,
+      filterDate: null,
+      formatDate: "yyyy-mm-dd",
     };
   },
   mounted() {
     this.fetchData();
+    this.isAdmin =
+      JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
+    this.checkIsUser();
   },
   computed: {
     ...mapGetters(["getlistSmartContract"]),
-
     filterlist() {
       const { selected } = this;
       if (selected === "0") return this.getlistSmartContract;
-      console.log("this.getlistSmartContract", this.getlistSmartContract);
       var items = [];
       this.getlistSmartContract.forEach(function (item) {
         if (item.type === selected) {
@@ -197,49 +209,73 @@ export default {
         }
       });
       return items;
+
+    
     },
 
     isSuperior() {
       return this.$store.state.user.currentUser.role == "admin";
-    },
-    getShowList() {
-      let ret = [];
-      for (let i = 0; i < this.list_smart_contracts[this.chosen_table].length; i++) {
-        if (
-          (this.pageNum - 1) * this.num_of_record <= i &&
-          this.pageNum * this.num_of_record > i
-        ) {
-          ret.push(this.list_smart_contracts[this.chosen_table][i]);
-        }
-      }
-      return ret;
-    },
-    countPageNum() {
-      return "" + this.pageNum + "/" + this.numOfPage;
-    },
-    numOfItems() {
-      return this.list_smart_contracts[this.chosen_table].length;
-    },
-    numOfRecod() {
-      if (
-        this.list_smart_contracts[this.chosen_table].length <
-        this.num_of_record * this.pageNum
-      ) {
-        return (
-          this.list_smart_contracts[this.chosen_table].length -
-          this.num_of_record * (this.pageNum - 1)
-        );
-      }
-      return this.num_of_record;
-    },
-    numOfPage() {
-      return Math.ceil(this.numOfItems / this.num_of_record);
     },
   },
   created() {
     this.setListSmartContract();
   },
   methods: {
+    sort(param) {
+      switch (param) {
+        case "upName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "downName":
+          this.filterlist.sort((a, b) =>
+            a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() < b.type.toLowerCase() ?-1 : 1
+          );
+          break;
+        case "downType":
+          this.filterlist.sort((a, b) =>
+            a.type.toLowerCase() > b.type.toLowerCase() ? -1 : 1
+          );
+          break;
+        case "upDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate < b.createdDate ? -1 : 1
+          );
+          break;
+        case "downDate":
+          this.filterlist.sort((a, b) =>
+            a.createdDate > b.createdDate ? -1 : 1
+          );
+          break;
+        case "upDes":
+          this.filterlist.sort((a, b) =>         
+            a.description.toLowerCase() < b.description.toLowerCase()  ? -1 : 1 
+          );
+     
+          break;
+        case "downDes":
+          this.filterlist.sort((a, b) =>
+            a.description.toLowerCase() > b.description.toLowerCase() ? -1 : 1
+          );
+          
+          break;
+      }
+    },
+    checkIsUser() {
+      if (!this.isAdmin) {
+        this.selected = "private";
+      }
+    },
+    onChangeDate(value) {
+      const date = dateFormat(value._d, this.formatDate);
+      this.filterDate = date;
+    },
     async deleteSmartContract(sid) {
       await DeleteSmartContracts(sid);
     },
@@ -267,7 +303,8 @@ export default {
       var hourstring = "" + date.getHours();
       var minutestring = "" + date.getMinutes();
       hourstring = hourstring.length == 1 ? "0" + hourstring : hourstring;
-      minutestring = minutestring.length == 1 ? "0" + minutestring : minutestring;
+      minutestring =
+        minutestring.length == 1 ? "0" + minutestring : minutestring;
       datestring = datestring.length == 1 ? "0" + datestring : datestring;
       monthstring = monthstring.length == 1 ? "0" + monthstring : monthstring;
       return (
@@ -282,10 +319,6 @@ export default {
         minutestring
       );
     },
-    ChooseTable(value) {
-      this.chosen_table = value;
-      this.fetchData();
-    },
     addSmartContract() {
       this.$router.push({
         name: "AddSc",
@@ -295,7 +328,9 @@ export default {
 
     deleteSC(sc_id) {
       if (
-        confirm("Do you want to delete the Smart Contract out of the system?") === true
+        confirm(
+          "Do you want to delete the Smart Contract out of the system?"
+        ) === true
       ) {
         this.deleteSmartContract(sc_id);
         this.$router.go(0);
@@ -312,7 +347,6 @@ export default {
       }
     },
     refuseSC(sc_id) {
-      console.log("sc", this.choose_SC);
       if (
         confirm(
           "Do you want to change the Smart Contract type from Common to Private?"
@@ -323,11 +357,6 @@ export default {
       }
     },
 
-    closeConfirm() {
-      this.isShowConfirmDelete = false;
-      this.isShowConfirmAccept = false;
-      this.isShowConfirmRefuse = false;
-    },
     editSC(sc_id, sc_name, sc_code, sc_description, sc_type) {
       this.$router.push({
         name: "EditSc",
@@ -341,20 +370,14 @@ export default {
         },
       });
     },
-
-    goPage(value) {
-      this.pageNum = value;
-    },
-  },
-  watch: {
-    chosen_table: function () {
-      this.pageNum = 1;
-    },
   },
 };
 </script>
 
 <style scoped>
+.container-fluid {
+  color: black;
+}
 h1 {
   font-size: 50px;
 }
@@ -366,17 +389,20 @@ h1 {
   margin-top: 2%;
   padding-right: 10px;
 }
+.row-end {
+  padding-top: 2%;
+  padding-bottom: 5%;
+}
 button {
   margin-right: 5px;
   margin-top: 5px;
 }
 table {
   width: 100%;
-  border-collapse: collapse;
 }
 table td,
 table th {
-  border: 1px solid #ddd;
+  padding-left: 5px;
 }
 table tr:nth-child(even) {
   background-color: #f2f2f2;
@@ -391,7 +417,7 @@ table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  color: black;
+  color: #3a7694;
   text-indent: inherit;
 }
 
@@ -405,56 +431,5 @@ table span {
 }
 #btn {
   text-align: right;
-}
-/* --- box --- */
-.chosen_box {
-  background-color: #e4ecfa;
-}
-/* ---- amsb-footer ---- */
-#amsb-footer {
-  width: 100%;
-  height: 50px;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  display: flex;
-}
-
-#itb-entries {
-  font-size: 14px;
-  margin-top: 10px;
-  margin-left: 2%;
-}
-#itb-cnpage {
-  margin-left: auto;
-  order: 2;
-  margin-top: 10px;
-  margin-right: 2%;
-  display: flex;
-}
-
-#itb-cnpage i {
-  margin-top: 1px;
-  font-size: 22px;
-  color: #636262;
-  cursor: pointer;
-}
-#itb-cnpage i:hover {
-  color: #424141;
-}
-
-/*---- showConfirmation */
-#showConfirmation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  align-items: center;
-  justify-content: center;
-}
-#removeSC-holder {
-  margin-top: 200px;
 }
 </style>

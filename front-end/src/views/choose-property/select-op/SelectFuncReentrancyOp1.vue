@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="container">
     <div class="header">
       <div class="title">
@@ -10,13 +10,13 @@
         <ul class="nav nav-tabs">
           <li
             class="nav-item d-inline-block text-truncate"
-            v-for="item in list_smart_contract"
-            :key="item.id"
+             v-for="(item, index) in list_smart_contract"
+              :key="item.id"
           >
             <a
               class="nav-link"
-              v-on:click="selected_sc = item.id"
-              v-bind:class="{ active: item.id == selected_sc }"
+               v-on:click="selectSC(item.sid, index)"
+                v-bind:class="{ active: item.sid == selected_smart }"
               >{{ item.name }}</a
             >
           </li>
@@ -33,7 +33,7 @@
               </span>
             </div>
             <div class="table-cell header-cell second-cell">
-              Local variable
+              Function
               <span
                 ><a-icon id="icon" type="caret-up" />
                 <a-icon id="icon" type="caret-down" />
@@ -43,9 +43,9 @@
           </div>
           <div
             class="table-row"
-            v-for="(func, index) in getSelected_sc"
-            v-bind:key="func.fid"
-            :class="{ even_row: index % 2 == 0 }"
+            v-for="(func, index) in smart_infor[selectedSCIndex].functions"
+              v-bind:key="func.fid"
+              :class="{ even_row: index % 2 == 0 }"
           >
             <div class="table-cell first-cell">{{ index + 1 }}</div>
             <div class="table-cell second-cell">{{ func.name }}</div>
@@ -54,8 +54,7 @@
                 type="radio"
                 id="one"
                 name="ch"
-                v-model="checkedNames"
-                :value="data"
+                :value="func.name"
               />
             </div>
           </div>
@@ -69,46 +68,48 @@
   </div>
 </template>
 <script>
+import { GetGloLocArgOfSmartContract } from "../../../services/data";
 export default {
   data() {
     return {
-      list_smart_contract: [{ name: "Smart Contract ", id: 1 }],
-      smart_contract_infor: {
-        1: {
-          name: "Smart Contract ",
-          functions: [
-            {
-              fid: 1,
-              name: "Function 1",
-            },
-            {
-              fid: 2,
-              name: "Function 2",
-            },
-            {
-              fid: 3,
-              name: "Function 3",
-            },
-            {
-              fid: 4,
-              name: "Function 4",
-            },
-          ],
-        },
-      },
-      selected_sc: 1,
+      list_smart_contract: [],
+      smart_infor: [],
+      selectedSCIndex: 0,
+      selected_smart: 1,
     };
   },
+  beforeMount() {
+    this.list_smart_contract = this.$store.state.data.data.selectedSc;
+    this.setSCInfor();
+  },
   computed: {
-    getSelected_sc() {
-      if (this.selected_sc in this.smart_contract_infor) {
-        return this.smart_contract_infor[this.selected_sc].functions;
+     getSelectedFunc() {
+      return this.function_infor;
+    },
+    getSelectedSmart() {
+      if (this.selected_smart in this.smart_infor) {
+        return this.smart_infor[this.selected_smart].SmartContract;
+   
       } else {
         return [];
-      }
+      }  
     },
   },
+ 
   methods: {
+     selectSC(sid, index) {
+      if (this.selected_smart != sid) {
+        this.selected_smart = sid;
+        this.selectedSCIndex = index;  
+      }
+    },
+    async setSCInfor() {
+      for (let i = 0; i < this.list_smart_contract.length; i++) {
+        this.smart_infor.push(
+          await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
+        );
+      }
+    },
     routing(param) {
       if (param == "next") {
         this.$router.push({ name: "SelectVarReentrancyOp1" });

@@ -126,7 +126,6 @@ export default {
     routing(param) {
       /* let ltl_content = this.getNodeValue() ltl content se duoc gui ve phia backend*/
       if (param == "add") {
-        console.log("this.select", this.select);
         if (this.select == 1) {
           this.$router.push({ name: "ChooseElementOfSmartContract" });
         } else if (this.select == 2) {

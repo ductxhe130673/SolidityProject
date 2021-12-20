@@ -1,7 +1,9 @@
 {
-    "type": "general",
+    "type": "type1",
     "params": {
-        "name": "under_over_flow",
-        "inputs": ["currentBalance"]
+        "name": "reetrancy",
+        "inputs": [
+            "template Reentrancy()"
+        ]
     }
 }

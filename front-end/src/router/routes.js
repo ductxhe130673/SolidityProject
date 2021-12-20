@@ -37,8 +37,8 @@ import EditContext from "../views/context/context-crud/edit-context.vue"
 import ListSc from "../views/select-sc/smartcontract-crud/list-sc.vue"
 import EditSc from "../views/select-sc/smartcontract-crud/edit-sc.vue"
 import AddSc from "../views/select-sc/smartcontract-crud/add-sc.vue"
-import SelectSContractSD2 from "../views/select-sc/select/SelectSContractSD2.vue"
-import SelectFuncSD from "../views/select-sc/select/SelectFuncSD.vue"
+import SelectSContractSD2 from "../views/choose-property/select-op/SelectSContractSD2.vue"
+import SelectFuncSD from "../views/choose-property/select-op/SelectFuncSD.vue"
 
 import AddVul from "../views/vuls-crud/add-vul.vue"
 import EditVul from "../views/vuls-crud/edit-vul.vue"
@@ -66,7 +66,7 @@ export const routes = [{
         path: "/",
         name: "Index",
         component: Index,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | home` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | home` },
     },
     {
         path: "/roadmap",
@@ -74,18 +74,18 @@ export const routes = [{
         component: RoadMap,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | RoadMap` },
         props: true
-      },
+    },
     {
         path: "/login",
         name: "Login",
         component: Login,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | login` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | login` },
     },
     {
         path: "/register",
         name: "Register",
         component: Register,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | register` },
+        meta: { requiresAuth: false, title: `${DOMAIN_TITLE} | register` },
     },
     {
         path: "/select-sc/",
@@ -111,7 +111,8 @@ export const routes = [{
             {
                 path: 'select-smart-contract',
                 name: 'SelectSmartContract',
-                component: SelectSmartContract
+                component: SelectSmartContract,
+                meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | checkreentrancydetail` }
             },
             {
                 path: 'uploadsc',
@@ -250,7 +251,7 @@ export const routes = [{
         path: "/list-context",
         name: "ListContext",
         component: ListContext,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
+        meta: { requiresAuth: true, isAdmin: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
         props: true
     },
     {
@@ -292,7 +293,7 @@ export const routes = [{
         path: "/list-vul",
         name: "ListVul",
         component: ListVul,
-        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
+        meta: { requiresAuth: true, isAdmin: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
         props: true
     },
     {
