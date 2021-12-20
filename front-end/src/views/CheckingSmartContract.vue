@@ -145,11 +145,15 @@ export default {
       dialog: {},
       confirmation: "",
       currentSC: null,
+      newltlconfig: this.$store.state.data.data.ltlConfig
+
+      //payoutMileStone1
     };
   },
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.fetchLTLProp();
+    console.log("-------------", this.newltlconfig)
   },
   methods: {
     sort(mess) {
@@ -181,9 +185,12 @@ export default {
       }
     },
     async callUnfoldingTool() {
+      const newltl = this.$store.state.data.data.ltlConfig;
+      newltl.params.formula = newltl.params.formula.replace("variable", "currentBalance");
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
-      const tltl_PATH_json = JSON.stringify(this.$store.state.data.data.ltlConfig, 0, 2);
+      const tltl_PATH_json = JSON.stringify(newltl, 0, 2);
+      //console.log("ltl------------",tltl_PATH_json)
       const initialMarkingInfor = JSON.stringify(
         this.$store.state.data.data.initialMarkingInfor,
         0,

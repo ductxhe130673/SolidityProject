@@ -19,22 +19,16 @@ def savetotemporary(data):
         with open(f'{path}/temporary/{k}', 'w') as f:
             f.write(data[k])
 
-# data = {
-#     "name": "getdata",
-#     "context_PATH.xml":"<DCRModel>\n    <id>220802</id>\n    <title>Healthcare Workflow</title>\n    <events>\n        <id>play</id>\n    </events>\n    <events>\n        <id>claimReward</id>\n    </events>\n    \n    <rules>\n        <type>condition</type>\n        <source>play</source>\n        <target>claimReward</target>\n    </rules>\n    <rules>\n        <type>include</type>\n        <source>claimReward</source>\n        <target>play</target>\n    </rules>\n</DCRModel>",
-#     "ltl_PATH.json": "{\n    \"type\": \"general\",\n    \"params\": {\n        \"name\": \"under_over_flow\",\n        \"inputs\": [\"currentBalance\"]\n    }\n}"
-# }
-# savetotemporary(data=data)
 
 
 def unfolding():
     # get from temporary
     # context_PATH = './test/test.xml'
-    ltl_PATH = './test/ltl.json'
-    initialMarking_PATH  = './test/test.im.json'
+    #ltl_PATH = './test/ltl.json'
+    # initialMarking_PATH  = './test/test.im.json'
     context_PATH = path + '/temporary/context_PATH.xml'
-    # ltl_PATH = path + '/temporary/ltl_PATH.json'
-    # initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
+    ltl_PATH = path + '/temporary/ltl_PATH.json'
+    initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
 
     # wait tools
     lna_PATH = './test/EtherGame.lna'
@@ -53,7 +47,8 @@ def unfolding():
     pathUnf = path + r"/unfolding"
     unfolding = subprocess.run(
         commandUnf, cwd=pathUnf, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-unfolding()
+    return {"err" : unfolding.stderr.decode(), "file_path" : path +r"/unfolding/output/", "file_name":output_NAME}
+#unfolding()
 
 def runHelena():
     helenaPath = path + r"/unfolding/output"
@@ -71,7 +66,7 @@ def runHelena():
     output = str(pro4.stdout.decode("cp932"))
     start = output.find("Helena report")
     report = output[start:]
-    print(repr(report))
+    #print(repr(report))
     f.close()
     return report
 

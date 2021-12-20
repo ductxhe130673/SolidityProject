@@ -55,7 +55,7 @@
                   type="radio"
                   id="one"
                   name="ch"
-                  v-model="ltlConfig.params.inputs.selected_variable"
+                  v-model="checkedLocalVar"
                   :value="func.name"
                 />
               </div>
@@ -109,6 +109,7 @@ export default {
     // this.getFuntionSC(this.list_smart_contract[0].sid);
     this.setSCInfor();
     this.ltlConfig = this.$store.state.data.data.ltlConfig;
+    console.log("log---------------",this.ltlConfig)
   },
   methods: {
     selectSC(sid, index) {

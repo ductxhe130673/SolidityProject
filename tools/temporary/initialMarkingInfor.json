@@ -1,9 +1,10 @@
 {
   "smart_contract": [
     {
-      "name": "indAuctionbl",
+      "name": "EtherGame",
       "functions": [
         {
+<<<<<<< HEAD
           "fid": 3,
           "name": "BlindAuction(uint _biddingTime, uint _revealTime, address _beneficiary)",
           "argument": [
@@ -118,6 +119,10 @@
         {
           "fid": 7,
           "name": "withdraw() returns (bool)",
+=======
+          "fid": 1,
+          "name": "play",
+>>>>>>> origin/sprint#2
           "argument": [],
           "sender_value": {}
         },
@@ -145,6 +150,7 @@
           }
         },
         {
+<<<<<<< HEAD
           "fid": 10,
           "name": "participate() payable",
           "argument": [],
@@ -210,6 +216,10 @@
         {
           "fid": 15,
           "name": "() payable ",
+=======
+          "fid": 2,
+          "name": "claimReward",
+>>>>>>> origin/sprint#2
           "argument": [],
           "sender_value": {
             "from": "1",
