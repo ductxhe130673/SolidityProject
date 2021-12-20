@@ -8,7 +8,7 @@ db = mysql.connector.connect(
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO Functions (name,bodycontent,sid) VALUES (%s,%s,%s)"
 multi = [
-    ("play() public payable","""
+    ("play","""
     require(msg.value == 0.5 ether); // each play is 0.5 ether
         uint currentBalance = this.balance + msg.value;
         // ensure no players after the game as finished
@@ -25,7 +25,7 @@ multi = [
         }
         return;
         """,1),
-    ("claimReward() public","""
+    ("claimReward","""
          // ensure the game is complete
         require(this.balance == finalMileStone);
         // ensure there is a reward to give
