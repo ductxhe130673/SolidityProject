@@ -33,19 +33,19 @@ multi = [
         redeemableEther[msg.sender] = 0;
         msg.sender.transfer(redeemableEther[msg.sender]);
         """,1),
-    ("BlindAuction(uint _biddingTime, uint _revealTime, address _beneficiary)","""
+    ("BlindAuction","""
         beneficiary = _beneficiary;
         auctionStart = now;
         biddingEnd = now + _biddingTime;
         revealEnd = biddingEnd + _revealTime;
     """,2),
-    ("bid(bytes32 _blindedBid) payable onlyBefore(biddingEnd)","""
+    ("bid","""
         bids[msg.sender].push(Bid({
         blindedBid : _blindedBid,
         deposit : msg.value
         }));
     """,2),
-    ("reveal(uint[] _values, bool[] _fake, bytes32[] _secret) onlyAfter(biddingEnd) onlyBefore(revealEnd)","""
+    ("reveal","""
      // Conditions
         uint length = bids[msg.sender].length;
         require(_values.length == length);
@@ -76,7 +76,7 @@ multi = [
         // Interactions
         msg.sender.transfer(refund);
     """,2),
-    ("placeBid(address bidder, uint value) internal returns (bool success)","""
+    ("placeBid","""
         if (value <= highestBid) {
             return false;
         }
@@ -88,7 +88,7 @@ multi = [
         highestBidder = bidder;
         return true;
     """,2),
-    ("withdraw() returns (bool)","""
+    ("withdraw","""
     var amount = pendingReturns[msg.sender];
         if (amount > 0) {
             // It is important to set this to zero because the recipient
@@ -105,7 +105,7 @@ multi = [
         }
         return true;
     """,2),
-    ("auctionEnd() onlyAfter(revealEnd)","""
+    ("auctionEnd","""
      require(!ended);
 
         AuctionEnded(highestBidder, highestBid);
@@ -117,11 +117,11 @@ multi = [
         // of the refunds might have failed.
         beneficiary.transfer(this.balance);
     """,2),
-    ("OpenAddressLottery()","""
+    ("OpenAddressLottery","""
     owner = msg.sender;
         reseed(SeedComponents((uint)(block.coinbase), block.difficulty, block.gaslimit, block.timestamp));
     """,3),
-    ("participate() payable","""
+    ("participate","""
             if(msg.value<0.1 ether)
             return; //verify ticket price
         
@@ -141,10 +141,10 @@ multi = [
         if(block.number-lastReseed>1000) //reseed if needed
             reseed(SeedComponents((uint)(block.coinbase), block.difficulty, block.gaslimit, block.timestamp)); //generate a quality random seed
     """,3),
-    ("luckyNumberOfAddress(address addr) constant returns(uint n)","""
+    ("luckyNumberOfAddress","""
      n = uint(keccak256(uint(addr), secretSeed)[0]) % 8;
     """,3),
-    (" reseed(SeedComponents components) internal ","""
+    ("reseed","""
     secretSeed = uint256(keccak256(
             components.component1,
             components.component2,
@@ -153,12 +153,12 @@ multi = [
         )); //hash the incoming parameters and use the hash to (re)initialize the seed
         lastReseed = block.number;
     """,3),
-    ("kill()","""
+    ("kill","""
     require(msg.sender==owner);
         
         selfdestruct(msg.sender);
     """,3),
-    (" forceReseed()","""
+    (" forceReseed","""
     require(msg.sender==owner);
         
         SeedComponents s;
@@ -169,13 +169,13 @@ multi = [
         
         reseed(s); //reseed
     """,3),
-    ("() payable ","""
+    ("payable","""
     if(msg.value>=0.1 ether && msg.sender!=owner) //owner can't participate, he can only fund the jackpot
             participate();""",3),
-    ("EtherLotto()","""
+    ("EtherLotto","""
     bank = msg.sender;
     """,4),
-    (" play() payable","""
+    ("play","""
     
         // Participants must spend some fixed ether before playing lottery.
         assert(msg.value == TICKET_AMOUNT);
@@ -199,10 +199,10 @@ multi = [
             pot = 0;
         }
     """,4),
-    ("SimpleDice()","""
+    ("SimpleDice","""
      owner = 0xee462a6717f17c57c826f1ad9b4d3813495296c9;  //this contract is an attachment to EthVentures
     """,5),
-    ("enter() ","""
+    ("enter","""
     if (msg.value >10 finney) {
 
     uint amount=msg.value;
@@ -277,28 +277,28 @@ multi = [
     //enter function ends
 	}
     """,5),
-    ("setOwner(address new_owner) onlyowner ","""
+    ("setOwner","""
      owner = new_owner;
     """,5),
-    ("setMinDeposit(uint new_mindeposit) onlyowner ","""
+    ("setMinDeposit","""
     MinDeposit = new_mindeposit;
     """,5),
-    ("setFeeRate(uint new_feerate) onlyowner","""
+    ("setFeeRate","""
     FeeRate = new_feerate;
     """,5),
-    ("getBlocksPerRound() constant returns(uint)","""
+    ("getBlocksPerRound","""
     return blocksPerRound;
     """,6),
-    ("getTicketPrice() constant returns(uint)","""
+    ("getTicketPrice","""
      return ticketPrice;
     """,6),
-    ("getRoundIndex() constant returns (uint)","""
+    ("getRoundIndex","""
     return block.number/blocksPerRound;
     """,6),
-    ("getIsCashed(uint roundIndex,uint subpotIndex) constant returns (bool)","""
+    ("getIsCashed","""
     return rounds[roundIndex].isCashed[subpotIndex];
     """,6),
-    ("calculateWinner(uint roundIndex, uint subpotIndex) constant returns(address)","""
+    ("calculateWinner","""
             var decisionBlockNumber = getDecisionBlockNumber(roundIndex,subpotIndex);
 
         if(decisionBlockNumber>block.number)
@@ -320,10 +320,10 @@ multi = [
             }
         }
     """,6),
-    ("getDecisionBlockNumber(uint roundIndex,uint subpotIndex) constant returns (uint)","""
+    ("getDecisionBlockNumber","""
     return ((roundIndex+1)*blocksPerRound)+subpotIndex;
     """,6),
-    ("getSubpotsCount(uint roundIndex) constant returns(uint)","""
+    ("getSubpotsCount","""
     var subpotsCount = rounds[roundIndex].pot/blockReward;
 
         if(rounds[roundIndex].pot%blockReward>0)
@@ -331,10 +331,10 @@ multi = [
 
         return subpotsCount;
     """,6),
-    ("getSubpot(uint roundIndex) constant returns(uint)","""
+    ("getSubpot","""
     return rounds[roundIndex].pot/getSubpotsCount(roundIndex);
     """,6),
-    ("cash(uint roundIndex, uint subpotIndex)","""
+    ("cash","""
     var subpotsCount = getSubpotsCount(roundIndex);
 
         if(subpotIndex>=subpotsCount)
@@ -356,19 +356,19 @@ multi = [
 
         rounds[roundIndex].isCashed[subpotIndex] = true;
     """,6),
-    ("getHashOfBlock(uint blockIndex) constant returns(uint)","""
+    ("getHashOfBlock","""
      return uint(block.blockhash(blockIndex));
     """,6),
-    ("getBuyers(uint roundIndex,address buyer) constant returns (address[])","""
+    ("getBuyers","""
     return rounds[roundIndex].buyers;
     """,6),
-    ("getTicketsCountByBuyer(uint roundIndex,address buyer) constant returns (uint)","""
+    ("getTicketsCountByBuyer","""
     return rounds[roundIndex].ticketsCountByBuyer[buyer];
     """,6),
-    ("getPot(uint roundIndex) constant returns(uint)","""
+    ("getPot","""
     return rounds[roundIndex].pot;
     """,6),
-    ("function()","""
+    ("function","""
     var roundIndex = getRoundIndex();
         var value = msg.value-(msg.value%ticketPrice);
 

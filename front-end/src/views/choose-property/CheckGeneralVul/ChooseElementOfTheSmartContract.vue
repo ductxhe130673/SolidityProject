@@ -5,8 +5,10 @@
     </div>
     <div class="smart-cell">
       <div class="min-max">
-        Min Threshold <input  type="number" v-model="minhold" /> Max Threshold
-        <input  type="number" v-model="maxhold" />
+        Min Threshold
+        <input type="number" v-model="ltlConfig.params.inputs.min_threshold" /> Max
+        Threshold
+        <input type="number" v-model="ltlConfig.params.inputs.max_threshold" />
       </div>
       <br />
       <div id="list-smart">
@@ -17,7 +19,7 @@
             :key="item.id"
           >
             <a
-              class="nav-link "
+              class="nav-link"
               v-on:click="selectSC(item.sid, index)"
               v-bind:class="{ active: item.sid == selected_smart }"
               >{{ item.name }}</a
@@ -52,7 +54,7 @@
                   type="radio"
                   id="one"
                   name="ch"
-                  v-model="checkedGlobalVar"
+                  v-model="ltlConfig.params.inputs.selected_variable"
                   :value="func.name"
                 />
               </td>
@@ -69,9 +71,9 @@
                 :key="item.id"
               >
                 <a
-                  class="nav-link "
+                  class="nav-link"
                   v-on:click="selectFunction(item.fid, index)"
-                  v-bind:class="{active: item.fid == selected_func}"
+                  v-bind:class="{ active: item.fid == selected_func }"
                   >{{ item.name }}</a
                 >
               </li>
@@ -93,18 +95,17 @@
                     <th>Selected</th>
                   </tr>
                 </thead>
-                <tr
-                  v-for="(func, index) in getSelectedFunc"
-                  v-bind:key="func.fid"
-                >
+                <tr v-for="(func, index) in getSelectedFunc" v-bind:key="func.fid">
                   <td>{{ index + 1 }}</td>
                   <td>{{ func.name }}</td>
                   <td>
+                    <!-- <input type="radio" id="one" name="localVar" :value="data" /> -->
                     <input
                       type="radio"
-                      id="two"
-                      name="localVar"
-                      :value="data"
+                      id="one"
+                      name="ch"
+                      v-model="ltlConfig.params.inputs.selected_variable"
+                      :value="func.name"
                     />
                   </td>
                 </tr>
@@ -121,7 +122,7 @@
   </div>
 </template>
 <script>
-import { GetGloLocArgOfSmartContract } from "../../../services/data";
+import { GetGloLocArgOfSmartContract, GetAllltltemplates } from "../../../services/data";
 export default {
   data() {
     return {
@@ -130,33 +131,31 @@ export default {
       list_function: [],
       functionBySC: [],
       smart_infor: [],
-      checkedGlobalVar: "",
-      checkedLocalVar: "",
       selectedSCIndex: 0,
       selectedFunctionIndex: 0,
       function_infor: {},
       selected_func: 1,
-      selected_smart: 1,
-      minhold: 0,
-      maxhold: 0,
+      selected_smart: 0,
+      ltlConfig: {},
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
     // this.getFuntionSC(this.list_smart_contract[0].sid);
+    this.ltlConfig = this.$store.state.data.data.ltlConfig;
     this.setSCInfor();
-    console.log("--------------", this.list_smart_contract);
+    this.initData();
   },
   methods: {
+    async initData() {
+      this.listTemplates = await GetAllltltemplates();
+
+      this.ltlConfig.params.description = this.listTemplates[0].description;
+    },
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
         this.selectedSCIndex = index;
-        console.log(
-          "this.selected_smart",
-          this.selected_smart,
-          this.selectedSCIndex
-        );
         this.functionBySC = this.list_function[index];
       }
     },
@@ -169,6 +168,7 @@ export default {
     },
     routing(param) {
       if (param == "next") {
+        this.$store.commit("SetLtlConfig", this.ltlConfig);
         this.$router.push({ name: "Initial" });
       }
       if (param == "back") {
@@ -184,7 +184,6 @@ export default {
         this.smart_infor.push(
           await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
         );
-        console.log("this.smart_infor", this.smart_infor);
       }
       this.list_function = this.smart_infor.map((item) => item.functions);
     },
@@ -213,10 +212,10 @@ h1 {
 input {
   margin: 7px;
 }
-.min-max input{
+.min-max input {
   border: 1px solid gray;
 }
-.min-max{
+.min-max {
   color: black;
 }
 .row {
@@ -283,8 +282,11 @@ table span {
   color: black;
   border: black solid 1px;
   border-bottom: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .nav-item {
+  width: 24%;
   min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
@@ -298,7 +300,6 @@ table span {
   border: 1px black solid;
   padding: 5% 4% 5% 4%;
 }
-
 
 .smart-cell {
   margin-top: 50px;

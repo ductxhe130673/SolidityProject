@@ -597,7 +597,7 @@ multi = [
         //keep track of the total pot
 
     }
-    ""","This is discription ",6),
+    ""","This is discription ",5),
 ]
 mycursor.executemany(sqlFomular,multi)
 db.commit()

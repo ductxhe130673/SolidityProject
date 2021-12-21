@@ -9,13 +9,13 @@ db = mysql.connector.connect(
 pass1= "pbkdf2_sha256$260000$gN183tr5ju1po0R1JlKdcM$J/FFCiqjTHwGc5k9JnEYVXCaKRDjTP1wyM69MWvN5T4="
 
 mycursor = db.cursor()
-sqlFomular = "INSERT INTO Account (username,password,role,last_login) VALUES (%s,%s,%s,%s)"
+sqlFomular = "INSERT INTO Account (username,password,role) VALUES (%s,%s,%s)"
 multi = [
-    ("xuanduc",pass1,"admin",""),
-    ("anhtu",pass1,"admin",""),
-    ("honghanh",pass1,"admin",""),
-    ("quangvinh",pass1,"admin",""),
-    ("quypham",pass1,"admin",""),
+    ("xuanduc",pass1,"admin"),
+    ("anhtu",pass1,"admin"),
+    ("honghanh",pass1,"admin"),
+    ("quangvinh",pass1,"admin"),
+    ("quypham",pass1,"admin"),
 ]
 mycursor.executemany(sqlFomular,multi)
 db.commit()

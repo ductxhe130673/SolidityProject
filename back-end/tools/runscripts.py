@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 
 # for Windows
-#th = r"D:\Demo\SolidityProject\tools"
+#path = r"G:\CapstoneProject\SolidityProject\tools"
 # for Ubuntu
 path = r"/home/quypham/SolidityProject/tools"
 
@@ -30,6 +30,13 @@ def unfolding():
     ltl_PATH = path + '/temporary/ltl_PATH.json'
     initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
 
+    f = open(context_PATH, 'r')
+    context = str(f.read())
+    if(context == ""):
+        context_type = "FREE"
+    else:
+        context_type = "DCR"
+    
     # wait tools
     lna_PATH = './test/EtherGame.lna'
     sol_ast_PATH = './test/blindAuction.ast'
@@ -40,7 +47,7 @@ def unfolding():
     output_NAME = 'test'
 
     commandUnf = "./unfolding --lna " + lna_PATH + " --context " + \
-        context_PATH + " --context-type " + "DCR" + " --ltl "+ltl_PATH+" --sol-ast " + \
+        context_PATH + " --context-type " + context_type + " --ltl "+ltl_PATH+" --sol-ast " + \
         sol_ast_PATH+" --lna-json "+lna_json_PATH+ " --im-json " +initialMarking_PATH + \
          " --output_path " + output_PATH+" --output_name "+output_NAME
     # print (commandUnf)

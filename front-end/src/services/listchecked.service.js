@@ -8,7 +8,6 @@ export class CheckedService extends BaseService{
     static async GetCommonSmartContracts() {
         try {
             const response = await this.request({ auth: true }).get(`${this.getUnity()}/listofcheckedtransactions/`)
-            console.log(response)
             // const data = {
             //     content: response.data.data,
             //     headers: response.headers['']
