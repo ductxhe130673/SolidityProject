@@ -86,7 +86,6 @@ export default {
 
   mounted() {
     this.selectedContext = this.$store.state.data.data.selectedContext;
-    console.log("this.selectedContext", this.selectedContext);
     this.initData();
   },
   methods: {
@@ -103,7 +102,6 @@ export default {
 
     async initData() {
       this.contexts = await GetAllcpncontext();
-      console.log(" this.selectedContext", this.selectedContext);
     },
 
     cComponents() {

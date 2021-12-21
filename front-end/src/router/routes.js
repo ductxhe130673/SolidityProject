@@ -5,6 +5,7 @@ import SelectSc from "../views/SelectSc.vue"
 import SelectContext from "../views/SelectContext.vue"
 import InitialMarkingSetting from "../views/InitialMarkingSetting.vue"
 import ChooseProperty from "../views/ChooseProperty"
+import DownloadFile from "../views/DownloadFile.vue"
 
 import ListOfCheckedTransactions from "../views/select-sc/transactions/ListOfCheckedTransactions.vue"
 import CheckReenTrancyDetail from "../views/select-sc/transactions/CheckReenTrancyDetail.vue"
@@ -234,6 +235,12 @@ export const routes = [{
         name: "CheckSmartContract",
         component: CheckingSmartContract,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
+    },
+    {
+        path: "/download",
+        name: "DownloadFile",
+        component: DownloadFile,
+        // meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Initial` },
     },
     {
         path: "/InitialMarkingLink",

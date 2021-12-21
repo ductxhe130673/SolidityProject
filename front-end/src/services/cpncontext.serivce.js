@@ -20,7 +20,7 @@ export class cpncontextService extends BaseService {
                 "context":context,
                 "ltl": ltl
             }
-            console.log('data',data);
+
             const response = await this.request({ auth: true }).post(`${this.getUnity()}/setDataForCallingTool`, data)
             return new ResponseWrapper(response, response.data)
         } catch (error) {
