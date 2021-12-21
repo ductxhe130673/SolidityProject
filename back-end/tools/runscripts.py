@@ -24,7 +24,7 @@ def savetotemporary(data):
 def unfolding():
     # get from temporary
     # context_PATH = './test/test.xml'
-    #ltl_PATH = './test/ltl.json'
+    # ltl_PATH = './test/ltl.json'
     # initialMarking_PATH  = './test/test.im.json'
     context_PATH = path + '/temporary/context_PATH.xml'
     ltl_PATH = path + '/temporary/ltl_PATH.json'

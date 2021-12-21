@@ -186,7 +186,7 @@ export default {
     },
     async callUnfoldingTool() {
       const newltl = this.$store.state.data.data.ltlConfig;
-      newltl.params.formula = newltl.params.formula.replace("variable", "currentBalance");
+      newltl.params.formula = newltl.params.formula.replaceAll("variable", "currentBalance");
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
       const tltl_PATH_json = JSON.stringify(newltl, 0, 2);
@@ -212,7 +212,9 @@ export default {
       this.$store.commit("Setrs", "wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
+        console.log("A-----------")
         const mess = res.data.message;
+        console.log(mess)
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {

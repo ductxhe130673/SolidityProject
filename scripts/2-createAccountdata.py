@@ -6,20 +6,16 @@ db = mysql.connector.connect(
     passwd = '123456',
     database="soliditycpn"
 )
-pass1= hash("1234567")
-pass2= hash("qwerty")
-pass3= hash("135790246")
-pass4= hash("asdcxz123")
-pass5= hash("qwertgfdaxz")
-pass6= hash("123@123a")
+pass1= "pbkdf2_sha256$260000$gN183tr5ju1po0R1JlKdcM$J/FFCiqjTHwGc5k9JnEYVXCaKRDjTP1wyM69MWvN5T4="
+
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO Account (username,password,role,last_login) VALUES (%s,%s,%s,%s)"
 multi = [
     ("xuanduc",pass1,"admin",""),
-    ("anhtu",pass2,"admin",""),
-    ("honghanh",pass3,"admin",""),
-    ("quangvinh",pass4,"admin",""),
-    ("quypham",pass5,"admin",""),
+    ("anhtu",pass1,"admin",""),
+    ("honghanh",pass1,"admin",""),
+    ("quangvinh",pass1,"admin",""),
+    ("quypham",pass1,"admin",""),
 ]
 mycursor.executemany(sqlFomular,multi)
 db.commit()
