@@ -5,8 +5,10 @@
     </div>
     <div class="smart-cell">
       <div class="min-max">
-        Min Threshold <input type="number" v-model="minhold" /> Max Threshold
-        <input type="number" v-model="maxhold" />
+        Min Threshold
+        <input type="number" v-model="ltlConfig.params.inputs.min_threshold" /> Max
+        Threshold
+        <input type="number" v-model="ltlConfig.params.inputs.max_threshold" />
       </div>
       <br />
       <div id="list-smart">
@@ -52,7 +54,7 @@
                   type="radio"
                   id="one"
                   name="ch"
-                  v-model="checkedVar"
+                  v-model="ltlConfig.params.inputs.selected_variable"
                   :value="func.name"
                 />
               </td>
@@ -97,7 +99,14 @@
                   <td>{{ index + 1 }}</td>
                   <td>{{ func.name }}</td>
                   <td>
-                    <input type="radio" id="one" name="localVar" :value="data" />
+                    <!-- <input type="radio" id="one" name="localVar" :value="data" /> -->
+                    <input
+                      type="radio"
+                      id="one"
+                      name="ch"
+                      v-model="ltlConfig.params.inputs.selected_variable"
+                      :value="func.name"
+                    />
                   </td>
                 </tr>
               </table>
@@ -113,7 +122,7 @@
   </div>
 </template>
 <script>
-import { GetGloLocArgOfSmartContract } from "../../../services/data";
+import { GetGloLocArgOfSmartContract, GetAllltltemplates } from "../../../services/data";
 export default {
   data() {
     return {
@@ -122,27 +131,31 @@ export default {
       list_function: [],
       functionBySC: [],
       smart_infor: [],
-      checkedVar: "",
       selectedSCIndex: 0,
       selectedFunctionIndex: 0,
       function_infor: {},
       selected_func: 1,
-      selected_smart: 1,
-      minhold: 0,
-      maxhold: 0,
+      selected_smart: 0,
+      ltlConfig: {},
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
     // this.getFuntionSC(this.list_smart_contract[0].sid);
+    this.ltlConfig = this.$store.state.data.data.ltlConfig;
     this.setSCInfor();
+    this.initData();
   },
   methods: {
+    async initData() {
+      this.listTemplates = await GetAllltltemplates();
+
+      this.ltlConfig.params.description = this.listTemplates[0].description;
+    },
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
         this.selectedSCIndex = index;
-        console.log("this.selected_smart", this.selected_smart, this.selectedSCIndex);
         this.functionBySC = this.list_function[index];
       }
     },
@@ -155,6 +168,7 @@ export default {
     },
     routing(param) {
       if (param == "next") {
+        this.$store.commit("SetLtlConfig", this.ltlConfig);
         this.$router.push({ name: "Initial" });
       }
       if (param == "back") {

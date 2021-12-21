@@ -50,10 +50,18 @@
       <div class="label">LTL Property</div>
       <div class="input-area">
         <input
+          v-if="selected_vuls.name"
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
           v-model="selected_vuls.name"
+        />
+        <input
+          v-else
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon3"
+          v-model="selected_vuls"
         />
       </div>
     </div>
@@ -204,11 +212,13 @@ export default {
     },
     async callUnfoldingTool() {
       const newVar = this.$store.state.data.data.isVarSelected;
-      console.log("newLtlO", newVar);
-      this.newLtl.params.formula = this.newLtl.params?.formula.replaceAll(
-        "variable",
-        newVar
-      );
+      if (this.newLtl.type !== "general") {
+        this.newLtl.params.formula = this.newLtl.params.formula.replaceAll(
+          "variable",
+          newVar
+        );
+      }
+
       console.log("newLtl", this.newLtl);
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;

@@ -9,7 +9,7 @@
           <thead>
             <tr>
               <th style="width: 10%">#</th>
-              <th >
+              <th>
                 Global variable
                 <span
                   ><a-icon id="icon" type="caret-up" />
@@ -26,12 +26,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ func.name }}</td>
             <td>
-              <input
-                type="radio"
-                id="one"
-                name="globalVar"
-                :value="func.name"
-              />
+              <input type="radio" id="one" name="globalVar" :value="func.name" />
             </td>
           </tr>
         </table>
@@ -237,9 +232,7 @@ table span {
   margin: auto;
   height: 300px;
   overflow-y: auto;
-
 }
-
 
 /* button */
 #processing-btn {
