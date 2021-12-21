@@ -11,7 +11,9 @@ const state = {
         uploadSCFile: {},
         selectedSc: [],
         selectedSCInfor: {},
-        selectedContext: {},
+        selectedContext: {
+            content : ""
+        },
         selectedTemplate: {},
         nameCSP: '',
         selectedVulnerbility: [],

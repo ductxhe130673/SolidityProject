@@ -244,7 +244,9 @@ export default {
       this.$store.commit("Setrs", "wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
+        console.log("A-----------")
         const mess = res.data.message;
+        console.log(mess)
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {
