@@ -87,7 +87,7 @@ function handleSingleStatement(opb, is_editable){
         }else if(op[0] == "'"){
             let value = ""
             let spec = ""
-            let p = op.split(op[0])
+            let p = op?.split(op[0])
             if(p.length == 3 && p[2].length > 0){
                 spec = p[2]
             }
@@ -116,7 +116,7 @@ function handleTextSingleStatement(opb, is_editable){
         }else if(op[0] == "'"){
             let value = ""
             let spec = ""
-            let p = op.split(op[0])
+            let p = op?.split(op[0])
             if(p.length == 3 && p[2].length > 0){
                 spec = p[2]
             }
@@ -135,8 +135,8 @@ function handleTextSingleStatement(opb, is_editable){
 
 function extractLtlTag(code){
     let tokens = []
-    let lines = code.split("\n")
-    for(let line_id = 0; line_id < lines.length; line_id++){
+    let lines = code?.split("\n")
+    for(let line_id = 0; line_id < lines?.length; line_id++){
         let line = lines[line_id]
         let opb = []
         let op = ""

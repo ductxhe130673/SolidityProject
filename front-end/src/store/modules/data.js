@@ -19,6 +19,7 @@ const state = {
         ltlProperty : [],
         isAuthen : false,
         typeFormula: '',
+        isVarSelected:'',
         ltlConfig : 
         {
             type: "",
@@ -36,8 +37,8 @@ const state = {
                             name: "",
                             argument: [],
                             sender_value: {
-                                from: "0",
-                                to: "10"
+                                from: null,
+                                to: null
                             }
                         },
                     ]
@@ -45,14 +46,14 @@ const state = {
             ],
             balance: {
                 type: "fixed",
-                fixed: "10",
+                fixed: "",
                 map: "",
                 random: {
                     from: "",
                     to: ""
                 }
             },
-            NumberOfUser: "5"
+            NumberOfUser: ""
         },
 
     },
@@ -123,7 +124,6 @@ const getters = {
 }
 const mutations = {
     Setrs(state, value) {
-        console.log("commit result");
         state.rs = value;
     },
     /* -- used */
@@ -173,6 +173,9 @@ const mutations = {
     /* -- index -- */
     setIndex(state, data) {
         state.index = data;
+    },
+    setVarSelected(state, data) {
+        state.data.isVarSelected = data;
     },
     setIsEditFormula(state, data) {
         state.isEditFormula = data;

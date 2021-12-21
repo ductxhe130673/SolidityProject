@@ -25,13 +25,13 @@
     }
   ],
   "balance": {
-    "type": "fixed",
-    "fixed": "10",
+    "type": "random",
+    "fixed": "3",
     "map": "",
     "random": {
-      "from": "",
-      "to": ""
+      "from": "2",
+      "to": "3"
     }
   },
-  "NumberOfUser": "5"
+  "NumberOfUser": "2"
 }

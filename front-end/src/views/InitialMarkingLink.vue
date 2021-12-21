@@ -248,7 +248,7 @@ export default {
         this.$store.commit("SetInitialMarking", this.init_marking);
         this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", 5);
-        console.log("this.smart_contract_infors", this.smart_contract_infors);
+
       }
       if (param == "back") {
         this.$router.push({ name: "CheckSmartContract" });

@@ -155,7 +155,6 @@ export default {
       );
     },
     changedLTL(value) {
-      console.log(`Parent: ${value}`);
       this.codeModel = value;
     },
   },
