@@ -124,7 +124,6 @@ const getters = {
 }
 const mutations = {
     Setrs(state, value) {
-        console.log("commit result");
         state.rs = value;
     },
     /* -- used */
@@ -176,7 +175,6 @@ const mutations = {
         state.index = data;
     },
     setVarSelected(state, data) {
-        console.log('check', data);
         state.data.isVarSelected = data;
     },
     setIsEditFormula(state, data) {

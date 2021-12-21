@@ -65,15 +65,6 @@
     </div>
     <div class="contain-process">
       <div id="processing-section">
-        <div id="download">
-          <a
-            v-if="showDownload"
-            class="btn btn-primary btn-sm"
-            href=""
-            download="test.lna"
-            >Download</a
-          >
-        </div>
         <div id="initial" v-if="step == 'initial'"></div>
         <div id="generating" v-show="step == 'generating'">
           <div>The smart contract is generating...</div>
@@ -109,6 +100,15 @@
         </div>
       </div>
     </div>
+    <div id="showConfirmation" v-if="showConfirmationDownload">
+      <div id="removeSC-holder">
+        <confirm
+          @cancel="closeConfirmDownload"
+          @confirm="routing('uploadfile')"
+          :dialog="upLoadDialog"
+        />
+      </div>
+    </div>
     <div id="processing-btn">
       <button
         v-if="step == 'initial' || step == 'generating'"
@@ -121,6 +121,9 @@
         Check
       </button>
       <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
+      <button v-if="showDownload" @click="openDownload()" class="btn btn-primary-outline">
+        Download
+      </button>
       <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
     </div>
   </div>
@@ -128,6 +131,8 @@
 
 <script>
 import CheckService from "../services/check.service";
+import DownloadFile from "./DownloadFile.vue";
+
 // import { GetLtl } from "../services/data";
 
 export default {
@@ -146,13 +151,29 @@ export default {
       confirmation: "",
       currentSC: null,
       newLtl: this.$store.state.data.data.ltlConfig,
+      showConfirmationDownload: false,
     };
   },
+
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.selected_vuls = this.$store.state.data.data.selectedTemplate;
   },
+  components: {
+    // Popup,
+    confirm: DownloadFile,
+  },
   methods: {
+    openDownload() {
+      this.upLoadDialog = {
+        title: "Do you want to Download",
+        confirmbtn: "OK",
+      };
+      this.showConfirmationDownload = true;
+    },
+    closeConfirmDownload() {
+      this.showConfirmationDownload = false;
+    },
     sort(mess) {
       switch (mess) {
         case "asId":
@@ -396,7 +417,7 @@ export default {
 
 #processing-btn button {
   cursor: pointer;
-  width: 15%;
+  width: 5%;
   height: 2%;
   border: 1px solid #2196f3;
   text-align: center;
@@ -411,6 +432,9 @@ export default {
 }
 .btn {
   margin: 0 10%;
+}
+#removeSC-holder {
+  margin-top: 200px;
 }
 #locate-1 {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;

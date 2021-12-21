@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="row">
-        <table class="table table-md">
+        <table class="table table-md ">
           <thead>
             <tr>
               <th style="width: 5%">#</th>
@@ -243,12 +243,16 @@ table td,
 table th {
   padding-left: 5px;
 }
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
 table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
 table tr:hover {
   background-color: #ddd;
+  
 }
 
 table th {

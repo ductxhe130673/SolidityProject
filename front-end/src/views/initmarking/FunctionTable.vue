@@ -14,35 +14,34 @@
         <input type="text" placeholder="10" v-model="sender_value.to" />
       </div>
       <div id="table-params">
-        <div class="table-params-row" id="header-params-row">
-          <div class="table-params-cell first-params-cell">
-            #
-            <span class="material-icons"> swap_vert </span>
-          </div>
-          <div class="table-params-cell second-params-cell">
-            Parameters
-            <span class="material-icons"> swap_vert </span>
-          </div>
-          <div class="table-params-cell third-params-cell">
-            Range
-            <span class="material-icons"> swap_vert </span>
-          </div>
-        </div>
-
-        <div
-          class="table-params-row"
-          v-for="(param, key, index) in own_list_argument.argument"
-          v-bind:key="key"
-          :class="{ even_row: index % 2 == 0 }"
-        >
-          <div class="table-params-cell first-params-cell">{{ param.id }}</div>
-          <div class="table-params-cell second-params-cell">{{ param.name }}</div>
-          <div class="table-params-cell third-params-cell">
-            <input type="text" v-model="param.from" />
-            <span>To</span>
-            <input type="text" v-model="param.to" />
-          </div>
-        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 10%">#</th>
+              <th>
+                Parameters
+                <span>
+                  <a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </th>
+              <th style="width: 25%">Range</th>
+            </tr>
+          </thead>
+          <tr v-for="(param, key) in own_list_argument.argument" v-bind:key="key">
+            <td>
+              {{ param.id }}
+            </td>
+            <td>
+              {{ param.name }}
+            </td>
+            <td class="random-input-form">
+              <input type="text" v-model="param.from" />
+              <span>To</span>
+              <input type="text" v-model="param.to" />
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -60,6 +59,7 @@ export default {
   },
   beforeMount() {
     this.own_list_argument = this.list_argument;
+    this.sender_value = this.own_list_argument.sender_value;
   },
   methods: {
     setArgument() {
@@ -77,6 +77,47 @@ export default {
 </script>
 
 <style scoped>
+.random-input-form {
+  display: flex;
+  justify-content: space-between;
+}
+.random-input-form input {
+  width: 40%;
+}
+table {
+  width: 100%;
+}
+table td,
+table th {
+  padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+table tr:hover {
+  background-color: #ddd;
+}
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
+}
+
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
+
 #params-setting-header {
   display: flex;
   height: 30px;
@@ -101,7 +142,7 @@ export default {
 
 #params-setting-input {
   height: 270px;
-  border: 2px solid black;
+  border: 1px solid black;
   padding-left: 4%;
   padding-right: 4%;
 }
@@ -119,7 +160,9 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
 }
-
+input {
+  border: 1px grey solid;
+}
 #table-params {
   width: 100%;
   margin-top: 10px;
@@ -127,50 +170,6 @@ export default {
   height: 200px;
   overflow-y: auto;
   border-radius: 4px;
-  border: 2px solid black;
-
-  background: rgb(241, 240, 240);
-}
-
-.table-params-row {
-  display: flex;
-  height: 40px;
-}
-#header-params-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
-}
-
-#header-params-row span {
-  float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 150%;
-}
-.even_row {
-  background-color: rgb(226, 224, 224);
-}
-.table-params-cell {
-  padding-top: 10px;
-}
-.first-params-cell {
-  flex-basis: 12%;
-  padding-left: 5px;
-}
-.second-params-cell {
-  flex-basis: 58%;
-}
-.third-params-cell {
-  padding-left: 5%;
-  flex-basis: 30%;
-}
-
-.third-params-cell input {
-  height: 20px;
-  width: 30px;
-}
-.third-params-cell span {
-  margin-left: 5px;
-  margin-right: 5px;
+  border: 1 px solid black;
 }
 </style>

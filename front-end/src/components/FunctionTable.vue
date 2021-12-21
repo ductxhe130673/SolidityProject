@@ -76,7 +76,7 @@ export default {
       list_smart_contract: [],
       smart_infor: [],
       selectedSCIndex: 0,
-      selected_smart: 1,
+      selected_smart: 0,
       selected_variable: "",
     };
   },

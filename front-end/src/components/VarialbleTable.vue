@@ -145,7 +145,7 @@ export default {
       selectedFunctionIndex: 0,
       function_infor: {},
       selected_func: 1,
-      selected_smart: 1,
+      selected_smart: 0,
     };
   },
   beforeMount() {
@@ -174,7 +174,6 @@ export default {
         document.getElementById("selection-table").style.display = "none";
       }
       if (param == "back") {
-        this.$router.push({ name: "CSPSettingType" });
         document.getElementById("selection-table").style.display = "none";
       }
     },
