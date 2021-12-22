@@ -1,13 +1,7 @@
 {
-  "type": "general",
+  "type": "specific",
   "params": {
-    "id": "iou",
-    "name": "under_over_flow",
-    "inputs": {
-      "min_threshold": "2",
-      "max_threshold": "3",
-      "selected_variable": "currentBalance"
-    },
-    "description": "outOfRange(x) is a proposition defining the conditions for overflow and underflow for the variable x w.r.t the range of its type which we delimit by defining lower and higher thresholds (minThreshold and maxThreshold respec\u0002tively)."
+    "name": "interger_overflow_underflow",
+    "formula": "const minThreshold = 0\r const maxThreshold = 2147483647\r proposition outOfRange: ('mileStone1Reward' < minThreshold) | ('mileStone1Reward' > maxThreshold);\r property prop: G(! outOfRange);"
   }
 }
