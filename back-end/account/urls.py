@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from django.urls import path
-from .views import RegisterView, LogoutAPIView, LoginAPIView, Test , Contact
+from .views import RegisterView, LogoutAPIView, LoginAPIView, Test
 from account import views
 
 urlpatterns = [
@@ -15,5 +15,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('test/',Test.as_view()),
     path('getcontactbyaid',views.getContactByAccountId),
-    path('getavatarbyaid',views.getAvatarAccountId)
+    path('getavatarbyaid',views.getAvatarAccountId),
+    path('updatecontactbyaid',views.updateContactInfor)
+    #path('insertintocontact',views.insertIntoContact)
 ]

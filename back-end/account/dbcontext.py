@@ -59,3 +59,64 @@ def read_blob(author_id, filename):
     finally:
         cursor.close()
         connection.close()
+
+def getLastInsertIDFromAccount():
+    try:
+        sql = '''SELECT aid FROM Account ORDER BY aid DESC LIMIT 1;'''
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
+    except:
+        return None
+    finally:
+        connection.close()  
+
+def InsertIMG(FilePath):
+    with open(FilePath,"rb") as File :
+        BinaryData = File.read()
+    return BinaryData
+
+def InsertIntoContact(email):
+    try:
+        sql = "INSERT INTO Contact (email,aid) VALUES (%s,%s)"
+        aid = getLastInsertIDFromAccount()
+        cursor = connection.cursor()
+        cursor.execute(sql, ([email],[aid]))
+        row = cursor.fetchall()
+        return "Add new Contact successfully !!!"
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return None
+    finally:
+        cursor.close()
+        connection.close()       
+
+def getContactIdByAId(aid):
+    try:
+        sql = '''select id from Contact where aid = %s;'''
+        cursor = connection.cursor()
+        cursor.execute(sql,[aid])
+        row = cursor.fetchone()
+        return row[0]
+    except Exception as e:
+        print(e)
+        return None
+    finally:
+        cursor.close()
+        connection.close()  
+
+def UpdateContactInfor(firstname, lastname , email , phone , birthdate, avartar , address, aid):
+    try:
+        contactIdByAid = getContactIdByAId(aid)
+        sql = " UPDATE soliditycpn.contact SET firstname = %s, lastname = %s,email = %s,phone = %s,birthDate =%s,avartar = %s,address = %s WHERE id = %s;"
+        cursor = connection.cursor()
+        cursor.execute(sql,([firstname],[lastname],[email],[phone],[birthdate],[InsertIMG(avartar)],[address],[contactIdByAid]))
+        row = cursor.fetchall()
+        return "Update Contact succesfully !!!"
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return None
+    finally:
+        cursor.close()
+        connection.close()         

@@ -50,18 +50,6 @@ class Test(APIView):
     def get(self, request):
         return Response('oke')
 
-# class Contact(APIView):
-#     def get(self, requset):
-#         try:
-#             if requset.method == "GET":
-#                 contactDB = Contact.objects.all()
-#                 serializerContact = GetContactSerializer(contactDB , many = True)
-#                 return Response(serializerContact.data, status=status.HTTP_200_OK)
-#         except Exception as e:
-#             print("ERROR====",e)
-#             return Response({"message":"Get Contact Failed !!!"}, status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(['GET'])
 def getContactByAccountId(request):
     try:
@@ -98,3 +86,25 @@ def getAvatarAccountId(request):
 #         with open(imagePath, mode='rb') as file:
 #             img = file.read()
 #         resData['img'] = base64.encodebytes(img).decode('utf-8')
+
+@api_view(['POST'])
+def insertIntoContact(request):
+    try:
+        resData = dbcontext.InsertIntoContact(request.data['email'])
+        if resData is None:
+            return Response({"message":"Fail to Add New Contact !!!"},status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData,status=status.HTTP_201_CREATED)    
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return Response({"message":"Fail !!!"},status=status.HTTP_400_BAD_REQUEST)    
+
+@api_view(['PUT'])
+def updateContactInfor(request):
+    try:
+        resData = dbcontext.UpdateContactInfor(request.data['firstname'],request.data['lastname'],request.data['email'],request.data['phone'],request.data['birthDate'],request.data['avartar'],request.data['address'],request.data['aid'])
+        if resData is None:
+            return Response({"message":"Fail to Update Contact Information !!!"},status=status.HTTP_400_BAD_REQUEST)
+        return Response(resData,status=status.HTTP_201_CREATED)    
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return Response({"message":"Fail !!!"},status=status.HTTP_400_BAD_REQUEST)            
