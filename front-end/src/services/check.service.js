@@ -51,6 +51,7 @@ export default class CheckService extends BaseService {
         }
     }
     static async getFileToDownload() {
+        console.log('apiaxios');
         try {
             const response = await this.request({ auth: true }).get('/tools/')
             return new ResponseWrapper(response, response.data)
