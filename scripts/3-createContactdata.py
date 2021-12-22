@@ -22,12 +22,11 @@ def InsertIMG(FilePath):
 mycursor = db.cursor()
 sqlFomular = "INSERT INTO Contact (firstname,lastname,email,phone,birthdate,avartar,address,aid) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 multi = [
-    ("Le","Duc Anh","anhld@fpt.edu.vn","0984268930",datetime.datetime.now(),InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\image\index1.jpeg"),str(loc),1),
-    ("Le","Anh Son","sonla@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\image\index1.jpeg"),str(loc),2),
-    ("Nguyen","Minh Hanh","hanhnm@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\image\index1.jpeg"),str(loc),3),
-    ("Nguyen","Minh Duc","ducnm@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\image\index1.jpeg"),str(loc),4),
-    ("Nguyen","Thanh Ha","hant@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\image\index1.jpeg"),str(loc),5),
-    ("Tran","Van Cuong","cuongtv@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"G:\CapstoneProject\SolidityProject\scripts\image\index1.jpeg"),str(loc),6),
+    ("Truong","Xuan Duc","ductx@fpt.edu.vn","0984268930",datetime.datetime.now(),InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\image\index1.jpeg"),str(loc),1),
+    ("Le Huu","Anh Tu","tulha@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\image\index1.jpeg"),str(loc),2),
+    ("Nguyen","Hong Hanh","hanhnh@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\image\index1.jpeg"),str(loc),3),
+    ("Ha","Quang Vinh","vinhhq@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\image\index1.jpeg"),str(loc),4),
+    ("Pham","Van Quy","quypv@fpt.edu.vn","0123456789",datetime.datetime.now(),InsertIMG(r"D:\Solidity\SolidityNew\SolidityProject\scripts\image\index1.jpeg"),str(loc),5),
 ]
 mycursor.executemany(sqlFomular,multi)
 db.commit()

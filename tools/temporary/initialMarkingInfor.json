@@ -230,17 +230,21 @@
     }
   ],
   "balance": {
-    "type": "random",
-    "fixed": "3",
-    "map": "",
+    "type": "map",
+    "fixed": "",
+    "map": "1,2,3",
     "random": {
-      "from": "2",
-      "to": "3"
+      "from": "",
+      "to": ""
     }
   },
+<<<<<<< HEAD
 <<<<<<< HEAD
   "NumberOfUser": "1"
 =======
   "NumberOfUser": "2"
+>>>>>>> origin/sprint#2
+=======
+  "NumberOfUser": "3"
 >>>>>>> origin/sprint#2
 }

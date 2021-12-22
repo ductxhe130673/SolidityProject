@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is Content 3 
 =======
 <DCRModel>
@@ -21,5 +22,27 @@ This is Content 3
         <source>claimReward</source>
         <target>play</target>
     </rules>
+</DCRModel>
+>>>>>>> origin/sprint#2
+=======
+<DCRModel>
+<id>220802</id>
+<title>Healthcare Workflow</title>
+<events>
+<id>play</id>
+</events>
+<events>
+<id>claimReward</id>
+</events>
+<rules>
+<type>condition</type>
+<source>play</source>
+<target>claimReward</target>
+</rules>
+<rules>
+<type>include</type>
+<source>claimReward</source>
+<target>play</target>
+</rules>
 </DCRModel>
 >>>>>>> origin/sprint#2

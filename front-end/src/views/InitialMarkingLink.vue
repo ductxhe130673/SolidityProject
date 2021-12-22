@@ -218,7 +218,7 @@ export default {
         } else {
           this.dataUserTable.push({
             name: "User" + i,
-            balance: this.init_marking.balance.map.split(",")[i],
+            balance: this.init_marking.balance.map.split(",")[i-1],
           });
         }
       }
