@@ -49,6 +49,7 @@ import SelectGlobalVariable from "../views/add-sagemented/SelectGlobalVariable.v
 import SelectLocalVariable from "../views/add-sagemented/SelectLocalVariable.vue"
 import SelectContract from "../views/add-sagemented/SelectSmartContract.vue"
 import RoadMap from "../views/RoadMap.vue"
+import Profile from "../views/profile.vue"
 
 import { DOMAIN_TITLE } from '../.env'
 
@@ -339,85 +340,15 @@ export const routes = [{
         nam: "SelectVarReentrancyOp2",
         component: SelectVarReentrancyOp2,
         meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Select Var Reentrancy Op2` },
-    }
+    },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: Profile,
+        meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Profile` },
+        props: true
+    },
+
+
 
 ]
-
-/*
-{
-    path: "/list-sc",
-    name: "ListSc",
-    component: ListSc,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | list smart contracts` },
-  },
-  {
-    path: "/edit-sc",
-    name: "EditSc",
-    component: EditSc,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | edit smart contracts` },
-    props: true
-  },
-  {
-    path: "/add-sc",
-    name: "AddSc",
-    component: AddSc,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create smart contracts` },
-    props: true
-  },
-  {
-    path: "/process",
-    name: "Processing",
-    component: Processing,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | processing` },
-  },
-  {
-    path: "/create-csp",
-    name: "CreateCsp",
-    component: CreateCsp,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | create contract-specific property` },
-    props: true
-  },
-  
-  {
-    path: "/add-context",
-    name: "AddContext",
-    component: AddContext,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Add a Context` },
-    props: true
-  },
-  {
-    path: "/edit-context",
-    name: "EditContext",
-    component: EditContext,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit Context` },
-    props: true
-  },
-  {
-    path: "/list-context",
-    name: "ListContext",
-    component: ListContext,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Contexts` },
-    props: true
-  },
-  {
-    path: "/list-vul",
-    name: "ListVul",
-    component: ListVul,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | List Of Vulnerabilities` },
-    props: true
-  },
-  {
-    path: "/add-vul",
-    name: "AddVul",
-    component: AddVul,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Add an LTL Vulnerability` },
-    props: true
-  },
-  {
-    path: "/edit-vul",
-    name: "EditVul",
-    component: EditVul,
-    meta: { requiresAuth: true, title: `${DOMAIN_TITLE} | Edit an LTL Vulnerability` },
-    props: true
-  },
-*/

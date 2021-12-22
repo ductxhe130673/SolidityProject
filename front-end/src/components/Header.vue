@@ -2,10 +2,6 @@
   <nav>
     <div class="nav__left">
       <div class="name" @click="goHome()">Solidity</div>
-      <div class="nav__search">
-        <span class="material-icons">search</span>
-        <input type="text" placeholder="Search Solidity" />
-      </div>
     </div>
 
     <div class="nav__mid">
@@ -26,7 +22,7 @@
         <i class="material-icons">map</i>
       </div>
       <div class="icon" title="Help">
-        <i class="material-icons">help</i>
+        <i class="material-icons" @click="help()">help</i>
       </div>
     </div>
 
@@ -38,24 +34,64 @@
         >
       </a>
       <div class="buttons">
-        <a><i class="material-icons">notifications</i></a>
-      </div>
-      <div class="buttons">
-        <a
-          ><i @click="toggleProfile" class="material-icons">arrow_drop_down</i>
-          <ProDia v-show="showDia" />
-        </a>
+        <div data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="material-icons">arrow_drop_down</i>
+        </div>
+        <ul class="dropdown-menu">
+          <li @click="profile()">
+            <a class="dropdown-item">Profile</a>
+          </li>
+          <li @click="logout"><a class="dropdown-item">Logout</a></li>
+        </ul>
       </div>
     </div>
     <div class="nav__right" v-if="!checkUser">
-      <button @click="goLogin()" id="login-btn">Login</button>
-      <button @click="goRegister()" id="register-btn">Register</button>
+      <button type="button" class="btn btn-outline-primary" @click="goLogin()">
+        Login
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="goRegister()"
+      >
+        Register
+      </button>
+    </div>
+    <div id="showConfirmation" v-if="showDia">
+      <div id="icon"><a-icon type="close" @click="close()" /></div>
+      <div id="removeSC-holder">
+        <p>
+          Under the explosive development of the Internet age, everything is
+          possible in the online world from buying, selling, trading to
+          conferences.
+        </p>
+        <p>
+          When you receive an email, word or excel file, it's really just a
+          duplicate. But when it comes to assets like money, contracts,
+          intellectual property, stocks, bonds, personal information or creative
+          products, things are completely different. That is why today we
+          completely rely on intermediaries like banks, governments, social
+          media companies or credit card companies etc. to build self-confidence
+          and as others. All these intermediaries perform the same functional
+          logic of transactions in commerce, from authentication and validation
+          of personal information to the creation and deletion of records.
+          However, more and more new problems arise: information leaks, these
+          intermediate channels make everything time-consuming and slower, etc.
+        </p>
+        <p>
+          Therefore, our team built FOVEMOSO using blockchain technology based
+          on Solidity code to solve the above problems. FOVEMOSO requires no
+          human intervention, thus ensuring the fastest, safest and most
+          accurate execution.
+        </p>
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
-import ProDia from "./ProfileDialog.vue";
+import { AuthService } from "../services/auth";
+
 export default {
   name: "Header",
   data: function () {
@@ -79,8 +115,11 @@ export default {
     },
   },
   methods: {
-    toggleProfile() {
+    help() {
       this.showDia = !this.showDia;
+    },
+    close() {
+      this.showDia = false;
     },
     goHome() {
       this.goURL("/");
@@ -106,8 +145,13 @@ export default {
         this.$router.push(url);
       }
     },
+    profile() {
+      this.$router.push({ name: "Profile" });
+    },
+    async logout() {
+      await AuthService.makeLogout();
+    },
   },
-  components: { ProDia },
 };
 </script>
 
@@ -170,6 +214,8 @@ nav {
 .nav__right {
   display: flex;
   align-items: center;
+  width: 12%;
+  justify-content: space-around;
 }
 .avatar {
   display: flex;
@@ -200,9 +246,13 @@ nav {
   border-radius: 50%;
   background: #e4e6eb;
 }
+
 .buttons i:hover {
   background: #c7c7c9;
   transition: ease-in-out 0.1s;
+}
+li :active {
+  background-color: white;
 }
 .material-icons {
   color: #616264;
@@ -248,6 +298,10 @@ a {
 #dropdown p:hover {
   background-color: #f9f9f9;
 }
+.dropdown {
+  border-radius: 50%;
+  background: #e4e6eb;
+}
 @media only screen and (max-width: 720px) {
   .nav__mid {
     display: none;
@@ -269,5 +323,37 @@ a {
   .avatar {
     display: none;
   }
+}
+/*---- showConfirmation */
+#showConfirmation {
+  position: absolute;
+  left: 55%;
+  top: 10%;
+  width: 40%;
+  height: auto;
+  background-color: whitesmoke;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  border-radius: 2%;
+  padding: 10px;
+  
+  box-shadow: 5px 5px 5px 5px rgb(172, 166, 166);
+}
+#removeSC-holder {
+  margin: 20px;
+  margin-top: 5px;
+}
+p {
+  color: black;
+  font-size: 15px;
+  text-indent: 30px;
+  margin-bottom: 0;
+}
+#icon {
+  text-align: right;
+  font-size: 20px;
+  margin-right: 8px;
 }
 </style>
