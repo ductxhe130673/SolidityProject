@@ -51,10 +51,17 @@ export default {
   },
   computed: {
     showNavigationBar() {
-      if (this.$route.name in this.sngPage && this.$store.state.data.index === 0) {
+      if (
+        this.$route.name in this.sngPage &&
+        this.$store.state.data.index === 0
+      ) {
         return "header";
       } else if (this.$route.name === "Login") {
         return "headerLogin";
+      } else if (this.$route.name === "Profile") {
+        return "header";
+      } else if (this.$route.name === "Register") {
+        return;
       }
       return "nav";
     },
