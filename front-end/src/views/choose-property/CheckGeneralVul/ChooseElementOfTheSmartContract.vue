@@ -286,7 +286,6 @@ table span {
   text-overflow: ellipsis;
 }
 .nav-item {
-  width: 24%;
   min-width: 10%;
   margin-right: 3px;
   cursor: pointer;

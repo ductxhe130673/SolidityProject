@@ -131,9 +131,10 @@ export default {
 }
 #add-vul {
   width: 60%;
+  color: black;
 }
 #header {
-  margin-top: 0;
+  margin-top: 2%;
   text-align: center;
   font-size: 35px;
   font-weight: bold;
@@ -165,6 +166,7 @@ textarea {
   width: 100%;
   display: flex;
   margin-left: 4%;
+  padding-bottom: 5%;
 }
 button:hover {
   background-color: #1079cf;

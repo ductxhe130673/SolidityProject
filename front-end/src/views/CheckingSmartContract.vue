@@ -1,32 +1,30 @@
 <template>
-  <div id="main">
-    <div id="header">
-      <h1>Generating CPN Model</h1>
+  <div class="container-fluid">
+    <div class="row">
+      <h1 class="text-center">Generating CPN Model</h1>
     </div>
-    <div class="text-2">
-      <span>Smart Contracts</span>
-    </div>
-    <div id="locate-1">
-      <div id="component">
-        <div class="table table-striped table-hover">
-          <table class="table" border="1">
+    <div class="row">
+      <div class="col-md-3">Smart Contracts</div>
+      <div class="col-md-7">
+        <div id="table-list">
+          <table class="table table-md">
+            <thead>
             <tr>
-              <th>
-                #<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('asId')" />
-                  <a-icon id="icon" type="caret-down" @click="sort('deId')" />
-                </span>
-              </th>
+              <th style="width: 10%">#</th>
               <th>
                 Contract Name
                 <span
-                  ><a-icon id="icon" type="caret-up" @click="sort('asName')" /><a-icon
+                  ><a-icon
+                    id="icon"
+                    type="caret-up"
+                    @click="sort('asName')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('deName')"
                 /></span>
               </th>
             </tr>
+            </thead>
             <tr v-for="(item, index) in filterSC" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ item }}</td>
@@ -35,9 +33,10 @@
         </div>
       </div>
     </div>
-    <div id="locate-2">
-      <div class="label">Context</div>
-      <div class="input-area">
+
+    <div class="row">
+      <div class="col-md-3">Context</div>
+      <div class="col-md-7">
         <input
           type="text"
           class="form-control"
@@ -46,9 +45,10 @@
         />
       </div>
     </div>
-    <div id="locate-3">
-      <div class="label">LTL Property</div>
-      <div class="input-area">
+
+    <div class="row">
+      <div class="col-md-3">LTL Property</div>
+      <div class="col-md-7">
         <input
           v-if="selected_vuls.name"
           type="text"
@@ -65,12 +65,16 @@
         />
       </div>
     </div>
-    <div id="locate-4">
-      <div class="label">Configuration</div>
-      <div class="link-to">
-        <a @click="navigate('config')"> Link to setting Configuration</a>
+
+    <div class="row">
+      <div class="col-md-3">Configuration</div>
+      <div class="col-md-7">
+        <a class="link-primary" @click="navigate('config')">
+          Link to setting Configuration</a
+        >
       </div>
     </div>
+
     <div class="contain-process">
       <div id="processing-section">
         <div id="initial" v-if="step == 'initial'"></div>
@@ -108,6 +112,7 @@
         </div>
       </div>
     </div>
+
     <div id="showConfirmation" v-if="showConfirmationDownload">
       <div id="removeSC-holder">
         <confirm
@@ -117,22 +122,46 @@
         />
       </div>
     </div>
+
     <div id="processing-btn">
       <button
+        type="button"
+        class="btn btn-outline-primary"
         v-if="step == 'initial' || step == 'generating'"
-        class="btn btn-primary-outline"
         @click="generate"
       >
         Generate
       </button>
-      <button v-if="step == 'check'" class="btn btn-primary-outline" @click="check">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        v-if="step == 'check'"
+        @click="check"
+      >
         Check
       </button>
-      <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
-      <button v-if="showDownload" @click="openDownload()" class="btn btn-primary-outline">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        v-if="step == 'finish'"
+      >
+        Next
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        v-if="showDownload"
+        @click="openDownload()"
+      >
         Download
       </button>
-      <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="navigate('back')"
+      >
+        Back
+      </button>
     </div>
   </div>
 </template>
@@ -184,12 +213,6 @@ export default {
     },
     sort(mess) {
       switch (mess) {
-        case "asId":
-          this.list_selected_sc.sort((a, b) => a.aid - b.aid);
-          break;
-        case "deId":
-          this.list_selected_sc.sort((a, b) => b.aid - a.aid);
-          break;
         case "asName":
           this.list_selected_sc.sort((a, b) => (a.name < b.name ? 1 : -1));
           break;
@@ -221,7 +244,8 @@ export default {
 
       console.log("newLtl", this.newLtl);
       const tName = "unfolding";
-      const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
+      const tcontext_PATH_xml =
+        this.$store.state.data.data.selectedContext.content;
       const tltl_PATH_json = JSON.stringify(this.newLtl, 0, 2);
       const initialMarkingInfor = JSON.stringify(
         this.$store.state.data.data.initialMarkingInfor,
@@ -244,9 +268,9 @@ export default {
       this.$store.commit("Setrs", "wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
-        console.log("A-----------")
+        console.log("A-----------");
         const mess = res.data.message;
-        console.log(mess)
+        console.log(mess);
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {
@@ -405,109 +429,88 @@ export default {
 </script>
 
 <style scoped>
-#main {
-  height: 100%;
-  width: 100%;
+h1{
+  font-weight: bold;  
 }
-#header {
-  text-align: center;
+.container-fluid {
+  color: black;
+  background-color: white;
+}
+.row {
   margin-top: 2%;
+  padding-right: 10px;
   margin-bottom: 2%;
-  font-weight: bold;
 }
+.col-md-3 {
+  padding-left: 13%;
+  font-size: 18px;
+}
+a:hover {
+  text-decoration: underline;
+}
+#table-list {
+  width: 100%;
+  margin: auto;
+  font-size: 0.9em;
+  height: 200px;
+  overflow-y: auto;
+}
+/* table */
+table {
+  width: 100%;
+  font-size: 1.1em;
+}
+
+table td,
+table th {
+  padding-left: 10px;
+}
+table td{
+  padding: 10px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  background-color: #d9edf7;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  color: #3a7694;
+  text-indent: inherit;
+}
+
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
+/* button */
 .contain-process {
-  width: 50%;
-  margin: 0 auto;
-  padding-bottom: 10%;
-}
-#locate-1 {
-  border: 1px solid;
   width: 60%;
   margin: 0 auto;
-  padding-bottom: 3%;
+  padding-bottom: 5%;
 }
 
-#processing-btn button {
-  cursor: pointer;
-  width: 5%;
-  height: 2%;
-  border: 1px solid #2196f3;
-  text-align: center;
-  color: #2196f3;
-  font-size: 13px;
-  line-height: 22px;
-  font-weight: 600;
-  padding: 4px 3px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 4%;
-}
-.btn {
-  margin: 0 10%;
-}
-#removeSC-holder {
-  margin-top: 200px;
-}
-#locate-1 {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  border: 1px solid #d9edf7;
-  border-radius: 10px;
-}
-
-#processing-btn button:hover {
-  background-color: #1079cf;
-  color: white;
-}
-.text-1 {
-  position: relative;
-  left: 15%;
-  top: 15px;
-  z-index: 1;
-  height: 30px;
-  width: 8%;
-  background: white;
-  text-align: center;
-}
-.text-2 {
-  position: relative;
-  left: 20%;
-  top: 15px;
-  z-index: 1;
-  height: 30px;
-  width: 6.6%;
-  background: white;
-  text-align: center;
-  width: 140px;
-}
-.text {
-  position: relative;
-  left: 15%;
-  top: 15px;
-  z-index: 1;
-  height: 30px;
-  width: 3.6%;
-  background: white;
-  text-align: center;
-}
-#component {
-  margin: 0 auto;
-  width: 94%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-}
-.table {
-  width: 94%;
-  margin: 0 auto;
-}
-.table tr:first-child {
-  background-color: #d9edf7;
-  color: #4ea8d6;
-}
 #processing-btn {
-  margin: 40px;
-  text-align: center;
-  margin-top: -90px;
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding-bottom: 5%;
 }
+
 #download {
   text-align: right;
   padding: 20px;
@@ -560,42 +563,4 @@ export default {
   margin-top: 50px;
 }
 </style>
-<style scoped>
-/* -----Context Style------ */
 
-#locate-2,
-#locate-3,
-#locate-4 {
-  width: 60%;
-  margin: 0 auto;
-  padding: 3% 2%;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  border: 1px solid #d9edf7;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
-  margin: 1% auto;
-}
-
-.label {
-  font-size: 25px;
-}
-.input-area {
-  width: 80%;
-}
-.link-to {
-  width: 80%;
-  display: flex;
-  align-items: center;
-  text-decoration: underline;
-  padding-left: 10px;
-}
-span {
-  float: right;
-  display: block;
-}
-#icon {
-  display: block;
-  height: 8px;
-}
-</style>

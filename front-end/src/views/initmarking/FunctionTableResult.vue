@@ -10,37 +10,31 @@
       <div id="sender-value-section">
         <span>Sender value</span>
         <input type="text" placeholder="0" v-model="own_list_argument.sender" />
-        <!-- <span>To</span>
-        <input type="text" placeholder="10" v-model="own_list_argument.sender_to" /> -->
       </div>
       <div id="table-params">
-        <div class="table-params-row" id="header-params-row">
-          <div class="table-params-cell first-params-cell">
-            #
-            <span class="material-icons"> swap_vert </span>
-          </div>
-          <div class="table-params-cell second-params-cell">
-            Parameters
-            <span class="material-icons"> swap_vert </span>
-          </div>
-          <div class="table-params-cell third-params-cell">
-            Range
-            <span class="material-icons"> swap_vert </span>
-          </div>
-        </div>
-
-        <div
-          class="table-params-row"
-          v-for="(param, key, index) in own_list_argument.argument"
-          v-bind:key="key"
-          :class="{ even_row: index % 2 == 0 }"
-        >
-          <div class="table-params-cell first-params-cell">{{ param.id }}</div>
-          <div class="table-params-cell second-params-cell">{{ param.name }}</div>
-          <div class="table-params-cell third-params-cell">
-            <input type="text" v-model="param.value" />
-          </div>
-        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 10%">#</th>
+              <th>
+                Parameters
+                <span>
+                  <a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </th>
+              <th style="width: 25%">Range</th>
+            </tr>
+          </thead>
+          <tr
+            v-for="(param, key) in own_list_argument.argument"
+            v-bind:key="key"
+          >
+            <td>{{ param.id }}</td>
+            <td>{{ param.name }}</td>
+            <td><input type="text" v-model="param.value" /></td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -97,13 +91,14 @@ export default {
 
 #params-setting-input {
   height: 270px;
-  border: 2px solid black;
+  border: 1px solid black;
   padding-left: 4%;
   padding-right: 4%;
 }
 
 #sender-value-section {
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #sender-value-section span {
@@ -114,59 +109,52 @@ export default {
   height: 25px;
   margin-left: 10px;
   margin-right: 10px;
+  border: 1px solid grey;
 }
 
+/* table */
 #table-params {
-  width: 100%;
-  margin-top: 10px;
+  margin: auto;
   font-size: 0.9em;
-  height: 200px;
+  height: 240px;
   overflow-y: auto;
-  border-radius: 4px;
-  border: 2px solid black;
-
-  background: rgb(241, 240, 240);
+}
+table {
+  width: 100%;
+}
+table td,
+table th {
+  padding: 6px;
 }
 
-.table-params-row {
-  display: flex;
-  height: 40px;
+table tr {
+  border-bottom: 1px solid #dee2e6;
 }
-#header-params-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+table tr:hover {
+  background-color: #ddd;
+}
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
 }
 
-#header-params-row span {
+table span {
   float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 150%;
+  display: block;
 }
-.even_row {
-  background-color: rgb(226, 224, 224);
+#icon {
+  display: block;
+  height: 8px;
 }
-.table-params-cell {
-  padding-top: 10px;
-}
-.first-params-cell {
-  flex-basis: 12%;
-  padding-left: 5px;
-}
-.second-params-cell {
-  flex-basis: 58%;
-}
-.third-params-cell {
-  padding-left: 5%;
-  flex-basis: 30%;
-}
-
-.third-params-cell input {
-  height: 20px;
-  width: 30px;
-}
-.third-params-cell span {
-  margin-left: 5px;
-  margin-right: 5px;
+table input{
+  border: 1px solid grey;
+  width: 50%;
 }
 </style>
