@@ -48,8 +48,11 @@ export class AuthService {
   static async makeLogout() {
     try {
       _resetAuthData()
+      
       // return new ResponseWrapper(response, response.data) 
       localStorage.removeItem("user");
+      localStorage.removeItem("vuex");
+      
       $router.push({ name: 'Login' }).catch(() => { })
     } catch (error) {
       throw new ErrorWrapper(error)

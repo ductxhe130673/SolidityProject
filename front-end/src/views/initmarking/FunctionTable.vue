@@ -17,25 +17,18 @@
         <table class="table">
           <thead>
             <tr>
-                <th style="width :10%">
-                  #
-                </th>
-                <th>
-                  Parameters
-                 <span>
-                    <a-icon id="icon" type="caret-up" />
-                    <a-icon id="icon" type="caret-down" />
-                  </span>
-                </th>
-                <th style="width : 25%">
-                  Range
-                </th>
+              <th style="width: 10%">#</th>
+              <th>
+                Parameters
+                <span>
+                  <a-icon id="icon" type="caret-up" />
+                  <a-icon id="icon" type="caret-down" />
+                </span>
+              </th>
+              <th style="width: 25%">Range</th>
             </tr>
           </thead>
-          <tr
-            v-for="(param, key) in own_list_argument.argument"
-            v-bind:key="key"   
-          >
+          <tr v-for="(param, key) in own_list_argument.argument" v-bind:key="key">
             <td>
               {{ param.id }}
             </td>
@@ -66,7 +59,7 @@ export default {
   },
   beforeMount() {
     this.own_list_argument = this.list_argument;
-    console.log("this.own_list_argument", this.own_list_argument);
+    this.sender_value = this.own_list_argument.sender_value;
   },
   methods: {
     setArgument() {
@@ -84,11 +77,11 @@ export default {
 </script>
 
 <style scoped>
-.random-input-form  {
+.random-input-form {
   display: flex;
   justify-content: space-between;
 }
-.random-input-form input{
+.random-input-form input {
   width: 40%;
 }
 table {

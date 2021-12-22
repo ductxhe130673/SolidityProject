@@ -2,7 +2,7 @@
   <div class="container">
     <div id="header">Checking Result</div>
     <div class="main">
-      <div class="content"> {{done_result}}</div>
+      <div class="content" style="white-space: pre-line"> {{done_result}}</div>
     </div>
 
     <div class="button">

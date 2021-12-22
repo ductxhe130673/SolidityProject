@@ -214,7 +214,7 @@ nav {
 .nav__right {
   display: flex;
   align-items: center;
-  width: 12%;
+  width: 13%;
   justify-content: space-around;
 }
 .avatar {

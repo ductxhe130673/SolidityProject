@@ -1,41 +1,66 @@
 <template>
-  <div
-    class="language-ltl"
-    id="highlighting-content"
-    spellcheck="false"
-    contenteditable=""
-    @input="updateInput"
-    @keydown.enter.prevent="keyEnter"
-    @keydown.tab.prevent="keyTab"
-  ></div>
+  <div id="ltleditor-container">
+    <div
+      class="language-ltl"
+      id="highlighting-content"
+      spellcheck="false"
+      contenteditable=""
+      @input="updateInput"
+      @keydown.enter.prevent="keyEnter"
+      @keydown.tab.prevent="keyTab"
+    ></div>
+
+    <div id="selection-table" v-if="isSelectVariable">
+      <div id="selection-table-b2">
+        <div id="selection-table-b2-s">
+          <ArgumentSelection
+            v-if="getVariableType == 'arg'"
+            :selectValue="getSelectVariableValue"
+            @changeValue="updateSelection"
+          />
+          <VariableSelection
+            v-if="getVariableType == 'var'"
+            :selectValue="getSelectVariableValue"
+            @changeValue="updateSelection"
+          />
+          <FunctionSelection
+            v-if="getVariableType == 'func'"
+            :selectValue="getSelectVariableValue"
+            @changeValue="updateSelection"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { analyseLTLCode } from "../mixins/text-parser.js";
+import ArgumentSelection from "./ArgumentTable.vue";
+import VariableSelection from "./VarialbleTable.vue";
+import FunctionSelection from "./FunctionTable.vue";
+
 export default {
   props: ["ltlcode"],
-  data: function () {
+  components: { ArgumentSelection, VariableSelection, FunctionSelection },
+  data() {
     return {
       selectVariable: false,
       select_variable_value: "",
       select_variable_id: "",
       select_variable_type: "",
-      selected_template: "",
-      ltltemplate: [],
-      description: "",
-      data: this.ltlcode,
+      temp_selection: "",
     };
+  },
+  mounted() {
+    this.updateContent(this.ltlcode?.length, this.ltlcode);
   },
   watch: {
     ltlcode(new_var) {
       if (this.getNodeValue() != new_var) {
-        this.updateContent(new_var.length, new_var);
+        this.updateContent(new_var?.length, new_var);
       }
     },
-  },
-  mounted() {
-    this.ltlcode = this.$store.state.data.data.selectedTemplate.formula;
-    this.updateContent(1, this.ltlcode);
   },
   computed: {
     isSelectVariable() {
@@ -48,50 +73,57 @@ export default {
       return this.select_variable_type;
     },
   },
-
   methods: {
-    sendMessage(data) {
-      this.$emit("input", data);
-    },
-    changeid(value) {
-      const data = this.ltltemplate.find((i) => {
-        return i.lteid == value;
-      });
-      this.ltlcode = data.formula;
-      this.description = data.description;
+    cancelEvent() {
+      this.$router.push({ name: "ContextSelection" });
     },
     updateSelection(new_value) {
-      if (new_value != "") {
-        let elemnet = document.getElementById(this.select_variable_id);
-        elemnet.innerText = new_value;
+      this.temp_selection = new_value;
+    },
+    cancelSelectValue() {
+      this.selectVariable = false;
+    },
+    updateSelectValue() {
+      if (this.temp_selection != "") {
+        let elements = document.getElementsByClassName(this.select_variable_id);
+        for (let i = 0; i < elements?.length; i++) {
+          let type = elements[i].type;
+          if (type == "") {
+            type = "var";
+          }
+          if (type == this.select_variable_type) {
+            elements[i].innerText = "'" + this.temp_selection + "'";
+          }
+        }
+        this.$emit("changeContent", this.getNodeValue());
       }
       this.select_variable_id = "";
       this.select_variable_value = "";
       this.select_variable_type = "";
       this.selectVariable = false;
-      this.sendMessage(this.getNodeValue());
     },
     openSelectTable(id, value, type) {
-      this.select_variable_value = value.substring(1, value.length - 1);
+      this.select_variable_value = value.substring(1, value?.length - 1);
       this.select_variable_id = id;
       if (type != "") {
         this.select_variable_type = type;
       } else {
         this.select_variable_type = "var";
       }
-      console.log("------", id, value, type);
-      this.$store.commit("setTypeFormula", this.select_variable_type);
+      console.log(type);
       this.selectVariable = true;
     },
     removeSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
       var self = this;
-      for (var i = 0; i < userSelection.length; i++) {
+      for (var i = 0; i < userSelection?.length; i++) {
         (function (index) {
-          userSelection[index].removeEventListener("click", function (event) {
+          userSelection[index].addEventListener("click", function (event) {
+            let val = event.target.innerHTML;
+            let classList = event.target.classList;
             self.openSelectTable(
-              event.target.id,
-              event.target.innerHTML,
+              classList[classList?.length - 1],
+              val,
               event.target.type
             );
           });
@@ -101,13 +133,14 @@ export default {
     addSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
       var self = this;
-      for (var i = 0; i < userSelection.length; i++) {
+      for (var i = 0; i < userSelection?.length; i++) {
         (function (index) {
-          userSelection[index].setAttribute("id", "select_var_" + i);
           userSelection[index].addEventListener("click", function (event) {
+            let val = event.target.innerHTML;
+            let classList = event.target.classList;
             self.openSelectTable(
-              event.target.id,
-              event.target.innerHTML,
+              classList[classList?.length - 1],
+              val,
               event.target.type
             );
           });
@@ -120,13 +153,13 @@ export default {
       result_element.innerHTML = analyseLTLCode(value);
       this.setCursor(pos);
       this.addSelectVarEventListener();
-      this.sendMessage(value);
+      this.$emit("changeContent", value);
     },
     getNodeValue() {
       let result_element = document.getElementById("highlighting-content");
       let childs = result_element.childNodes;
       let all_text = [];
-      for (let i = 0; i < childs.length; ++i) {
+      for (let i = 0; i < childs?.length; ++i) {
         if (childs[i]) {
           if (childs[i].nodeType != 3) {
             let value = childs[i].innerHTML;
@@ -145,29 +178,25 @@ export default {
     updateInput() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      if (value.length == 0 && pos == 0) {
-        value = " ";
-        pos = 1;
-      }
       this.updateContent(pos, value);
     },
     keyEnter() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value = value.substring(0, pos) + "\n " + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\n " + value.substring(pos, value?.length);
       this.updateContent(pos + 1, value);
     },
     keyTab() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value = value.substring(0, pos) + "\t" + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\t" + value.substring(pos, value?.length);
       this.updateContent(pos + 1, value);
     },
     getCursorPos() {
       let selection = window.getSelection();
       let range = selection.getRangeAt(0);
       range.setStartBefore(document.getElementById("highlighting-content").parentNode);
-      let pos = range.toString().split("").length;
+      let pos = range.toString()?.split("")?.length;
       range.collapse(false);
       return pos;
     },
@@ -183,18 +212,92 @@ export default {
 </script>
 
 <style scoped>
-/* ---Formular Editor Style---- */
+#ltleditor-container {
+  height: 100%;
+  width: 100%;
+}
+
 #highlighting-content {
-  margin: 10px;
-  padding: 10px;
   border: 0;
-  width: calc(101% - 32px);
-  height: 150px;
+  width: 100%;
+  height: 100%;
   background-color: #f6f6f6;
-  font-size: 15pt;
+  font-size: 13pt;
   font-family: normal normal 1em/1.2em monospace;
   line-height: 20pt;
   overflow: auto;
   white-space: pre;
+}
+#selection-table {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s;
+}
+#selection-table-b2 {
+  position: absolute;
+  height: 550px;
+  width: 900px;
+  border-radius: 10px;
+  top: 130px;
+  left: calc(50% - 450px);
+  background-color: white;
+  overflow: auto;
+}
+
+#selection-table-b2-s {
+  width: 90%;
+  margin: auto;
+  height: 460px;
+  margin-top: 10px;
+}
+
+/* button */
+#ssc-button {
+  width: 90%;
+  height: 80px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.button-style {
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  color: #111827;
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  text-decoration: none #d1d5db solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 3px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-style:hover {
+  background-color: rgb(249, 250, 251);
+}
+
+.button-style:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-style:focus-visible {
+  box-shadow: none;
 }
 </style>
