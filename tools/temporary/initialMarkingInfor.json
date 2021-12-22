@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "smart_contract": [
     {
       "name": "EtherGame",
@@ -246,5 +247,39 @@
 >>>>>>> origin/sprint#2
 =======
   "NumberOfUser": "3"
+>>>>>>> origin/sprint#2
+=======
+    "smart_contract": [{
+        "name": "EtherGame",
+        "functions": [{
+                "fid": 1,
+                "name": "play",
+                "argument": [],
+                "sender_value": {
+                    "from": "1",
+                    "to": "10"
+                }
+            },
+            {
+                "fid": 2,
+                "name": "claimReward",
+                "argument": [],
+                "sender_value": {
+                    "from": "1",
+                    "to": "10"
+                }
+            }
+        ]
+    }],
+    "balance": {
+        "type": "map",
+        "fixed": "",
+        "map": "1,2,3",
+        "random": {
+            "from": "",
+            "to": ""
+        }
+    },
+    "NumberOfUser": "3"
 >>>>>>> origin/sprint#2
 }

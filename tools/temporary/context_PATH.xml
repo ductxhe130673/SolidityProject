@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is Content 3 
 =======
 <DCRModel>
@@ -45,4 +46,7 @@ This is Content 3
 <target>play</target>
 </rules>
 </DCRModel>
+>>>>>>> origin/sprint#2
+=======
+This is Content 2 
 >>>>>>> origin/sprint#2

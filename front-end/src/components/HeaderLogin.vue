@@ -2,10 +2,6 @@
   <nav>
     <div class="nav__left">
       <div class="name" @click="goHome()">Solidity</div>
-      <div class="nav__search">
-        <span class="material-icons">search</span>
-        <input type="text" placeholder="Search Solidity" />
-      </div>
     </div>
 
     <div class="nav__mid">
@@ -30,7 +26,7 @@
       </div>
     </div>
     <div class="nav__right">
-      <button @click="goRegister()" id="register-btn">Register</button>
+      <button class="btn btn-outline-primary" @click="goRegister()" >Register</button>
     </div>
   </nav>
 </template>
@@ -41,13 +37,9 @@ export default {
   data: function () {
     return {
       username: "",
-      showDia: false,
     };
   },
   methods: {
-    toggleProfile() {
-      this.showDia = !this.showDia;
-    },
     goHome() {
       this.goURL("/");
     },
@@ -184,14 +176,7 @@ a {
   color: blue;
   text-decoration: underline;
 }
-#register-btn {
-  font-size: 20px;
-  border: none;
-  margin-left: 10px;
-  margin-right: 30px;
-  background-color: #5fb8ee;
-  border-radius: 5px;
-}
+
 #dropdown-content {
   display: none;
   position: absolute;
