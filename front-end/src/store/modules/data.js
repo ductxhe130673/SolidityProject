@@ -7,6 +7,7 @@ const state = {
     isEditFormula: false,
     contentFile: '',
     fileUpload: null,
+    fileToDownload: null,
     data: {
         uploadSCFile: {},
         selectedSc: [],
@@ -134,6 +135,9 @@ const mutations = {
     },
     SetDateState(state, value) {
         state.date_modified = value
+    },
+    SetDataToDownload(state, data) {
+        state.fileToDownload = data
     },
     ResetState(state) {
         state.used = false
