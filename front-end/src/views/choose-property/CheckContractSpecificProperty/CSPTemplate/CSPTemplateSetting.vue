@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-2">Formula</div>
       <div class="col-10">
-        <LtlEditor :ltlcode="getFormula" :ltlcodetext="getFormulaText" />
+        <LtlEditor :ltlcode="getFormulaText" :ltlcodetext="getFormulaText" />
       </div>
     </div>
     <div class="row">
