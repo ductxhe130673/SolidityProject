@@ -219,7 +219,7 @@ export default {
         );
       }
 
-      console.log("newLtl", this.newLtl);
+      console.log("newLtl", this.newLtl.params);
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
       const tltl_PATH_json = JSON.stringify(this.newLtl, 0, 2);
@@ -234,8 +234,8 @@ export default {
         tltl_PATH_json,
         initialMarkingInfor
       );
-      console.log("here");
-      console.log(res);
+      this.$store.commit("SetDataToDownload", res.data)
+      console.log("res---", res.data)
     },
 
     async callToolHelena() {

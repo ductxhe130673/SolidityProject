@@ -7,6 +7,7 @@ const state = {
     isEditFormula: false,
     contentFile: '',
     fileUpload: null,
+    fileToDownload : null,
     data: {
         uploadSCFile: {},
         selectedSc: [],
@@ -127,6 +128,10 @@ const getters = {
 const mutations = {
     Setrs(state, value) {
         state.rs = value;
+    },
+    SetDataToDownload(state, data){
+        console.log("data--", data)
+        state.fileToDownload = data;
     },
     /* -- used */
     SetUsedState(state, value) {

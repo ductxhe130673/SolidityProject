@@ -47,13 +47,14 @@ export class ltltemplateService extends BaseService {
     }
 
         /*---------Update LTLTemplate--------- */
-        static async UpdateLtlTemplate(id, name, description, fomular ,date) {
+        static async UpdateLtlTemplate(id, name, description, fomular ,date,formulaText) {
             console.log('fomular',fomular);
             try {
                 const paraData = {
                     "lteid": id,
                     "name": name,
                     "formula": fomular,            // fix cung
+                    "formula_text": formulaText,
                     "description": description,
                     "createdDate": date,  // fix cung
                     "template_type": "test",       // fix cung

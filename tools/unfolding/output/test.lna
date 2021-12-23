@@ -1,4 +1,4 @@
-EtherGame(N := 2, cb := 0, v1 := 3, v2 := 2, v3 := 5, v4 := 3, v5 := 10, v6 := 5, users := 1, play_sdr := 10, claimReward_sdr := 10) {
+EtherGame(N := 2, cb := 0, v1 := 3, v2 := 2, v3 := 5, v4 := 3, v5 := 10, v6 := 5, users := 5, play_sdr := 10, claimReward_sdr := 10) {
 
 /**************************
  *** Colour Definitions ***
@@ -24,7 +24,7 @@ type CLAIM_REWARD_RETURN : struct { USER sender;};
 type PLAY_STATE : struct { STATE state;PLAY_PAR playPar;};
 type CLAIM_REWARD_STATE : struct { STATE state;CLAIM_REWARD_PAR claimRewardPar;};
 type UINT_ARRAY : list[UINT] of UINT with capacity 1000;
-constant UINT_ARRAY user_balance:=|10|;
+constant UINT_ARRAY user_balance:=|8,3,8,5,6|;
 constant UINT_ARRAY play_sender_value:=|1,2,3,4,5,6,7,8,9,10|;
 constant UINT_ARRAY claimReward_sender_value:=|1,2,3,4,5,6,7,8,9,10|;
 
