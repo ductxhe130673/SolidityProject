@@ -234,13 +234,8 @@ export default {
         tltl_PATH_json,
         initialMarkingInfor
       );
-<<<<<<< HEAD
       this.$store.commit("SetDataToDownload", res.data)
       console.log("res---", res.data)
-=======
-      console.log("here");
-      this.$store.commit("SetDataToDownload", res);
->>>>>>> sprint#2
     },
 
     async callToolHelena() {

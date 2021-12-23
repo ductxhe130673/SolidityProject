@@ -9,11 +9,7 @@
             style="margin-top: 20px; margin-left: 30px"
             theme="twoTone"
           />
-<<<<<<< HEAD
           <h4>HCPN</h4>
-=======
-          <h4>HCPN File</h4>
->>>>>>> sprint#2
         </div>
         <div class="file">
           <a-icon
@@ -21,11 +17,7 @@
             style="margin-top: 20px; margin-left: 30px"
             theme="twoTone"
           />
-<<<<<<< HEAD
           <h4>Prop</h4>
-=======
-          <h4>Prop File</h4>
->>>>>>> sprint#2
         </div>
         <div class="file">
           <a-icon
@@ -33,11 +25,7 @@
             style="margin-top: 20px; margin-left: 30px"
             theme="twoTone"
           />
-<<<<<<< HEAD
           <h4>Context</h4>
-=======
-          <h4>Context File</h4>
->>>>>>> sprint#2
         </div>
         <!-- <a class="btn btn-primary btn-sm" @click="downloadItem(1)">Download</a> -->
         <!-- <button type="button" @click="downloadItem(1)">Download blob_hcpn</button> 
@@ -67,15 +55,10 @@ export default {
   },
   mounted() {
     this.dataDownload = this.$store.state.data.fileToDownload;
-<<<<<<< HEAD
     console.log("RES----", this.dataDownload.hcpn)
   },
   methods: {
     
-=======
-  },
-  methods: {
->>>>>>> sprint#2
     downloadItem() {
       let blob_hcpn = new Blob([this.dataDownload.hcpn.content], {
         type: "text/plain;charset-urf-8",

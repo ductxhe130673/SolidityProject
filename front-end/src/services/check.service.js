@@ -51,11 +51,6 @@ export default class CheckService extends BaseService {
         }
     }
     static async getFileToDownload() {
-<<<<<<< HEAD
-
-=======
-        console.log('apiaxios');
->>>>>>> sprint#2
         try {
             const response = await this.request({ auth: true }).get('/tools/')
             console.log("RES-------------",response)

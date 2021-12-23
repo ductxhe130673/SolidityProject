@@ -7,11 +7,7 @@ const state = {
     isEditFormula: false,
     contentFile: '',
     fileUpload: null,
-<<<<<<< HEAD
     fileToDownload : null,
-=======
-    fileToDownload: null,
->>>>>>> sprint#2
     data: {
         uploadSCFile: {},
         selectedSc: [],
@@ -133,10 +129,7 @@ const mutations = {
     Setrs(state, value) {
         state.rs = value;
     },
-    SetDataToDownload(state, data){
-        console.log("data--", data)
-        state.fileToDownload = data;
-    },
+    
     /* -- used */
     SetUsedState(state, value) {
         state.used = value
