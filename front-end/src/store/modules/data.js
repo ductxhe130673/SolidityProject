@@ -141,14 +141,62 @@ const mutations = {
         state.fileToDownload = data
     },
     ResetState(state) {
+        state.index= 0,
+        state.isEditFormula= false,
+        state.contentFile= '',
+        state.fileUpload= null,
+        state.fileToDownload = null,
         state.used = false
         state.data = {
-            selectedSc: [],
-            selectedSCInfor: {},
-            selectedContext: {},
-            selectedTemplate:{},
-            selectedVulnerbility: [],
-            configVul: {}
+            uploadSCFile: {},
+        selectedSc: [],
+        selectedSCInfor: {},
+        selectedContext: {
+            content : ""
+        },
+        selectedTemplate: {},
+        nameCSP: '',
+        selectedVulnerbility: [],
+        configVul: {},
+        ltlProperty : [],
+        isAuthen : false,
+        typeFormula: '',
+        isVarSelected:'',
+        ltlConfig : 
+        {
+            type: "",
+            params: {
+            }
+        },
+        
+        initialMarkingInfor: {
+            smart_contract: [
+                {
+                    name: "",
+                    functions: [
+                        {   
+                            fid: "",
+                            name: "",
+                            argument: [],
+                            sender_value: {
+                                from: null,
+                                to: null
+                            }
+                        },
+                    ]
+                }
+            ],
+            balance: {
+                type: "fixed",
+                fixed: "",
+                map: "",
+                random: {
+                    from: "",
+                    to: ""
+                }
+            },
+            NumberOfUser: ""
+        },
         }
         state.views = {
             process: 'sc-selection',
