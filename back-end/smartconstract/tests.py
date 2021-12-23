@@ -13,27 +13,25 @@ class SimpleTest(TestCase):
     def test_create_new_smartcontract(self):
         response = self.client.post('http://127.0.0.1:8000/smartconstract/select-smart-contract',
                                     data={
-                                        'name': 'abc', 'type': 'new', 'content': 'abc', 'description': 'abc', 'aid': '1'},
+                                        'name': 'abc', 'type': 'new', 'createdDate':'2021-12-22','content': 'abc', 'description': 'abc', 'aid': '1'},
                                     content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+class SimpleTestUpdate(TestCase):
     # test update smartcontract
     def test_update_smartcontract(self):
         response = self.client.put('http://127.0.0.1:8000/smartconstract/select-smart-contract',
                                    data={
-                                       'id': '6', 'name': 'abc', 'type': 'new', 'content': 'abc', 'description': 'abc', 'aid': '1'},
+                                       'id': '6', 'name': 'abc', 'type': 'new', 'createdDate':'2021-12-22','content': 'abc', 'description': 'abc', 'aid': '1'},
                                    content_type='application/json')
         self.assertEquals(response.status_code, status.HTTP_202_ACCEPTED)
 
+class SimpleTestDelete(TestCase):
     # test delete smartcontract
     def test_delete_smartcontract(self):
         response = self.client.delete(
-            'http://127.0.0.1:8000/smartconstract/select-smart-contract?id=6')
+            'http://127.0.0.1:8000/smartconstract/select-smart-contract?id=6')           
 
-<<<<<<< HEAD
-=======
-
->>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
 class Test_Insert_Methods(TransactionTestCase):
    # test new insert into initialmanrking
     def test_insert_into_initialmarking(self):
@@ -60,13 +58,13 @@ class Test_Insert_Methods(TransactionTestCase):
        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
     # test new insert into IMArgument
-    def test_insertIntoIMArgument(self):
-       response = self.client.post(
-                                   'http://127.0.0.1:8000/smartconstract/addnewimargument',
-                                   data={
-                                       'arg_name': 'test', 'IMfrom': '1', 'IMto': '10'},
-                                   content_type='application/json')
-       self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+    # def test_insertIntoIMArgument(self):
+    #    response = self.client.post(
+    #                                'http://127.0.0.1:8000/smartconstract/addnewimargument',
+    #                                data={
+    #                                    'arg_name': 'test', 'IMfrom': '1', 'IMto': '10'},
+    #                                content_type='application/json')
+    #    self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
     # test new insert into CheckedBashSC
     def test_insertIntoCheckBashSC(self):
@@ -234,8 +232,6 @@ class TestGetArgumentByFunctionId(TestCase):
     # test get argument by function ID,'id' not 'sid'
     def test_getArgument_by_FunctionId(self):
         response =  self.client.get('http://127.0.0.1:8000/smartconstract/getargubyfunctionid?sid=4')
-<<<<<<< HEAD
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST) 
-=======
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
->>>>>>> b2ef9eb15c56fddd0ae09143133476b9d355ae5a
+
+#  python .\manage.py test --testrunner=custom_seting.custom_runner.CustomRunner        

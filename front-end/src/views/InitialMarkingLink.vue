@@ -218,7 +218,7 @@ export default {
         } else {
           this.dataUserTable.push({
             name: "User" + i,
-            balance: this.init_marking.balance.map.split(",")[i],
+            balance: this.init_marking.balance.map.split(",")[i-1],
           });
         }
       }
@@ -248,7 +248,7 @@ export default {
         this.$store.commit("SetInitialMarking", this.init_marking);
         this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", 5);
-        console.log("this.smart_contract_infors", this.smart_contract_infors);
+
       }
       if (param == "back") {
         this.$router.push({ name: "CheckSmartContract" });

@@ -10,7 +10,7 @@
           @change="changeid($event.target.value)"
           v-model="select"
         >
-          <option v-for="item in listTemplates" :key="item" :value="item.lteid">
+          <option v-for="item in listTemplates" :key="item" :value="item.name">
             {{ item.name }}
           </option>
         </select>
@@ -25,7 +25,7 @@
           cols="30"
           rows="5"
           class="form-control"
-          v-model="description"
+          v-model="ltlConfig.params.description"
         >
         </textarea>
       </div>
@@ -40,34 +40,12 @@
         Back
       </button>
     </div>
-    <div id="selection-table" v-if="isSelectVariable">
-      <div id="selection-table-b2">
-        <ArgumentSelection
-          v-if="getVariableType == 'arg'"
-          :current_value="getSelectVariableValue"
-          @updateCurrentSelectVariable="updateSelection"
-        />
-        <VariableSelection
-          v-if="getVariableType == 'var'"
-          :current_value="getSelectVariableValue"
-          @updateCurrentSelectVariable="updateSelection"
-        />
-        <FunctionSelection
-          v-if="getVariableType == 'func'"
-          :current_value="getSelectVariableValue"
-          @updateCurrentSelectVariable="updateSelection"
-        />
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import { GetAllltltemplates } from "../../../services/data";
 import { analyseLTLCode } from "../../../mixins/text-parser.js";
-import ArgumentSelection from "../../../components/ArgumentTable.vue";
-import VariableSelection from "../../../components/VarialbleTable.vue";
-import FunctionSelection from "../../../components/FunctionTable.vue";
 export default {
   data: function () {
     return {
@@ -78,11 +56,23 @@ export default {
       selected_template: "",
       ltlcode: "abc",
       listTemplates: [],
-      description: "",
-      select: 1,
+      select: "interger_overflow_underflow",
+
+      ltlConfig: {
+        type: "general",
+        params: {
+          id: "iou",
+          name: "under_over_flow",
+          inputs: {
+            min_threshold: "",
+            max_threshold: "",
+            selected_variable: "",
+          },
+          description: "",
+        },
+      },
     };
   },
-  components: { ArgumentSelection, VariableSelection, FunctionSelection },
   mounted() {
     this.initData();
     this.updateContent(1, this.ltlcode);
@@ -114,7 +104,7 @@ export default {
     async initData() {
       this.listTemplates = await GetAllltltemplates();
       this.ltlcode = this.listTemplates[0].formula;
-      this.description = this.listTemplates[0].description;
+      this.ltlConfig.params.description = this.listTemplates[0].description;
     },
     changeid(value) {
       const data = this.listTemplates.find((i) => {
@@ -126,13 +116,15 @@ export default {
     routing(param) {
       /* let ltl_content = this.getNodeValue() ltl content se duoc gui ve phia backend*/
       if (param == "add") {
-        if (this.select == 1) {
+        this.$store.commit("SetLtlConfig", this.ltlConfig);
+        this.$store.commit("SetSelectedTemplate", this.select);
+        if (this.select == "interger_overflow_underflow") {
           this.$router.push({ name: "ChooseElementOfSmartContract" });
-        } else if (this.select == 2) {
+        } else if (this.select == "reetrancy") {
           this.$router.push({ name: "SelectFuncReentrancyOp1" });
-        } else if (this.select == 3) {
+        } else if (this.select == "self_destruction") {
           this.$router.push({ name: "SelectFuncSD" });
-        } else if (this.select == 4) {
+        } else if (this.select == "timestamp_dependence") {
           this.$router.push({ name: "SelectFuncTimeStampSkipEmpty" });
         }
       }

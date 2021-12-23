@@ -117,6 +117,7 @@ export default {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
     async clickHandler(action) {
+      console.log("A-----", this.code)
       if (action == "save") {
         if (this.code === "" || this.name === "") alert("Please input all field!!!");
         await CreateLTLTemplate(

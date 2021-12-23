@@ -134,7 +134,7 @@ def getFunctionVarArgu(request):
 # INSERT INTO INITIAL MARKING
 @api_view(['POST'])
 def addNewInitialMarking(request):
-    print('Number======',request.GET['num_user'])
+    #print('Number======',request.data['num_user'])
     try:
         resData = dbcontext.addNewInitialMarking(request.data['num_user'],request.data['IM_type'])
         if resData is None :

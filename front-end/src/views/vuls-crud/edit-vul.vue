@@ -123,6 +123,7 @@ export default {
       this.name = data.name;
       this.description = data.description;
       this.dateFormat = data.createdDate;
+      this.formulaText = data.formula_text
     },
 
     async clickHandler(action) {
@@ -132,7 +133,8 @@ export default {
           this.name,
           this.description,
           this.codeModel,
-          this.dateFormat
+          this.dateFormat,
+          this.formulaText
         );
         this.$router.push(this.$route.params.parent_path);
         this.$store.commit("setIsEditFormula", false);
@@ -155,7 +157,6 @@ export default {
       );
     },
     changedLTL(value) {
-      console.log(`Parent: ${value}`);
       this.codeModel = value;
     },
   },

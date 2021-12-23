@@ -10,6 +10,7 @@ class SimpleTest(TestCase):
         response = self.client.get('http://127.0.0.1:8000/ltltemplate/api')
         self.assertEquals(response.status_code, 202)
 
+class SimpleTest1(TestCase):
     # test create new template
     def test_create_new_template(self):
         response = self.client.post('http://127.0.0.1:8000/ltltemplate/api',
@@ -18,6 +19,7 @@ class SimpleTest(TestCase):
                                     content_type='application/json')
         self.assertEquals(response.status_code, 201)
 
+class SimpleTest2(TestCase):
     # test update template information
     def test_update_template(self):
         response = self.client.put('http://127.0.0.1:8000/ltltemplate/api',
@@ -26,10 +28,11 @@ class SimpleTest(TestCase):
                                    content_type='application/json')
         self.assertEqual(response.status_code, 202)
 
+class SimpleTest3(TestCase):
     # test delete template
     def test_delete_template(self):
         response = self.client.delete(
-            'http://127.0.0.1:8000/ltltemplate/api?lteid=12')
+            'http://127.0.0.1:8000/ltltemplate/api?lteid=6')
         self.assertEquals(response.status_code, 200)
 <<<<<<< HEAD
 =======

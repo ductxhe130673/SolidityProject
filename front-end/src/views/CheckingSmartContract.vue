@@ -50,10 +50,18 @@
       <div class="label">LTL Property</div>
       <div class="input-area">
         <input
+          v-if="selected_vuls.name"
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
           v-model="selected_vuls.name"
+        />
+        <input
+          v-else
+          type="text"
+          class="form-control"
+          aria-describedby="basic-addon3"
+          v-model="selected_vuls"
         />
       </div>
     </div>
@@ -65,15 +73,6 @@
     </div>
     <div class="contain-process">
       <div id="processing-section">
-        <div id="download">
-          <a
-            v-if="showDownload"
-            class="btn btn-primary btn-sm"
-            href=""
-            download="test.lna"
-            >Download</a
-          >
-        </div>
         <div id="initial" v-if="step == 'initial'"></div>
         <div id="generating" v-show="step == 'generating'">
           <div>The smart contract is generating...</div>
@@ -109,6 +108,15 @@
         </div>
       </div>
     </div>
+    <div id="showConfirmation" v-if="showConfirmationDownload">
+      <div id="removeSC-holder">
+        <confirm
+          @cancel="closeConfirmDownload"
+          @confirm="routing('uploadfile')"
+          :dialog="upLoadDialog"
+        />
+      </div>
+    </div>
     <div id="processing-btn">
       <button
         v-if="step == 'initial' || step == 'generating'"
@@ -121,6 +129,9 @@
         Check
       </button>
       <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
+      <button v-if="showDownload" @click="openDownload()" class="btn btn-primary-outline">
+        Download
+      </button>
       <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
     </div>
   </div>
@@ -128,14 +139,16 @@
 
 <script>
 import CheckService from "../services/check.service";
-import { GetLtl } from "../services/data";
+import DownloadFile from "./DownloadFile.vue";
+
+// import { GetLtl } from "../services/data";
 
 export default {
   data() {
     return {
       step: "initial",
       list_selected_sc: [],
-      selected_vuls: this.$store.state.data.data.selectedTemplate,
+      selected_vuls: "",
       context: this.$store.state.data.data.selectedContext.name,
       error: true,
       view: "",
@@ -145,17 +158,30 @@ export default {
       dialog: {},
       confirmation: "",
       currentSC: null,
-      newltlconfig: this.$store.state.data.data.ltlConfig
-
-      //payoutMileStone1
+      newLtl: this.$store.state.data.data.ltlConfig,
+      showConfirmationDownload: false,
     };
   },
+
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
-    this.fetchLTLProp();
-    console.log("-------------", this.newltlconfig)
+    this.selected_vuls = this.$store.state.data.data.selectedTemplate;
+  },
+  components: {
+    // Popup,
+    confirm: DownloadFile,
   },
   methods: {
+    openDownload() {
+      this.upLoadDialog = {
+        title: "Do you want to Download",
+        confirmbtn: "OK",
+      };
+      this.showConfirmationDownload = true;
+    },
+    closeConfirmDownload() {
+      this.showConfirmationDownload = false;
+    },
     sort(mess) {
       switch (mess) {
         case "asId":
@@ -172,9 +198,9 @@ export default {
           break;
       }
     },
-    async fetchLTLProp() {
-      this.ltlProperty = await GetLtl();
-    },
+    // async fetchLTLProp() {
+    //   this.ltlProperty = await GetLtl();
+    // },
     navigate(param) {
       if (param == "config") {
         this.$router.push({ name: "InitialMarkingLink" });
@@ -185,12 +211,18 @@ export default {
       }
     },
     async callUnfoldingTool() {
-      const newltl = this.$store.state.data.data.ltlConfig;
-      newltl.params.formula = newltl.params.formula.replace("variable", "currentBalance");
+      const newVar = this.$store.state.data.data.isVarSelected;
+      if (this.newLtl.type !== "general") {
+        this.newLtl.params.formula = this.newLtl.params.formula.replaceAll(
+          "variable",
+          newVar
+        );
+      }
+
+      console.log("newLtl", this.newLtl.params);
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
-      const tltl_PATH_json = JSON.stringify(newltl, 0, 2);
-      //console.log("ltl------------",tltl_PATH_json)
+      const tltl_PATH_json = JSON.stringify(this.newLtl, 0, 2);
       const initialMarkingInfor = JSON.stringify(
         this.$store.state.data.data.initialMarkingInfor,
         0,
@@ -202,8 +234,8 @@ export default {
         tltl_PATH_json,
         initialMarkingInfor
       );
-      console.log("here");
-      console.log(res);
+      this.$store.commit("SetDataToDownload", res.data)
+      console.log("res---", res.data)
     },
 
     async callToolHelena() {
@@ -212,7 +244,9 @@ export default {
       this.$store.commit("Setrs", "wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
+        console.log("A-----------");
         const mess = res.data.message;
+        console.log(mess);
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
       } else {
@@ -341,7 +375,6 @@ export default {
     },
   },
   mounted() {
-    this.selected_vuls = this.$store.state.data.data.selectedTemplate;
     this.view = this.$store.getters["data/GetProcessView"];
   },
   computed: {
@@ -396,7 +429,7 @@ export default {
 
 #processing-btn button {
   cursor: pointer;
-  width: 15%;
+  width: 5%;
   height: 2%;
   border: 1px solid #2196f3;
   text-align: center;
@@ -411,6 +444,9 @@ export default {
 }
 .btn {
   margin: 0 10%;
+}
+#removeSC-holder {
+  margin-top: 200px;
 }
 #locate-1 {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;

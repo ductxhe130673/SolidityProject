@@ -21,7 +21,6 @@ export async function initCurrentUserStateMiddleware (to, from, next) {
 
 export function checkAccessMiddleware (to, from, next) {
   const currentUserId = localStorage.getItem("user")
-  // console.log("record => record.meta.role)",to.matched);
   const isAuthRoute = to.matched.some(record => record.meta.requiresAuth)
   const isAdminRoutes = to.matched.some(record => record.meta.isAdmin)
   const userRole = localStorage.getItem("user")

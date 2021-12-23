@@ -39,7 +39,6 @@ export class ContextService extends BaseService {
         /*---------Delete Context--------- */
     static async DeleteContext(id) {
             try {
-                console.log(id)
                 const response = await this.request({ auth: true }).delete(`${this.getUnity()}/api?cid=${id}`)
                 return new ResponseWrapper(response, response.data)
             } catch (error) {
@@ -50,7 +49,6 @@ export class ContextService extends BaseService {
         /*---------Update Context--------- */
     static async UpdateContext(id, ct_name, dateFormat, option, description, content) {
             // const ContextById = await this.request({ auth: true }).get(`${this.getUnity()}/cpncontextbyid?cid=${id}`)
-            // console.log(ContextById,ct_name,ct_description)
             try {
                 const paraData = {
                     "cid": id,

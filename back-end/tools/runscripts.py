@@ -5,7 +5,11 @@ from subprocess import Popen, PIPE, STDOUT
 
 
 # for Windows
+<<<<<<< HEAD
 # path = r"D:\Document\CapStone\CapstoneProject\SolidityProject\tools"
+=======
+#path = r"D:\Solidity\SolidityNew\SolidityProject\tools"
+>>>>>>> ce55ba095f05871519cdf08530b0ae53b0324391
 # for Ubuntu
 path = r"G:\CapstoneProject\SolidityProject\tools"
 
@@ -24,12 +28,19 @@ def savetotemporary(data):
 def unfolding():
     # get from temporary
     # context_PATH = './test/test.xml'
-    #ltl_PATH = './test/ltl.json'
+    # ltl_PATH = './test/ltl.json'
     # initialMarking_PATH  = './test/test.im.json'
     context_PATH = path + '/temporary/context_PATH.xml'
     ltl_PATH = path + '/temporary/ltl_PATH.json'
     initialMarking_PATH  = path + '/temporary/initialMarkingInfor.json'
 
+    f = open(context_PATH, 'r')
+    context = str(f.read())
+    if(context == ""):
+        context_type = "FREE"
+    else:
+        context_type = "DCR"
+    
     # wait tools
     lna_PATH = './test/EtherGame.lna'
     sol_ast_PATH = './test/blindAuction.ast'
@@ -40,7 +51,7 @@ def unfolding():
     output_NAME = 'test'
 
     commandUnf = "./unfolding --lna " + lna_PATH + " --context " + \
-        context_PATH + " --context-type " + "DCR" + " --ltl "+ltl_PATH+" --sol-ast " + \
+        context_PATH + " --context-type " + context_type + " --ltl "+ltl_PATH+" --sol-ast " + \
         sol_ast_PATH+" --lna-json "+lna_json_PATH+ " --im-json " +initialMarking_PATH + \
          " --output_path " + output_PATH+" --output_name "+output_NAME
     # print (commandUnf)

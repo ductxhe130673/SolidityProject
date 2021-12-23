@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-2">Formula</div>
       <div class="col-10">
-        <LtlEditor :ltlcode="getFormula" />
+        <LtlEditor :ltlcode="getFormulaText" :ltlcodetext="getFormulaText" />
       </div>
     </div>
     <div class="row">
@@ -73,8 +73,11 @@ export default {
     LtlEditor,
   },
   computed: {
-    getFormula() {
+    getFormulaText() {
       return this.template.formula_text;
+    },
+    getFormula() {
+      return this.template.formula;
     },
   },
   methods: {

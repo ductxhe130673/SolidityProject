@@ -206,8 +206,8 @@ export async function DeleteLtlTemplate(id_Ltl) {
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date) {
-    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date,formulaText) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date,formulaText)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()
