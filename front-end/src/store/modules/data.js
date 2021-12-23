@@ -7,7 +7,11 @@ const state = {
     isEditFormula: false,
     contentFile: '',
     fileUpload: null,
+<<<<<<< HEAD
     fileToDownload : null,
+=======
+    fileToDownload: null,
+>>>>>>> sprint#2
     data: {
         uploadSCFile: {},
         selectedSc: [],
@@ -139,6 +143,9 @@ const mutations = {
     },
     SetDateState(state, value) {
         state.date_modified = value
+    },
+    SetDataToDownload(state, data) {
+        state.fileToDownload = data
     },
     ResetState(state) {
         state.used = false
