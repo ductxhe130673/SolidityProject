@@ -95,7 +95,7 @@ export default {
             elements[i].innerText = "'" + this.temp_selection + "'";
           }
         }
-        this.$emit("changeContent", this.getNodeValue());
+        this.$emit("input", this.getNodeValue());
       }
       this.select_variable_id = "";
       this.select_variable_value = "";
@@ -153,7 +153,7 @@ export default {
       result_element.innerHTML = analyseLTLCode(value);
       this.setCursor(pos);
       this.addSelectVarEventListener();
-      this.$emit("changeContent", value);
+      this.$emit("input", value);
     },
     getNodeValue() {
       let result_element = document.getElementById("highlighting-content");

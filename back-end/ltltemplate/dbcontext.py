@@ -2,7 +2,7 @@ from django.db import connection
 
 def modifyCheckedDetail(cid):
     try:
-        sql = '''UPDATE soliditycpn.checkedbatchsc SET lteid = NULL WHERE lteid = %s'''
+        sql = '''UPDATE soliditycpn.CheckedBatchSC SET lteid = NULL WHERE lteid = %s'''
         cursor = connection.cursor()
         cursor.execute(sql,[cid])
         return "Update Successful"
