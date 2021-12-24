@@ -231,7 +231,7 @@ h1 {
   align-items: center;
 }
 .row {
-  margin-top: 2%;
+ padding-top: 2%;
   padding-right: 10px;
 }
 .row-end {

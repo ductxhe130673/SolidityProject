@@ -3,6 +3,7 @@ import { ContextService } from "./context.serivce"
 //import { LtlService } from "./ltlpro.serivce"
 import { cpncontextService } from "./cpncontext.serivce"
 import { ltltemplateService } from "./ltltemplate.serivce"
+import { ProfileService } from "./profile.serivce"
 
 /* -------Vulnerabilities------ */
 var listVulnerabilities = [
@@ -197,7 +198,7 @@ export async function GetLtltemplteById(id_Ltl) {
 /*---------CreateAndModiftyLtl--------- */
 export async function CreateLTLTemplate(name, fomular, description, date, formula_text) {
     console.log('fomular', formula_text);
-    return await ltltemplateService.CreateLTLTemplate(name, fomular, description, date,formula_text);
+    return await ltltemplateService.CreateLTLTemplate(name, fomular, description, date, formula_text);
 }
 
 /*---------DeleteLtl-------- */
@@ -206,8 +207,8 @@ export async function DeleteLtlTemplate(id_Ltl) {
 }
 
 /*---------Update Ltl-------- */
-export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date) {
-    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date)
+export async function UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date, formulaText) {
+    return await ltltemplateService.UpdateLtlTemplate(id_Ltl, ct_name, ct_description, fomular, date, formulaText)
 }
 export async function GetAllcpncontext() {
     const response = await cpncontextService.GetAllcpncontext()
@@ -216,5 +217,13 @@ export async function GetAllcpncontext() {
 export async function SetDataForCallingTool(context, ltl) {
     const response = await cpncontextService.setDataForCallingTool(context, ltl)
     console.log('response1');
+    return response.data
+}
+export async function GetAccountById(id) {
+    const response = await ProfileService.GetAccountById(id)
+    return response.data
+}
+export async function GetAvatarById(id) {
+    const response = await ProfileService.GetAvatarById(id)
     return response.data
 }

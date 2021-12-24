@@ -18,10 +18,7 @@
               <th style="width: 10%">#</th>
               <th>
                 Parameters
-                <span>
-                  <a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
+
               </th>
               <th style="width: 25%">Range</th>
             </tr>

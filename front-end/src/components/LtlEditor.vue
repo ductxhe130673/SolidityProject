@@ -240,10 +240,10 @@ export default {
 }
 #selection-table-b2 {
   position: absolute;
-  height: 550px;
-  width: 900px;
+  height: 90%;
+  width: 70%;
   border-radius: 10px;
-  top: 130px;
+  top: 30px;
   left: calc(50% - 450px);
   background-color: white;
   overflow: auto;

@@ -115,10 +115,7 @@
                       <th style="width: 10 %">#</th>
                       <th>
                         Functions
-                        <span>
-                          <a-icon id="icon" type="caret-up" />
-                          <a-icon id="icon" type="caret-down" />
-                        </span>
+
                       </th>
                       <th style="width: 25%">Arguments</th>
                     </tr>
@@ -485,7 +482,8 @@ table span {
 
 
 .input-param-text:hover {
-  color: rgb(78, 78, 243);
+  color: red;
+  text-decoration: underline red wavy;
 }
 
 /* Button */

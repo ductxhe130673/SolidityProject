@@ -258,7 +258,7 @@ color: black;
   width: 70%;
 }
 #header {
-  margin-top: 1%;
+  margin-top: 2%;
   text-align: center;
   font-size: 35px;
   font-weight: bold;

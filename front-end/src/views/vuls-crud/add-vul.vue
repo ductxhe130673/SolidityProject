@@ -117,8 +117,10 @@ export default {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
     async clickHandler(action) {
+      console.log("A-----", this.code);
       if (action == "save") {
-        if (this.code === "" || this.name === "") alert("Please input all field!!!");
+        if (this.code === "" || this.name === "")
+          alert("Please input all field!!!");
         await CreateLTLTemplate(
           this.name,
           this.code,
@@ -136,11 +138,11 @@ export default {
 };
 </script>
 <style scoped>
-.container-fluid{
+.container-fluid {
   color: black;
 }
 .row {
-  margin-top: 2%;
+  padding-top: 2%;
   padding-right: 10px;
 }
 .row > .col-md-3:not(.row:first-of-type > .col-md-3) {

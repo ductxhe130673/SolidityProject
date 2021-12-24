@@ -28,7 +28,7 @@
 
     <div class="nav__right" v-if="checkUser">
       <a class="avatar">
-        <img class="avatar__img" src="../assets/avata.jpg" />
+        <img class="avatar__img" src="../assets/avatar.png" />
         <span
           ><strong>{{ getUserName }}</strong></span
         >

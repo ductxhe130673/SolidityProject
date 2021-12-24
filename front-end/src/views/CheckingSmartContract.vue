@@ -13,15 +13,6 @@
               <th style="width: 10%">#</th>
               <th>
                 Contract Name
-                <span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('asName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('deName')"
-                /></span>
               </th>
             </tr>
             </thead>
@@ -242,7 +233,7 @@ export default {
         );
       }
 
-      console.log("newLtl", this.newLtl);
+      console.log("newLtl", this.newLtl.params);
       const tName = "unfolding";
       const tcontext_PATH_xml =
         this.$store.state.data.data.selectedContext.content;
@@ -258,8 +249,8 @@ export default {
         tltl_PATH_json,
         initialMarkingInfor
       );
-      console.log("here");
-      console.log(res);
+      this.$store.commit("SetDataToDownload", res.data)
+      console.log("res---", res.data)
     },
 
     async callToolHelena() {

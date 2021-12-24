@@ -123,6 +123,7 @@ export default {
       this.name = data.name;
       this.description = data.description;
       this.dateFormat = data.createdDate;
+      this.formulaText = data.formula_text;
     },
 
     async clickHandler(action) {
@@ -132,7 +133,8 @@ export default {
           this.name,
           this.description,
           this.codeModel,
-          this.dateFormat
+          this.dateFormat,
+          this.formulaText
         );
         this.$router.push(this.$route.params.parent_path);
         this.$store.commit("setIsEditFormula", false);
@@ -162,11 +164,11 @@ export default {
 };
 </script>
 <style scoped>
-.container-fluid{
+.container-fluid {
   color: black;
 }
 .row {
-  margin-top: 2%;
+  padding-top: 2%;
   padding-right: 10px;
 }
 .row > .col-md-3:not(.row:first-of-type > .col-md-3) {

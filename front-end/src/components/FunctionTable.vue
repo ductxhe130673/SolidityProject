@@ -24,41 +24,29 @@
       </div>
       <div id="func-information-table">
         <div id="table-list">
-          <div class="table-row" id="header-row">
-            <div class="table-cell header-cell first-cell">
-              #
-              <span
-                ><a-icon id="icon" type="caret-up" />
-                <a-icon id="icon" type="caret-down" />
-              </span>
-            </div>
-            <div class="table-cell header-cell second-cell">
-              Function
-              <span
-                ><a-icon id="icon" type="caret-up" />
-                <a-icon id="icon" type="caret-down" />
-              </span>
-            </div>
-            <div class="table-cell header-cell third-cell">Selected</div>
-          </div>
-          <div
-            class="table-row"
-            v-for="(func, index) in smart_infor[selectedSCIndex].functions"
-            v-bind:key="func.fid"
-            :class="{ even_row: index % 2 == 0 }"
-          >
-            <div class="table-cell first-cell">{{ index + 1 }}</div>
-            <div class="table-cell second-cell">{{ func.name }}</div>
-            <div class="table-cell third-cell">
-              <input
-                type="radio"
-                id="one"
-                name="ch"
-                :value="func.name"
-                v-model="selected_variable"
-              />
-            </div>
-          </div>
+          <table class="table">
+            <thead>
+              <th style="width: 10%">#</th>
+              <th>Function</th>
+              <th style="width: 15%">Selected</th>
+            </thead>
+            <tr
+              v-for="(func, index) in smart_infor[selectedSCIndex].functions"
+              v-bind:key="func.fid"
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ func.name }}</td>
+              <td>
+                <input
+                  type="radio"
+                  id="one"
+                  name="ch"
+                  :value="func.name"
+                  v-model="selected_variable"
+                />
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -134,76 +122,60 @@ export default {
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-#icon {
-  display: block;
-  height: 8px;
-}
+/* tab link */
 .nav-item .active {
-  color: white;
-  background-color: #383838;
-  border: grey;
+  color: black;
+  background-color: #d9edf7;
 }
 .nav-link {
-  color: #383838;
-  border: grey solid;
+  color: black;
+  border: black solid 1px;
   border-bottom: none;
 }
 .nav-item {
-  width: 20%;
+  min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
 }
 
 #func-information-table {
-  border: black solid;
-  padding: 3% 2% 3% 2%;
+  border: black solid 1px;
+  padding: 4% 3% 4% 3%;
 }
 
+/* table */
 #table-list {
-  width: 100%;
-  margin: auto;
-  font-size: 0.9em;
-  height: 300px;
   overflow-y: auto;
-  border-radius: 4px;
-  border: 2px solid black;
-  background: rgb(241, 240, 240);
+  height: 300px;
 }
 
-.table-row {
-  display: flex;
-  height: 50px;
-  border: 2px solid #ddd;
+table {
+  width: 100%;
 }
-#header-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
+table td,
+table th {
+  padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-#table-list span {
-  float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 100%;
+table tr:hover {
+  background-color: #ddd;
 }
-.even_row {
-  background-color: rgb(226, 224, 224);
+
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
 }
-.table-cell {
-  padding-top: 10px;
-  font-size: 15px;
-}
-.first-cell {
-  flex-basis: 10%;
-  padding-left: 5px;
-}
-.second-cell {
-  flex-basis: 60%;
-}
-.third-cell {
-  flex-basis: 30%;
-}
+
 
 /* button */
 #processing-btn {

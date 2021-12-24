@@ -50,21 +50,16 @@ export default class CheckService extends BaseService {
             throw new ErrorWrapper(error, message)
         }
     }
-    // static async getFileToDownload(tcontext_PATH_xml, tltl_PATH_json,initialMarkingInfor) {
-    //     const paraData = {
-    //         name: tName,
-    //         "context_PATH.xml": tcontext_PATH_xml,
-    //         "ltl_PATH.json": tltl_PATH_json,
-    //         "initialMarkingInfor.json": initialMarkingInfor
-    //     };
-    //     try {
-    //         const response = await this.request({ auth: true }).post('/tools/', paraData)
-    //         return new ResponseWrapper(response, response.data)
-    //     } catch (error) {
-    //         const message = error.response.data ? error.response.data.error : error.response.statusText
-    //         throw new ErrorWrapper(error, message)
-    //     }
-    // }
+    static async getFileToDownload() {
+        try {
+            const response = await this.request({ auth: true }).get('/tools/')
+            console.log("RES-------------",response)
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
 
     static async callToolLTL(tName) {
         const paraData = {
