@@ -160,7 +160,7 @@ export default {
       currentSC: null,
       newLtl: this.$store.state.data.data.ltlConfig,
       showConfirmationDownload: false,
-      dataDownload: {},
+      fileDownload: {}
     };
   },
 
@@ -173,19 +173,20 @@ export default {
   },
   methods: {
     downloadItem() {
-      console.log("dataDownload", this.dataDownload);
-      let blob_hcpn = new Blob([this.dataDownload?.hcpn.content], {
+      if(this.fileDownload !== {}){
+        let blob_hcpn = new Blob([this.fileDownload.hcpn.content], {
         type: "text/plain;charset-urf-8",
       });
-      let blob_prop = new Blob([this.dataDownload?.prop.content], {
+      let blob_prop = new Blob([this.fileDownload.prop.content], {
         type: "text/plain;charset-urf-8",
       });
-      let blob_context = new Blob([this.dataDownload?.context.content], {
+      let blob_context = new Blob([this.fileDownload.context.content], {
         type: "text/plain;charset-urf-8",
       });
-      saveAs(blob_hcpn, this.dataDownload?.hcpn.name);
-      saveAs(blob_prop, this.dataDownload?.prop.name);
-      saveAs(blob_context, this.dataDownload?.context.name);
+      saveAs(blob_hcpn, this.fileDownload.hcpn.name);
+      saveAs(blob_prop, this.fileDownload.prop.name);
+      saveAs(blob_context, this.fileDownload.context.name);
+      }
     },
     // openDownload() {
     //   this.upLoadDialog = {
@@ -249,6 +250,8 @@ export default {
         initialMarkingInfor
       );
       this.$store.commit("SetDataToDownload", res.data);
+      this.fileDownload = res.data
+      
     },
 
     async callToolHelena() {
@@ -261,6 +264,14 @@ export default {
         console.log(mess);
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
+        await CheckService.addNewCheckedBatchSC(
+        this.selected_vuls.lteid,
+        this.context.cid,
+        this.list_selected_sc.length,
+        1,
+        this.newLtl.params.formula,
+        this.results[0]
+      );
       } else {
         this.$store.commit("Setrs", "11");
         this.results.push("Can't run HELENA tools");
@@ -330,14 +341,17 @@ export default {
       await this.delay(2000);
       this.$router.push({ name: "checkingresult31" });
       this.$store.commit("setIndex", 7);
-      await CheckService.addNewCheckedBatchSC(
-        this.selected_vuls.lteid,
-        this.context.cid,
-        this.list_selected_sc.length,
-        1,
-        this.newLtl.params.formula,
-        this.results
-      );
+      // if(this.results){
+      //   await CheckService.addNewCheckedBatchSC(
+      //   this.selected_vuls.lteid,
+      //   this.context.cid,
+      //   this.list_selected_sc.length,
+      //   1,
+      //   this.newLtl.params.formula,
+      //   this.results
+      // );
+      // }
+      
     },
     routing(processview) {
       this.$store.commit("data/SetProcessView", processview);

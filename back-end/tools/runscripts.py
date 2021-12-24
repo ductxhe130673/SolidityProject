@@ -7,7 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 # for Windows
 # path = r"D:\Document\CapStone\CapstoneProject\SolidityProject\tools"
 # for Ubuntu
-path = r"G:\CapstoneProject\SolidityProject\tools"
+path = r"/home/quypham/SolidityProject/tools"
 
 
 # ---save file to temporary----
