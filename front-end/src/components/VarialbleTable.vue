@@ -7,6 +7,7 @@
         </div>
       </div>
       <div class="smart-cell">
+        <br />
         <div id="list-smart">
           <ul class="nav nav-tabs" style="flex-wrap: nowrap">
             <li
@@ -55,9 +56,67 @@
                   type="radio"
                   id="one"
                   name="ch"
-                  v-model="ltlConfig.params.inputs.selected_variable"
+                  v-model="checkedVar"
                   :value="func.name"
                 />
+              </div>
+            </div>
+          </div>
+
+          <div class="function">
+            <div id="list-smart">
+              <ul class="nav nav-tabs">
+                <li
+                  class="nav-item d-inline-block text-truncate"
+                  v-for="(item, index) in functionBySC"
+                  :key="item.id"
+                >
+                  <a
+                    class="nav-link"
+                    v-on:click="selectFunction(item.fid, index)"
+                    v-bind:class="{ active: item.sid == selected_smart }"
+                    >{{ item.name }}</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div id="Func-table">
+              <div id="table-list">
+                <div class="table-row" id="header-row">
+                  <div class="table-cell header-cell first-cell">
+                    #
+                    <span>
+                      <a-icon id="icon" type="caret-up" />
+                      <a-icon id="icon" type="caret-down" />
+                    </span>
+                  </div>
+                  <div class="table-cell header-cell second-cell">
+                    Local variables
+                    <span>
+                      <a-icon id="icon" type="caret-up" />
+                      <a-icon id="icon" type="caret-down" />
+                    </span>
+                  </div>
+                  <div class="table-cell header-cell third-cell">Selected</div>
+                </div>
+                <div
+                  class="table-row"
+                  v-for="(func, index) in getSelectedFunc"
+                  v-bind:key="func.fid"
+                  :class="{ even_row: index % 2 == 0 }"
+                >
+                  <div class="table-cell first-cell">{{ index + 1 }}</div>
+                  <div class="table-cell second-cell">{{ func.name }}</div>
+                  <div class="table-cell third-cell">
+                    <input
+                      type="radio"
+                      id="one"
+                      name="ch"
+                      v-model="checkedVar"
+                      :value="func.name"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -80,42 +139,25 @@ export default {
       list_function: [],
       functionBySC: [],
       smart_infor: [],
-      checkedGlobalVar: "",
+      checkedVar: "",
       checkedLocalVar: "",
       selectedSCIndex: 0,
       selectedFunctionIndex: 0,
-      ltlConfig: {
-        type: "specific",
-        params: {
-          id: "",
-          name: "",
-          formula: "",
-          description: "",
-          inputs: {
-            selected_variable: "",
-            selected_function: "",
-          },
-        },
-      },
       function_infor: {},
       selected_func: 1,
-      selected_smart: 1,
-      minhold: 0,
-      maxhold: 0,
+      selected_smart: 0,
     };
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc; //nhung smartcontract da select
     // this.getFuntionSC(this.list_smart_contract[0].sid);
     this.setSCInfor();
-    this.ltlConfig = this.$store.state.data.data.ltlConfig;
   },
   methods: {
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
         this.selectedSCIndex = index;
-        console.log("this.selected_smart", this.selected_smart, this.selectedSCIndex);
         this.functionBySC = this.list_function[index];
       }
     },
@@ -126,13 +168,14 @@ export default {
         this.function_infor = this.functionBySC[index].localVar;
       }
     },
+    // SetSelectedTemplate
     routing(param) {
       if (param == "next") {
-        this.$store.commit("SetLtlConfig", this.ltlConfig);
-        this.$router.push({ name: "CSPTemplateSetting" });
+        this.$store.commit("setVarSelected", this.checkedVar);
+        document.getElementById("selection-table").style.display = "none";
       }
       if (param == "back") {
-        this.$router.push({ name: "GenaralVulSetting" });
+        document.getElementById("selection-table").style.display = "none";
       }
     },
     getFuntionSC(sid) {
@@ -190,11 +233,14 @@ table span {
   color: #383838;
   border: grey solid;
   border-bottom: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .nav-item {
-  width: 25%;
+  width: 24%;
   margin-right: 3px;
   cursor: pointer;
+  border-bottom: 2px solid;
 }
 
 #Information-table {

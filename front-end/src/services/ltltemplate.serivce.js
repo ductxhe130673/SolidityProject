@@ -47,13 +47,14 @@ export class ltltemplateService extends BaseService {
     }
 
     /*---------Update LTLTemplate--------- */
-    static async UpdateLtlTemplate(id, name, description, fomular, date) {
+    static async UpdateLtlTemplate(id, name, description, fomular, date, formulaText) {
         console.log('fomular', fomular);
         try {
             const paraData = {
                 "lteid": id,
                 "name": name,
                 "formula": fomular, // fix cung
+                "formula_text": formulaText,
                 "description": description,
                 "createdDate": date, // fix cung
                 "template_type": "test", // fix cung
@@ -68,7 +69,16 @@ export class ltltemplateService extends BaseService {
             throw new ErrorWrapper(error, message)
 
         }
+
+        // const response = await this.request({ auth: true }).put(`${this.getUnity()}/api`, paraData)
+        // return new ResponseWrapper(response, response.data)
+    } catch (error) {
+        const message = error.response.data ? error.response.data.error : error.response.statusText
+        console.log(error)
+        throw new ErrorWrapper(error, message)
+
     }
+
 
     /*---------Delete LTLTemplate--------- */
     static async DeleteLtlTemplate(id) {

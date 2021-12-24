@@ -8,6 +8,7 @@ dcr2cpn_PATH='./dcr2cpn/*.cpp'
 ltl2prop_PATH='./ltl2prop/*.cpp'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 g++ -c ./dcr2cpn/*.  -c ./ltl2prop/* -c ./*.cpp
 
 
@@ -28,3 +29,7 @@ g++ -c "$dcr2cpn_PATH"  -c "$ltl2prop_PATH" -c "$current_PATH"
 # #g++ -c "$dcr2cpn_PATH"  -c "$ltl2prop_PATH" -c "$current_PATH"
 # g++ -c ./dcr2cpn/*.cpp  -c ./ltl2prop/*.cpp -c ./*.cpp
 >>>>>>> origin/sprint#2
+=======
+g++ -c ./ltl2prop/*.cpp  -c ./dcr2cpn/*.cpp -c ./*.cpp
+
+>>>>>>> origin/sprint#3

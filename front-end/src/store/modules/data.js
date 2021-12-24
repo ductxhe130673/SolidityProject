@@ -7,11 +7,14 @@ const state = {
     isEditFormula: false,
     contentFile: '',
     fileUpload: null,
+    fileToDownload : null,
     data: {
         uploadSCFile: {},
         selectedSc: [],
         selectedSCInfor: {},
-        selectedContext: {},
+        selectedContext: {
+            content : ""
+        },
         selectedTemplate: {},
         nameCSP: '',
         selectedVulnerbility: [],
@@ -19,6 +22,7 @@ const state = {
         ltlProperty : [],
         isAuthen : false,
         typeFormula: '',
+        isVarSelected:'',
         ltlConfig : 
         {
             type: "",
@@ -36,8 +40,8 @@ const state = {
                             name: "",
                             argument: [],
                             sender_value: {
-                                from: "0",
-                                to: "10"
+                                from: null,
+                                to: null
                             }
                         },
                     ]
@@ -45,14 +49,14 @@ const state = {
             ],
             balance: {
                 type: "fixed",
-                fixed: "10",
+                fixed: "",
                 map: "",
                 random: {
                     from: "",
                     to: ""
                 }
             },
-            NumberOfUser: "5"
+            NumberOfUser: ""
         },
 
     },
@@ -123,9 +127,9 @@ const getters = {
 }
 const mutations = {
     Setrs(state, value) {
-        console.log("commit result");
         state.rs = value;
     },
+    
     /* -- used */
     SetUsedState(state, value) {
         state.used = value
@@ -133,15 +137,66 @@ const mutations = {
     SetDateState(state, value) {
         state.date_modified = value
     },
+    SetDataToDownload(state, data) {
+        state.fileToDownload = data
+    },
     ResetState(state) {
+        state.index= 0,
+        state.isEditFormula= false,
+        state.contentFile= '',
+        state.fileUpload= null,
+        state.fileToDownload = null,
         state.used = false
         state.data = {
-            selectedSc: [],
-            selectedSCInfor: {},
-            selectedContext: {},
-            selectedTemplate:{},
-            selectedVulnerbility: [],
-            configVul: {}
+            uploadSCFile: {},
+        selectedSc: [],
+        selectedSCInfor: {},
+        selectedContext: {
+            content : ""
+        },
+        selectedTemplate: {},
+        nameCSP: '',
+        selectedVulnerbility: [],
+        configVul: {},
+        ltlProperty : [],
+        isAuthen : false,
+        typeFormula: '',
+        isVarSelected:'',
+        ltlConfig : 
+        {
+            type: "",
+            params: {
+            }
+        },
+        
+        initialMarkingInfor: {
+            smart_contract: [
+                {
+                    name: "",
+                    functions: [
+                        {   
+                            fid: "",
+                            name: "",
+                            argument: [],
+                            sender_value: {
+                                from: null,
+                                to: null
+                            }
+                        },
+                    ]
+                }
+            ],
+            balance: {
+                type: "fixed",
+                fixed: "",
+                map: "",
+                random: {
+                    from: "",
+                    to: ""
+                }
+            },
+            NumberOfUser: ""
+        },
         }
         state.views = {
             process: 'sc-selection',
@@ -173,6 +228,9 @@ const mutations = {
     /* -- index -- */
     setIndex(state, data) {
         state.index = data;
+    },
+    setVarSelected(state, data) {
+        state.data.isVarSelected = data;
     },
     setIsEditFormula(state, data) {
         state.isEditFormula = data;

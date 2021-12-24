@@ -67,7 +67,6 @@ class cpncontextAPIView(APIView):
 		except Exception as e:
 			print('ERROR====',e)
 			return Response({"message":"Fail!!"},status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['GET'])
 def getCPNcontextById(request):
     try:

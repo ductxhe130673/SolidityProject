@@ -117,25 +117,21 @@
                         Functions
                         <span>
                           <a-icon id="icon" type="caret-up" />
-                          <a-icon id="icon" type="caret-down"/>
+                          <a-icon id="icon" type="caret-down" />
                         </span>
                       </th>
                       <th style="width: 25%">Arguments</th>
                     </tr>
                   </thead>
                   <tr
-                    v-for="(func, index) in init_marking.smart_contract[
-                      selectedSCIndex
-                    ].functions"
+                    v-for="(func, index) in init_marking.smart_contract[selectedSCIndex]
+                      .functions"
                     v-bind:key="index"
                   >
                     <td>{{ index + 1 }}</td>
                     <td>{{ func.name }}</td>
                     <td>
-                      <div
-                        class="input-param-text"
-                        @click="setFunctionParam(func.fid)"
-                      >
+                      <div class="input-param-text" @click="setFunctionParam(func.fid)">
                         Input Params
                       </div>
                     </td>
@@ -257,7 +253,6 @@ export default {
         return newObject;
       });
       this.init_marking.smart_contract = newData;
-      console.log("newData", newData);
     },
     async getFuntionSC(sid) {
       const func = await GetGloLocArgOfSmartContract(sid).then(
@@ -286,7 +281,7 @@ export default {
     //     this.selected_function
     //   ] = val;
     // },
- 
+
     routing(param) {
       if (param == "save") {
         if (!this.init_marking.NumberOfUser || !this.init_marking.balance.type) {
@@ -505,9 +500,9 @@ table span {
   border-radius: 0.5rem;
   box-sizing: border-box;
   color: #111827;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.25rem;

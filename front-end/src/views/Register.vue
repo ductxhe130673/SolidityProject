@@ -150,10 +150,10 @@ export default {
   box-shadow: 5px 10px 8px 10px #888888;
 }
 label {
-  color: rgb(97, 94, 94);
+  color: rgb(68, 65, 65);
   display: inline-block;
   margin: 25px 0 15px;
-  font-size: 0.6em;
+  font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
@@ -163,7 +163,7 @@ input {
   padding: 10px 6px;
   width: 100%;
   box-sizing: border-box;
-  border-style: solid;
+  border: 1px solid;
   border-color: rgb(163, 161, 161);
   border-radius: 10px;
   color: rgb(126, 126, 126);
@@ -222,7 +222,7 @@ button {
   width: 100%;
 }
 #body {
-  height: 800px;
+  height: 650px;
   width: 100%;
   min-width: 420px;
   background-color: #f9f9f9;

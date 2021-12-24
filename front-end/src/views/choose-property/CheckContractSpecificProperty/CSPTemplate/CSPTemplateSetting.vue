@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-2">Formula</div>
       <div class="col-10">
-        <LtlEditor :ltlcode="getFormula" />
+        <LtlEditor :ltlcode="getFormulaText" :ltlcodetext="getFormulaText" />
       </div>
     </div>
     <div class="row">
@@ -73,8 +73,19 @@ export default {
     LtlEditor,
   },
   computed: {
+    getFormulaText() {
+      let formulaText = "";
+      if (!this.$store.state.data.data.isVarSelected)
+        formulaText = this.template.formula_text;
+      else
+        formulaText = this.template.formula_text?.replaceAll(
+          "variable",
+          this.$store.state.data.data.isVarSelected
+        );
+      return formulaText;
+    },
     getFormula() {
-      return this.template.formula_text;
+      return this.template.formula;
     },
   },
   methods: {

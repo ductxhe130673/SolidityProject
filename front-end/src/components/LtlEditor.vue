@@ -29,14 +29,6 @@
             @changeValue="updateSelection"
           />
         </div>
-        <div id="ssc-button">
-          <button class="button-style" role="button" @click="updateSelectValue">
-            Ok
-          </button>
-          <button class="button-style" role="button" @click="cancelSelectValue">
-            Cancel
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -49,7 +41,7 @@ import VariableSelection from "./VarialbleTable.vue";
 import FunctionSelection from "./FunctionTable.vue";
 
 export default {
-  props: ["ltlcode"],
+  props: ["ltlcode", "ltlcodetext"],
   components: { ArgumentSelection, VariableSelection, FunctionSelection },
   data() {
     return {
@@ -61,12 +53,12 @@ export default {
     };
   },
   mounted() {
-    this.updateContent(this.ltlcode.length, this.ltlcode);
+    this.updateContent(this.ltlcode?.length, this.ltlcode);
   },
   watch: {
     ltlcode(new_var) {
       if (this.getNodeValue() != new_var) {
-        this.updateContent(new_var.length, new_var);
+        this.updateContent(new_var?.length, new_var);
       }
     },
   },
@@ -94,7 +86,7 @@ export default {
     updateSelectValue() {
       if (this.temp_selection != "") {
         let elements = document.getElementsByClassName(this.select_variable_id);
-        for (let i = 0; i < elements.length; i++) {
+        for (let i = 0; i < elements?.length; i++) {
           let type = elements[i].type;
           if (type == "") {
             type = "var";
@@ -111,7 +103,7 @@ export default {
       this.selectVariable = false;
     },
     openSelectTable(id, value, type) {
-      this.select_variable_value = value.substring(1, value.length - 1);
+      this.select_variable_value = value.substring(1, value?.length - 1);
       this.select_variable_id = id;
       if (type != "") {
         this.select_variable_type = type;
@@ -124,12 +116,16 @@ export default {
     removeSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
       var self = this;
-      for (var i = 0; i < userSelection.length; i++) {
+      for (var i = 0; i < userSelection?.length; i++) {
         (function (index) {
           userSelection[index].addEventListener("click", function (event) {
             let val = event.target.innerHTML;
             let classList = event.target.classList;
-            self.openSelectTable(classList[classList.length - 1], val, event.target.type);
+            self.openSelectTable(
+              classList[classList?.length - 1],
+              val,
+              event.target.type
+            );
           });
         })(i);
       }
@@ -137,12 +133,16 @@ export default {
     addSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
       var self = this;
-      for (var i = 0; i < userSelection.length; i++) {
+      for (var i = 0; i < userSelection?.length; i++) {
         (function (index) {
           userSelection[index].addEventListener("click", function (event) {
             let val = event.target.innerHTML;
             let classList = event.target.classList;
-            self.openSelectTable(classList[classList.length - 1], val, event.target.type);
+            self.openSelectTable(
+              classList[classList?.length - 1],
+              val,
+              event.target.type
+            );
           });
         })(i);
       }
@@ -159,7 +159,7 @@ export default {
       let result_element = document.getElementById("highlighting-content");
       let childs = result_element.childNodes;
       let all_text = [];
-      for (let i = 0; i < childs.length; ++i) {
+      for (let i = 0; i < childs?.length; ++i) {
         if (childs[i]) {
           if (childs[i].nodeType != 3) {
             let value = childs[i].innerHTML;
@@ -183,20 +183,20 @@ export default {
     keyEnter() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value = value.substring(0, pos) + "\n " + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\n " + value.substring(pos, value?.length);
       this.updateContent(pos + 1, value);
     },
     keyTab() {
       let value = this.getNodeValue();
       let pos = this.getCursorPos();
-      value = value.substring(0, pos) + "\t" + value.substring(pos, value.length);
+      value = value.substring(0, pos) + "\t" + value.substring(pos, value?.length);
       this.updateContent(pos + 1, value);
     },
     getCursorPos() {
       let selection = window.getSelection();
       let range = selection.getRangeAt(0);
       range.setStartBefore(document.getElementById("highlighting-content").parentNode);
-      let pos = range.toString().split("").length;
+      let pos = range.toString()?.split("")?.length;
       range.collapse(false);
       return pos;
     },
@@ -246,6 +246,7 @@ export default {
   top: 130px;
   left: calc(50% - 450px);
   background-color: white;
+  overflow: auto;
 }
 
 #selection-table-b2-s {
