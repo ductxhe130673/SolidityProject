@@ -105,8 +105,8 @@ export default {
       }
     },
     async setSCInfor() {
-      for (let i = 0; i < this.list_smart_contract.length; i++) {
-        this.smart_infor.push(
+      for (let i = 0; i < this.list_smart_contract?.length; i++) {
+        this.smart_infor?.push(
           await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
         );
       }
