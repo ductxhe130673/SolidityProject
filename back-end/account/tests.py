@@ -18,6 +18,14 @@ class TestGetAvartarByAccountId(TestCase):
             'http://127.0.0.1:8000/auth/getavatarbyaid?id=1')
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
+class TestCheckEmailExisted(TestCase):
+    # test check email existed
+    def test_check_email_existed(self):
+        response = self.client.get(
+            'http://127.0.0.1:8000/auth/checkemailexited?email=vinhhq@fpt.edu.vna')
+        self.assertEquals(response.data , "Valid")    
+        self.assertEquals(response.status_code, status.HTTP_200_OK)        
+
 
 class TestInsertMethods(TransactionTestCase):
         # test update contact information
