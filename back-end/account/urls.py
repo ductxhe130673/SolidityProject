@@ -16,6 +16,7 @@ urlpatterns = [
     path('test/',Test.as_view()),
     path('getcontactbyaid',views.getContactByAccountId),
     path('getavatarbyaid',views.getAvatarAccountId),
-    path('updatecontactbyaid',views.updateContactInfor)
+    path('updatecontactbyaid',views.updateContactInfor),
+    path('checkemailexited',views.CheckEmailExisted)
     #path('insertintocontact',views.insertIntoContact)
 ]
