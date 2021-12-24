@@ -179,7 +179,6 @@ export default {
       try {
         let response = await LTLTemplate.getLTLTemplate();
         this.list_template = response.data;
-        console.log(this.list_template);
       } catch (error) {
         console.log(error);
       }

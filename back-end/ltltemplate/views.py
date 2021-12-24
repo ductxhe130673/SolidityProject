@@ -105,4 +105,4 @@ def getLTLTemplateById(request):
 # 			                  print('ERROR====', e)
 #         cursor.close
 #     except:
-#         return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
+#         return Response({"message": "Get LTL Template By ID Fail!!"}, status=status.HTTP_400_BAD_REQUEST)	

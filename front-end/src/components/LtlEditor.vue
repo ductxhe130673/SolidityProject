@@ -41,7 +41,7 @@ import VariableSelection from "./VarialbleTable.vue";
 import FunctionSelection from "./FunctionTable.vue";
 
 export default {
-  props: ["ltlcode"],
+  props: ["ltlcode", "ltlcodetext"],
   components: { ArgumentSelection, VariableSelection, FunctionSelection },
   data() {
     return {

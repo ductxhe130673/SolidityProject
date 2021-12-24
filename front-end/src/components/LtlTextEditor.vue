@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { analyseLTLCode, analyseLTLTextCode } from "../mixins/text-parser.js";
+import { analyseLTLCode } from "../mixins/text-parser.js";
 import ArgumentSelection from "./ArgumentTable.vue";
 import VariableSelection from "./VarialbleTable.vue";
 import FunctionSelection from "./FunctionTable.vue";
@@ -128,7 +128,7 @@ export default {
     updateSelectValue() {
       if (this.temp_selection != "") {
         let elements = document.getElementsByClassName(this.select_variable_id);
-        for (let i = 0; i < elements.length; i++) {
+        for (let i = 0; i < elements?.length; i++) {
           let type = elements[i].type;
           if (type == "") {
             type = "var";
@@ -137,11 +137,7 @@ export default {
             elements[i].innerText = "'" + this.temp_selection + "'";
           }
         }
-        this.$emit(
-          "changeContent",
-          this.getNodeValue("highlighting-content-raw"),
-          this.getNodeValue("highlighting-content-text")
-        );
+        this.$emit("changeContent", this.getNodeValue("highlighting-content"));
       }
       this.select_variable_id = "";
       this.select_variable_value = "";
@@ -149,24 +145,29 @@ export default {
       this.selectVariable = false;
     },
     openSelectTable(id, value, type) {
-      this.select_variable_value = value.substring(1, value.length - 1);
+      this.select_variable_value = value.substring(1, value?.length - 1);
       this.select_variable_id = id;
       if (type != "") {
         this.select_variable_type = type;
       } else {
         this.select_variable_type = "var";
       }
+      console.log(type);
       this.selectVariable = true;
     },
     removeSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
       var self = this;
-      for (var i = 0; i < userSelection.length; i++) {
+      for (var i = 0; i < userSelection?.length; i++) {
         (function (index) {
           userSelection[index].addEventListener("click", function (event) {
             let val = event.target.innerHTML;
             let classList = event.target.classList;
-            self.openSelectTable(classList[classList.length - 1], val, event.target.type);
+            self.openSelectTable(
+              classList[classList?.length - 1],
+              val,
+              event.target.type
+            );
           });
         })(i);
       }
@@ -174,12 +175,16 @@ export default {
     addSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
       var self = this;
-      for (var i = 0; i < userSelection.length; i++) {
+      for (var i = 0; i < userSelection?.length; i++) {
         (function (index) {
           userSelection[index].addEventListener("click", function (event) {
             let val = event.target.innerHTML;
             let classList = event.target.classList;
-            self.openSelectTable(classList[classList.length - 1], val, event.target.type);
+            self.openSelectTable(
+              classList[classList?.length - 1],
+              val,
+              event.target.type
+            );
           });
         })(i);
       }
@@ -187,14 +192,10 @@ export default {
     updateContent(pos, value, class_option) {
       let result_element = document.getElementById(class_option);
       this.removeSelectVarEventListener();
-      if (class_option == "highlighting-content-raw") {
-        result_element.innerHTML = analyseLTLCode(value, false);
-      } else if (class_option == "highlighting-content-text") {
-        result_element.innerHTML = analyseLTLTextCode(value, false);
-      }
-
+      result_element.innerHTML = analyseLTLCode(value);
       this.setCursor(pos);
       this.addSelectVarEventListener();
+      this.$emit("changeContent", value);
     },
     getNodeValue(class_option) {
       let result_element = document.getElementById(class_option);
@@ -290,6 +291,7 @@ export default {
   top: 130px;
   left: calc(50% - 450px);
   background-color: white;
+  overflow: auto;
 }
 
 #selection-table-b2-s {

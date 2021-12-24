@@ -25,6 +25,7 @@ export default {
   name: "profiledialog",
   methods: {
     async logout() {
+      this.$store.commit("ResetState");
       await AuthService.makeLogout();
     },
   },
