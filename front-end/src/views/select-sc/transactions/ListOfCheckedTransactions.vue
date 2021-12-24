@@ -20,7 +20,7 @@
               <td>
                 <div v-on:click="set(item.bid)" v-bind:id="item.bid">
                   <router-link
-                    :to="{ path: 'checking-result', query: { id: item[0] } }"
+                    :to="{ path: 'checking-result', query: { id: item[5] } }"
                     tag="a"
                     class="lk"
                     >{{ item[1] + " " + item[2] }}</router-link
@@ -57,6 +57,7 @@ export default {
         this.$router.push({ name: "CheckRentrancy" });
       }
       if (param == "addsc") {
+        this.$store.commit("ResetState");
         this.$router.push({ name: "SelectSmartContract" });
         this.$store.commit("setIndex", 2);
       }
@@ -135,6 +136,8 @@ h1 {
   padding-bottom: 15%;
   border: 1px solid #d9edf7;
   border-radius: 10px;
+  height: 300px;
+  overflow: auto;
 }
 #btn-addsc {
   cursor: pointer;

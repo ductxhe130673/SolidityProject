@@ -129,7 +129,7 @@
         Check
       </button>
       <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
-      <button v-if="showDownload" @click="openDownload()" class="btn btn-primary-outline">
+      <button v-if="showDownload" @click="downloadItem()" class="btn btn-primary-outline">
         Download
       </button>
       <button class="btn btn-primary-outline" @click="navigate('back')">Back</button>
@@ -139,7 +139,7 @@
 
 <script>
 import CheckService from "../services/check.service";
-import DownloadFile from "./DownloadFile.vue";
+import { saveAs } from "file-saver";
 
 // import { GetLtl } from "../services/data";
 
@@ -160,6 +160,7 @@ export default {
       currentSC: null,
       newLtl: this.$store.state.data.data.ltlConfig,
       showConfirmationDownload: false,
+      fileDownload: {}
     };
   },
 
@@ -169,19 +170,34 @@ export default {
   },
   components: {
     // Popup,
-    confirm: DownloadFile,
   },
   methods: {
-    openDownload() {
-      this.upLoadDialog = {
-        title: "Do you want to Download",
-        confirmbtn: "OK",
-      };
-      this.showConfirmationDownload = true;
+    downloadItem() {
+      if(this.fileDownload !== {}){
+        let blob_hcpn = new Blob([this.fileDownload.hcpn.content], {
+        type: "text/plain;charset-urf-8",
+      });
+      let blob_prop = new Blob([this.fileDownload.prop.content], {
+        type: "text/plain;charset-urf-8",
+      });
+      let blob_context = new Blob([this.fileDownload.context.content], {
+        type: "text/plain;charset-urf-8",
+      });
+      saveAs(blob_hcpn, this.fileDownload.hcpn.name);
+      saveAs(blob_prop, this.fileDownload.prop.name);
+      saveAs(blob_context, this.fileDownload.context.name);
+      }
     },
-    closeConfirmDownload() {
-      this.showConfirmationDownload = false;
-    },
+    // openDownload() {
+    //   this.upLoadDialog = {
+    //     title: "Do you want to Download",
+    //     confirmbtn: "OK",
+    //   };
+    //   this.showConfirmationDownload = true;
+    // },
+    // closeConfirmDownload() {
+    //   this.showConfirmationDownload = false;
+    // },
     sort(mess) {
       switch (mess) {
         case "asId":
@@ -219,7 +235,6 @@ export default {
         );
       }
 
-      console.log("newLtl", this.newLtl.params);
       const tName = "unfolding";
       const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
       const tltl_PATH_json = JSON.stringify(this.newLtl, 0, 2);
@@ -234,8 +249,9 @@ export default {
         tltl_PATH_json,
         initialMarkingInfor
       );
-      this.$store.commit("SetDataToDownload", res.data)
-      console.log("res---", res.data)
+      this.$store.commit("SetDataToDownload", res.data);
+      this.fileDownload = res.data
+      
     },
 
     async callToolHelena() {
@@ -244,11 +260,18 @@ export default {
       this.$store.commit("Setrs", "wait a seconds...");
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
-        console.log("A-----------");
         const mess = res.data.message;
         console.log(mess);
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
+        await CheckService.addNewCheckedBatchSC(
+        this.selected_vuls.lteid,
+        this.context.cid,
+        this.list_selected_sc.length,
+        1,
+        this.newLtl.params.formula,
+        this.results[0]
+      );
       } else {
         this.$store.commit("Setrs", "11");
         this.results.push("Can't run HELENA tools");
@@ -312,12 +335,23 @@ export default {
       //    "We have discover some counter-examples with the smart contract code. Do you want to look at them?"
       //  );
       this.step = "checked";
-      await this.delay(2000);
       this.step = "finish";
       this.$store.commit("data/SetProcessView", "finish");
       this.callToolHelena();
+      await this.delay(2000);
       this.$router.push({ name: "checkingresult31" });
       this.$store.commit("setIndex", 7);
+      // if(this.results){
+      //   await CheckService.addNewCheckedBatchSC(
+      //   this.selected_vuls.lteid,
+      //   this.context.cid,
+      //   this.list_selected_sc.length,
+      //   1,
+      //   this.newLtl.params.formula,
+      //   this.results
+      // );
+      // }
+      
     },
     routing(processview) {
       this.$store.commit("data/SetProcessView", processview);

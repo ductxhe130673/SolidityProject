@@ -110,8 +110,10 @@ export default {
       } else {
         this.select_variable_type = "var";
       }
+
       console.log(type);
       this.selectVariable = true;
+      document.getElementById("selection-table").style.display = "block";
     },
     removeSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
