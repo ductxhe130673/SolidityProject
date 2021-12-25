@@ -58,10 +58,10 @@ class LoginSerializer(serializers.ModelSerializer):
 
         return super().validate(attrs)
 
-class sendEmail():
-    server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-    server.login("soliditycpn.g9@gmail.com", "solidity123")
-    server.sendmail("soliditycpn.g9@gmail.com", "quypham1503@gmail.com", "Please comfirm your email!")
-    server.quit()
+# class sendEmail():
+#     server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+#     server.login("soliditycpn.g9@gmail.com", "solidity123")
+#     server.sendmail("soliditycpn.g9@gmail.com", "quypham1503@gmail.com", "Please comfirm your email!")
+#     server.quit()
 
 

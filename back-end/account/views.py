@@ -12,7 +12,7 @@ from account import dbcontext
 
 
 class RegisterView(APIView):
-    sendEmail = sendEmail
+    # sendEmail = sendEmail
     serializer_class = RegisterSerializer
 
     def post(self, request):
