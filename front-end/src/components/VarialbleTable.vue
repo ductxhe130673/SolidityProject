@@ -26,41 +26,31 @@
         </div>
         <div id="Information-table">
           <div id="table-list">
-            <div class="table-row" id="header-row">
-              <div class="table-cell header-cell first-cell">
-                #
-                <span>
-                  <a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </div>
-              <div class="table-cell header-cell second-cell">
-                Global variables
-                <span>
-                  <a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
-              </div>
-              <div class="table-cell header-cell third-cell">Selected</div>
-            </div>
-            <div
-              class="table-row"
-              v-for="(func, index) in smart_infor[selectedSCIndex].globalVar"
-              v-bind:key="func.fid"
-              :class="{ even_row: index % 2 == 0 }"
-            >
-              <div class="table-cell first-cell">{{ index + 1 }}</div>
-              <div class="table-cell second-cell">{{ func.name }}</div>
-              <div class="table-cell third-cell">
-                <input
-                  type="radio"
-                  id="one"
-                  name="ch"
-                  v-model="checkedVar"
-                  :value="func.name"
-                />
-              </div>
-            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width: 10%">#</th>
+                  <th>Global variables</th>
+                  <th style="width: 15%">Selected</th>
+                </tr>
+              </thead>
+              <tr
+                v-for="(func, index) in smart_infor[selectedSCIndex].globalVar"
+                v-bind:key="func.fid"
+              >
+                <td>{{ index + 1 }}</td>
+                <td>{{ func.name }}</td>
+                <td>
+                  <input
+                    type="radio"
+                    id="one"
+                    name="ch"
+                    v-model="checkedVar"
+                    :value="func.name"
+                  />
+                </td>
+              </tr>
+            </table>
           </div>
 
           <div class="function">
@@ -82,41 +72,31 @@
             </div>
             <div id="Func-table">
               <div id="table-list">
-                <div class="table-row" id="header-row">
-                  <div class="table-cell header-cell first-cell">
-                    #
-                    <span>
-                      <a-icon id="icon" type="caret-up" />
-                      <a-icon id="icon" type="caret-down" />
-                    </span>
-                  </div>
-                  <div class="table-cell header-cell second-cell">
-                    Local variables
-                    <span>
-                      <a-icon id="icon" type="caret-up" />
-                      <a-icon id="icon" type="caret-down" />
-                    </span>
-                  </div>
-                  <div class="table-cell header-cell third-cell">Selected</div>
-                </div>
-                <div
-                  class="table-row"
-                  v-for="(func, index) in getSelectedFunc"
-                  v-bind:key="func.fid"
-                  :class="{ even_row: index % 2 == 0 }"
-                >
-                  <div class="table-cell first-cell">{{ index + 1 }}</div>
-                  <div class="table-cell second-cell">{{ func.name }}</div>
-                  <div class="table-cell third-cell">
-                    <input
-                      type="radio"
-                      id="one"
-                      name="ch"
-                      v-model="checkedVar"
-                      :value="func.name"
-                    />
-                  </div>
-                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%">#</th>
+                      <th>Local variables</th>
+                      <th style="width: 15%">Selected</th>
+                    </tr>
+                  </thead>
+                  <tr
+                    v-for="(func, index) in getSelectedFunc"
+                    v-bind:key="func.fid"
+                  >
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ func.name }}</td>
+                    <td>
+                      <input
+                        type="radio"
+                        id="one"
+                        name="ch"
+                        v-model="checkedVar"
+                        :value="func.name"
+                      />
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
@@ -207,6 +187,7 @@ export default {
 </script>
 
 <style scoped>
+
 .title {
   text-align: center;
   margin-top: 5%;
@@ -216,37 +197,25 @@ export default {
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 }
-table span {
-  float: right;
-  display: block;
-}
-#icon {
-  display: block;
-  height: 8px;
-}
 .nav-item .active {
-  color: white;
-  background-color: #383838;
-  border: grey;
+  color: black;
+  background-color: #d9edf7;
 }
 .nav-link {
-  color: #383838;
-  border: grey solid;
+  color: black;
+  border: black solid 1px;
   border-bottom: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .nav-item {
-  width: 24%;
+  min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
-  border-bottom: 2px solid;
+}
+#Information-table {
+  border: black solid 1px;
+  padding: 4% 3% 4% 3%;
 }
 
-#Information-table {
-  border: 1px black solid;
-  padding: 3% 2% 3% 2%;
-}
 #Func-table {
   border: 1px black solid;
   padding: 5% 4% 5% 4%;
@@ -257,50 +226,39 @@ table span {
 .function {
   margin-top: 50px;
 }
+/* table*/
 #table-list {
-  width: 100%;
-  margin: auto;
-  font-size: 0.9em;
-  height: 300px;
   overflow-y: auto;
-  border-radius: 4px;
-  border: 1px solid black;
-  background: rgb(241, 240, 240);
+  height: 300px;
 }
 
-.table-row {
-  display: flex;
-  height: 50px;
-  border: 1px solid #ddd;
+table {
+  width: 100%;
 }
-#header-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
+table td,
+table th {
+  padding: 6px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-#table-list span {
-  float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 100%;
+table tr:hover {
+  background-color: #ddd;
 }
-.even_row {
-  background-color: rgb(226, 224, 224);
+
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
 }
-.table-cell {
-  padding-top: 10px;
-  font-size: 15px;
-}
-.first-cell {
-  flex-basis: 10%;
-  padding-left: 5px;
-}
-.second-cell {
-  flex-basis: 60%;
-}
-.third-cell {
-  flex-basis: 30%;
-}
+
 
 /* button */
 #processing-btn {

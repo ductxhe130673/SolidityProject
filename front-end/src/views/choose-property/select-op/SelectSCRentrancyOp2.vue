@@ -25,10 +25,7 @@
                             </span>
                         </th>
                         <th style="width: 30%" scope="col">Selected
-                            <span>
-                                <a-icon id="icon" type="caret-up"/>
-                                <a-icon id="icon" type="caret-down"/>
-                            </span>
+                           
                         </th>
                     </tr>
                 </thead>

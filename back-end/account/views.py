@@ -66,7 +66,7 @@ def getContactByAccountId(request):
 @api_view(['GET'])
 def getAvatarAccountId(request):
     # CHANGE THIS BEFORE RUNNING
-    path = "D:\Solidity\SolidityNew\SolidityProject\scripts"
+    path = "D:\Demo\SolidityProject\scripts\image"
     try:
         # GET AID 
         aId = request.GET['id']

@@ -51,6 +51,7 @@ export default {
   font-size: 40px;
   line-height: 46px;
   margin-bottom: 40px;
+color: black;
 }
 
 #pcb-content {
@@ -60,11 +61,11 @@ export default {
 #pcb-content p {
   font-size: 16px;
   font-weight: bold;
-  color: rgb(97, 97, 97);
+  color: black;
 }
 #pcb-content li {
   font-size: 14px;
-  color: rgb(145, 144, 144);
+  color: black;
 }
 #pcb-button {
   margin-top: 40px;

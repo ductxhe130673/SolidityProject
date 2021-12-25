@@ -89,7 +89,9 @@ export default {
   text-align: center;
   font-weight: bolder;
   font-size: 30px;
-  margin-bottom: 70px;
+  margin-bottom: 5%;
+  margin-top: 2%;
+  color: black;
 }
 
 .main {
@@ -98,19 +100,25 @@ export default {
 }
 .content {
   overflow: scroll;
-  width: 1000px;
-  border: 1px solid black;
   width: 100%;
+  border: 1px solid black;
   height: 300px;
   font-weight: bolder;
-  margin-bottom: 100px;
+  margin-bottom: 3%;
 }
-
-.right {
-  text-align: right;
+.buttonGroup {
+  padding-top: 2%;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin: 0 auto;
 }
-
-.up {
-  margin-bottom: 20px;
+.buttonGroup1 {
+  padding-top: 2%;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding-bottom: 8%;
 }
 </style>

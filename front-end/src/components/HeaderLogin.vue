@@ -21,25 +21,43 @@
       <div class="icon" @click="goRoadMap()" title="RoadMap">
         <i class="material-icons">map</i>
       </div>
-      <div class="icon" title="Help">
-        <i class="material-icons">help</i>
+      <div class="icon" @click="help()" title="Help">
+        <i class="material-icons" >help</i>
       </div>
     </div>
     <div class="nav__right">
-      <button class="btn btn-outline-primary" @click="goRegister()" >Register</button>
+      <button class="btn btn-outline-primary" @click="goRegister()">
+        Register
+      </button>
+    </div>
+    <div id="showConfirmation" v-if="showConfirmation">
+      <div id="removeSC-holder">
+        <Help @cancel="closeConfirm" />
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
+import Help from "../views/Help.vue";
 export default {
   name: "HeaderLogin",
   data: function () {
     return {
       username: "",
+      showConfirmation: false,
     };
   },
+  components: {
+    Help,
+  },
   methods: {
+    cancel() {
+      this.$emit("cancel");
+    },
+    closeConfirm() {
+      this.showConfirmation = false;
+    },
     goHome() {
       this.goURL("/");
     },
@@ -219,5 +237,20 @@ a {
   .avatar {
     display: none;
   }
+}
+/*---- showConfirmation */
+#showConfirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+}
+#removeSC-holder {
+  margin-top: 100px;
 }
 </style>
