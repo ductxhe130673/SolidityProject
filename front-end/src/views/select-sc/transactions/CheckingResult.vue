@@ -2,7 +2,7 @@
   <div class="container">
     <div id="header">Checking Result</div>
     <div class="main">
-      <div class="content">
+      <div class="content" style="white-space: pre-line">
         <p v-for="(item, index) in getListCheck" v-bind:key="index">
           {{ item[0] }}
         </p>

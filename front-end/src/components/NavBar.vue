@@ -3,9 +3,6 @@
     <div class="nav__left">
       <div class="name" @click="goHome()">Solidity</div>
     </div>
-    <div class="road-map-text">
-      <span>Road map</span>
-    </div>
     <div class="nav__mid">
       <a-steps :current="this.$store.state.data.index - 1" size="small">
         <a-step title="Start" style="cursor: pointer" @click="onChangeIndex(1)" />

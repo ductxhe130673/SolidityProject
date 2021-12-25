@@ -1,11 +1,11 @@
 <template>
   <div id="initial-marking">
-    <div id="initial-marking-header">Configuration</div>
+    <div id="initial-marking-header"><h1>Configuration</h1></div>
     <div id="initial-marking-input">
       <div id="header-section">
-        <div class="number-cell">Number of users</div>
-        <div class="multi-cell">Balance</div>
-        <div class="function-cell">Function parameters</div>
+        <div class="number-cell" id="text">Number of users</div>
+        <div class="multi-cell" id="text">Balance</div>
+        <div class="function-cell" id="text">Function parameters</div>
       </div>
       <div id="input-section">
         <div class="number-cell">
@@ -115,10 +115,7 @@
                       <th style="width: 10 %">#</th>
                       <th>
                         Functions
-                        <span>
-                          <a-icon id="icon" type="caret-up" />
-                          <a-icon id="icon" type="caret-down" />
-                        </span>
+
                       </th>
                       <th style="width: 25%">Arguments</th>
                     </tr>
@@ -331,8 +328,14 @@ export default {
 };
 </script>
 <style scoped>
+h1{
+  font-weight: bold;
+}
 input {
   border: 1px solid gray;
+}
+#text{
+  font-size: 18px;
 }
 #initial-marking {
   height: 100%;
@@ -342,11 +345,9 @@ input {
 }
 
 #initial-marking-header {
-  height: 60px;
-  padding-top: 10px;
-  font-size: 30px;
-  font-weight: bold;
+  padding-top: 20px;
   text-align: center;
+  
 }
 #initial-marking-input {
   width: 60%;
@@ -366,6 +367,7 @@ input {
 .number-cell {
   height: 40px;
   margin-top: 20px;
+ 
 }
 
 .multi-cell {
@@ -477,12 +479,10 @@ table span {
   overflow-y: auto;
 }
 
-.input-param-text {
-  color: rgb(42, 42, 214);
-  cursor: pointer;
-}
+
 .input-param-text:hover {
-  color: rgb(78, 78, 243);
+  color: red;
+  text-decoration: underline red wavy;
 }
 
 /* Button */

@@ -165,7 +165,7 @@ export default {
   color: black;
 }
 .row {
-  margin-top: 2%;
+ padding-top: 2%;
   padding-right: 10px;
 }
 

@@ -21,14 +21,14 @@
       <div class="icon" @click="goRoadMap()" title="RoadMap">
         <i class="material-icons">map</i>
       </div>
-      <div class="icon" title="Help">
-        <i class="material-icons" @click="help()">help</i>
+      <div class="icon"  @click="help()" title="Help">
+        <i class="material-icons">help</i>
       </div>
     </div>
 
     <div class="nav__right" v-if="checkUser">
       <a class="avatar">
-        <img class="avatar__img" src="../assets/avata.jpg" />
+        <img class="avatar__img" src="../assets/avatar.png" />
         <span
           ><strong>{{ getUserName }}</strong></span
         >
@@ -53,30 +53,10 @@
         Register
       </button>
     </div>
-    <div id="showConfirmation" v-if="showDia">
-      <div id="icon"><a-icon type="close" @click="close()" /></div>
+
+    <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
-        <p>
-          Under the explosive development of the Internet age, everything is possible in
-          the online world from buying, selling, trading to conferences.
-        </p>
-        <p>
-          When you receive an email, word or excel file, it's really just a duplicate. But
-          when it comes to assets like money, contracts, intellectual property, stocks,
-          bonds, personal information or creative products, things are completely
-          different. That is why today we completely rely on intermediaries like banks,
-          governments, social media companies or credit card companies etc. to build
-          self-confidence and as others. All these intermediaries perform the same
-          functional logic of transactions in commerce, from authentication and validation
-          of personal information to the creation and deletion of records. However, more
-          and more new problems arise: information leaks, these intermediate channels make
-          everything time-consuming and slower, etc.
-        </p>
-        <p>
-          Therefore, our team built FOVEMOSO using blockchain technology based on Solidity
-          code to solve the above problems. FOVEMOSO requires no human intervention, thus
-          ensuring the fastest, safest and most accurate execution.
-        </p>
+        <Help @cancel="closeConfirm"/>
       </div>
     </div>
   </nav>
@@ -84,14 +64,18 @@
 
 <script>
 import { AuthService } from "../services/auth";
-
+import Help from "../views/Help.vue";
 export default {
   name: "Header",
+
   data: function () {
     return {
       username: "",
-      showDia: false,
+      showConfirmation: false,
     };
+  },
+  components: {
+    Help,
   },
   computed: {
     checkUser() {
@@ -109,10 +93,10 @@ export default {
   },
   methods: {
     help() {
-      this.showDia = !this.showDia;
+      this.showConfirmation = true;
     },
-    close() {
-      this.showDia = false;
+    closeConfirm() {
+      this.showConfirmation = false;
     },
     goHome() {
       this.goURL("/");
@@ -320,34 +304,17 @@ a {
 }
 /*---- showConfirmation */
 #showConfirmation {
-  position: absolute;
-  left: 55%;
-  top: 10%;
-  width: 40%;
-  height: auto;
-  background-color: whitesmoke;
-  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
-  border-radius: 2%;
-  padding: 10px;
-
-  box-shadow: 5px 5px 5px 5px rgb(172, 166, 166);
 }
 #removeSC-holder {
-  margin: 20px;
-  margin-top: 5px;
-}
-p {
-  color: black;
-  font-size: 15px;
-  text-indent: 30px;
-  margin-bottom: 0;
-}
-#icon {
-  text-align: right;
-  font-size: 20px;
-  margin-right: 8px;
+  margin-top: 100px;
 }
 </style>

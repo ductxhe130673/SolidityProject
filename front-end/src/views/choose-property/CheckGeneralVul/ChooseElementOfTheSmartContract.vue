@@ -35,10 +35,6 @@
                 <th style="width: 10%">#</th>
                 <th>
                   Global variables
-                  <span>
-                    <a-icon id="icon" type="caret-up" />
-                    <a-icon id="icon" type="caret-down" />
-                  </span>
                 </th>
                 <th style="width: 15%">Selected</th>
               </tr>
@@ -87,10 +83,6 @@
                     <th style="width: 10%">#</th>
                     <th>
                       Local variables
-                      <span>
-                        <a-icon id="icon" type="caret-up" />
-                        <a-icon id="icon" type="caret-down" />
-                      </span>
                     </th>
                     <th>Selected</th>
                   </tr>
@@ -286,7 +278,6 @@ table span {
   text-overflow: ellipsis;
 }
 .nav-item {
-  width: 24%;
   min-width: 10%;
   margin-right: 3px;
   cursor: pointer;

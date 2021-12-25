@@ -121,6 +121,9 @@ export default {
 </script>
 
 <style scoped>
+#notify {
+  margin: 0 auto;
+}
 .form {
   max-width: 420px;
   margin: 30px auto;
