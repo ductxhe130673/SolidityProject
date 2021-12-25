@@ -8,9 +8,6 @@
             >LTL</a
           ></span
         >
-        >
-
-        <a>List</a>
       </div>
       <div class="col-md-7 text-center">
         <h1>LTL Property Template List</h1>
@@ -294,5 +291,6 @@ table span {
 }
 #btn {
   text-align: right;
+  display: flex;
 }
 </style>

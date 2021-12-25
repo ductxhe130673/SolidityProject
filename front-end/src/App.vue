@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       sngPage: {
+        Register: true,
         Index: true,
         RoadMap: true,
         ListOfCheckedTransactions: true,
@@ -51,10 +52,7 @@ export default {
   },
   computed: {
     showNavigationBar() {
-      if (
-        this.$route.name in this.sngPage &&
-        this.$store.state.data.index === 0
-      ) {
+      if (this.$route.name in this.sngPage && this.$store.state.data.index === 0) {
         return "header";
       } else if (this.$route.name === "Login") {
         return "headerLogin";

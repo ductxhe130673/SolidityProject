@@ -39,4 +39,4 @@ class TestGetLTLTemplateById(TestCase):
     # test get ltltemplate by ltltemplate ID
     def test_get_ltltemplate_by_Id(self):
          response =  self.client.get('http://127.0.0.1:8000/ltltemplate/ltltemplatebyid?lteid=2')
-         self.assertEqual(response.status_code, status.HTTP_200_OK)
+         self.assertEqual(response.status_code, status.HTTP_200_OK) 

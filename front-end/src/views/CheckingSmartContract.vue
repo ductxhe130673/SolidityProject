@@ -129,21 +129,11 @@
       >
         Check
       </button>
-      <button v-if="step == 'finish'" class="btn btn-primary-outline">
-        Next
-      </button>
-      <button
-        v-if="showDownload"
-        @click="downloadItem()"
-        class="btn btn-primary-outline"
-      >
+      <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
+      <button v-if="showDownload" @click="downloadItem()" class="btn btn-primary-outline">
         Download
       </button>
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="navigate('back')"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="navigate('back')">
         Back
       </button>
     </div>
@@ -201,16 +191,7 @@ export default {
         saveAs(blob_context, this.fileDownload.context.name);
       }
     },
-    // openDownload() {
-    //   this.upLoadDialog = {
-    //     title: "Do you want to Download",
-    //     confirmbtn: "OK",
-    //   };
-    //   this.showConfirmationDownload = true;
-    // },
-    // closeConfirmDownload() {
-    //   this.showConfirmationDownload = false;
-    // },
+
     sort(mess) {
       switch (mess) {
         case "asName":
@@ -243,8 +224,7 @@ export default {
       }
 
       const tName = "unfolding";
-      const tcontext_PATH_xml =
-        this.$store.state.data.data.selectedContext.content;
+      const tcontext_PATH_xml = this.$store.state.data.data.selectedContext.content;
       const tltl_PATH_json = JSON.stringify(this.newLtl, 0, 2);
       const initialMarkingInfor = JSON.stringify(
         this.$store.state.data.data.initialMarkingInfor,
@@ -348,16 +328,6 @@ export default {
       await this.delay(2000);
       this.$router.push({ name: "checkingresult31" });
       this.$store.commit("setIndex", 7);
-      // if(this.results){
-      //   await CheckService.addNewCheckedBatchSC(
-      //   this.selected_vuls.lteid,
-      //   this.context.cid,
-      //   this.list_selected_sc.length,
-      //   1,
-      //   this.newLtl.params.formula,
-      //   this.results
-      // );
-      // }
     },
     routing(processview) {
       this.$store.commit("data/SetProcessView", processview);
@@ -579,4 +549,3 @@ table span {
   margin-top: 50px;
 }
 </style>
-

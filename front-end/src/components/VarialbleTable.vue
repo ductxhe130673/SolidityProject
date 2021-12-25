@@ -124,7 +124,7 @@ export default {
       selectedSCIndex: 0,
       selectedFunctionIndex: 0,
       function_infor: {},
-      selected_func: 1,
+      selected_func: 0,
       selected_smart: 0,
     };
   },
@@ -163,8 +163,8 @@ export default {
       return listFunc.functions;
     },
     async setSCInfor() {
-      for (let i = 0; i < this.list_smart_contract.length; i++) {
-        this.smart_infor.push(
+      for (let i = 0; i < this.list_smart_contract?.length; i++) {
+        this.smart_infor?.push(
           await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
         );
       }
@@ -177,7 +177,7 @@ export default {
     },
     getSelectedSmart() {
       if (this.selected_smart in this.smart_infor) {
-        return this.smart_infor[this.selected_smart].SmartContract;
+        return this.smart_infor[this.selected_smart]?.SmartContract;
       } else {
         return [];
       }
