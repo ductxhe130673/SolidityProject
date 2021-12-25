@@ -4,11 +4,7 @@
       <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline"
-            >Smart Contract</a
-          >
-          >
-          <a>List</a>
+          <a href="" class="link-primary text-decoration-underline">Smart Contract</a>
         </span>
       </div>
       <div class="col-md-7 text-center"><h1>Smart Contracts List</h1></div>
@@ -29,12 +25,7 @@
         <div class="col-md">
           <p>Type</p>
           <div class="input-group mb-3">
-            <select
-              v-if="isAdmin"
-              class="form-select"
-              id="inputGroup"
-              v-model="selected"
-            >
+            <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
               <option value="0">All</option>
               <option value="common">Common</option>
               <option value="private">Private</option>
@@ -58,10 +49,7 @@
               <th style="width: 5%">#</th>
               <th style="width: 15%">
                 Name<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upName')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upName')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downName')"
@@ -69,10 +57,7 @@
               </th>
               <th style="width: 15%">
                 Type<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upType')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upType')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downType')"
@@ -80,10 +65,7 @@
               </th>
               <th style="width: 15%">
                 Date<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDate')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upDate')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downDate')"
@@ -91,10 +73,7 @@
               </th>
               <th style="width: 50%">
                 Description<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDes')" /><a-icon
+                  ><a-icon id="icon" type="caret-up" @click="sort('upDes')" /><a-icon
                     id="icon"
                     type="caret-down"
                     @click="sort('downDes')"
@@ -114,13 +93,7 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="
-                    editSC(
-                      item.sid,
-                      item.name,
-                      item.content,
-                      item.description,
-                      item.type
-                    )
+                    editSC(item.sid, item.name, item.content, item.description, item.type)
                   "
                 >
                   Edit
@@ -241,14 +214,10 @@ export default {
           );
           break;
         case "upDate":
-          this.filterlist.sort((a, b) =>
-            a.createdDate < b.createdDate ? -1 : 1
-          );
+          this.filterlist.sort((a, b) => (a.createdDate < b.createdDate ? -1 : 1));
           break;
         case "downDate":
-          this.filterlist.sort((a, b) =>
-            a.createdDate > b.createdDate ? -1 : 1
-          );
+          this.filterlist.sort((a, b) => (a.createdDate > b.createdDate ? -1 : 1));
           break;
         case "upDes":
           this.filterlist.sort((a, b) =>
@@ -300,8 +269,7 @@ export default {
       var hourstring = "" + date.getHours();
       var minutestring = "" + date.getMinutes();
       hourstring = hourstring.length == 1 ? "0" + hourstring : hourstring;
-      minutestring =
-        minutestring.length == 1 ? "0" + minutestring : minutestring;
+      minutestring = minutestring.length == 1 ? "0" + minutestring : minutestring;
       datestring = datestring.length == 1 ? "0" + datestring : datestring;
       monthstring = monthstring.length == 1 ? "0" + monthstring : monthstring;
       return (
@@ -325,9 +293,7 @@ export default {
 
     deleteSC(sc_id) {
       if (
-        confirm(
-          "Do you want to delete the Smart Contract out of the system?"
-        ) === true
+        confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
         this.deleteSmartContract(sc_id);
         this.$router.go(0);
@@ -383,7 +349,7 @@ h1 {
   align-items: center;
 }
 .row {
- padding-top: 2%;
+  padding-top: 2%;
   padding-right: 10px;
 }
 .row-end {
@@ -396,7 +362,6 @@ button {
 }
 table {
   width: 100%;
-
 }
 
 table td,
