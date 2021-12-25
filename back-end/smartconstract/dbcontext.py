@@ -208,25 +208,12 @@ import datetime
 # INSERT INTO CheckedBatchSC
 def addNewCheckedBatchSC(aid,lteid,cid,noSC,status,LTLformula,result):
     try:    
-        if status == '1': 
-         print(status)
-         lnid = getLastInsertIDFromLNAFile()
-         imid = getLastInsertIDFromInitialMarking()
-         sql = '''INSERT INTO CheckedBatchSC (aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result) VALUES (%s,%s,%s,%s,%s,%s,%s,1,%s,%s);'''
-         cursor = connection.cursor()
-         cursor.execute(sql, ([aid],[lnid],[lteid],[cid],[imid],[noSC],[datetime.datetime.now()],[LTLformula],[result]))
-         row = cursor.fetchall()
-         # transaction.commit()
-         return "Add New CheckedBatchSC Successfully"
-        else:
-         lnid = getLastInsertIDFromLNAFile()
-         imid = getLastInsertIDFromInitialMarking()
-         sql = '''INSERT INTO CheckedBatchSC (aid,lnid,lteid,cid,imid,noSC,checkedDate,status,LTLformula,result) VALUES (%s,%s,%s,%s,%s,%s,%s,0,%s,%s);'''
-         cursor = connection.cursor()
-         cursor.execute(sql, ([aid],[lnid],[lteid],[cid],[imid],[noSC],[datetime.datetime.now()],[LTLformula],[result]))
-         row = cursor.fetchall()
-         # transaction.commit()
-         return "Add New CheckedBatchSC Successfully"   
+            sql = '''INSERT INTO soliditycpn.CheckedBatchSC (aid,lteid,cid,noSC,lnid,imid,checkedDate,status,LTLformula,result) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'''
+            cursor = connection.cursor()
+            cursor.execute(sql, ([aid],[lteid],[cid],[noSC],[1],[1],[datetime.datetime.now()],[1],[LTLformula],[result]))
+            row = cursor.fetchall()
+            # transaction.commit()
+            return "Add New CheckedBatchSC Successfully"  
     except Exception as e:
         print(e)
         return None

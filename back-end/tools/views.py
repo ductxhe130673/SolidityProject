@@ -49,7 +49,7 @@ def calltools(request):
             #------helena-----------               
             elif (name == 'helena'):
                 result = runHelena()
-                print(result)
+                #print(result)
                 return Response({"message": result}, status=status.HTTP_200_OK)
             return Response({"message": "Run Tool Successfully"}, status=status.HTTP_200_OK)
     except:

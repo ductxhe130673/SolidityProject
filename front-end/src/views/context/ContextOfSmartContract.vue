@@ -140,6 +140,7 @@ export default {
 #section {
   width: 70%;
   margin: auto;
+  color: black;
 }
 #header {
   text-align: center;

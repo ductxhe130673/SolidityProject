@@ -11,10 +11,7 @@
               <th style="width: 10%">#</th>
               <th>
                 Global variable
-                <span
-                  ><a-icon id="icon" type="caret-up" />
-                  <a-icon id="icon" type="caret-down" />
-                </span>
+                
               </th>
               <th style="width: 15%">Selected</th>
             </tr>
@@ -58,11 +55,7 @@
                   <th style="width: 10%">#</th>
 
                   <th>
-                    Local variable<span
-                      ><a-icon id="icon" type="caret-up" /><a-icon
-                        id="icon"
-                        type="caret-down"
-                    /></span>
+                    Local variable
                   </th>
                   <th style="width: 15%">Select</th>
                 </tr>

@@ -143,6 +143,9 @@ export default {
 </script>
 
 <style scoped>
+#notify {
+  margin: 0 auto;
+}
 .form {
   max-width: 420px;
   margin: 30px auto;
@@ -165,7 +168,7 @@ input {
   padding: 10px 6px;
   width: 100%;
   box-sizing: border-box;
- border: 1px solid;
+  border: 1px solid;
   border-color: rgb(163, 161, 161);
   border-radius: 10px;
   color: rgb(126, 126, 126);

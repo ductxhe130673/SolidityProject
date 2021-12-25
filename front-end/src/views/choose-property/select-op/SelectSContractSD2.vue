@@ -12,11 +12,7 @@
             </th>
 
             <th>
-              Smart Contract Name<span
-                ><a-icon id="icon" type="caret-up" /><a-icon
-                  id="icon"
-                  type="caret-down"
-              /></span>
+              Smart Contract Name
             </th>
             <th style="width :15%">Select</th>
           </tr>

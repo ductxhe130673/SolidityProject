@@ -6,8 +6,10 @@
           <img
             class="rounded-circle mt-5"
             width="150px"
-            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+            height="150px"
+            src="../assets/avatar.png"
           />
+          <h4>{{getUserName}}</h4>
         </div>
       </div>
       <div class="col-md-6">
@@ -21,7 +23,8 @@
               ><input
                 type="text"
                 class="form-control"
-                value=""
+                v-model="firstName"
+                readonly
               />
             </div>
             <div class="col-md-6">
@@ -29,7 +32,8 @@
               ><input
                 type="text"
                 class="form-control"
-                value=""
+                v-model="lastName"
+                readonly
               />
             </div>
           </div>
@@ -39,7 +43,8 @@
               ><input
                 type="text"
                 class="form-control"
-                value=""
+                v-model="birthday"
+                readonly
               />
             </div>
             <div class="col-md-12">
@@ -47,7 +52,8 @@
               ><input
                 type="text"
                 class="form-control"
-                value=""
+                v-model="mobileNumber"
+                readonly
               />
             </div>
             <div class="col-md-12">
@@ -55,7 +61,8 @@
               ><input
                 type="text"
                 class="form-control"
-                value=""
+                v-model="address"
+                readonly
               />
             </div>
             <div class="col-md-12">
@@ -63,20 +70,63 @@
               ><input
                 type="text"
                 class="form-control"
-                value=""
+                v-model="email"
+                readonly
               />
             </div>
-          </div>
-          <div class="mt-5 text-center">
-            <button class="btn btn-primary " type="button">
-              Save Profile
-            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+import { GetAccountById} from "../../src/services/data";
+export default {
+  created() {
+    this.initData();
+  },
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      birthday: "",
+      mobileNumber: "",
+      address: "",
+      email: ""
+    };
+  },
+  methods: {
+    async initData() {
+      const data = await GetAccountById(this.checkUser);
+      data.forEach((element) => {
+        this.firstName = element.firstname;
+        this.lastName = element.lastname;
+        this.email = element.email;
+        this.mobileNumber = element.phone;
+        this.birthday = element.birthDate;
+        this.address = element.address;
+      });
+      console.log(this.checkUser);
+    },
+    
+  },
+  computed: {
+    checkUser() {
+      const userId = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")).id
+        : null;
+      return userId;
+    },
+    getUserName() {
+      const username = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")).username
+        : null;
+      return username;
+    },
+  },
+};
+</script>
 <style>
 .container-fluid {
   background-color: #f9f9f9;
@@ -84,16 +134,13 @@
 
 .form-control:focus {
   box-shadow: none;
-  border-color: #0d6efd;;
+  border-color: #0d6efd;
 }
-
 
 .labels {
   font-size: 1em;
   letter-spacing: 1px;
   color: rgb(68, 65, 65);
-
 }
-
 
 </style>

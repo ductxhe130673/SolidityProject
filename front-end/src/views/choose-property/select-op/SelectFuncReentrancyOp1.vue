@@ -31,11 +31,7 @@
                   </th>
 
                   <th>
-                    Functions<span
-                      ><a-icon id="icon" type="caret-up" /><a-icon
-                        id="icon"
-                        type="caret-down"
-                    /></span>
+                    Functions
                   </th>
                   <th style="width: 15%">Select</th>
                 </tr>
@@ -183,14 +179,6 @@ table th {
   text-indent: inherit;
 }
 
-table span {
-  float: right;
-  display: block;
-}
-#icon {
-  display: block;
-  height: 8px;
-}
 
 /* function */
 .function-cell {

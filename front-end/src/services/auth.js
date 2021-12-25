@@ -10,138 +10,140 @@ import { API_URL } from '../.env'
 let BEARER = ''
 
 export class AuthService {
-  /**
-   ******************************
-   * @API
-   ******************************
-   */
-  
-  static async makeLogin ({ username, password }) {
-    try {
-      const response = await axios.post(`${API_URL}/auth/login`,{username, password}, {useCredentails: true})
-      _setAuthData({
-        accessToken: response.data.tokens.access,
-        exp: _parseTokenData(response.data.tokens.access).exp
-      })
-      setCookie("admin", response.data.tokens.access, 10)
-      // this.$store.commit("setIsAuthen", true)
-      localStorage.setItem('user', JSON.stringify({id: response.data.aid, username: response.data.username, role: response.data.role}));
-      return new ResponseWrapper(response, response.data)
-    } catch (error) {
-      throw new ErrorWrapper(error)
-    }
-  }
+    /**
+     ******************************
+     * @API
+     ******************************
+     */
 
-  // static async loginToken ({accessToken}) {
-  //   try {
-  //     const response = await axios.post(`${API_URL}/auth/login`,{username, password}, {useCredentails: true})
-  //     _setAuthData({
-  //       accessToken: response.data.tokens.access,
-  //       exp: _parseTokenData(response.data.tokens.access).exp
-  //     })
-  //     return new ResponseWrapper(response, response.data)
-  //   } catch (error) {
-  //     throw new ErrorWrapper(error)
-  //   }
-  // }
+    static async makeLogin({ username, password }) {
+        try {
+            const response = await axios.post(`${API_URL}/auth/login`, { username, password }, { useCredentails: true })
+            _setAuthData({
+                accessToken: response.data.tokens.access,
+                exp: _parseTokenData(response.data.tokens.access).exp
+            })
+            setCookie("admin", response.data.tokens.access, 10)
+                // this.$store.commit("setIsAuthen", true)
+            localStorage.setItem('user', JSON.stringify({ id: response.data.aid, username: response.data.username, role: response.data.role }));
+            return new ResponseWrapper(response, response.data)
 
-  static async makeLogout() {
-    try {
-      _resetAuthData()
-      
-      // return new ResponseWrapper(response, response.data) 
-      localStorage.removeItem("user");
-      localStorage.removeItem("vuex");
-      
-      $router.push({ name: 'Login' }).catch(() => { })
-    } catch (error) {
-      throw new ErrorWrapper(error)
-    }
-  }
+        } catch (error) {
+            alert("The user name or password is incorrect")
+            throw new ErrorWrapper(error)
 
-  static async makeRegister({ username, email, password }) {
-    try {
-      const response = await axios.post(`${API_URL}/auth/register`,
-        { username, email, password }, { useCredentails: true })
-      return new ResponseWrapper(response, response.data)
-    } catch (error) {
-      throw new ErrorWrapper(error)
-    }
-  }
-
-
-  static async refreshTokens() {
-    try {
-      var currentUserId = $store.state.user.currentUser.id
-      const response = await axios.post(`${API_URL}/auth/refresh-tokens`, { currentUserId }, { useCredentails: true })
-      _setAuthData({
-        accessToken: response.data.accessToken,
-        exp: _parseTokenData(response.data.accessToken).exp
-      })
-      return new ResponseWrapper(response, response.data)
-    } catch (error) {
-      console.log(error.response.data.code)
-      _resetAuthData()
-      $router.push({ name: 'Login' }).catch(() => { })
-      throw new ErrorWrapper(error)
-    }
-  }
-
-  static debounceRefreshTokens = this._debounce(() => {
-    return this.refreshTokens()
-  }, 100)
-
-  /**
-   ******************************
-   * @METHODS
-   ******************************
-   */
-
-  static isAccessTokenExpired() {
-    const accessTokenExpDate = $store.state.auth.accessTokenExpDate - 10
-    const nowTime = Math.floor(new Date().getTime() / 1000)
-
-    return accessTokenExpDate <= nowTime
-  }
-
-  static hasRefreshToken() {
-    return Boolean(localStorage.getItem('refreshToken'))
-  }
-
-  static setRefreshToken(status) {
-    if (!['', 'true'].includes(status)) {
-      throw new Error(`setRefreshToken: invalid value ${status}; Expect one of ['', 'true']`)
+        }
     }
 
-    localStorage.setItem('refreshToken', status)
-  }
+    // static async loginToken ({accessToken}) {
+    //   try {
+    //     const response = await axios.post(`${API_URL}/auth/login`,{username, password}, {useCredentails: true})
+    //     _setAuthData({
+    //       accessToken: response.data.tokens.access,
+    //       exp: _parseTokenData(response.data.tokens.access).exp
+    //     })
+    //     return new ResponseWrapper(response, response.data)
+    //   } catch (error) {
+    //     throw new ErrorWrapper(error)
+    //   }
+    // }
 
-  static getBearer() {
-    return BEARER
-  }
+    static async makeLogout() {
+        try {
+            _resetAuthData()
 
-  static setBearer(accessToken) {
-    BEARER = `${accessToken}`
-  }
+            // return new ResponseWrapper(response, response.data) 
+            localStorage.removeItem("user");
+            localStorage.removeItem("vuex");
 
-  /*
-   *tham khảo https://stackoverflow.com/questions/35228052/debounce-function-implemented-with-promises
-   */
-  static _debounce(inner, ms = 0) {
-    let timer = null
-    let resolves = []
-
-    return function () {
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        const result = inner()
-        resolves.forEach(r => r(result))
-        resolves = []
-      }, ms)
-
-      return new Promise(resolve => resolves.push(resolve))
+            $router.push({ name: 'Login' }).catch(() => {})
+        } catch (error) {
+            throw new ErrorWrapper(error)
+        }
     }
-  }
+
+    static async makeRegister({ username, email, password }) {
+        try {
+            const response = await axios.post(`${API_URL}/auth/register`, { username, email, password }, { useCredentails: true })
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            throw new ErrorWrapper(error)
+        }
+    }
+
+
+    static async refreshTokens() {
+        try {
+            var currentUserId = $store.state.user.currentUser.id
+            const response = await axios.post(`${API_URL}/auth/refresh-tokens`, { currentUserId }, { useCredentails: true })
+            _setAuthData({
+                accessToken: response.data.accessToken,
+                exp: _parseTokenData(response.data.accessToken).exp
+            })
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            console.log(error.response.data.code)
+            _resetAuthData()
+            $router.push({ name: 'Login' }).catch(() => {})
+            throw new ErrorWrapper(error)
+        }
+    }
+
+    static debounceRefreshTokens = this._debounce(() => {
+        return this.refreshTokens()
+    }, 100)
+
+    /**
+     ******************************
+     * @METHODS
+     ******************************
+     */
+
+    static isAccessTokenExpired() {
+        const accessTokenExpDate = $store.state.auth.accessTokenExpDate - 10
+        const nowTime = Math.floor(new Date().getTime() / 1000)
+
+        return accessTokenExpDate <= nowTime
+    }
+
+    static hasRefreshToken() {
+        return Boolean(localStorage.getItem('refreshToken'))
+    }
+
+    static setRefreshToken(status) {
+        if (!['', 'true'].includes(status)) {
+            throw new Error(`setRefreshToken: invalid value ${status}; Expect one of ['', 'true']`)
+        }
+
+        localStorage.setItem('refreshToken', status)
+    }
+
+    static getBearer() {
+        return BEARER
+    }
+
+    static setBearer(accessToken) {
+        BEARER = `${accessToken}`
+    }
+
+    /*
+     *tham khảo https://stackoverflow.com/questions/35228052/debounce-function-implemented-with-promises
+     */
+    static _debounce(inner, ms = 0) {
+        let timer = null
+        let resolves = []
+
+        return function() {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+                const result = inner()
+                resolves.forEach(r => r(result))
+                resolves = []
+            }, ms)
+
+            return new Promise(resolve => resolves.push(resolve))
+        }
+    }
 }
 
 /**
@@ -151,58 +153,58 @@ export class AuthService {
  */
 
 function _parseTokenData(accessToken) {
-  let payload = ''
-  let tokenData = {}
+    let payload = ''
+    let tokenData = {}
 
-  try {
-    payload = accessToken.split('.')[1]
-    tokenData = JSON.parse(atob(payload))
-  } catch (error) {
-    throw new Error(error)
-  }
+    try {
+        payload = accessToken.split('.')[1]
+        tokenData = JSON.parse(atob(payload))
+    } catch (error) {
+        throw new Error(error)
+    }
 
-  return tokenData
+    return tokenData
 }
 
 function _resetAuthData() {
-  // reset userData
-  $store.commit('user/SET_CURRENT_USER', {})
-  $store.commit('auth/SET_ATOKEN_EXP_DATE', null)
+    // reset userData
+    $store.commit('user/SET_CURRENT_USER', {})
+    $store.commit('auth/SET_ATOKEN_EXP_DATE', null)
 
-  // reset pageData
-  // $store.commit('data/resetAll')
-  // $store.commit('views/resetAll')
-  // reset tokens
-  AuthService.setRefreshToken('')
-  AuthService.setBearer('')
+    // reset pageData
+    // $store.commit('data/resetAll')
+    // $store.commit('views/resetAll')
+    // reset tokens
+    AuthService.setRefreshToken('')
+    AuthService.setBearer('')
 }
 
 function _setAuthData({ accessToken, exp } = {}) {
-  AuthService.setRefreshToken('true')
-  AuthService.setBearer(accessToken)
-  $store.commit('auth/SET_ATOKEN_EXP_DATE', exp)
+    AuthService.setRefreshToken('true')
+    AuthService.setBearer(accessToken)
+    $store.commit('auth/SET_ATOKEN_EXP_DATE', exp)
 }
 
 /*----------------- Login----------------- */
 export async function makeLogin(user, pass) {
-  const req = await axios.post('/Login', {
-    Username: user,
-    Pwd: pass
-  })
-  return req
+    const req = await axios.post('/Login', {
+        Username: user,
+        Pwd: pass
+    })
+    return req
 }
 
 export async function getAccessToken(userDetail) {
-  try {
-    const req = await axios.post('/accesstoken', {
-      id: userDetail.id,
-      username: userDetail.Username,
-      password: userDetail.Password,
-      realname: userDetail.Realname,
-      role: userDetail.role
-    })
-    return new ResponseWrapper(req, req.data)
-  } catch (error) {
-    return new ErrorWrapper(error)
-  }
+    try {
+        const req = await axios.post('/accesstoken', {
+            id: userDetail.id,
+            username: userDetail.Username,
+            password: userDetail.Password,
+            realname: userDetail.Realname,
+            role: userDetail.role
+        })
+        return new ResponseWrapper(req, req.data)
+    } catch (error) {
+        return new ErrorWrapper(error)
+    }
 }
