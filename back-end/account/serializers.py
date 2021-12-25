@@ -3,7 +3,7 @@ from .models import Account
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
-import smtplib
+# import smtplib
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
