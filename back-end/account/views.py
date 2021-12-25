@@ -12,7 +12,7 @@ from account import dbcontext
 
 
 class RegisterView(APIView):
-    sendEmail = sendEmail
+    # sendEmail = sendEmail
     serializer_class = RegisterSerializer
 
     def post(self, request):
@@ -109,3 +109,12 @@ def updateContactInfor(request):
     except Exception as e:
         print("ERROR ==== ",e)
         return Response({"message":"Fail !!!"},status=status.HTTP_400_BAD_REQUEST)            
+
+@api_view(['GET'])
+def CheckEmailExisted(request):
+    try:
+        resData = dbcontext.CheckEmailExisted(request.GET['email'])
+        return Response(resData, status=status.HTTP_200_OK)
+    except Exception as e:
+        print("ERROR ==== ", e)
+        return Response({"message": "Check email existed failed !!!"}, status=status.HTTP_400_BAD_REQUEST)        

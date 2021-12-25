@@ -1,22 +1,24 @@
 from django.db import connection
 # Get Contact by Account id
+
+
 def getContactByAid(id):
     try:
         sql = '''select * from Contact where aid = %s;'''
         cursor = connection.cursor()
-        cursor.execute(sql,[id])
+        cursor.execute(sql, [id])
         dbData = cursor.fetchall()
         afterFormat = []
         for row in dbData:
             element = {
-                "id":row[0],
-                "firstname":row[1],
-                "lastname":row[2],
-                "email":row[3],
-                "phone":row[4],
-                "birthDate":row[5],
-                #"avartar": row[6],
-                "address":row[7]
+                "id": row[0],
+                "firstname": row[1],
+                "lastname": row[2],
+                "email": row[3],
+                "phone": row[4],
+                "birthDate": row[5],
+                # "avartar": row[6],
+                "address": row[7]
             }
             # print(element)
             afterFormat.append(element)
@@ -26,11 +28,13 @@ def getContactByAid(id):
         return None
     finally:
         cursor.close()
-        connection.close()    
+        connection.close()
+
 
 def write_file(data, filename):
     with open(filename, 'wb') as f:
         f.write(data)
+
 
 def read_blob(author_id, filename):
     # select photo column of a specific author
@@ -42,7 +46,7 @@ def read_blob(author_id, filename):
     try:
         # sql blob data form the authors table
         cursor = connection.cursor()
-        cursor.execute(sql,[author_id])
+        cursor.execute(sql, [author_id])
         avartar = cursor.fetchone()[0]
         #onn = MySQLConnection(**db_config)
         #cursor = conn.cursor()
@@ -54,11 +58,12 @@ def read_blob(author_id, filename):
         return True
 
     except Exception as e:
-        print("ERROR ==== ",e)
+        print("ERROR ==== ", e)
 
     finally:
         cursor.close()
         connection.close()
+
 
 def getLastInsertIDFromAccount():
     try:
@@ -70,33 +75,36 @@ def getLastInsertIDFromAccount():
     except:
         return None
     finally:
-        connection.close()  
+        connection.close()
+
 
 def InsertIMG(FilePath):
-    with open(FilePath,"rb") as File :
+    with open(FilePath, "rb") as File:
         BinaryData = File.read()
     return BinaryData
+
 
 def InsertIntoContact(email):
     try:
         sql = "INSERT INTO Contact (email,aid) VALUES (%s,%s)"
         aid = getLastInsertIDFromAccount()
         cursor = connection.cursor()
-        cursor.execute(sql, ([email],[aid]))
+        cursor.execute(sql, ([email], [aid]))
         row = cursor.fetchall()
         return "Add new Contact successfully !!!"
     except Exception as e:
-        print("ERROR ==== ",e)
+        print("ERROR ==== ", e)
         return None
     finally:
         cursor.close()
-        connection.close()       
+        connection.close()
+
 
 def getContactIdByAId(aid):
     try:
         sql = '''select id from Contact where aid = %s;'''
         cursor = connection.cursor()
-        cursor.execute(sql,[aid])
+        cursor.execute(sql, [aid])
         row = cursor.fetchone()
         return row[0]
     except Exception as e:
@@ -104,19 +112,39 @@ def getContactIdByAId(aid):
         return None
     finally:
         cursor.close()
-        connection.close()  
+        connection.close()
 
-def UpdateContactInfor(firstname, lastname , email , phone , birthdate, avartar , address, aid):
+
+def UpdateContactInfor(firstname, lastname, email, phone, birthdate, avartar, address, aid):
     try:
         contactIdByAid = getContactIdByAId(aid)
         sql = " UPDATE soliditycpn.contact SET firstname = %s, lastname = %s,email = %s,phone = %s,birthDate =%s,avartar = %s,address = %s WHERE id = %s;"
         cursor = connection.cursor()
-        cursor.execute(sql,([firstname],[lastname],[email],[phone],[birthdate],[InsertIMG(avartar)],[address],[contactIdByAid]))
+        cursor.execute(sql, ([firstname], [lastname], [email], [phone], [
+                       birthdate], [InsertIMG(avartar)], [address], [contactIdByAid]))
         row = cursor.fetchall()
         return "Update Contact succesfully !!!"
     except Exception as e:
-        print("ERROR ==== ",e)
+        print("ERROR ==== ", e)
         return None
     finally:
         cursor.close()
-        connection.close()         
+        connection.close()
+
+
+def CheckEmailExisted(email):
+    try:
+        sql = '''select email from soliditycpn.contact where email like %s;'''
+        cursor = connection.cursor()
+        cursor.execute(sql, [email])
+        row = cursor.fetchone()
+        if row is not None:
+           return "Existed"
+        else : 
+            return "Valid"  
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return "Exception"
+    finally:
+        cursor.close()
+        connection.close()
