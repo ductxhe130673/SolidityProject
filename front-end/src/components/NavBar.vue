@@ -170,7 +170,8 @@ nav {
 }
 .nav__left .name {
   flex-basis: 10%;
-  margin-left: 21%;
+  margin-left: auto;
+  margin-right: auto;
   font-size: 24px;
   cursor: pointer;
   color: black;

@@ -94,7 +94,7 @@ export default {
 <style scoped>
 .description-start {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 110px;
@@ -103,7 +103,7 @@ export default {
 }
 .description-selectSC {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 210px;
@@ -112,7 +112,7 @@ export default {
 }
 .description-select-context {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 310px;
@@ -121,7 +121,7 @@ export default {
 }
 .description-choosevul {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 410px;
@@ -130,7 +130,7 @@ export default {
 }
 .description-generate {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 510px;
@@ -139,7 +139,7 @@ export default {
 }
 .description-checkSC {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 610px;
@@ -148,7 +148,7 @@ export default {
 }
 .description-finish {
   position: fixed;
-  width: 300px;
+  width: 20%;
   height: 100px;
   border: 2px solid gray;
   top: 710px;

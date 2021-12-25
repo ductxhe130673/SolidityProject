@@ -6,8 +6,6 @@
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">Context</a></span
         >
-        >
-        <a>List</a>
       </div>
       <div class="col-md-7 text-center"><h1>Context List</h1></div>
     </div>

@@ -6,9 +6,6 @@
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
           <a href="" class="link-primary text-decoration-underline">LTL</a></span
         >
-        >
-
-        <a>List</a>
       </div>
       <div class="col-md-7 text-center">
         <h1>LTL Property Template List</h1>
@@ -35,7 +32,7 @@
         </div>
       </div>
       <div class="row">
-        <table class="table table-md ">
+        <table class="table table-md">
           <thead>
             <tr>
               <th style="width: 5%">#</th>
@@ -252,7 +249,6 @@ table tr:nth-child(even) {
 
 table tr:hover {
   background-color: #ddd;
-  
 }
 
 table th {
@@ -274,5 +270,6 @@ table span {
 }
 #btn {
   text-align: right;
+  display: flex;
 }
 </style>
