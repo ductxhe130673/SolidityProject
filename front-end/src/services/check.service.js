@@ -87,4 +87,22 @@ export default class CheckService extends BaseService {
             throw new ErrorWrapper(error, message)
         }
     }
+    static async addNewCheckedBatchSC(lteid , cid , noSC , status , LTLformula , result) {
+         const data = {
+            aid: JSON.parse(localStorage.getItem("user")).id,
+            lteid: lteid,
+            cid: 1,
+            noSC: noSC,
+            status: status,
+            LTLformula: LTLformula,
+            result: result,
+            }
+        try {
+            const response = await this.request({ auth: true }).post (`${this.getUnity()}/addnewcheckedbatchsc`, data)
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
 }

@@ -32,7 +32,6 @@ class SimpleTestDelete(TestCase):
         response = self.client.delete(
             'http://127.0.0.1:8000/smartconstract/select-smart-contract?id=6')           
 
-
 class Test_Insert_Methods(TransactionTestCase):
    # test new insert into initialmanrking
     def test_insert_into_initialmarking(self):
@@ -233,6 +232,6 @@ class TestGetArgumentByFunctionId(TestCase):
     # test get argument by function ID,'id' not 'sid'
     def test_getArgument_by_FunctionId(self):
         response =  self.client.get('http://127.0.0.1:8000/smartconstract/getargubyfunctionid?sid=4')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST) 
 
 #  python .\manage.py test --testrunner=custom_seting.custom_runner.CustomRunner        

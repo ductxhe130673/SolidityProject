@@ -5,39 +5,50 @@
       <div class="content" style="white-space: pre-line">{{ done_result }}</div>
     </div>
 
-    <div class="buttonGroup">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('checkIM')"
-      >
-        Checking with the same LTL properties and different configurations
-      </button>
+    <div class="button">
+      <div class="container">
+        <div class="row up">
+          <div class="col-7">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="routing('checkIM')"
+            >
+              Checking with the same LTL properties and different configurations
+            </button>
+          </div>
+          <div class="col-4 right">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="routing('checkLTL')"
+            >
+              Checking with different LTL properties
+            </button>
+          </div>
+        </div>
 
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('checkLTL')"
-      >
-        Checking with different LTL properties
-      </button>
-    </div>
-    <div class="buttonGroup1">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('checkNew')"
-      >
-        Start a new checking session
-      </button>
-
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('back')"
-      >
-        Back
-      </button>
+        <div class="row">
+          <div class="col-5">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="routing('checkNew')"
+            >
+              Start a new checking session
+            </button>
+          </div>
+          <div class="col-6 right">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              @click="routing('back')"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -64,8 +75,9 @@ export default {
         this.$store.commit("setIndex", 4);
       }
       if (param == "checkNew") {
+        this.$store.commit("ResetState");
         this.$router.push({ name: "SelectSmartContract" });
-        this.$store.commit("setIndex", 3);
+        this.$store.commit("setIndex", 2);
       }
     },
   },
@@ -109,5 +121,4 @@ export default {
   margin: 0 auto;
   padding-bottom: 8%;
 }
-
 </style>

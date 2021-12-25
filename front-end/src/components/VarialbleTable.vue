@@ -148,6 +148,7 @@ export default {
         this.function_infor = this.functionBySC[index].localVar;
       }
     },
+    // SetSelectedTemplate
     routing(param) {
       if (param == "next") {
         this.$store.commit("setVarSelected", this.checkedVar);

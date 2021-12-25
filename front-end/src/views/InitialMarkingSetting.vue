@@ -250,7 +250,6 @@ export default {
         return newObject;
       });
       this.init_marking.smart_contract = newData;
-      console.log("newData", newData);
     },
     async getFuntionSC(sid) {
       const func = await GetGloLocArgOfSmartContract(sid).then(

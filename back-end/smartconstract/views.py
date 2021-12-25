@@ -74,7 +74,8 @@ def getScById(request):
             serialiSmartConstract = GetSmartConstractSerializer(
                 smartConstractDB)
             return Response(serialiSmartConstract.data, status=status.HTTP_200_OK)
-    except:
+    except Exception as e:
+        print('ERROR !!!', e)
         return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
 

@@ -49,11 +49,7 @@
       <button type="button" class="btn btn-outline-primary" @click="goLogin()">
         Login
       </button>
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="goRegister()"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="goRegister()">
         Register
       </button>
     </div>
@@ -130,6 +126,7 @@ export default {
       this.$router.push({ name: "Profile" });
     },
     async logout() {
+      this.$store.commit("ResetState");
       await AuthService.makeLogout();
     },
   },

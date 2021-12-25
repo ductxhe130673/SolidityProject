@@ -74,7 +74,15 @@ export default {
   },
   computed: {
     getFormulaText() {
-      return this.template.formula_text;
+      let formulaText = "";
+      if (!this.$store.state.data.data.isVarSelected)
+        formulaText = this.template.formula_text;
+      else
+        formulaText = this.template.formula_text?.replaceAll(
+          "variable",
+          this.$store.state.data.data.isVarSelected
+        );
+      return formulaText;
     },
     getFormula() {
       return this.template.formula;
