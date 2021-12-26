@@ -50,7 +50,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          v-model="selected_vuls"
+          v-model="newLtl.params.name"
         />
       </div>
     </div>
@@ -130,7 +130,12 @@
         Check
       </button>
       <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
-      <button v-if="showDownload" @click="downloadItem()" class="btn btn-primary-outline">
+      <button
+        v-if="showDownload"
+        @click="downloadItem()"
+        style="border: 1px solid #0d6efd; color: #0d6efd"
+        class="btn btn-primary-outline"
+      >
         Download
       </button>
       <button type="button" class="btn btn-outline-primary" @click="navigate('back')">
@@ -170,6 +175,7 @@ export default {
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.selected_vuls = this.$store.state.data.data.selectedTemplate;
+    console.log("newLtl", this.newLtl);
   },
   components: {
     // Popup,

@@ -18,7 +18,6 @@
       </div>
       <div id="pcb-button">
         <a class="link-button" @click="goCSP">Check a Contract-Specifc Property </a>
-        <a class="link-button" @click="goGV">Check a General Vulnerability </a>
         <a class="link-button" @click="goBack">Back </a>
       </div>
     </div>

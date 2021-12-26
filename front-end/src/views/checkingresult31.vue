@@ -67,10 +67,12 @@ export default {
         this.$store.commit("setIndex", 5);
       }
       if (param == "checkLTL") {
+        this.$store.commit("resetLTL");
         this.$router.push({ name: "LTLCheckOption" });
         this.$store.commit("setIndex", 4);
       }
       if (param == "checkIM") {
+        this.$store.commit("resetInit");
         this.$router.push({ name: "Initial" });
         this.$store.commit("setIndex", 4);
       }

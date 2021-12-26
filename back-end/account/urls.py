@@ -18,5 +18,6 @@ urlpatterns = [
     path('getavatarbyaid',views.getAvatarAccountId),
     path('updatecontactbyaid',views.updateContactInfor),
     path('checkemailexited',views.CheckEmailExisted),
-    path('insertintocontact',views.insertIntoContact)
+    path('insertintocontact',views.insertIntoContact),
+    path('checkusernameexited',views.CheckUsernameExisted)
 ]

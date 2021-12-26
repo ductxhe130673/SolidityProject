@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-3">Formula</div>
       <div class="col-md-7">
-        <FormularEditor @input="updateMessage" />
+        <FormularEditor @changeContent="updateMessage" />
       </div>
     </div>
     <div class="row">
@@ -58,11 +58,7 @@
     </div>
 
     <div class="buttonGroup">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="clickHandler('save')"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="clickHandler('save')">
         Save
       </button>
       <button
@@ -101,26 +97,22 @@ export default {
   },
   methods: {
     updateMessage(mes) {
-      var mapObj = {
-        G: "After an occurrence of",
-        F: "at least one occurrence of",
-        g: "g",
-        f: "f",
-      };
-      const step1 = mes.replace("=>", "there will be");
-      this.formulaText = step1.replace(/G|F/gi, function (matched) {
-        return mapObj[matched];
-      });
-      this.code = mes;
+      if (mes.search("property prop: F odp;") >= 0) {
+        this.formulaText = "'variable' will occur in some day";
+      } else if (mes.search("property prop: G F odp;") >= 0) {
+        this.formulaText = "'variable' occurs infinitely often";
+      } else if (mes.search("proposition outOfRange:") >= 0) {
+        this.formulaText =
+          "the case where 'variable' is greater than 2147483647 or less than 0 will never happen";
+      }
+      this.codeModel = mes;
     },
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
     async clickHandler(action) {
-      console.log("A-----", this.code);
       if (action == "save") {
-        if (this.code === "" || this.name === "")
-          alert("Please input all field!!!");
+        if (this.code === "" || this.name === "") alert("Please input all field!!!");
         await CreateLTLTemplate(
           this.name,
           this.code,

@@ -1,6 +1,6 @@
 from rest_framework import serializers, status, permissions
 from rest_framework.decorators import api_view
-from .serializers import RegisterSerializer, LoginSerializer, sendEmail
+from .serializers import RegisterSerializer, LoginSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -118,3 +118,12 @@ def CheckEmailExisted(request):
     except Exception as e:
         print("ERROR ==== ", e)
         return Response({"message": "Check email existed failed !!!"}, status=status.HTTP_400_BAD_REQUEST)        
+
+@api_view(['GET'])
+def CheckUsernameExisted(request):
+    try:
+        resData = dbcontext.CheckUserNameExisted(request.GET['username'])
+        return Response(resData, status=status.HTTP_200_OK)
+    except Exception as e:
+        print("ERROR ==== ", e)
+        return Response({"message": "Check email existed failed !!!"}, status=status.HTTP_400_BAD_REQUEST)     
