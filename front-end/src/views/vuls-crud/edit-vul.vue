@@ -58,11 +58,7 @@
     </div>
 
     <div class="buttonGroup">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="clickHandler('save')"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="clickHandler('save')">
         Save
       </button>
       <button
@@ -104,16 +100,13 @@ export default {
   },
   methods: {
     updateMessage(mes) {
-      var mapObj = {
-        G: "After an occurrence of",
-        F: "at least one occurrence of",
-        g: "g",
-        f: "f",
-      };
-      const step1 = mes.replace("=>", "there will be");
-      this.formulaText = step1.replace(/G|F/gi, function (matched) {
-        return mapObj[matched];
-      });
+      if (
+        mes ===
+        "proposition odp: run 'variable';\n property prop: F odp;\n 'function'.func"
+      ) {
+        this.formulaText = "hihiu";
+      }
+      console.log(this.formulaText);
       this.codeModel = mes;
     },
     async initData() {
@@ -124,6 +117,7 @@ export default {
       this.description = data.description;
       this.dateFormat = data.createdDate;
       this.formulaText = data.formula_text;
+      console.log("this.formulaText", this.formulaText);
     },
 
     async clickHandler(action) {

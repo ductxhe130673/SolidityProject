@@ -41,7 +41,7 @@ import VariableSelection from "./VarialbleTable.vue";
 import FunctionSelection from "./FunctionTable.vue";
 
 export default {
-  props: ["ltlcode"],
+  props: ["ltlcode", "ltlcodetext"],
   components: { ArgumentSelection, VariableSelection, FunctionSelection },
   data() {
     return {
@@ -95,7 +95,7 @@ export default {
             elements[i].innerText = "'" + this.temp_selection + "'";
           }
         }
-        this.$emit("input", this.getNodeValue());
+        this.$emit("changeContent", this.getNodeValue());
       }
       this.select_variable_id = "";
       this.select_variable_value = "";
@@ -110,8 +110,10 @@ export default {
       } else {
         this.select_variable_type = "var";
       }
+
       console.log(type);
       this.selectVariable = true;
+      document.getElementById("selection-table").style.display = "block";
     },
     removeSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
@@ -153,7 +155,7 @@ export default {
       result_element.innerHTML = analyseLTLCode(value);
       this.setCursor(pos);
       this.addSelectVarEventListener();
-      this.$emit("input", value);
+      this.$emit("changeContent", value);
     },
     getNodeValue() {
       let result_element = document.getElementById("highlighting-content");
@@ -218,7 +220,8 @@ export default {
 }
 
 #highlighting-content {
-  border: 0;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
   width: 100%;
   height: 100%;
   background-color: #f6f6f6;
@@ -240,10 +243,10 @@ export default {
 }
 #selection-table-b2 {
   position: absolute;
-  height: 550px;
-  width: 900px;
+  height: 90%;
+  width: 70%;
   border-radius: 10px;
-  top: 130px;
+  top: 30px;
   left: calc(50% - 450px);
   background-color: white;
   overflow: auto;

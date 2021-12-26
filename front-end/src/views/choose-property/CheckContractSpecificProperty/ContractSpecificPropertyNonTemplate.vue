@@ -5,36 +5,42 @@
       <div class="row">
         <div class="col-2">Name</div>
         <div class="col-9">
-          <input type="text" class="form-control" placeholder="Check format">
+          <input
+            type="text"
+            class="form-control"
+            v-model="template.name"
+            placeholder=""
+          />
         </div>
       </div>
       <div class="row">
         <div class="col-2">Formula</div>
         <div class="col-9">
-         <formular-editor/>
+          <FormularEditor @changeContent="getData" :ltlcode="template.formula" />
         </div>
       </div>
       <div class="row">
-      <div class="col-2">Description</div>
-      <div class="col-9">
-        <textarea name="" id="" cols="30" rows="5" class="form-control">
+        <div class="col-2">Description</div>
+        <div class="col-9">
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="5"
+            v-model="template.description"
+            class="form-control"
+          >
             Not currentBalance overflow
-          </textarea
-        >
+          </textarea>
+        </div>
       </div>
-    </div>
       <div class="row">
         <div class="col-2"></div>
         <div id="btn-group" class="col-9">
           <button class="btn btn-primary-outline btn-sm" @click="routing('save')">
             Next
           </button>
-          <button
-            class="btn btn-outline btn-sm"
-            @click="routing('back')"
-          >
-            Back
-          </button>
+          <button class="btn btn-outline btn-sm" @click="routing('back')">Back</button>
         </div>
       </div>
     </div>
@@ -42,17 +48,51 @@
 </template>
 
 <script>
-import FormularEditor from "../../../components/FormularEditor.vue"
+import FormularEditor from "../../../components/LtlEditor.vue";
 export default {
+  data: function () {
+    return {
+      template: {
+        aid: JSON.parse(localStorage.getItem("user")).id,
+        createdDate: "2021-12-27",
+        description: "",
+        formula: "",
+        formula_text: "This is formular text",
+        name: "",
+        template_type: "type0",
+      },
+      ltlConfig: {},
+    };
+  },
   components: {
-    FormularEditor
+    FormularEditor,
+  },
+  mounted() {
+    this.template = this.$store.state.data.data.selectedTemplate;
+  },
+  computed: {
+    getFormula() {
+      return this.template.formula;
+    },
   },
   methods: {
-    getLTLCode(code) {
-      this.ltlcode = code;
+    getData(data) {
+      this.template.formula = data;
+    },
+    setLtlConfig() {
+      this.ltlConfig = {
+        type: "specific",
+        params: {
+          name: this.template.name,
+          formula: this.template.formula,
+        },
+      };
     },
     routing(param) {
       if (param == "save") {
+        this.setLtlConfig();
+        this.$store.commit("SetLtlConfig", this.ltlConfig);
+        this.$store.commit("SetSelectedTemplate", this.template);
         this.$router.push({ name: "Initial" });
       }
       if (param == "back") {
@@ -106,8 +146,8 @@ textarea {
   border-radius: 4px;
   cursor: pointer;
 }
-#btn-group button:hover{
-   background-color: #1079cf;
+#btn-group button:hover {
+  background-color: #1079cf;
   color: white;
 }
 button {
