@@ -113,10 +113,7 @@
                   <thead>
                     <tr>
                       <th style="width: 10 %">#</th>
-                      <th>
-                        Functions
-
-                      </th>
+                      <th>Functions</th>
                       <th style="width: 25%">Arguments</th>
                     </tr>
                   </thead>
@@ -306,6 +303,7 @@ export default {
         ) {
           alert("From must be smaller than To");
         } else {
+          console.log("this.init_marking", this.init_marking);
           this.$store.commit("SetInitialMarking", this.init_marking);
           this.$router.push({ name: "CheckSmartContract" });
           this.$store.commit("setIndex", 5);
@@ -328,13 +326,13 @@ export default {
 };
 </script>
 <style scoped>
-h1{
+h1 {
   font-weight: bold;
 }
 input {
   border: 1px solid gray;
 }
-#text{
+#text {
   font-size: 18px;
 }
 #initial-marking {
@@ -347,7 +345,6 @@ input {
 #initial-marking-header {
   padding-top: 20px;
   text-align: center;
-  
 }
 #initial-marking-input {
   width: 60%;
@@ -367,7 +364,6 @@ input {
 .number-cell {
   height: 40px;
   margin-top: 20px;
- 
 }
 
 .multi-cell {
@@ -478,7 +474,6 @@ table span {
   height: 240px;
   overflow-y: auto;
 }
-
 
 .input-param-text:hover {
   color: blue;

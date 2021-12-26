@@ -118,7 +118,6 @@ export default {
       this.description = data.description;
       this.dateFormat = data.createdDate;
       this.formulaText = data.formula_text;
-      console.log("this.formulaText", this.formulaText);
     },
 
     async clickHandler(action) {

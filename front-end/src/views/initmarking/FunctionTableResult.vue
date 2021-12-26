@@ -9,24 +9,20 @@
     <div id="params-setting-input">
       <div id="sender-value-section">
         <span>Sender value</span>
-        <input type="text" placeholder="0" v-model="own_list_argument.sender" />
+        <input type="text" v-model="own_list_argument.sender_value.from" />
+        <span>To</span>
+        <input type="text" v-model="own_list_argument.sender_value.to" />
       </div>
       <div id="table-params">
         <table class="table">
           <thead>
             <tr>
               <th style="width: 10%">#</th>
-              <th>
-                Parameters
-
-              </th>
+              <th>Parameters</th>
               <th style="width: 25%">Range</th>
             </tr>
           </thead>
-          <tr
-            v-for="(param, key) in own_list_argument.argument"
-            v-bind:key="key"
-          >
+          <tr v-for="(param, key) in own_list_argument.argument" v-bind:key="key">
             <td>{{ param.id }}</td>
             <td>{{ param.name }}</td>
             <td><input type="text" v-model="param.value" /></td>
@@ -150,7 +146,7 @@ table span {
   display: block;
   height: 8px;
 }
-table input{
+table input {
   border: 1px solid grey;
   width: 50%;
 }
