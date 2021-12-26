@@ -28,7 +28,7 @@
     <div class="row">
       <div class="col-md-3">Formula</div>
       <div class="col-md-7">
-        <FormularEditor :ltlcode="codeModel" @input="updateMessage" />
+        <FormularEditor :ltlcode="codeModel" @changeContent="updateMessage" />
       </div>
     </div>
     <div class="row">
@@ -100,13 +100,14 @@ export default {
   },
   methods: {
     updateMessage(mes) {
-      if (
-        mes ===
-        "proposition odp: run 'variable';\n property prop: F odp;\n 'function'.func"
-      ) {
-        this.formulaText = "hihiu";
+      if (mes.search("property prop: F odp;") >= 0) {
+        this.formulaText = "'variable' will occur in some day";
+      } else if (mes.search("property prop: G F odp;") >= 0) {
+        this.formulaText = "'variable' occurs infinitely often";
+      } else if (mes.search("proposition outOfRange:") >= 0) {
+        this.formulaText =
+          "the case where 'variable' is greater than 2147483647 or less than 0 will never happen";
       }
-      console.log(this.formulaText);
       this.codeModel = mes;
     },
     async initData() {
@@ -117,7 +118,6 @@ export default {
       this.description = data.description;
       this.dateFormat = data.createdDate;
       this.formulaText = data.formula_text;
-      console.log("this.formulaText", this.formulaText);
     },
 
     async clickHandler(action) {

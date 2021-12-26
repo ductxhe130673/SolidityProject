@@ -46,10 +46,7 @@
             <thead>
               <tr>
                 <th style="width: 15%">#</th>
-                <th>
-                  Users
-                 
-                </th>
+                <th>Users</th>
                 <th style="width: 25%">Balance</th>
               </tr>
             </thead>
@@ -88,9 +85,7 @@
                 <thead>
                   <tr>
                     <th style="width: 10%">#</th>
-                    <th>
-                      Functions
-                    </th>
+                    <th>Functions</th>
                     <th style="width: 25%">Arguments</th>
                   </tr>
                 </thead>
@@ -98,10 +93,7 @@
                   <td>{{ index + 1 }}</td>
                   <td>{{ func.name }}</td>
                   <td>
-                    <div
-                      class="input-param-text"
-                      @click="setFunctionParam(func.fid)"
-                    >
+                    <div class="input-param-text" @click="setFunctionParam(func.fid)">
                       Input Params
                     </div>
                   </td>
@@ -119,11 +111,7 @@
       </div>
     </div>
     <div class="buttonGroup">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        @click="routing('back')"
-      >
+      <button type="button" class="btn btn-outline-primary" @click="routing('back')">
         Back
       </button>
     </div>
@@ -131,7 +119,6 @@
 </template>
 
 <script>
-import { GetGloLocArgOfSmartContract } from "../services/data";
 import FunctionTableResult from "./initmarking/FunctionTableResult.vue";
 export default {
   components: {
@@ -154,8 +141,9 @@ export default {
   },
   beforeMount() {
     this.list_smart_contract = this.$store.state.data.data.selectedSc;
-    this.getFuntionSC(this.list_smart_contract[0].sid);
     this.init_marking = this.$store.state.data.data.initialMarkingInfor;
+    this.getFuntionSC();
+
     this.setUserParam();
     if (this.list_smart_contract.length > 0) {
       this.selected_sc = this.list_smart_contract[0].sid;
@@ -200,9 +188,6 @@ export default {
                 1)
           ) + parseInt(this.init_marking.balance.random.from)
         );
-      // else if (this.init_marking.Balance.type === "map") {
-
-      // };
     },
     setUserParam() {
       for (let i = 1; i <= this.init_marking.NumberOfUser; i++) {
@@ -222,23 +207,15 @@ export default {
     changeSelected(value) {
       this.function_cell_selected = value;
     },
-    async getFuntionSC(sid) {
-      const fun = await GetGloLocArgOfSmartContract(sid);
-      this.func = fun.functions;
+    getFuntionSC() {
+      this.func = this.init_marking.smart_contract[0].functions;
     },
     selectSC(sid) {
       if (this.selected_sc != sid) {
         this.selected_sc = sid;
-        this.getFuntionSC(sid);
       }
     },
-    // updateInitMarking(val) {
-    //   this.function_cell_selected = "function";
-    //   this.selected_function = null;
-    //   this.init_marking.Funtion_params[this.selected_sc].functions[
-    //     this.selected_function
-    //   ] = val;
-    // },
+
     routing(param) {
       if (param == "save") {
         this.$store.commit("SetInitialMarking", this.init_marking);
@@ -320,7 +297,7 @@ table span {
   height: 240px;
   overflow-y: auto;
 }
-.input-param-text{
+.input-param-text {
   padding: 2px;
 }
 .input-param-text:hover {
@@ -380,7 +357,6 @@ table span {
   border: black solid 1px;
   padding: 3% 2% 3% 2%;
 }
-
 
 /* button */
 .buttonGroup {
