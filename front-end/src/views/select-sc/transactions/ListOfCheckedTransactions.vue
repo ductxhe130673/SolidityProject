@@ -191,8 +191,8 @@ a {
   color: black;
 }
 a:hover {
-  color: red;
-  text-decoration: underline red wavy;
+  color: blue;
+  text-decoration: underline ;
 }
 div#main {
   padding-bottom: 10%;

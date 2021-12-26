@@ -1,135 +1,131 @@
 <template>
-  <div id="initial-marking">
-    <div id="initial-marking-header">Configuration</div>
-    <div id="initial-marking-input">
-      <div id="header-section">
-        <div class="multi-cell">Type</div>
-        <div class="user-cell">User parameters</div>
-        <div class="function-cell">Function parameters</div>
-      </div>
-      <div id="input-section">
-        <div class="multi-cell">
-          <div id="multi-radio-chooses">
-            <div class="radio-choose">
-              <input
-                type="radio"
-                name="radio"
-                class="radio-buttons"
-                value="fixed"
-                v-model="init_marking.balance.type"
-              />
-              <span>Fixed</span>
-            </div>
-            <div class="radio-choose">
-              <input
-                type="radio"
-                name="radio"
-                class="radio-buttons"
-                value="random"
-                v-model="init_marking.balance.type"
-              />
-              <span>Random</span>
-            </div>
-            <div class="radio-choose">
-              <input
-                type="radio"
-                name="radio"
-                class="radio-buttons"
-                value="map"
-                v-model="init_marking.balance.type"
-              />
-              <span>Map</span>
-            </div>
+  <div class="container-fluid">
+    <div class="row"><h1 class="text-center">Configuration</h1></div>
+    <div class="row">
+      <div class="col-md-3">Type</div>
+      <div class="col-md-7">
+        <div id="multi-radio-chooses">
+          <div class="radio-choose">
+            <input
+              type="radio"
+              name="radio"
+              class="radio-buttons"
+              value="fixed"
+              v-model="init_marking.balance.type"
+            />
+            <span>Fixed</span>
           </div>
-        </div>
-        <div class="user-cell">
-          <div id="table-list">
-            <div class="table-row" id="header-row">
-              <div class="table-cell header-cell first-cell">
-                #
-                <span class="material-icons"> swap_vert </span>
-              </div>
-              <div class="table-cell header-cell second-cell">
-                Users
-                <span class="material-icons"> swap_vert </span>
-              </div>
-              <div class="table-cell header-cell third-cell">Balance</div>
-            </div>
-
-            <div
-              class="table-row"
-              v-for="(func, index) in dataUserTable"
-              v-bind:key="func.fid"
-              :class="{ even_row: index % 2 == 0 }"
-            >
-              <div class="table-cell first-cell">{{ index + 1 }}</div>
-              <div class="table-cell second-cell">{{ func.name }}</div>
-              <div class="table-cell third-cell">{{ func.balance }}</div>
-            </div>
+          <div class="radio-choose">
+            <input
+              type="radio"
+              name="radio"
+              class="radio-buttons"
+              value="random"
+              v-model="init_marking.balance.type"
+            />
+            <span>Random</span>
           </div>
-        </div>
-        <div class="user-cell">
-          <div class="function-cell">
-            <div id="list-smart-contract">
-              <ul class="nav nav-tabs">
-                <li
-                  class="nav-item d-inline-block text-truncate"
-                  v-for="item in list_smart_contract"
-                  :key="item.id"
-                >
-                  <a
-                    class="nav-link"
-                    v-on:click="selectSC(item.sid)"
-                    v-bind:class="{ active: item.sid == selected_sc }"
-                    >{{ item.name }}</a
-                  >
-                </li>
-              </ul>
-            </div>
-            <div id="sm-information-table">
-              <div v-if="function_cell_selection == 'function'">
-                <div id="table-list">
-                  <div class="table-row" id="header-row">
-                    <div class="table-cell header-cell first-cell">
-                      #
-                      <span class="material-icons"> swap_vert </span>
-                    </div>
-                    <div class="table-cell header-cell second-cell">
-                      Functions
-                      <span class="material-icons"> swap_vert </span>
-                    </div>
-                    <div class="table-cell header-cell third-cell">Arguments</div>
-                  </div>
-
-                  <div
-                    class="table-row"
-                    v-for="(func, index) in func"
-                    v-bind:key="index"
-                    :class="{ even_row: index % 2 == 0 }"
-                  >
-                    <div class="table-cell first-cell">{{ index + 1 }}</div>
-                    <div class="table-cell second-cell">{{ func.name }}</div>
-                    <div class="table-cell third-cell">
-                      <div class="input-param-text" @click="setFunctionParam(func.fid)">
-                        Input Params
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div v-if="function_cell_selection == 'params'">
-                <function-table
-                  :list_argument="getFunctionArgument"
-                  @changeSelected="changeSelected"
-                />
-              </div>
-            </div>
+          <div class="radio-choose">
+            <input
+              type="radio"
+              name="radio"
+              class="radio-buttons"
+              value="map"
+              v-model="init_marking.balance.type"
+            />
+            <span>Map</span>
           </div>
         </div>
       </div>
     </div>
-    <div id="processing-btn">
-      <button class="pr-button" @click="routing('back')">Back</button>
+    <div class="row">
+      <div class="col-md-3">User parameters</div>
+      <div class="col-md-7">
+        <div id="table-list">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 15%">#</th>
+                <th>
+                  Users
+                 
+                </th>
+                <th style="width: 25%">Balance</th>
+              </tr>
+            </thead>
+            <tr v-for="(func, index) in dataUserTable" v-bind:key="func.fid">
+              <td>{{ index + 1 }}</td>
+              <td>{{ func.name }}</td>
+              <td>{{ func.balance }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Function parameters</div>
+      <div class="col-md-7">
+        <div id="list-smart-contract">
+          <ul class="nav nav-tabs">
+            <li
+              class="nav-item d-inline-block text-truncate"
+              v-for="item in list_smart_contract"
+              :key="item.id"
+            >
+              <a
+                class="nav-link"
+                v-on:click="selectSC(item.sid)"
+                v-bind:class="{ active: item.sid == selected_sc }"
+                >{{ item.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div id="sm-information-table">
+          <div v-if="function_cell_selection == 'function'">
+            <div id="table-list">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 10%">#</th>
+                    <th>
+                      Functions
+                    </th>
+                    <th style="width: 25%">Arguments</th>
+                  </tr>
+                </thead>
+                <tr v-for="(func, index) in func" v-bind:key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ func.name }}</td>
+                  <td>
+                    <div
+                      class="input-param-text"
+                      @click="setFunctionParam(func.fid)"
+                    >
+                      Input Params
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div v-if="function_cell_selection == 'params'">
+            <function-table
+              :list_argument="getFunctionArgument"
+              @changeSelected="changeSelected"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="buttonGroup">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        @click="routing('back')"
+      >
+        Back
+      </button>
     </div>
   </div>
 </template>
@@ -218,7 +214,7 @@ export default {
         } else {
           this.dataUserTable.push({
             name: "User" + i,
-            balance: this.init_marking.balance.map.split(",")[i-1],
+            balance: this.init_marking.balance.map.split(",")[i - 1],
           });
         }
       }
@@ -248,7 +244,6 @@ export default {
         this.$store.commit("SetInitialMarking", this.init_marking);
         this.$router.push({ name: "CheckSmartContract" });
         this.$store.commit("setIndex", 5);
-
       }
       if (param == "back") {
         this.$router.push({ name: "CheckSmartContract" });
@@ -265,54 +260,75 @@ export default {
 };
 </script>
 <style scoped>
-#initial-marking {
-  height: 100%;
-  width: 100%;
-  min-width: 900px;
+.container-fluid {
+  color: black;
 }
-
-#initial-marking-header {
-  height: 60px;
-  padding-top: 10px;
-  font-size: 30px;
+h1 {
   font-weight: bold;
-  text-align: center;
 }
-#initial-marking-input {
-  width: 60%;
-  margin-left: 20%;
-
-  display: flex;
-  justify-content: space-between;
+.row {
+  margin-top: 2%;
+  padding-right: 10px;
+  margin-bottom: 3%;
 }
-
-#header-section {
-  flex-basis: 20%;
+.col-md-3 {
+  padding-left: 13%;
+  font-size: 18px;
 }
-
-#input-section {
-  flex-basis: 80%;
-}
-
-.number-cell {
-  height: 40px;
-  margin-top: 20px;
-}
-
-.multi-cell {
-  height: 100px;
-  margin-top: 20px;
-}
-
-.function-cell {
-  margin-top: 20px;
-}
-
-.user-cell {
+/* function */
+table {
   width: 100%;
-  height: 255px;
+}
+table td,
+table th {
+  padding: 6px;
+}
+table td {
+  padding: 10px;
+}
+table tr {
+  border-bottom: 1px solid #dee2e6;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+table tr:hover {
+  background-color: #ddd;
+}
+table th {
+  background-color: #d9edf7;
+  color: #3a7694;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  text-indent: inherit;
 }
 
+table span {
+  float: right;
+  display: block;
+}
+#icon {
+  display: block;
+  height: 8px;
+}
+
+#table-list {
+  width: 100%;
+  margin: auto;
+  font-size: 0.9em;
+  height: 240px;
+  overflow-y: auto;
+}
+.input-param-text{
+  padding: 2px;
+}
+.input-param-text:hover {
+  color:blue;
+  text-decoration: underline;
+}
+
+/* radio button */
 #multi-radio-chooses {
   display: flex;
 }
@@ -346,153 +362,33 @@ export default {
 }
 
 .nav-item .active {
-  color: white;
-  background-color: #383838;
-  border: grey;
+  color: black;
+  background-color: #d9edf7;
 }
 .nav-link {
-  font-size: 14px;
-  color: #383838;
-  border: grey solid;
+  color: black;
+  border: black solid 1px;
   border-bottom: none;
 }
 .nav-item {
-  width: 20%;
+  min-width: 10%;
   margin-right: 3px;
   cursor: pointer;
 }
 
 #sm-information-table {
-  border: black solid;
+  border: black solid 1px;
   padding: 3% 2% 3% 2%;
 }
 
-/* function */
 
-#table-list {
-  width: 100%;
-  margin: auto;
-  font-size: 0.9em;
-  height: 240px;
-  overflow-y: auto;
-  border-radius: 4px;
-  border: 2px solid black;
-
-  background: rgb(241, 240, 240);
-}
-
-.table-row {
-  display: flex;
-  height: 40px;
-}
-#header-row {
-  background-color: rgb(196, 194, 194);
-  font-weight: bold;
-}
-
-#table-list span {
-  float: right;
-  margin: 0 20% 0 0;
-  padding: 0;
-  font-size: 150%;
-}
-.even_row {
-  background-color: rgb(226, 224, 224);
-}
-.table-cell {
-  display: flex;
-  align-items: center;
-}
-.first-cell {
-  flex-basis: 12%;
-  padding-left: 5px;
-}
-.second-cell {
-  flex-basis: 58%;
-}
-.third-cell {
-  flex-basis: 30%;
-}
-.input-param-text {
-  color: rgb(42, 42, 214);
-  cursor: pointer;
-}
-.input-param-text:hover {
-  color: rgb(78, 78, 243);
-}
-
-/* Button */
-#ssc-button {
-  width: 60%;
-  height: 80px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.button-style {
-  background-color: #ffffff;
-  border: 0;
-  border-radius: 0.5rem;
-  box-sizing: border-box;
-  color: #111827;
-  font-family: "Inter var", ui-sans-serif, system-ui, -apple-system, system-ui, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.25rem;
-  padding: 0.75rem 1rem;
-  text-align: center;
-  text-decoration: none #d1d5db solid;
-  text-decoration-thickness: auto;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 3px 0 rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-style:hover {
-  background-color: rgb(249, 250, 251);
-}
-
-.button-style:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.button-style:focus-visible {
-  box-shadow: none;
-}
 /* button */
-#processing-btn {
-  width: 47%;
-  height: 120px;
-  margin-left: 50%;
+.buttonGroup {
+  padding-top: 2%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 105px;
-}
-#processing-btn .pr-button {
-  cursor: pointer;
-  width: 20%;
-  height: 30px;
-  border: 1px solid #2196f3;
-  text-align: center;
-  color: #2196f3;
-  font-size: 13px;
-  line-height: 22px;
-  font-weight: 600;
-  padding-top: 4px;
-  border-radius: 4px;
-}
-#processing-btn .pr-button:hover {
-  background-color: #1079cf;
-  color: white;
-}
-.btn {
-  margin: 0 3%;
+  width: 60%;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding-bottom: 2%;
 }
 </style>

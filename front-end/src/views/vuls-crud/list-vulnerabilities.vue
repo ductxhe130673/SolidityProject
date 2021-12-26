@@ -4,11 +4,10 @@
       <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline">LTL</a></span
+          <a href="" class="link-primary text-decoration-underline"
+            >LTL</a
+          ></span
         >
-        >
-
-        <a>List</a>
       </div>
       <div class="col-md-7 text-center">
         <h1>LTL Property Template List</h1>
@@ -17,8 +16,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p>Date</p>
-          <a-date-picker :default-value="moment('2021/12/01', dateFormat)" />
+          
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -28,49 +26,29 @@
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
               <option value="0">All</option>
-              <option value="type0">CSP</option>
-              <option value="type1">Vulnerability</option>
+              <option value="CSP">CSP</option>
+              <option value="Vulnerability">Vulnerability</option>
             </select>
           </div>
         </div>
       </div>
       <div class="row">
-        <table class="table table-md ">
+        <table class="table table-md">
           <thead>
             <tr>
               <th style="width: 5%">#</th>
 
               <th style="width: 15%">
-                Name<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downName')"
-                /></span>
+                Name
               </th>
               <th style="width: 15%">
-                Type<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upType')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downType')"
-                /></span>
+                Type
               </th>
               <th style="width: 15%">
-                Date<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upDate')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDate')"
-                /></span>
+                Date
               </th>
-              <th style="width: 50%">
-                Description<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upDes')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDes')"
-                /></span>
+              <th style="width: 25%">
+                
               </th>
             </tr>
           </thead>
@@ -80,7 +58,7 @@
             <td>{{ data.template_type }}</td>
             <td>{{ data.createdDate }}</td>
             <td class="align-items">
-              {{ data.description }}
+              
               <span class="col" id="btn">
                 <button
                   type="button"
@@ -165,10 +143,14 @@ export default {
           );
           break;
         case "upDate":
-          this.filterlist.sort((a, b) => (a.createdDate < b.createdDate ? -1 : 1));
+          this.filterlist.sort((a, b) =>
+            a.createdDate < b.createdDate ? -1 : 1
+          );
           break;
         case "downDate":
-          this.filterlist.sort((a, b) => (a.createdDate > b.createdDate ? -1 : 1));
+          this.filterlist.sort((a, b) =>
+            a.createdDate > b.createdDate ? -1 : 1
+          );
           break;
         case "upDes":
           this.filterlist.sort((a, b) =>
@@ -204,7 +186,10 @@ export default {
       this.$store.commit("setIsEditFormula", true);
     },
     deleteVul(id) {
-      if (confirm("Do you want to delete the LTLTemplate out of the system?") === true) {
+      if (
+        confirm("Do you want to delete the LTLTemplate out of the system?") ===
+        true
+      ) {
         this.deleteLtlTemplate(id);
         this.$router.go(0);
       }
@@ -225,7 +210,7 @@ h1 {
   align-items: center;
 }
 .row {
-  margin-top: 2%;
+  padding-top: 2%;
   padding-right: 10px;
 }
 .row-end {
@@ -252,7 +237,6 @@ table tr:nth-child(even) {
 
 table tr:hover {
   background-color: #ddd;
-  
 }
 
 table th {
@@ -274,5 +258,6 @@ table span {
 }
 #btn {
   text-align: right;
+  float: right;
 }
 </style>

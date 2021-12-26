@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="add-vul">
+  <div class="container">
     <div id="header">General Vulnerability Setting</div>
     <div class="row">
       <div class="col-2">Vulnerability</div>
@@ -251,15 +251,14 @@ export default {
 </script>
 
 <style scoped>
-#container {
-  height: 100%;
-  width: 100%;
+.container {
+color: black;
 }
 #con-setting {
   width: 70%;
 }
 #header {
-  margin-top: 1%;
+  margin-top: 2%;
   text-align: center;
   font-size: 35px;
   font-weight: bold;

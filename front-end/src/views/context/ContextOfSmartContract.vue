@@ -33,9 +33,10 @@
         <p>Description</p>
       </div>
       <div class="col-10">
-        <span>There are several options:</span>
         <ul>
-          <li v-for="(c, index) in contexts" :key="index">{{ c.description }}</li>
+          <li>The goal of this game is to be the 7th player to deposit 1 Ether.</li>
+          <li>Players can deposit only 1 Ether at a time.</li>
+          <li>Winner will be able to withdraw all Ether.</li>
         </ul>
       </div>
     </div>
@@ -140,6 +141,7 @@ export default {
 #section {
   width: 70%;
   margin: auto;
+  color: black;
 }
 #header {
   text-align: center;

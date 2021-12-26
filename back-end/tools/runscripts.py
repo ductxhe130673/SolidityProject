@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE, STDOUT
 
 
 # for Windows
-# path = r"D:\Document\CapStone\CapstoneProject\SolidityProject\tools"
+#path = r"D:\Solidity\SolidityNew\SolidityProject\tools"
 # for Ubuntu
 path = r"/home/quypham/SolidityProject/tools"
 
@@ -66,6 +66,7 @@ def runHelena():
     begin = propLna.find("property ")+9
     end = propLna.find(":")
     property = propLna[begin:end]
+    print("prop=",property)
     # print(property)
     helena = "helena -N=CHECK -p=" + property + " " + helenaFile
     pro4 = subprocess.run(helena, cwd=helenaPath, shell=True,

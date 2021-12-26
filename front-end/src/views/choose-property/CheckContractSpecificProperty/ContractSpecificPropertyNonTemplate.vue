@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import FormularEditor from "../../../components/FormularEditor.vue"
+import FormularEditor from "../../../components/LtlEditor.vue"
 export default {
   components: {
     FormularEditor
@@ -66,9 +66,10 @@ export default {
 <style scoped>
 #con-setting {
   width: 70%;
+  color: black;
 }
 #header {
-  margin-top: 0;
+  margin-top: 2%;
   text-align: center;
   font-size: 35px;
   font-weight: bold;

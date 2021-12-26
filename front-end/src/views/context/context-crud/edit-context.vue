@@ -27,8 +27,8 @@
       <div class="col-md-3">Type</div>
       <div class="col-md-7">
         <select class="form-select" v-model="options">
-          <option value="type1">DCR</option>
-          <option value="type2">CPN</option>
+          <option value="DCR">DCR</option>
+          <option value="CPN">CPN</option>
         </select>
       </div>
     </div>
@@ -165,7 +165,7 @@ export default {
   color: black;
 }
 .row {
-  margin-top: 2%;
+ padding-top: 2%;
   padding-right: 10px;
 }
 

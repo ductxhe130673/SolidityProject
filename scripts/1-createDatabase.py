@@ -181,7 +181,7 @@ noSC int,
 checkedDate date,
 status bit,
 LTLformula text,
-result varchar(200)
+result text
 )
 """)
 mycursor.execute("""

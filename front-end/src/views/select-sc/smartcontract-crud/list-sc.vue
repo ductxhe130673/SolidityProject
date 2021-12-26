@@ -4,11 +4,7 @@
       <div class="col-md-3">
         <span>
           <a href="/" class="link-primary text-decoration-underline">Home</a> >
-          <a href="" class="link-primary text-decoration-underline"
-            >Smart Contract</a
-          >
-          >
-          <a>List</a>
+          <a href="" class="link-primary text-decoration-underline">Smart Contract</a>
         </span>
       </div>
       <div class="col-md-7 text-center"><h1>Smart Contracts List</h1></div>
@@ -16,11 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p>Date</p>
-          <a-date-picker
-            :default-value="moment('2021/12/01', dateFormat)"
-            @change="onChangeDate"
-          />
+          
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -29,13 +21,7 @@
         <div class="col-md">
           <p>Type</p>
           <div class="input-group mb-3">
-            <select
-              v-if="isAdmin"
-              class="form-select"
-              id="inputGroup"
-              v-model="selected"
-            >
-              <option value="0">All</option>
+            <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
               <option value="common">Common</option>
               <option value="private">Private</option>
               <option value="pending">Pending</option>
@@ -57,48 +43,16 @@
             <tr>
               <th style="width: 5%">#</th>
               <th style="width: 15%">
-                Name<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downName')"
-                /></span>
+                Name
               </th>
               <th style="width: 15%">
-                Type<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upType')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downType')"
-                /></span>
+                Type
               </th>
               <th style="width: 15%">
-                Date<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDate')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDate')"
-                /></span>
+                Date
               </th>
               <th style="width: 50%">
-                Description<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDes')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDes')"
-                /></span>
+                Description
               </th>
             </tr>
           </thead>
@@ -114,13 +68,7 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="
-                    editSC(
-                      item.sid,
-                      item.name,
-                      item.content,
-                      item.description,
-                      item.type
-                    )
+                    editSC(item.sid, item.name, item.content, item.description, item.type)
                   "
                 >
                   Edit
@@ -136,7 +84,7 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="acceptSC(item.sid)"
-                  v-if="isAdmin"
+                  v-if="isAdmin && selected=='pending'"
                 >
                   Accept
                 </button>
@@ -144,7 +92,7 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="refuseSC(item.sid)"
-                  v-if="isAdmin"
+                  v-if="isAdmin && selected=='pending'"
                 >
                   Refuse
                 </button></span
@@ -169,9 +117,6 @@
 
 <script>
 import {
-  GetCommonSmartContracts,
-  GetPendingSmartContracts,
-  GetPrivateSmartContracts,
   DeleteSmartContracts,
   AcceptPendingSmartContracts,
   RefusePendingSmartContracts,
@@ -184,14 +129,14 @@ export default {
   data() {
     return {
       choose_SC: "",
-      selected: "0",
+      selected: "pending",
       isAdmin: true,
       filterDate: null,
       formatDate: "yyyy-mm-dd",
     };
   },
   mounted() {
-    this.fetchData();
+    //this.fetchData();
     this.isAdmin =
       JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
     this.checkIsUser();
@@ -241,14 +186,10 @@ export default {
           );
           break;
         case "upDate":
-          this.filterlist.sort((a, b) =>
-            a.createdDate < b.createdDate ? -1 : 1
-          );
+          this.filterlist.sort((a, b) => (a.createdDate < b.createdDate ? -1 : 1));
           break;
         case "downDate":
-          this.filterlist.sort((a, b) =>
-            a.createdDate > b.createdDate ? -1 : 1
-          );
+          this.filterlist.sort((a, b) => (a.createdDate > b.createdDate ? -1 : 1));
           break;
         case "upDes":
           this.filterlist.sort((a, b) =>
@@ -285,11 +226,11 @@ export default {
     moment,
     ...mapActions(["setListSmartContract"]),
     // get common contracts
-    async fetchData() {
-      this.list_smart_contracts.common = await GetCommonSmartContracts();
-      this.list_smart_contracts.private = await GetPrivateSmartContracts();
-      this.list_smart_contracts.pending = await GetPendingSmartContracts();
-    },
+    // async fetchData() {
+    //   this.list_smart_contracts.common = await GetCommonSmartContracts();
+    //   this.list_smart_contracts.private = await GetPrivateSmartContracts();
+    //   this.list_smart_contracts.pending = await GetPendingSmartContracts();
+    // },
     inc(value) {
       return value + 1;
     },
@@ -300,8 +241,7 @@ export default {
       var hourstring = "" + date.getHours();
       var minutestring = "" + date.getMinutes();
       hourstring = hourstring.length == 1 ? "0" + hourstring : hourstring;
-      minutestring =
-        minutestring.length == 1 ? "0" + minutestring : minutestring;
+      minutestring = minutestring.length == 1 ? "0" + minutestring : minutestring;
       datestring = datestring.length == 1 ? "0" + datestring : datestring;
       monthstring = monthstring.length == 1 ? "0" + monthstring : monthstring;
       return (
@@ -325,9 +265,7 @@ export default {
 
     deleteSC(sc_id) {
       if (
-        confirm(
-          "Do you want to delete the Smart Contract out of the system?"
-        ) === true
+        confirm("Do you want to delete the Smart Contract out of the system?") === true
       ) {
         this.deleteSmartContract(sc_id);
         this.$router.go(0);
@@ -336,7 +274,7 @@ export default {
     acceptSC(sc_id) {
       if (
         confirm(
-          "Do you want to change the Smart Contract type from Private to Common?"
+          "Do you want to change the Smart Contract type from Pending to Common?"
         ) === true
       ) {
         this.acceptSmartContract(sc_id);
@@ -346,7 +284,7 @@ export default {
     refuseSC(sc_id) {
       if (
         confirm(
-          "Do you want to change the Smart Contract type from Common to Private?"
+          "Do you want to change the Smart Contract type from Pending to Private?"
         ) === true
       ) {
         this.refuseSmartContract(sc_id);
@@ -383,7 +321,7 @@ h1 {
   align-items: center;
 }
 .row {
-  margin-top: 2%;
+  padding-top: 2%;
   padding-right: 10px;
 }
 .row-end {
@@ -396,7 +334,6 @@ button {
 }
 table {
   width: 100%;
-
 }
 
 table td,

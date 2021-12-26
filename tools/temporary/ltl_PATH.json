@@ -2,6 +2,6 @@
   "type": "specific",
   "params": {
     "name": "interger_overflow_underflow",
-    "formula": "const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('mileStone2Reward' < minThreshold) | ('mileStone2Reward' > maxThreshold);\nproperty prop: G(! outOfRange);"
+    "formula": "const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('currentBalance' < minThreshold) | ('currentBalance' > maxThreshold);\nproperty prop: G(! outOfRange);"
   }
 }

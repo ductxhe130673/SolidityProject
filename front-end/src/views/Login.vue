@@ -59,12 +59,7 @@
       <input type="text" required v-model="username" placeholder="User Name" />
 
       <label>Password:</label>
-      <input
-        type="password"
-        required
-        v-model="password"
-        placeholder="Password"
-      />
+      <input type="password" required v-model="password" placeholder="Password" />
       <div v-if="error" class="error">{{ error }}</div>
 
       <div class="terms">
@@ -104,23 +99,6 @@ export default {
     this.$store.commit("setIndex", 0);
   },
   methods: {
-    // login() {
-    //   const result = makeLogin(this.username, this.password);
-    //   console.log('Bat Dau Gui Request')
-    //   result
-    //     .then((response) => {
-    //       let user = response.data;
-    //       if (user.exist == undefined) {
-    //         console.log(user); //-> Then transfer to Json web token
-    //         this.$router.push("/");
-    //       } else {
-    //         this.error = "Login Fail!!!";
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       this.error = err;
-    //     });
-    // },
     login() {
       if (this.username === "" || this.password === "") {
         alert("You have to fill all");
@@ -143,6 +121,9 @@ export default {
 </script>
 
 <style scoped>
+#notify {
+  margin: 0 auto;
+}
 .form {
   max-width: 420px;
   margin: 30px auto;
@@ -165,7 +146,7 @@ input {
   padding: 10px 6px;
   width: 100%;
   box-sizing: border-box;
- border: 1px solid;
+  border: 1px solid;
   border-color: rgb(163, 161, 161);
   border-radius: 10px;
   color: rgb(126, 126, 126);
@@ -208,6 +189,7 @@ button {
   background-color: #ea4335;
 }
 .btn-facebook {
+  visibility: hidden;
   color: white;
   background-color: #3b5998;
 }

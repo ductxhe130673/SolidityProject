@@ -116,17 +116,6 @@ place P_play {
 }
 
 /*
- * Function: claimReward
- */
-place claimReward_cflow {
-	dom : epsilon;
-}
-place P_claimReward {
-	dom : CLAIM_REWARD_PAR;
-	init : for (i in ADDRESS range 1 .. ADDRESS (users), j in UINT range 0 .. UINT(claimReward_sdr-1)) <( {{i, UINT(user_balance[UINT(i-1)])},claimReward_sender_value[j]})>;
-}
-
-/*
  * Function: play
  */
 place PLAY_P1 {
@@ -160,19 +149,6 @@ place PLAY_currentBalance {
 	dom : UINT;
 }
 
-/*
- * Function: claimReward
- */
-place CLAIM_REWARD_P1 {
-	dom : CLAIM_REWARD_STATE;
-}
-place CLAIM_REWARD_P2 {
-	dom : CLAIM_REWARD_STATE;
-}
-place CLAIM_REWARD_P3 {
-	dom : CLAIM_REWARD_STATE;
-}
-
 /******************************
  *** Transition Definitions ***
  ******************************/
@@ -202,7 +178,7 @@ transition claimReward {
 	}
 	out {
 		marking : <(cvalue(execute,|{1,1}|),cvalue(response,|{1,0}|),cvalue(include,|{0,1}|))>;
-		claimReward_cflow : epsilon;
+		state_cflow : epsilon;
 	}
 	guard : (include[1] = 1) and (confirm_condition(|{include[0],execute[0]}|) = 1);
 }
@@ -248,7 +224,6 @@ transition PLAY_revert2 {
 		PLAY_currentBalance : <( currentBalance )>;
 	}
 	out {
-		PLAY_currentBalance : <( currentBalance )>;
 		S : <( sp.state )>;
 		state_cflow : epsilon;
 	}
@@ -376,83 +351,15 @@ transition PLAY_t4 {
 transition PLAY_return {
 	in {
 		PLAY_P4 : <( sp )>;
+		PLAY_currentBalance : <( currentBalance )>;
 	}
 	out {
 		S : <( sp.state )>;
-		state_cflow : epsilon;
-	}
-}
-
-/*
- * Function: claimReward
- */
-transition CLAIM_REWARD_revert1 {
-	in {
-		S : <( s )>;
-		P_claimReward : <( p )>;
-		claimReward_cflow : epsilon;
-	}
-	out {
-		S : <( s )>;
-		state_cflow : epsilon;
-	}
-	guard : not (s.contractBalance = s.finalMileStone);
-}
-transition CLAIM_REWARD_n_revert1 {
-	in {
-		S : <( s )>;
-		P_claimReward : <( p )>;
-		claimReward_cflow : epsilon;
-	}
-	out {
-		CLAIM_REWARD_P1 : <( {s,p} )>;
-	}
-	guard : s.contractBalance = s.finalMileStone;
-}
-transition CLAIM_REWARD_revert2 {
-	in {
-		CLAIM_REWARD_P1 : <( sp )>;
-	}
-	out {
-		S : <( sp.state )>;
-		state_cflow : epsilon;
-	}
-	guard : not (getElement(sp.state.redeemableEther,sp.claimRewardPar.sender.adr).uint > 0);
-}
-transition CLAIM_REWARD_n_revert2 {
-	in {
-		CLAIM_REWARD_P1 : <( sp )>;
-	}
-	out {
-		CLAIM_REWARD_P2 : <( sp )>;
-	}
-	guard : getElement(sp.state.redeemableEther,sp.claimRewardPar.sender.adr).uint > 0;
-}
-transition CLAIM_REWARD_t1 {
-	in {
-		CLAIM_REWARD_P2 : <( sp )>;
-	}
-	out {
-		CLAIM_REWARD_P3 : <( {sp.state :: (redeemableEther := nlre),sp.claimRewardPar} )>;
-	}
-	let {
-					STRUCT_REDEEMABLE_ETHER re := getElement(sp.state.redeemableEther,sp.claimRewardPar.sender.adr);
-			STRUCT_REDEEMABLE_ETHER nre := re :: (uint := 0);
-			LIST_REDEEMABLE_ETHER nlre := sp.state.redeemableEther :: ([getIndex(sp.state.redeemableEther,sp.claimRewardPar.sender.adr)] := nre);
-	
-		}
-}
-transition CLAIM_REWARD_send {
-	in {
-		CLAIM_REWARD_P3 : <( sp )>;
-	}
-	out {
-		S : <( sp.state :: (contractBalance := sp.state.contractBalance - getElement(sp.state.redeemableEther,sp.claimRewardPar.sender.adr).uint) )>;
 		state_cflow : epsilon;
 	}
 }
 proposition outOfRange:
-	exists (t2 in S | (t2->1).mileStone2Reward < 0) or exists (t2 in S | (t2->1).mileStone2Reward > 2147483647);
+	exists (t in PLAY_currentBalance | t->1 < 0) or exists (t in PLAY_currentBalance | t->1 > 2147483647);
 
 
 }

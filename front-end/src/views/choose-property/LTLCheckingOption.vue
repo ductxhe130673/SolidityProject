@@ -11,15 +11,11 @@
             Contract-Specific Property: You will choose the functions and using template
             or non-template to design your LTL formula.
           </li>
-          <li>
-            General Vulnerability: You will select the common vulnerability from the list
-          </li>
         </ul>
       </div>
       <div id="pcb-button">
-        <a class="link-button" @click="goCSP">Check a Contract-Specifc Property </a>
-        <a class="link-button" @click="goGV">Check a General Vulnerability </a>
-        <a class="link-button" @click="goBack">Back </a>
+        <a class="btn btn-outline-primary" @click="goCSP">Check a Contract-Specifc Property </a>
+        <a class="btn btn-outline-primary" @click="goBack">Back </a>
       </div>
     </div>
   </div>
@@ -73,7 +69,7 @@ export default {
 }
 #pcb-button {
   margin-top: 40px;
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
 }
