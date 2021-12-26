@@ -103,7 +103,7 @@ const getters = {
         return state.isEditFormula;
     },
     getNameCSP: state =>{
-        return state.nameCSP;
+        return state.data.nameCSP;
     },
     getLtlProperty: state => {
         return state.data.ltlProperty;
@@ -155,7 +155,7 @@ const mutations = {
             content : ""
         },
         selectedTemplate: {},
-        nameCSP: '',
+        nameCSP: "",
         selectedVulnerbility: [],
         configVul: {},
         ltlProperty : [],
@@ -206,6 +206,71 @@ const mutations = {
             fourth_step_views: "property-coptions",
         }
     },
+    resetLTL(state){
+        state.fileToDownload = null,
+        state.data.selectedTemplate= {},
+        state.data.nameCSP= "",
+        state.data.ltlConfig = {},
+        state.data.initialMarkingInfor={
+            smart_contract: [
+                {
+                    name: "",
+                    functions: [
+                        {   
+                            fid: "",
+                            name: "",
+                            argument: [],
+                            sender_value: {
+                                from: null,
+                                to: null
+                            }
+                        },
+                    ]
+                }
+            ],
+            balance: {
+                type: "fixed",
+                fixed: "",
+                map: "",
+                random: {
+                    from: "",
+                    to: ""
+                }
+            },
+            NumberOfUser: ""
+        },
+        state.data.isVarSelected = ''
+    },
+    resetInit(state){
+        state.data.initialMarkingInfor={
+            smart_contract: [
+                {
+                    name: "",
+                    functions: [
+                        {   
+                            fid: "",
+                            name: "",
+                            argument: [],
+                            sender_value: {
+                                from: null,
+                                to: null
+                            }
+                        },
+                    ]
+                }
+            ],
+            balance: {
+                type: "fixed",
+                fixed: "",
+                map: "",
+                random: {
+                    from: "",
+                    to: ""
+                }
+            },
+            NumberOfUser: ""
+        }
+    },
     /* -- data -- */
     SetDataState(state, data) {
         state.data = data
@@ -236,7 +301,7 @@ const mutations = {
         state.isEditFormula = data;
     },
     setNameCSP(state, data) {
-        state.nameCSP = data;
+        state.data.nameCSP = data;
     },
     setLtlProperty(state, data){
         state.data.ltlProperty= data;

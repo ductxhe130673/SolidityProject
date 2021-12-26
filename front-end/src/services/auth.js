@@ -34,7 +34,25 @@ export class AuthService {
 
         }
     }
-
+    static async checkExistedEmail(mail) {
+        try {
+            const response = await axios.get(`/auth/checkemailexited?email=${mail}`)
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
+    static async checkExistedUsername(name) {
+        try {
+            const response = await axios.get(`/auth/checkusernameexited?username=${name}`)
+            return new ResponseWrapper(response, response.data)
+        } catch (error) {
+            const message = error.response.data ? error.response.data.error : error.response.statusText
+            throw new ErrorWrapper(error, message)
+        }
+    }
+    // checkusernameexited
     // static async loginToken ({accessToken}) {
     //   try {
     //     const response = await axios.post(`${API_URL}/auth/login`,{username, password}, {useCredentails: true})

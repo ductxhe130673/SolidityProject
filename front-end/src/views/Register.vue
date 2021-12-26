@@ -87,6 +87,7 @@
 
 <script>
 import axios from "axios";
+import { AuthService } from "../services/auth";
 export default {
   name: "register",
   data() {
@@ -97,6 +98,8 @@ export default {
       terms: false,
       error: "",
       email: "",
+      ischeckedMail: "",
+      ischeckedName: "",
     };
   },
   methods: {
@@ -108,7 +111,17 @@ export default {
         x.type = "password";
       }
     },
-    register() {
+    async isCheckedMail() {
+      const isCheckmail = await AuthService.checkExistedEmail(this.email);
+      this.ischeckedMail = isCheckmail.data;
+    },
+    async isCheckedUser() {
+      const isCheckUsername = await AuthService.checkExistedUsername(this.username);
+      this.ischeckedName = isCheckUsername.data;
+    },
+    async register() {
+      await this.isCheckedUser();
+      await this.isCheckedMail();
       if (
         this.username === "" ||
         this.password === "" ||
@@ -118,6 +131,10 @@ export default {
         alert("You have to fill all");
       } else if (this.repassword !== this.password) {
         alert("Password must the same Re-password");
+      } else if (this.ischeckedMail === "Existed") {
+        alert("Email is already existed");
+      } else if (this.ischeckedName === "Existed") {
+        alert("Username is already existed");
       } else {
         axios
           .post("http://127.0.0.1:8000/auth/register/", {

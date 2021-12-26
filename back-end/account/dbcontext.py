@@ -148,3 +148,20 @@ def CheckEmailExisted(email):
     finally:
         cursor.close()
         connection.close()
+
+def CheckUserNameExisted(username):
+    try:
+        sql = '''select username from soliditycpn.account where username like %s;'''
+        cursor = connection.cursor()
+        cursor.execute(sql, [username])
+        row = cursor.fetchone()
+        if row is not None:
+           return "Existed"
+        else : 
+            return "Valid"  
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return "Exception"
+    finally:
+        cursor.close()
+        connection.close()

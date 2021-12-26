@@ -3,7 +3,6 @@ from .models import Account
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib import auth
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
-import smtplib
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,11 +56,4 @@ class LoginSerializer(serializers.ModelSerializer):
         }
 
         return super().validate(attrs)
-
-# class sendEmail():
-#     server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-#     server.login("soliditycpn.g9@gmail.com", "solidity123")
-#     server.sendmail("soliditycpn.g9@gmail.com", "quypham1503@gmail.com", "Please comfirm your email!")
-#     server.quit()
-
 

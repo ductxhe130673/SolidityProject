@@ -29,6 +29,12 @@
             @changeValue="updateSelection"
           />
         </div>
+        <div id="processing-btn">
+          <button class="pr-button" role="button" @click="updateSelectValue">Ok</button>
+          <button class="pr-button" role="button" @click="cancelSelectValue">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -95,6 +101,7 @@ export default {
             elements[i].innerText = "'" + this.temp_selection + "'";
           }
         }
+        this.$store.commit("setVarSelected", this.temp_selection);
         this.$emit("changeContent", this.getNodeValue());
       }
       this.select_variable_id = "";
@@ -110,10 +117,7 @@ export default {
       } else {
         this.select_variable_type = "var";
       }
-
-      console.log(type);
       this.selectVariable = true;
-      document.getElementById("selection-table").style.display = "block";
     },
     removeSelectVarEventListener() {
       var userSelection = document.getElementsByClassName("select-variable");
@@ -220,7 +224,8 @@ export default {
 }
 
 #highlighting-content {
-  border: 0;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
   width: 100%;
   height: 100%;
   background-color: #f6f6f6;
@@ -231,6 +236,8 @@ export default {
   white-space: pre;
 }
 #selection-table {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -301,5 +308,35 @@ export default {
 
 .button-style:focus-visible {
   box-shadow: none;
+}
+/* button */
+#processing-btn {
+  margin-top: 45%;
+  width: 45%;
+  height: 120px;
+  margin-left: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#processing-btn .pr-button {
+  cursor: pointer;
+  width: 20%;
+  height: 30px;
+  border: 1px solid #2196f3;
+  text-align: center;
+  color: #2196f3;
+  font-size: 13px;
+  line-height: 22px;
+  font-weight: 600;
+  padding-top: 4px;
+  border-radius: 4px;
+}
+#processing-btn .pr-button:hover {
+  background-color: #1079cf;
+  color: white;
+}
+.btn {
+  margin: 0 3%;
 }
 </style>
