@@ -67,7 +67,7 @@ export default {
     // this.fetchData();
     this.fetchTemplate();
     this.template = this.$store.state.data.data.selectedTemplate;
-    this.name = this.$store.state.data.nameCSP;
+    this.name = this.$store.state.data.data.nameCSP;
   },
   components: {
     LtlEditor,

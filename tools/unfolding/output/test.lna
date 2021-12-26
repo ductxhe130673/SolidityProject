@@ -359,7 +359,7 @@ transition PLAY_return {
 	}
 }
 proposition outOfRange:
-	exists (t in PLAY_currentBalance | t->1 < 0) or exists (t in PLAY_currentBalance | t->1 > 2147483647);
+	exists (t in PLAY_currentBalance | t->1 < 2) or exists (t in PLAY_currentBalance | t->1 > 10);
 
 
 }

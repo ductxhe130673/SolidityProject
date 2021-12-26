@@ -103,6 +103,12 @@ export default {
       this.fileUpload = event.target.files[0];
     },
     updateContext(data) {
+      if(!this.name.trim()){
+        alert("Name can not be blank!")
+      }else if(!this.description.trim()){
+        alert("Description can not be blank!")
+      }
+      else{
       UpdateContext(
         this.cid,
         this.name,
@@ -115,6 +121,7 @@ export default {
           name: "ListContext",
         });
       });
+      }
     },
 
     async initData() {

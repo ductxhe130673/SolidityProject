@@ -57,7 +57,7 @@ export class ltltemplateService extends BaseService {
                     "formula_text": formulaText,
                     "description": description,
                     "createdDate": date,  // fix cung
-                    "template_type": "test",       // fix cung
+                    "template_type": "CSP",       // fix cung
                     "aid": "1"        // fix cung
                 }
     

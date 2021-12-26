@@ -21,7 +21,7 @@
       <div class="icon" @click="goRoadMap()" title="RoadMap">
         <i class="material-icons">map</i>
       </div>
-      <div class="icon"  @click="help()" title="Help">
+      <div class="icon" @click="help()" title="Help">
         <i class="material-icons">help</i>
       </div>
     </div>
@@ -56,7 +56,7 @@
 
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
-        <Help @cancel="closeConfirm"/>
+        <Help @cancel="closeConfirm" />
       </div>
     </div>
   </nav>
@@ -215,6 +215,7 @@ nav {
   margin-right: 5px;
 }
 .buttons {
+  cursor: pointer;
   display: flex;
   align-items: center;
 }

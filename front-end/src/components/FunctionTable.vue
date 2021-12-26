@@ -38,21 +38,17 @@
               <td>{{ func.name }}</td>
               <td>
                 <input
-                  type="radio"
+                  type="checkbox"
                   id="one"
                   name="ch"
+                  @change="uniqueCheck"
                   :value="func.name"
-                  v-model="selected_variable"
                 />
               </td>
             </tr>
           </table>
         </div>
       </div>
-    </div>
-    <div id="processing-btn">
-      <div class="pr-button" @click="routing('next')">Next</div>
-      <div class="pr-button" @click="routing('back')">Back</div>
     </div>
   </div>
 </template>
@@ -86,6 +82,15 @@ export default {
   },
 
   methods: {
+    uniqueCheck(e) {
+      this.additional_grouped = [];
+      if (e.target.checked) {
+        this.additional_grouped.push(e.target.value);
+        this.$emit("changeValue", e.target.value);
+      } else {
+        this.$emit("changeValue", "");
+      }
+    },
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
@@ -97,15 +102,6 @@ export default {
         this.smart_infor?.push(
           await GetGloLocArgOfSmartContract(this.list_smart_contract[i].sid)
         );
-      }
-    },
-    routing(param) {
-      if (param == "next") {
-        this.$store.commit("setVarSelected", this.selected_variable);
-        document.getElementById("selection-table").style.display = "none";
-      }
-      if (param == "back") {
-        document.getElementById("selection-table").style.display = "none";
       }
     },
   },
@@ -175,7 +171,6 @@ table th {
   text-align: left;
   text-indent: inherit;
 }
-
 
 /* button */
 #processing-btn {

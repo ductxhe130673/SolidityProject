@@ -50,7 +50,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          v-model="selected_vuls"
+          v-model="newLtl.params.name"
         />
       </div>
     </div>
@@ -170,6 +170,7 @@ export default {
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.selected_vuls = this.$store.state.data.data.selectedTemplate;
+    console.log("newLtl", this.newLtl);
   },
   components: {
     // Popup,

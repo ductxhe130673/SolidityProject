@@ -118,7 +118,7 @@ def getContactIdByAId(aid):
 def UpdateContactInfor(firstname, lastname, email, phone, birthdate, avartar, address, aid):
     try:
         contactIdByAid = getContactIdByAId(aid)
-        sql = " UPDATE soliditycpn.contact SET firstname = %s, lastname = %s,email = %s,phone = %s,birthDate =%s,avartar = %s,address = %s WHERE id = %s;"
+        sql = " UPDATE Contact SET firstname = %s, lastname = %s,email = %s,phone = %s,birthDate =%s,avartar = %s,address = %s WHERE id = %s;"
         cursor = connection.cursor()
         cursor.execute(sql, ([firstname], [lastname], [email], [phone], [
                        birthdate], [InsertIMG(avartar)], [address], [contactIdByAid]))
@@ -134,9 +134,26 @@ def UpdateContactInfor(firstname, lastname, email, phone, birthdate, avartar, ad
 
 def CheckEmailExisted(email):
     try:
-        sql = '''select email from soliditycpn.contact where email like %s;'''
+        sql = '''select email from Contact where email like %s;'''
         cursor = connection.cursor()
         cursor.execute(sql, [email])
+        row = cursor.fetchone()
+        if row is not None:
+           return "Existed"
+        else : 
+            return "Valid"  
+    except Exception as e:
+        print("ERROR ==== ",e)
+        return "Exception"
+    finally:
+        cursor.close()
+        connection.close()
+
+def CheckUserNameExisted(username):
+    try:
+        sql = '''select username from Account where username like %s;'''
+        cursor = connection.cursor()
+        cursor.execute(sql, [username])
         row = cursor.fetchone()
         if row is not None:
            return "Existed"

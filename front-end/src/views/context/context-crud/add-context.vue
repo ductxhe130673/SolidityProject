@@ -27,8 +27,8 @@
       <div class="col-md-3">Type</div>
       <div class="col-md-7">
         <select class="form-select" v-model="options">
-          <option value="type1">DCR</option>
-          <option value="type2">CPN</option>
+          <option value="DCR">DCR</option>
+          <option value="CPN">CPN</option>
         </select>
       </div>
     </div>
@@ -115,11 +115,11 @@ export default {
     },
     clickHandler(action) {
       if (action == "save") {
-        if (this.fileUpload === "") {
+        if (!this.fileUpload) {
           alert("You have to select file to update!!!");
         }
-        if (this.name === "" || this.options === "") {
-          alert("Name and Type are must not empty!!!");
+        if (!this.name.trim() || !this.options.trim() || !this.description.trim()) {
+          alert("All field must be filled!!!");
         }
         const reader = new FileReader();
         reader.readAsText(this.fileUpload);

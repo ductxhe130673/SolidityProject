@@ -1,7 +1,7 @@
 {
   "type": "specific",
   "params": {
-    "name": "interger_overflow_underflow",
-    "formula": "const minThreshold = 0\nconst maxThreshold = 2147483647\nproposition outOfRange: ('currentBalance' < minThreshold) | ('currentBalance' > maxThreshold);\nproperty prop: G(! outOfRange);"
+    "name": "abc",
+    "formula": "const minThreshold = 2\n const maxThreshold = 10\n proposition outOfRange: ('currentBalance' < minThreshold) | ('currentBalance' > maxThreshold);\n property prop: G(! outOfRange);"
   }
 }

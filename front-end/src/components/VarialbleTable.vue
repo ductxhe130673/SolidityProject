@@ -42,10 +42,11 @@
                 <td>{{ func.name }}</td>
                 <td>
                   <input
-                    type="radio"
+                    type="checkbox"
                     id="one"
                     name="ch"
-                    v-model="checkedVar"
+                    v-model="additional_grouped"
+                    @change="uniqueCheck"
                     :value="func.name"
                   />
                 </td>
@@ -80,18 +81,16 @@
                       <th style="width: 15%">Selected</th>
                     </tr>
                   </thead>
-                  <tr
-                    v-for="(func, index) in getSelectedFunc"
-                    v-bind:key="func.fid"
-                  >
+                  <tr v-for="(func, index) in getSelectedFunc" v-bind:key="func.fid">
                     <td>{{ index + 1 }}</td>
                     <td>{{ func.name }}</td>
                     <td>
                       <input
-                        type="radio"
+                        type="checkbox"
                         id="one"
                         name="ch"
-                        v-model="checkedVar"
+                        v-model="additional_grouped"
+                        @change="uniqueCheck"
                         :value="func.name"
                       />
                     </td>
@@ -101,10 +100,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div id="processing-btn">
-        <div class="pr-button" @click="routing('next')">Next</div>
-        <div class="pr-button" @click="routing('back')">Back</div>
       </div>
     </div>
   </div>
@@ -126,6 +121,7 @@ export default {
       function_infor: {},
       selected_func: 0,
       selected_smart: 0,
+      additional_grouped: [],
     };
   },
   beforeMount() {
@@ -134,6 +130,15 @@ export default {
     this.setSCInfor();
   },
   methods: {
+    uniqueCheck(e) {
+      this.additional_grouped = [];
+      if (e.target.checked) {
+        this.additional_grouped.push(e.target.value);
+        this.$emit("changeValue", e.target.value);
+      } else {
+        this.$emit("changeValue", "");
+      }
+    },
     selectSC(sid, index) {
       if (this.selected_smart != sid) {
         this.selected_smart = sid;
@@ -146,16 +151,6 @@ export default {
         this.selected_func = fid;
         this.selectedFunctionIndex = index;
         this.function_infor = this.functionBySC[index].localVar;
-      }
-    },
-    // SetSelectedTemplate
-    routing(param) {
-      if (param == "next") {
-        this.$store.commit("setVarSelected", this.checkedVar);
-        document.getElementById("selection-table").style.display = "none";
-      }
-      if (param == "back") {
-        document.getElementById("selection-table").style.display = "none";
       }
     },
     getFuntionSC(sid) {
@@ -187,7 +182,6 @@ export default {
 </script>
 
 <style scoped>
-
 .title {
   text-align: center;
   margin-top: 5%;
@@ -258,7 +252,6 @@ table th {
   text-align: left;
   text-indent: inherit;
 }
-
 
 /* button */
 #processing-btn {
