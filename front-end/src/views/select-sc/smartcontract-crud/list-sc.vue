@@ -51,8 +51,8 @@
               <th style="width: 15%">
                 Date
               </th>
-              <th style="width: 50%">
-                Description
+              <th style="width: 25%">
+
               </th>
             </tr>
           </thead>
@@ -62,7 +62,7 @@
             <td>{{ item.type }}</td>
             <td>{{ item.createdDate }}</td>
             <td class="align-items">
-              {{ item.description }}
+              
               <span class="col" id="btn">
                 <button
                   type="button"

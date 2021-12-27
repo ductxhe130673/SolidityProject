@@ -33,7 +33,7 @@ export class ltltemplateService extends BaseService {
                 "name": name,
                 "formula": formula,
                 "description": description,
-                "template_type": "test",
+                "template_type": "CSP",
                 "createdDate": date, // hard code, chua fix trong database,chuyen thanh ham getdate ben js
                 "formula_text" : formula_text,
                 "aid":"1"

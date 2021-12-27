@@ -140,6 +140,8 @@ export default {
           alert("Name can not be blank!")
         }else if(!this.demoEditSC.trim()){
           alert("Content can not be blank!")
+        }else if(!this.descriptionSC.trim()){
+          alert("Description can not be blank!")
         }
         else{
         await UpdateSmartContractCode(

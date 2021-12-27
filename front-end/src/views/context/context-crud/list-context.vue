@@ -43,8 +43,8 @@
               <th style="width: 15%">
                 Date
               </th>
-              <th style="width: 50%">
-                Description
+              <th style="width: 25%">
+                
               </th>
             </tr>
           </thead>
@@ -54,7 +54,7 @@
             <td>{{ data.context_type }}</td>
             <td>{{ data.createdDate }}</td>
             <td class="align-items">
-              {{ data.description }}
+              
               <span class="col" id="btn">
                 <button
                   type="button"

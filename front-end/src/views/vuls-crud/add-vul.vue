@@ -105,14 +105,15 @@ export default {
         this.formulaText =
           "the case where 'variable' is greater than 2147483647 or less than 0 will never happen";
       }
-      this.codeModel = mes;
+      this.code = mes;
     },
     getDate() {
       this.dateFormat = moment().format("YYYY-MM-DD");
     },
     async clickHandler(action) {
       if (action == "save") {
-        if (this.code === "" || this.name === "") alert("Please input all field!!!");
+        if (!this.code.trim() || !this.name.trim() || !this.formulaText.trim() || !this.description.trim()) alert("Please input all field!!!");
+        else{
         await CreateLTLTemplate(
           this.name,
           this.code,
@@ -120,7 +121,7 @@ export default {
           this.dateFormat,
           this.formulaText
         );
-        this.$router.push(this.$route.params.parent_path);
+        this.$router.push(this.$route.params.parent_path);}
       } else if (action == "cancel") {
         this.$router.push(this.$route.params.parent_path);
       }

@@ -1,7 +1,7 @@
 {
   "type": "specific",
   "params": {
-    "name": "abc",
+    "name": "EtherGame LTL",
     "formula": "const minThreshold = 2\n const maxThreshold = 10\n proposition outOfRange: ('currentBalance' < minThreshold) | ('currentBalance' > maxThreshold);\n property prop: G(! outOfRange);"
   }
 }

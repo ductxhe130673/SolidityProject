@@ -41,10 +41,10 @@
       </div>
     </div>
     <div id="btns">
-      <button @click="routing('add')">Next</button>
-      <button @click="upLoad()">Upload a Context File</button>
-      <button @click="routing('ship')">Skip</button>
-      <button @click="routing('back')">Back</button>
+      <button class="btn btn-outline-primary" @click="routing('add')">Next</button>
+      <button class="btn btn-outline-primary" @click="upLoad()">Upload a Context File</button>
+      <button class="btn btn-outline-primary" @click="routing('ship')">Skip</button>
+      <button class="btn btn-outline-primary" @click="routing('back')">Back</button>
     </div>
     <div id="showConfirmation" v-if="showConfirmation">
       <div id="removeSC-holder">
@@ -168,10 +168,15 @@ export default {
   font-size: 18px;
 }
 #btns {
-  text-align: center;
+  /* text-align: center;
   margin-top: 50px;
   margin-bottom: 50px;
-  padding-bottom: 5%;
+  padding-bottom: 5%; */
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  padding: 5%;
+  margin: 0 auto;
 }
 #context-type {
   width: 100%;
@@ -179,7 +184,7 @@ export default {
   border-radius: 3px;
   border: 1px solid black;
 }
-#btns button {
+/* #btns button {
   margin-left: 40px;
   margin-right: 40px;
   cursor: pointer;
@@ -199,7 +204,7 @@ export default {
 #btns button:hover {
   background-color: #1079cf;
   color: white;
-}
+} */
 
 /* ---- showComponents ---- */
 /* #showComponents {

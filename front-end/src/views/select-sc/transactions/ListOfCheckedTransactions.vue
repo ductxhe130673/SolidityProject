@@ -19,7 +19,13 @@
               <th scope="row">{{ index + 1 }}</th>
               <td>
                 <div v-on:click="set(item.bid)" v-bind:id="item.bid">
-                  <router-link
+                  <router-link v-if="!item[1]"
+                    :to="{ path: 'checking-result', query: { id: item[5] } }"
+                    tag="a"
+                    class="lk"
+                    >Normal Checker</router-link
+                  >
+                  <router-link v-else
                     :to="{ path: 'checking-result', query: { id: item[5] } }"
                     tag="a"
                     class="lk"
@@ -35,8 +41,8 @@
       </div>
     </div>
     <div id="action">
-      <div id="btn-addsc" @click="routing('addsc')">Start a new checking session</div>
-      <div id="btn-backnext" @click="routing('back')">Back</div>
+      <div class="btn btn-outline-primary" @click="routing('addsc')">Start a new checking session</div>
+      <div class="btn btn-outline-primary" @click="routing('back')">Back</div>
       <!-- <div id="btn-backnext" @click="routing('next')">Next</div> -->
     </div>
   </div>

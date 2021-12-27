@@ -111,6 +111,34 @@ export default {
         x.type = "password";
       }
     },
+    async registerAcc() {
+      await axios
+          .post("http://127.0.0.1:8000/auth/register/", {
+            username: this.username,
+            password: this.password,
+            role: "user",
+          })
+          .then(function (response) {
+            console.log("res--",response);
+            
+
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+    },
+    async insertContact(){
+      await axios.post("http://127.0.0.1:8000/auth/insertintocontact", {email: this.email})
+          .then(function (response) {
+            console.log("res--",response);
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+    },
     async isCheckedMail() {
       const isCheckmail = await AuthService.checkExistedEmail(this.email);
       this.ischeckedMail = isCheckmail.data;
@@ -136,21 +164,9 @@ export default {
       } else if (this.ischeckedName === "Existed") {
         alert("Username is already existed");
       } else {
-        axios
-          .post("http://127.0.0.1:8000/auth/register/", {
-            username: this.username,
-            password: this.password,
-            role: "user",
-          })
-          .then(function (response) {
-            console.log("res--",response);
-            if(response.status === 201){
-              axios.post("http://127.0.0.1:8000/auth/insertintocontact", {email: this.email})
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        
+        await this.registerAcc()
+        await this.insertContact()
         
         this.$router.push({ name: "Login" });
       }
