@@ -63,8 +63,7 @@
       <div v-if="error" class="error">{{ error }}</div>
 
       <div class="terms">
-        <input type="checkbox" v-model="terms" />
-        <label>Remember Me</label>
+        
       </div>
 
       <div class="submit">
@@ -180,11 +179,12 @@ button {
   width: 100%;
   margin-top: 20px;
   padding-top: 20px;
-  border-top-style: solid;
+  /* border-top-style: solid;
   border-top-color: #777;
-  border-top-width: 1px;
+  border-top-width: 1px; */
 }
 .btn-google {
+  visibility: hidden;
   color: white;
   background-color: #ea4335;
 }
