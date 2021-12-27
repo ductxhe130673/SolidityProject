@@ -46,9 +46,9 @@
       </tbody>
     </table>
     <div id="action">
-      <div id="btn" @click="funtionNext()">Next</div>
-      <div id="btn" @click="upLoad">Upload Smart Contract</div>
-      <div id="btn" @click="routing('back')">Back</div>
+      <div class="btn btn-outline-primary" @click="funtionNext()">Next</div>
+      <div class="btn btn-outline-primary" @click="upLoad">Upload Smart Contract</div>
+      <div class="btn btn-outline-primary" @click="routing('back')">Back</div>
     </div>
 
     <!-- <popup v-bind:isOpen="isOpen" v-on:clickdahieu="dahieu" /> -->

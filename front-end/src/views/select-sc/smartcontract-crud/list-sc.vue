@@ -12,11 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p>Date</p>
-          <a-date-picker
-            :default-value="moment('2021/12/01', dateFormat)"
-            @change="onChangeDate"
-          />
+          
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -26,7 +22,6 @@
           <p>Type</p>
           <div class="input-group mb-3">
             <select v-if="isAdmin" class="form-select" id="inputGroup" v-model="selected">
-              <option value="0">All</option>
               <option value="common">Common</option>
               <option value="private">Private</option>
               <option value="pending">Pending</option>
@@ -48,36 +43,16 @@
             <tr>
               <th style="width: 5%">#</th>
               <th style="width: 15%">
-                Name<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downName')"
-                /></span>
+                Name
               </th>
               <th style="width: 15%">
-                Type<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upType')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downType')"
-                /></span>
+                Type
               </th>
               <th style="width: 15%">
-                Date<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upDate')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDate')"
-                /></span>
+                Date
               </th>
-              <th style="width: 50%">
-                Description<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upDes')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDes')"
-                /></span>
+              <th style="width: 25%">
+
               </th>
             </tr>
           </thead>
@@ -87,7 +62,7 @@
             <td>{{ item.type }}</td>
             <td>{{ item.createdDate }}</td>
             <td class="align-items">
-              {{ item.description }}
+              
               <span class="col" id="btn">
                 <button
                   type="button"
@@ -109,7 +84,7 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="acceptSC(item.sid)"
-                  v-if="isAdmin"
+                  v-if="isAdmin && selected=='pending'"
                 >
                   Accept
                 </button>
@@ -117,7 +92,7 @@
                   type="button"
                   class="btn btn-outline-primary"
                   @click="refuseSC(item.sid)"
-                  v-if="isAdmin"
+                  v-if="isAdmin && selected=='pending'"
                 >
                   Refuse
                 </button></span
@@ -142,9 +117,6 @@
 
 <script>
 import {
-  GetCommonSmartContracts,
-  GetPendingSmartContracts,
-  GetPrivateSmartContracts,
   DeleteSmartContracts,
   AcceptPendingSmartContracts,
   RefusePendingSmartContracts,
@@ -157,14 +129,14 @@ export default {
   data() {
     return {
       choose_SC: "",
-      selected: "0",
+      selected: "pending",
       isAdmin: true,
       filterDate: null,
       formatDate: "yyyy-mm-dd",
     };
   },
   mounted() {
-    this.fetchData();
+    //this.fetchData();
     this.isAdmin =
       JSON.parse(localStorage.getItem("user")).role === "admin" ? true : false;
     this.checkIsUser();
@@ -254,11 +226,11 @@ export default {
     moment,
     ...mapActions(["setListSmartContract"]),
     // get common contracts
-    async fetchData() {
-      this.list_smart_contracts.common = await GetCommonSmartContracts();
-      this.list_smart_contracts.private = await GetPrivateSmartContracts();
-      this.list_smart_contracts.pending = await GetPendingSmartContracts();
-    },
+    // async fetchData() {
+    //   this.list_smart_contracts.common = await GetCommonSmartContracts();
+    //   this.list_smart_contracts.private = await GetPrivateSmartContracts();
+    //   this.list_smart_contracts.pending = await GetPendingSmartContracts();
+    // },
     inc(value) {
       return value + 1;
     },
@@ -302,7 +274,7 @@ export default {
     acceptSC(sc_id) {
       if (
         confirm(
-          "Do you want to change the Smart Contract type from Private to Common?"
+          "Do you want to change the Smart Contract type from Pending to Common?"
         ) === true
       ) {
         this.acceptSmartContract(sc_id);
@@ -312,7 +284,7 @@ export default {
     refuseSC(sc_id) {
       if (
         confirm(
-          "Do you want to change the Smart Contract type from Common to Private?"
+          "Do you want to change the Smart Contract type from Pending to Private?"
         ) === true
       ) {
         this.refuseSmartContract(sc_id);

@@ -16,8 +16,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p>Date</p>
-          <a-date-picker :default-value="moment('2021/12/01', dateFormat)" />
+          
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -27,8 +26,8 @@
           <div class="input-group mb-3">
             <select class="form-select" id="inputGroup" v-model="selected">
               <option value="0">All</option>
-              <option value="type0">CSP</option>
-              <option value="type1">Vulnerability</option>
+              <option value="CSP">CSP</option>
+              <option value="Vulnerability">Vulnerability</option>
             </select>
           </div>
         </div>
@@ -40,48 +39,16 @@
               <th style="width: 5%">#</th>
 
               <th style="width: 15%">
-                Name<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downName')"
-                /></span>
+                Name
               </th>
               <th style="width: 15%">
-                Type<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upType')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downType')"
-                /></span>
+                Type
               </th>
               <th style="width: 15%">
-                Date<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDate')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDate')"
-                /></span>
+                Date
               </th>
-              <th style="width: 50%">
-                Description<span
-                  ><a-icon
-                    id="icon"
-                    type="caret-up"
-                    @click="sort('upDes')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDes')"
-                /></span>
+              <th style="width: 25%">
+                
               </th>
             </tr>
           </thead>
@@ -91,7 +58,7 @@
             <td>{{ data.template_type }}</td>
             <td>{{ data.createdDate }}</td>
             <td class="align-items">
-              {{ data.description }}
+              
               <span class="col" id="btn">
                 <button
                   type="button"
@@ -291,6 +258,6 @@ table span {
 }
 #btn {
   text-align: right;
-  display: flex;
+  float: right;
 }
 </style>

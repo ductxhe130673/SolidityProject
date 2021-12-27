@@ -126,7 +126,7 @@ export default {
       nameSc: "",
       options: "private",
       code: "",
-      demoEditSC: "test add sc",
+      demoEditSC: "",
       description: "",
       isAdmin: true,
     };
@@ -145,7 +145,7 @@ export default {
     },
     async clickHandler(action) {
       if (action == "save") {
-        if (this.nameSc === "" || this.options === "") {
+        if (!this.nameSc.trim() || !this.options.trim() || !this.demoEditSC.trim()) {
           window.alert("Please input all field");
         } else {
           await AddNewSmartContracts(

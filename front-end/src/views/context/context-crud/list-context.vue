@@ -12,8 +12,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md">
-          <p>Date</p>
-          <a-date-picker :default-value="moment('2021/12/01', dateFormat)" />
+          
         </div>
         <div class="col-md"></div>
         <div class="col-md"></div>
@@ -36,36 +35,16 @@
             <tr>
               <th style="width: 5%">#</th>
               <th style="width: 15%">
-                Name<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upName')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downName')"
-                /></span>
+                Name
               </th>
               <th style="width: 15%">
-                Type<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upType')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downType')"
-                /></span>
+                Type
               </th>
               <th style="width: 15%">
-                Date<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upDate')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDate')"
-                /></span>
+                Date
               </th>
-              <th style="width: 50%">
-                Description<span
-                  ><a-icon id="icon" type="caret-up" @click="sort('upDes')" /><a-icon
-                    id="icon"
-                    type="caret-down"
-                    @click="sort('downDes')"
-                /></span>
+              <th style="width: 25%">
+                
               </th>
             </tr>
           </thead>
@@ -75,7 +54,7 @@
             <td>{{ data.context_type }}</td>
             <td>{{ data.createdDate }}</td>
             <td class="align-items">
-              {{ data.description }}
+              
               <span class="col" id="btn">
                 <button
                   type="button"
@@ -117,6 +96,7 @@ export default {
   data() {
     return {
       selected: "0",
+      text: "Context",
       list_context: [],
     };
   },
@@ -205,7 +185,7 @@ export default {
     },
     deleteContext(cid) {
       if (
-        confirm("Do you want to delete the Smart Contract out of the system?") === true
+        confirm("Do you want to delete the " + this.text + " out of the system?") === true
       ) {
         DeleteContext(cid).then((data) => {
           this.initData();

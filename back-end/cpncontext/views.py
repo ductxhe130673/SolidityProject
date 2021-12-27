@@ -25,8 +25,6 @@ class cpncontextAPIView(APIView):
             return Response({"message": "Get Data Fail!!"}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
-        print(f'request {request}')
-        print(f'request data {request.data}')
         try:
             if request.method == 'POST':
                 serializeContext = cpncontextSerializerPost(data=request.data)
@@ -39,9 +37,7 @@ class cpncontextAPIView(APIView):
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        # print('ID====',request.GET['cid'])
-        print(f'request Put {request}')
-        print(f'request PUT data {request.data}')
+        
         try:
             if request.method == 'PUT':
                 idContext = request.data['cid']

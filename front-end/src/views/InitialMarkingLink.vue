@@ -301,8 +301,8 @@ table span {
   padding: 2px;
 }
 .input-param-text:hover {
-  color: red;
-  text-decoration: underline red wavy;
+  color:blue;
+  text-decoration: underline;
 }
 
 /* radio button */

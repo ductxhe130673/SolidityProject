@@ -59,7 +59,7 @@ export default {
         formula: "",
         formula_text: "This is formular text",
         name: "",
-        template_type: "type0",
+        template_type: "CSP",
       },
       ltlConfig: {},
     };

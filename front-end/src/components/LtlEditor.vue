@@ -311,7 +311,7 @@ export default {
 }
 /* button */
 #processing-btn {
-  margin-top: 45%;
+  margin-top: 58%;
   width: 45%;
   height: 120px;
   margin-left: 25%;

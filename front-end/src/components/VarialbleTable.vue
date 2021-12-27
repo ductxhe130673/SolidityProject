@@ -65,7 +65,7 @@
                   <a
                     class="nav-link"
                     v-on:click="selectFunction(item.fid, index)"
-                    v-bind:class="{ active: item.sid == selected_smart }"
+                    v-bind:class="{ active: item.fid == selected_func }"
                     >{{ item.name }}</a
                   >
                 </li>

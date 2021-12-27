@@ -70,10 +70,8 @@ class Checkreentrancydetail(APIView):
                 sql = '''select result from soliditycpn.CheckedBatchSC where bid = %s'''
             cursor = connection.cursor()
             try:
-                print('ID====',request.GET['id'])
                 cursor.execute(sql,[request.GET['id']] )
                 data = cursor.fetchall()
-                print("A----------",data)
                 return Response(data, status=status.HTTP_200_OK)
             except Exception as e:
                 cursor.close

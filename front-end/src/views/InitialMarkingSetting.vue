@@ -476,8 +476,8 @@ table span {
 }
 
 .input-param-text:hover {
-  color: red;
-  text-decoration: underline red wavy;
+  color: blue;
+  text-decoration: underline;
 }
 
 /* Button */

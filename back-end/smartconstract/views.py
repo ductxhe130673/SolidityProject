@@ -32,8 +32,6 @@ class SmartConstractAPIView(APIView):
             return Response({"message": "A"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        print(f'request Put {request}')
-        print(f'request PUT data {request.data}')
         try:
             if request.method == 'PUT':
                 idClient = request.data['id']

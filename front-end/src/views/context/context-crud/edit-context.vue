@@ -27,8 +27,8 @@
       <div class="col-md-3">Type</div>
       <div class="col-md-7">
         <select class="form-select" v-model="options">
-          <option value="type1">DCR</option>
-          <option value="type2">CPN</option>
+          <option value="DCR">DCR</option>
+          <option value="CPN">CPN</option>
         </select>
       </div>
     </div>
@@ -103,6 +103,12 @@ export default {
       this.fileUpload = event.target.files[0];
     },
     updateContext(data) {
+      if(!this.name.trim()){
+        alert("Name can not be blank!")
+      }else if(!this.description.trim()){
+        alert("Description can not be blank!")
+      }
+      else{
       UpdateContext(
         this.cid,
         this.name,
@@ -115,6 +121,7 @@ export default {
           name: "ListContext",
         });
       });
+      }
     },
 
     async initData() {

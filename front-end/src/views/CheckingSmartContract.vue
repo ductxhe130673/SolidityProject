@@ -30,7 +30,7 @@
           type="text"
           class="form-control"
           aria-describedby="basic-addon3"
-          v-model="this.context"
+          v-model="context.name"
         />
       </div>
     </div>
@@ -129,13 +129,8 @@
       >
         Check
       </button>
-      <button v-if="step == 'finish'" class="btn btn-primary-outline">Next</button>
-      <button
-        v-if="showDownload"
-        @click="downloadItem()"
-        style="border: 1px solid #0d6efd; color: #0d6efd"
-        class="btn btn-primary-outline"
-      >
+      <button v-if="step == 'finish'" class="btn btn-primary-outline" id="download">Next</button>
+      <button v-if="showDownload" @click="downloadItem()" class="btn btn-primary-outline" id="download">
         Download
       </button>
       <button type="button" class="btn btn-outline-primary" @click="navigate('back')">
@@ -157,7 +152,7 @@ export default {
       step: "initial",
       list_selected_sc: [],
       selected_vuls: "",
-      context: this.$store.state.data.data.selectedContext.name,
+      context: this.$store.state.data.data.selectedContext,
       error: true,
       view: "",
       ltlProperty: [],
@@ -175,7 +170,11 @@ export default {
   beforeMount() {
     this.list_selected_sc = this.$store.state.data.data.selectedSc;
     this.selected_vuls = this.$store.state.data.data.selectedTemplate;
-    console.log("newLtl", this.newLtl);
+    if(!this.$store.state.data.data.selectedContext){
+      this.context = {name: "free-context", cid: 1}
+    }else{
+      this.context = this.$store.state.data.data.selectedContext
+    }
   },
   components: {
     // Popup,
@@ -254,7 +253,7 @@ export default {
       const res = await CheckService.callHelenaTools(tName);
       if (res.status == 200 && res !== null && res != undefined) {
         const mess = res.data.message;
-        console.log(mess);
+
         this.results.push(mess);
         this.$store.commit("Setrs", mess);
         await CheckService.addNewCheckedBatchSC(
@@ -553,5 +552,9 @@ table span {
 }
 #removeAll-holder {
   margin-top: 50px;
+}
+#download {
+  border: 1px solid #0d6efd;
+  color: #0d6efd;
 }
 </style>

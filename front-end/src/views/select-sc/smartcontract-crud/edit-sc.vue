@@ -136,6 +136,14 @@ export default {
     },
     async clickHandler(param) {
       if (param == "save") {
+        if(!this.nameSc.trim()){
+          alert("Name can not be blank!")
+        }else if(!this.demoEditSC.trim()){
+          alert("Content can not be blank!")
+        }else if(!this.descriptionSC.trim()){
+          alert("Description can not be blank!")
+        }
+        else{
         await UpdateSmartContractCode(
           this.sc_id,
           this.nameSc,
@@ -146,6 +154,7 @@ export default {
         this.$router.push({
           name: "ListSc",
         });
+        }
       }
       if (param == "back") {
         this.$router.push(this.$route.params.parent_path);

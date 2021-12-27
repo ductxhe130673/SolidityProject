@@ -19,9 +19,10 @@ export class AuthService {
     static async makeLogin({ username, password }) {
         try {
             const response = await axios.post(`${API_URL}/auth/login`, { username, password }, { useCredentails: true })
+            console.log("exp----------",_parseTokenData(response.data.tokens.access).exp)
             _setAuthData({
                 accessToken: response.data.tokens.access,
-                exp: _parseTokenData(response.data.tokens.access).exp
+                exp: _parseTokenData(response.data.tokens.access).exp + 1000
             })
             setCookie("admin", response.data.tokens.access, 10)
                 // this.$store.commit("setIsAuthen", true)
@@ -52,6 +53,7 @@ export class AuthService {
             throw new ErrorWrapper(error, message)
         }
     }
+    
     // checkusernameexited
     // static async loginToken ({accessToken}) {
     //   try {
@@ -80,9 +82,9 @@ export class AuthService {
         }
     }
 
-    static async makeRegister({ username, email, password }) {
+    static async makeRegister({ username, password }) {
         try {
-            const response = await axios.post(`${API_URL}/auth/register`, { username, email, password }, { useCredentails: true })
+            const response = await axios.post(`${API_URL}/auth/register`, { username, password }, { useCredentails: true })
             return new ResponseWrapper(response, response.data)
         } catch (error) {
             throw new ErrorWrapper(error)
@@ -92,8 +94,8 @@ export class AuthService {
 
     static async refreshTokens() {
         try {
-            var currentUserId = $store.state.user.currentUser.id
-            const response = await axios.post(`${API_URL}/auth/refresh-tokens`, { currentUserId }, { useCredentails: true })
+            var currentUserId = JSON.parse(localStorage.getItem("user")).id
+            const response = await axios.post(`${API_URL}/auth/api/token/refresh/`, { currentUserId }, { useCredentails: true })
             _setAuthData({
                 accessToken: response.data.accessToken,
                 exp: _parseTokenData(response.data.accessToken).exp

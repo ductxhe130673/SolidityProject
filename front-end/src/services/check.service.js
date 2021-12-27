@@ -88,9 +88,13 @@ export default class CheckService extends BaseService {
         }
     }
     static async addNewCheckedBatchSC(lteid , cid , noSC , status , LTLformula , result) {
-         const data = {
+        let newlteid = 1;
+        if(lteid){
+           newlteid = lteid 
+        }
+        const data = {
             aid: JSON.parse(localStorage.getItem("user")).id,
-            lteid: lteid,
+            lteid: newlteid,
             cid: 1,
             noSC: noSC,
             status: status,
