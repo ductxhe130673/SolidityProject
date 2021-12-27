@@ -1,16 +1,8 @@
-EtherGame(N := 2, cb := 0, v1 := 3, v2 := 2, v3 := 5, v4 := 3, v5 := 10, v6 := 5, users := 5, play_sdr := 4, claimReward_sdr := 4) {
+EtherGame(cb := 0, v1 := 3, v2 := 2, v3 := 5, v4 := 3, v5 := 10, v6 := 5, users := 5, play_sdr := 10, claimReward_sdr := 10) {
 
 /**************************
  *** Colour Definitions ***
  **************************/
-type boolean : range 0 .. 1;
-type count : range 0 .. N;
-subtype event_id : count range 0 .. (count'last-1);
-type marking_value : list[event_id] of boolean with capacity N;
-type mvalue : struct { event_id id;boolean vl;};
-type vchange : list[event_id] of mvalue with capacity N;
-type cvalue : struct { boolean cv1;boolean cv2;};
-type vcondition : list[event_id] of cvalue with capacity N;
 type ADDRESS : range 0 .. 100;
 type UINT : range 0 .. (int'last);
 type USER : struct { ADDRESS adr;UINT balance;};
@@ -25,36 +17,12 @@ type PLAY_STATE : struct { STATE state;PLAY_PAR playPar;};
 type CLAIM_REWARD_STATE : struct { STATE state;CLAIM_REWARD_PAR claimRewardPar;};
 type UINT_ARRAY : list[UINT] of UINT with capacity 1000;
 constant UINT_ARRAY user_balance:=|10,10,10,10,10|;
-constant UINT_ARRAY play_sender_value:=|1,2,3,4|;
-constant UINT_ARRAY claimReward_sender_value:=|1,2,3,4|;
+constant UINT_ARRAY play_sender_value:=|1,2,3,4,5,6,7,8,9,10|;
+constant UINT_ARRAY claimReward_sender_value:=|1,2,3,4,5,6,7,8,9,10|;
 
 /****************************
  *** Function Definitions ***
  ****************************/
-function cvalue (marking_value mv, vchange lc) -> marking_value{
-	marking_value m := empty;
-	for(v in mv){
-		m := m & v;
-	}
-	for(v in lc){
-		m[v.id] := v.vl;
-	}
-	return m;
-}
-function confirm_condition (vcondition vc) -> boolean{
-	boolean ret := 1;
-	for(v in vc){
-		if(v.cv1 = 1 and v.cv2 = 0) ret := 0;
-	}
-	return ret;
-}
-function confirm_milestone (vcondition vc) -> boolean{
-	boolean ret := 1;
-	for(v in vc){
-		if(v.cv1 = 1 and v.cv2 = 1) ret := 0;
-	}
-	return ret;
-}
 function initRedeemableEther (nat n) -> LIST_REDEEMABLE_ETHER{
 		LIST_REDEEMABLE_ETHER l := empty;
       		for (i in ADDRESS range 1 .. ADDRESS (n)) l := {i,UINT(0)} & l;
@@ -83,14 +51,6 @@ function getIndex (LIST_REDEEMABLE_ETHER lre, ADDRESS adr) -> int{
 /*************************
  *** Place Definitions ***
  *************************/
-
-/*
- * Function: state
- */
-place marking {
-	dom : marking_value*marking_value*marking_value;
-	init : <(|0,0|,|0,0|,|1,1|)>;
-}
 
 /*
  * Function: state
@@ -158,34 +118,12 @@ place PLAY_currentBalance {
  */
 transition play {
 	in {
-		marking : <(execute,response,include)>;
 		state_cflow : epsilon;
 	}
 	out {
-		marking : <(cvalue(execute,|{0,1}|),cvalue(response,|{0,0}|),include)>;
 		play_cflow : epsilon;
 	}
-	guard : (include[0] = 1);
 }
-
-/*
- * Function: claimReward
- */
-transition claimReward {
-	in {
-		marking : <(execute,response,include)>;
-		state_cflow : epsilon;
-	}
-	out {
-		marking : <(cvalue(execute,|{1,1}|),cvalue(response,|{1,0}|),cvalue(include,|{0,1}|))>;
-		state_cflow : epsilon;
-	}
-	guard : (include[1] = 1) and (confirm_condition(|{include[0],execute[0]}|) = 1);
-}
-
-/*
- * Function: play
- */
 transition PLAY_revert1 {
 	in {
 		S : <( s )>;
@@ -358,8 +296,20 @@ transition PLAY_return {
 		state_cflow : epsilon;
 	}
 }
+
+/*
+ * Function: claimReward
+ */
+transition claimReward {
+	in {
+		state_cflow : epsilon;
+	}
+	out {
+		state_cflow : epsilon;
+	}
+}
 proposition outOfRange:
-	exists (t in PLAY_currentBalance | t->1 < 2) or exists (t in PLAY_currentBalance | t->1 > 10);
+	exists (t in PLAY_currentBalance | t->1 < 0) or exists (t in PLAY_currentBalance | t->1 > 2147483647);
 
 
 }
